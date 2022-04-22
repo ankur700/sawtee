@@ -3,8 +3,8 @@ const settings = {
   state: {
     frontity: {
       url: "https://test.frontity.org",
-      title: "Test Frontity Blog",
-      description: "WordPress installation for Frontity development",
+      title: "SAWTEE",
+      description: "South Asia Watch on Trade, Economics and Environment",
     },
   },
   packages: [
@@ -13,11 +13,10 @@ const settings = {
       state: {
         theme: {
           menu: [
-            ["Home", "/"],
-            ["Nature", "/category/nature/"],
-            ["Travel", "/category/travel/"],
-            ["Japan", "/tag/japan/"],
-            ["About Us", "/about-us/"],
+            ["Know Us", "/"],
+            ["Our Work", "/category/nature/"],
+            ["Publications", "/category/travel/"],
+            ["Events", "/tag/japan/"],
           ],
           featured: {
             showOnList: true,
@@ -30,7 +29,7 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: "https://test.frontity.org",
+          url: "https://sawtee.ankursingh.com.np",
         },
       },
     },
