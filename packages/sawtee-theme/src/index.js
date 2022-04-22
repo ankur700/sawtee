@@ -2,8 +2,8 @@ import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import link from "@frontity/html2react/processors/link";
 
-const twentyTwentyTheme = {
-  name: "@frontity/twentytwenty-theme",
+const sawteeTheme = {
+  name: "sawtee-theme",
   roots: {
     /**
      *  In Frontity, any package can add React components to the site.
@@ -88,4 +88,4 @@ const twentyTwentyTheme = {
   },
 };
 
-export default twentyTwentyTheme;
+export default sawteeTheme;

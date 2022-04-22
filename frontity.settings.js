@@ -5,6 +5,7 @@ const settings = {
       url: "https://test.frontity.org",
       title: "SAWTEE",
       description: "South Asia Watch on Trade, Economics and Environment",
+      year: "1997",
     },
   },
   packages: [
@@ -13,10 +14,10 @@ const settings = {
       state: {
         theme: {
           menu: [
-            ["Know Us", "/"],
-            ["Our Work", "/category/nature/"],
-            ["Publications", "/category/travel/"],
-            ["Events", "/tag/japan/"],
+            ["Know Us", "/about"],
+            ["Our Work", "/our-work"],
+            ["Publications", "/publications"],
+            ["Events", "/events"],
           ],
           featured: {
             showOnList: true,

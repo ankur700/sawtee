@@ -11,6 +11,7 @@ import SearchResults from "./search/search-results";
 import SkipLink from "./styles/skip-link";
 import MetaTitle from "./page-meta-title";
 import PageError from "./page-error";
+import Home from "./home/home";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -22,7 +23,7 @@ const Theme = ({ state }) => {
 
   return (
     <>
-      {/* Add global styles for the whole site, like body or a's or font-faces. 
+      {/* Add global styles for the whole site, like body or a's or font-faces.
         Not classes here because we use CSS-in-JS. Only global HTML tags. */}
       <Global styles={globalStyles(state.theme.colors)} />
       <FontFaces />
@@ -50,6 +51,7 @@ const Theme = ({ state }) => {
             <Loading when={data.isFetching} />
             <SearchResults when={data.isSearch} />
             <Archive when={data.isArchive} />
+            <Home when={data.isHome} />
             <Post when={data.isPostType} />
             <PageError when={data.isError} />
           </Switch>

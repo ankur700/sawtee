@@ -8,8 +8,9 @@ import MobileMenuButton from "./mobile/menu-button";
 import MobileMenuModal from "./mobile/menu-modal";
 
 const Header = ({ state }) => {
-  const { title, description } = state.frontity;
+  const { title, description, year } = state.frontity;
   const { headerBg } = state.theme.colors;
+  const { data } = state.source.data;
 
   return (
     <PageHeader bg={headerBg} id="site-header">
@@ -23,7 +24,7 @@ const Header = ({ state }) => {
             <SiteTitle>
               <StyledLink link="/">{title}</StyledLink>
             </SiteTitle>
-            <SiteDescription>{description}</SiteDescription>
+            <SiteDescription> ESTD: {year}</SiteDescription>
           </TitleGroup>
 
           {/* Mobile menu button and modal */}
@@ -113,8 +114,8 @@ const SiteTitle = styled.h1`
 const SiteDescription = styled.div`
   margin: 0;
   margin-top: 1rem;
-  color: #6d6d6d;
-  font-size: 1.8rem;
+  color: #006181;
+  font-size: 1.2rem;
   font-weight: 500;
   display: none;
   letter-spacing: -0.0311em;
