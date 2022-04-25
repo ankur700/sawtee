@@ -19,10 +19,20 @@ const settings = {
             ["Publications", "/publications"],
             ["Events", "/events"],
           ],
-          featured: {
-            showOnList: true,
+          colors: {
+            primary: "#006181",
+            headerBg: "#ffffff",
+            footerBg: "#ffffff",
+            bodyBg: "#f5efe0",
+          },
+          showSearchInHeader: true,
+          showAllContentOnArchive: false,
+          featuredMedia: {
+            showOnArchive: true,
             showOnPost: true,
           },
+          autoPreFetch: "hover",
+          fontSets: "us-ascii",
         },
       },
     },
@@ -31,6 +41,8 @@ const settings = {
       state: {
         source: {
           url: "https://sawtee.ankursingh.com.np",
+          homepage: "home",
+          postsPage: "blog",
         },
       },
     },
