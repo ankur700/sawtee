@@ -14,6 +14,7 @@ const settings = {
       state: {
         theme: {
           menu: [
+            ["Home", "/"],
             ["Know Us", "/about"],
             ["Our Work", "/our-work"],
             ["Publications", "/publications"],

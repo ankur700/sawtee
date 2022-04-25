@@ -1,5 +1,6 @@
 import { connect, styled } from "frontity";
 import Link from "../link";
+import { HomeIcon } from "../icons";
 
 /**
  * Navigation Component
@@ -20,7 +21,7 @@ const Navigation = ({ state }) => (
                 link={link}
                 aria-current={isCurrentPage ? "page" : undefined}
               >
-                {name}
+                {name === "Home" ? <HomeIcon /> : name}
               </MenuLink>
             </MenuItem>
           );
