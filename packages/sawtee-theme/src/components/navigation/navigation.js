@@ -21,7 +21,7 @@ const Navigation = ({ state }) => (
                 link={link}
                 aria-current={isCurrentPage ? "page" : undefined}
               >
-                {name === "Home" ? <HomeIcon /> : name}
+                {name !== "Home" ? name : <HomeIcon />}
               </MenuLink>
             </MenuItem>
           );

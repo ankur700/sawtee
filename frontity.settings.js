@@ -41,7 +41,7 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: "https://sawtee.ankursingh.com.np",
+          url: "https://sawtee.ankursingh.com.np/",
           homepage: "home",
           postsPage: "blog",
         },

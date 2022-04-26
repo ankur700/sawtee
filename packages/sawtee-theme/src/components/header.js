@@ -21,7 +21,7 @@ const Header = ({ state }) => {
 
           {/* Heading and Description of the site */}
           <TitleGroup>
-            <SiteTitle>
+            <SiteTitle title={description}>
               <StyledLink link="/">{title}</StyledLink>
             </SiteTitle>
             <SiteDescription> ESTD: {year}</SiteDescription>
@@ -136,7 +136,7 @@ const StyledLink = styled(Link)`
   display: block;
 
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 
