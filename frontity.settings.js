@@ -14,7 +14,6 @@ const settings = {
       state: {
         theme: {
           menu: [
-            ["Home", "/"],
             ["Know Us", "/about"],
             ["Our Work", "/our-work"],
             ["Publications", "/publications"],
@@ -22,9 +21,9 @@ const settings = {
           ],
           colors: {
             primary: "#006181",
-            headerBg: "#ffffff",
+            headerBg: "#D9DAE1",
             footerBg: "#ffffff",
-            bodyBg: "#f5efe0",
+            bodyBg: "#828990",
           },
           showSearchInHeader: true,
           showAllContentOnArchive: false,

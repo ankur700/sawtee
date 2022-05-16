@@ -21,6 +21,7 @@ import Page from "./page";
 const Theme = ({ state }) => {
   // Get information about the current URL.
   const data = state.source.get(state.router.link);
+  const { bodyBg } = state.theme.colors;
 
   return (
     <>
@@ -69,4 +70,5 @@ export default connect(Theme);
 
 const Main = styled.main`
   display: block;
+  background-color: ${(props) => props.bg};
 `;

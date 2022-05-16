@@ -78,7 +78,9 @@ const TitleWrapper = styled.div`
 const PageHeader = styled.header`
   z-index: 1;
   background: ${(props) => props.bg};
-  position: relative;
+  position: sticky;
+  top: 0;
+  left: 0;
 `;
 
 const HeaderInner = styled.div`
