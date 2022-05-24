@@ -6,11 +6,11 @@ import SearchModal from "./search/search-modal";
 import MobileSearchButton from "./mobile/search-button";
 import MobileMenuButton from "./mobile/menu-button";
 import MobileMenuModal from "./mobile/menu-modal";
+import image from "@frontity/components/image";
 
 const Header = ({ state }) => {
-  const { title, description, year } = state.frontity;
+  const { title, description, year, logo } = state.frontity;
   const { headerBg } = state.theme.colors;
-  const { data } = state.source.data;
 
   return (
     <PageHeader bg={headerBg} id="site-header">
@@ -22,7 +22,9 @@ const Header = ({ state }) => {
           {/* Heading and Description of the site */}
           <TitleGroup>
             <SiteTitle title={description}>
-              <StyledLink link="/">{title}</StyledLink>
+              <StyledLink link="/">
+                <SiteLogo src="/logo_sawtee.jpg" alt={title} />
+              </StyledLink>
             </SiteTitle>
             <SiteDescription> ESTD: {year}</SiteDescription>
           </TitleGroup>
@@ -52,6 +54,7 @@ const TitleGroup = styled.div`
   @media (min-width: 1000px) {
     align-items: baseline;
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     justify-content: flex-start;
     margin: -1rem 0 0 -2.4rem;
@@ -111,6 +114,12 @@ const SiteTitle = styled.h1`
     font-size: 2.4rem;
     font-weight: 700;
   }
+`;
+
+const SiteLogo = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 `;
 
 const SiteDescription = styled.div`

@@ -1,6 +1,5 @@
 import { connect, styled } from "frontity";
 import Link from "../link";
-import { HomeIcon } from "../icons";
 
 /**
  * Navigation Component
@@ -65,7 +64,7 @@ const Menu = styled.ul`
 `;
 
 const MenuItem = styled.li`
-  font-size: 1.75rem;
+  font-size: 1.65rem;
   line-height: 1.2;
   position: relative;
   padding: 0.5rem;
@@ -80,7 +79,7 @@ const MenuLink = styled(Link)`
   text-decoration: none;
   padding: 0.5rem 1rem;
   --c: #006181; /* the color  */
-  --h: 1.25em; /* the height */
+  --h: 1.5em; /* the height */
 
   line-height: var(--h);
   color: #0000;
