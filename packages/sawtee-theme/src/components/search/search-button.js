@@ -20,7 +20,8 @@ const SearchButton = ({ state, actions }) => {
           aria-label="Click to open search bar..."
           style={{ bottom: "0.5rem" }}
         >
-          <LabeledIcon icon={SearchIcon} label="Search" />
+          {/* pass label as prop a prop to provide a label <LabelIcon label={some label} */}
+          <LabeledIcon icon={SearchIcon} label="search" />
         </BaseToggle>
       </ToggleWrapper>
     </HeaderToggle>
@@ -35,12 +36,10 @@ const HeaderToggle = styled.div`
   @media (min-width: 1000px) {
     display: flex;
     flex-shrink: 0;
-    margin-right: -3rem;
     margin-left: 3rem;
   }
 
   @media (min-width: 1220px) {
-    margin-right: -4rem;
     margin-left: 4rem;
   }
 `;

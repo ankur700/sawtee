@@ -1,10 +1,15 @@
 import { styled, connect } from "frontity";
 
 const Home = ({ state }) => {
+  const data = state.source.get(state.router.link);
+  const post = state.source[data.type][data.id];
+  const slides = post.acf?.slides;
   return (
     <>
       <HeroSection>
-        <h1>Insert Slider Here</h1>
+        {slides?.map((element) => {
+          return <h1>{element.slide_caption}</h1>;
+        })}
       </HeroSection>
       <Content>
         <h2>Content goes here</h2>

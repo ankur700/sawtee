@@ -47,7 +47,7 @@ const MenuNav = styled.nav`
 
 const Menu = styled.ul`
   display: flex;
-  font-size: 1.8rem;
+  // font-size: 1.8rem;
   font-weight: 500;
   letter-spacing: -0.0277em;
   flex-wrap: wrap;
@@ -64,10 +64,12 @@ const Menu = styled.ul`
 `;
 
 const MenuItem = styled.li`
-  font-size: 1.65rem;
+  font-size: 1.5rem;
   line-height: 1.2;
   position: relative;
-  padding: 0.5rem;
+  background: #d9dae1;
+  overflow: hidden;
+  padding: 0.75rem;
   @media (min-width: 1220px) {
     margin: 0.8rem 0 0 2.5rem !important;
   }
@@ -75,12 +77,12 @@ const MenuItem = styled.li`
 
 const MenuLink = styled(Link)`
   display: block;
-  line-height: 1.2;
   text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
   padding: 0.5rem 1rem;
   --c: #006181; /* the color  */
   --h: 1.5em; /* the height */
-
   line-height: var(--h);
   color: #0000;
   overflow: hidden;
@@ -88,7 +90,7 @@ const MenuLink = styled(Link)`
     0 calc(var(--h) * (1 - var(--_i, 0))) #fff;
   background: linear-gradient(var(--c) 0 0) no-repeat
     calc(200% - var(--_i, 0) * 100%) 100% / 200%
-    calc(100% * var(--_i, 0) + 0.08em);
+    calc(100% * var(--_i, 0) + 0.05em);
   transition: 0.3s calc(var(--_i, 0) * 0.3s),
     background-position 0.3s calc(0.3s - calc(var(--_i, 0) * 0.3s));
 

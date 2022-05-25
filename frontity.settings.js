@@ -2,11 +2,11 @@ const settings = {
   name: "sawtee-frontend",
   state: {
     frontity: {
-      url: "https://sawtee.vercel.com",
+      url: "https://sawtee.ankursingh.com.np/",
       title: "SAWTEE",
       description: "South Asia Watch on Trade, Economics and Environment",
       year: "1997",
-      logo: "logo_sawtee.jpg",
+      logo: "/assets/logo_sawtee.jpg",
     },
   },
   packages: [

@@ -6,7 +6,7 @@ import SearchModal from "./search/search-modal";
 import MobileSearchButton from "./mobile/search-button";
 import MobileMenuButton from "./mobile/menu-button";
 import MobileMenuModal from "./mobile/menu-modal";
-import image from "@frontity/components/image";
+import logoImage from "../assets/final-logo-sawtee.png";
 
 const Header = ({ state }) => {
   const { title, description, year, logo } = state.frontity;
@@ -23,7 +23,7 @@ const Header = ({ state }) => {
           <TitleGroup>
             <SiteTitle title={description}>
               <StyledLink link="/">
-                <SiteLogo src="/logo_sawtee.jpg" alt={title} />
+                <SiteLogo src={logoImage} alt={title} />
               </StyledLink>
             </SiteTitle>
             <SiteDescription> ESTD: {year}</SiteDescription>
@@ -34,12 +34,10 @@ const Header = ({ state }) => {
           <MobileMenuModal />
         </TitleWrapper>
 
-        <HeaderNavigationWrapper>
-          {/* Desktop navigation links */}
-          <Navigation />
-          {/* Desktop search button */}
-          {state.theme.showSearchInHeader && <SearchButton />}
-        </HeaderNavigationWrapper>
+        {/* Desktop navigation links */}
+        <Navigation />
+        {/* Desktop search button */}
+        {state.theme.showSearchInHeader && <SearchButton />}
       </HeaderInner>
       {/* Global search modal */}
       <SearchModal />
@@ -95,9 +93,10 @@ const HeaderInner = styled.div`
   z-index: 100;
   margin-left: auto;
   margin-right: auto;
+  width: calc(100% - 10rem);
 
-  @media (min-width: 700px) {
-    width: calc(100% - 8rem);
+  @media (min-width: 1150px) {
+    width: calc(100% - 25rem);
   }
 `;
 
@@ -124,7 +123,7 @@ const SiteLogo = styled.img`
 
 const SiteDescription = styled.div`
   margin: 0;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   color: #006181;
   font-size: 1.2rem;
   font-weight: 500;
@@ -133,7 +132,7 @@ const SiteDescription = styled.div`
   transition: all 0.15s linear;
 
   @media (min-width: 1000px) {
-    margin: 1rem 0 0 2.4rem;
+    margin: 0.5rem 0 0 3.05rem;
   }
 
   @media (min-width: 700px) {
@@ -145,6 +144,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
   display: block;
+  max-width: 150px;
 
   &:hover {
     text-decoration: none;
