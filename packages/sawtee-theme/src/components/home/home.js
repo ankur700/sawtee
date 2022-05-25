@@ -1,4 +1,5 @@
 import { styled, connect } from "frontity";
+import Slider from "../slider/slider";
 
 const Home = ({ state }) => {
   const data = state.source.get(state.router.link);
@@ -7,9 +8,7 @@ const Home = ({ state }) => {
   return (
     <>
       <HeroSection>
-        {slides?.map((element) => {
-          return <h1>{element.slide_caption}</h1>;
-        })}
+        <Slider slides={slides} />
       </HeroSection>
       <Content>
         <h2>Content goes here</h2>
@@ -22,12 +21,12 @@ export default connect(Home);
 
 const HeroSection = styled.section`
   width: 100%;
-  padding: 1rem 2rem;
-  background: #f5efe0;
+  // padding: 1rem 2rem;
+  // background: #f5efe0;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 6.5rem);
+  // min-height: calc(100vh - 6.5rem);
 `;
 
 const Content = styled.section`
