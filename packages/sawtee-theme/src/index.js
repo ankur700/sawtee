@@ -2,22 +2,6 @@ import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import link from "@frontity/html2react/processors/link";
 
-// Custom handler for ACF options
-const acfOptionsHandler = {
-  pattern: "acf-options-page",
-  func: async ({ route, state, libraries }) => {
-    // 1. Get ACF option page from REST API.
-    const response = await libraries.source.api.get({
-      endpoint: `/acf/v3/posts`,
-    });
-    const option = await response.json();
-
-    // 2. Add data to `source`.
-    const data = state.source.get(route);
-    Object.assign(data, { ...option, isAcfOptionsPage: true });
-  },
-};
-
 const sawteeTheme = {
   name: "sawtee-theme",
   roots: {
@@ -90,18 +74,9 @@ const sawteeTheme = {
       closeSearchModal: ({ state }) => {
         state.theme.isSearchModalOpen = false;
       },
-      beforeSSR: async ({ state, actions }) => {
-        // This will make Frontity wait until the ACF options
-        // page has been fetched and it is available
-        // using state.source.get("acf-options-page").
-        await actions.source.fetch("acf-options-page");
-      },
     },
   },
   libraries: {
-    source: {
-      handlers: [acfOptionsHandler],
-    },
     html2react: {
       /**
        * Add a processor to `html2react` so it processes the `<img>` tags
