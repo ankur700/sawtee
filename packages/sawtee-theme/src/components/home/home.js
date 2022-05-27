@@ -7,9 +7,7 @@ const Home = ({ state }) => {
   const slides = post.acf?.slides;
   return (
     <>
-      <HeroSection>
-        <Slider slides={slides} />
-      </HeroSection>
+      <Slider slides={slides} />
       <Content>
         <h2>Content goes here</h2>
       </Content>

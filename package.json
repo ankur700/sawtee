@@ -21,9 +21,9 @@
     "@frontity/html2react": "^1.7.0",
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
+    "@sefailyasoz/react-carousel": "^1.1.1",
     "frontity": "^1.17.2",
     "react-icons": "^4.3.1",
-    "sawtee-theme": "file:packages/sawtee-theme",
-    "swiper": "^8.1.6"
+    "sawtee-theme": "file:packages/sawtee-theme"
   }
 }
