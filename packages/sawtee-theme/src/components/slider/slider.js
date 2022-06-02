@@ -1,70 +1,38 @@
 // Import Swiper React components
-import { styled } from "frontity";
+import { css, styled } from "frontity";
 import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
-import { HiArrowNarrowLeft, HiArrowNarrowRight } from "react-icons/hi";
+import {
+  HiArrowNarrowLeft,
+  HiArrowNarrowRight,
+  HiChevronLeft,
+  HiChevronRight,
+} from "react-icons/hi";
 import { BsDot } from "react-icons/bs";
-
-const Slide = ({ slides, width, updateIndex, activeIndex }) => {
-  return (
-    <>
-      {slides?.map((slide, i) => {
-        return (
-          <SliderItem key={i} width={width}>
-            <SliderImage src={slide.imgPath} alt={slide.title} />
-            <div className={styles.content}>
-              <p className={styles.title}>{slide.title}</p>
-              <p className={styles.subtitle}>{slide.subtitle}</p>
-            </div>
-            <div className={cn(styles.navigation)}>
-              <ul className={styles.list}>
-                {slides?.map((slide, i) => {
-                  return (
-                    <li
-                      key={i}
-                      className={`${
-                        i === activeIndex ? styles.active : styles.listItem
-                      }`}
-                    >
-                      <span
-                        className="trigger cursor-pointer"
-                        onClick={() => {
-                          updateIndex(i);
-                        }}
-                      >
-                        {slide.title}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </SliderItem>
-        );
-      })}
-    </>
-  );
-};
 
 const Slider = ({ slides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
-      newIndex = slides.length - 1;
-    } else if (newIndex > slides.length - 1) {
       newIndex = 0;
+    } else if (newIndex >= slides.length) {
+      newIndex = slides.length - 1;
     }
+
     setActiveIndex(newIndex);
-    setActiveImageLink(slides[newIndex].imgPath);
   };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => updateIndex(activeIndex + 1),
+    onSwipedRight: () => updateIndex(activeIndex - 1),
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!paused && activeIndex < slides.length - 1) {
+      if (!paused) {
         updateIndex(activeIndex + 1);
-      } else if (!paused && activeIndex === slides.length - 1) {
-        updateIndex(0);
       }
     }, 3000);
 
@@ -75,113 +43,196 @@ const Slider = ({ slides }) => {
     };
   });
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () => updateIndex(activeIndex + 1),
-    onSwipedRight: () => updateIndex(activeIndex - 1),
-  });
-
   return (
-    <div
+    <Carousel
       {...handlers}
-      className={cn(styles.container)}
-      style={{ backgroundColor: Hex }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
     >
-      <div
-        className={styles.wrapper}
-        onMouseEnter={() => {
-          setPaused(true);
-        }}
-        onMouseLeave={() => {
-          setPaused(false);
-        }}
+      <Inner
+        css={css`
+          transform: translateX(-${activeIndex * 100}%);
+        `}
       >
-        <div
-          className={styles.inner}
-          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-        >
-          <Slide
-            slides={slides}
-            width="100%"
-            updateIndex={updateIndex}
-            activeIndex={activeIndex}
-          />
-        </div>
-      </div>
-      <div className={styles.indicators}>
-        <button
-          onClick={() => {
-            if (activeIndex <= 0) {
-              updateIndex(slides.length - 1);
-            } else if (activeIndex <= slides.length - 1) {
-              updateIndex(activeIndex - 1);
-            }
-          }}
-        >
-          <HiArrowNarrowLeft />
-        </button>
-        <button
-          onClick={() => {
-            if (activeIndex === slides.length - 1) {
-              updateIndex(0);
-            } else {
-              updateIndex(activeIndex + 1);
-            }
-          }}
-        >
-          <HiArrowNarrowRight />
-        </button>
-      </div>
-
-      <ul>
-        {slides?.map((slide, i) => {
+        {slides?.map((slide, index) => {
           return (
-            <li
-              key={i}
-              className={`${i === activeIndex ? "active" : "text-gray-300"}`}
-            >
-              <span
-                className="cursor-pointer shadow-lg"
-                onClick={() => {
-                  updateIndex(i);
-                }}
-              >
-                <BsDot />
-              </span>
-            </li>
+            <CarouselItem key={index} width="100%">
+              <CarouselImage src={slide.slide_image} alt={slide.slide_title} />
+              <Overlay className="after" />
+              <Content>
+                <Title>{slide.slide_title}</Title>
+                <Caption>{slide.slide_caption}</Caption>
+              </Content>
+            </CarouselItem>
           );
         })}
-      </ul>
-    </div>
+      </Inner>
+      <PrevButton
+        onClick={() => {
+          updateIndex(activeIndex - 1);
+        }}
+      >
+        <HiChevronLeft className="icon" size="6rem" />
+      </PrevButton>
+      <Indicators>
+        {slides.map((slide, index) => {
+          return (
+            <RoundButtons
+              css={css`
+                cursor: pointer;
+              `}
+              index={index}
+              activeIndex={activeIndex}
+              key={index + Math.random()}
+              onClick={() => {
+                updateIndex(index);
+              }}
+            >
+              <BsDot className="dots" size="3rem" />
+            </RoundButtons>
+          );
+        })}
+      </Indicators>
+      <NextButton
+        onClick={() => {
+          updateIndex(activeIndex + 1);
+        }}
+      >
+        <HiChevronRight className="icon" size="6rem" />
+      </NextButton>
+    </Carousel>
   );
 };
 
 export default Slider;
 
-const Sliderr = styled.div`
+const Carousel = styled.div`
   overflow: hidden;
+  position: relative;
 `;
 
-const SliderInner = styled.div`
+const Inner = styled.div`
   white-space: nowrap;
   transition: transform 0.3s;
 `;
 
-const SliderItem = styled.div`
+const CarouselItem = styled.div`
   display: inline-flex;
-  justify-content: center;
   align-items: center;
-  height: 200px;
-  color: white;
+  justify-content: center;
+  height: calc(100vh - 12.125rem);
+  color: #fff;
+  width: ${(props) => props.width || "100%"};
+  position: relative;
+
+  & .after {
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    content: "";
+    background: hsl(0, 0%, 0%, 0.4);
+  }
 `;
 
-const SliderImage = styled.img`
-  height: 100%;
+export const CarouselImage = styled.img`
   width: 100%;
+  height: 100%;
+  display: block;
   object-fit: cover;
-  opacity: 0.7;
-  filter: alpha(opacity=70);
-  & :hover {
-    opacity: 0.9;
-    filter: alpha(opacity=90);
+`;
+
+const Indicators = styled.div`
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 5%;
+  left: 45%;
+  gap: 1rem;
+`;
+
+const PrevButton = styled.button`
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  background: hsla(70, 0%, 0%, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer: cursor;
+  border-radius: 50%;
+  &:hover {
+    background: hsla(70, 0%, 0%, 1);
+    border-radius: 50%;
   }
+  &:hover .icon {
+    color: #fff;
+  }
+`;
+
+const NextButton = styled.button`
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  background: hsla(70, 0%, 0%, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer: cursor;
+  border-radius: 50%;
+  &:hover {
+    background: hsla(70, 0%, 0%, 1);
+    border-radius: 50%;
+  }
+  &:hover .icon {
+    color: #fff;
+  }
+`;
+
+const RoundButtons = styled.button`
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  color: #fff;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) =>
+    props.index === props.activeIndex
+      ? "	hsla(195, 100%, 25%, 0.6)"
+      : "hsla(0, 0%, 0%, 0.6)"};
+`;
+
+const Content = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  bottom: 15%;
+  z-index: 99;
+`;
+
+const Title = styled.p`
+  font-size: 4rem;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 0.5rem !important;
+`;
+
+const Caption = styled.p`
+  font-size: 2.5rem;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem 1.5rem;
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  color: #fff;
 `;

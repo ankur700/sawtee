@@ -7,7 +7,9 @@ const Home = ({ state }) => {
   const slides = post.acf?.slides;
   return (
     <>
-      <Slider slides={slides} />
+      <HeroSection>
+        <Slider slides={slides} />
+      </HeroSection>
       <Content>
         <h2>Content goes here</h2>
       </Content>
@@ -19,12 +21,11 @@ export default connect(Home);
 
 const HeroSection = styled.section`
   width: 100%;
-  // padding: 1rem 2rem;
-  // background: #f5efe0;
+  padding: 0;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  // min-height: calc(100vh - 6.5rem);
 `;
 
 const Content = styled.section`
