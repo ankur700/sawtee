@@ -2,12 +2,7 @@
 import { css, styled } from "frontity";
 import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
-import {
-  HiArrowNarrowLeft,
-  HiArrowNarrowRight,
-  HiChevronLeft,
-  HiChevronRight,
-} from "react-icons/hi";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { BsDot } from "react-icons/bs";
 
 const Slider = ({ slides }) => {
@@ -60,8 +55,30 @@ const Slider = ({ slides }) => {
               <CarouselImage src={slide.slide_image} alt={slide.slide_title} />
               <Overlay className="after" />
               <Content>
-                <Title>{slide.slide_title}</Title>
-                <Caption>{slide.slide_caption}</Caption>
+                <Title
+                  css={css`
+                    @media (max-width: 768px) {
+                      font-size: 2rem;
+                    }
+                    @media (max-width: 992px) {
+                      font-size: 2.5rem;
+                    }
+                  `}
+                >
+                  {slide.slide_title}
+                </Title>
+                <Caption
+                  css={css`
+                    @media (max-width: 768px) {
+                      font-size: 1rem;
+                    }
+                    @media (max-width: 992px) {
+                      font-size: 1.65rem;
+                    }
+                  `}
+                >
+                  {slide.slide_caption}
+                </Caption>
               </Content>
             </CarouselItem>
           );
@@ -74,7 +91,13 @@ const Slider = ({ slides }) => {
       >
         <HiChevronLeft className="icon" size="6rem" />
       </PrevButton>
-      <Indicators>
+      <Indicators
+        css={css`
+          @media (max-width: 576px) {
+            display: none;
+          }
+        `}
+      >
         {slides.map((slide, index) => {
           return (
             <RoundButtons
@@ -124,6 +147,7 @@ const CarouselItem = styled.div`
   color: #fff;
   width: ${(props) => props.width || "100%"};
   position: relative;
+  overflow: hidden;
 
   & .after {
     display: block;
@@ -144,7 +168,7 @@ export const CarouselImage = styled.img`
 
 const Indicators = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   position: absolute;
   bottom: 5%;
   left: 45%;
@@ -155,14 +179,15 @@ const PrevButton = styled.button`
   position: absolute;
   top: 50%;
   left: 5%;
-  background: hsla(70, 0%, 0%, 0.3);
+  background: hsla(195, 100%, 25%, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
   pointer: cursor;
   border-radius: 50%;
+  cursor: pointer;
   &:hover {
-    background: hsla(70, 0%, 0%, 1);
+    background: hsla(195, 100%, 25%, 0.8);
     border-radius: 50%;
   }
   &:hover .icon {
@@ -174,14 +199,15 @@ const NextButton = styled.button`
   position: absolute;
   top: 50%;
   right: 5%;
-  background: hsla(70, 0%, 0%, 0.3);
+  background: hsla(195, 100%, 25%, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
   pointer: cursor;
   border-radius: 50%;
+  cursor: pointer;
   &:hover {
-    background: hsla(70, 0%, 0%, 1);
+    background: hsla(195, 100%, 25%, 0.8);
     border-radius: 50%;
   }
   &:hover .icon {
@@ -190,8 +216,8 @@ const NextButton = styled.button`
 `;
 
 const RoundButtons = styled.button`
-  height: 3rem;
-  width: 3rem;
+  height: 2rem;
+  width: 2rem;
   border-radius: 50%;
   color: #fff;
   padding: 0.5rem;
@@ -210,6 +236,9 @@ const Content = styled.div`
   flex-direction: column;
   bottom: 15%;
   z-index: 99;
+  width: 60%;
+  word-break: break-word;
+  padding: 0 2.5rem;
 `;
 
 const Title = styled.p`
@@ -217,7 +246,7 @@ const Title = styled.p`
   color: #fff;
   text-align: center;
   padding: 0.5rem 1.5rem;
-  margin-bottom: 0.5rem !important;
+  margin: 0;
 `;
 
 const Caption = styled.p`
@@ -225,6 +254,7 @@ const Caption = styled.p`
   color: #fff;
   text-align: center;
   padding: 0.5rem 1.5rem;
+  margin: 0;
 `;
 
 const Overlay = styled.div`

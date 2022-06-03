@@ -82,7 +82,7 @@ const MenuLink = styled(Link)`
   letter-spacing: 0.1rem;
   padding: 0.5rem 1rem;
   --c: #006181; /* the color  */
-  --h: 1.5em; /* the height */
+  --h: 1.8em; /* the height */
   line-height: var(--h);
   color: #0000;
   overflow: hidden;
