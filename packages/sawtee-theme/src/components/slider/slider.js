@@ -10,7 +10,7 @@ const Slider = ({ slides }) => {
   const [paused, setPaused] = useState(false);
 
   const updateIndex = (newIndex) => {
-    if (newIndex < 0) {
+    if (newIndex <= 0) {
       newIndex = 0;
     } else if (newIndex >= slides.length) {
       newIndex = slides.length - 1;
@@ -28,6 +28,11 @@ const Slider = ({ slides }) => {
     const interval = setInterval(() => {
       if (!paused) {
         updateIndex(activeIndex + 1);
+        if (activeIndex === slides.length - 1) {
+          updateIndex(0);
+        } else {
+          updateIndex(activeIndex + 1);
+        }
       }
     }, 3000);
 
@@ -86,7 +91,11 @@ const Slider = ({ slides }) => {
       </Inner>
       <PrevButton
         onClick={() => {
-          updateIndex(activeIndex - 1);
+          if (activeIndex === 0) {
+            updateIndex(slides.length - 1);
+          } else {
+            updateIndex(activeIndex - 1);
+          }
         }}
       >
         <HiChevronLeft className="icon" size="6rem" />
@@ -118,7 +127,11 @@ const Slider = ({ slides }) => {
       </Indicators>
       <NextButton
         onClick={() => {
-          updateIndex(activeIndex + 1);
+          if (activeIndex === slides.length - 1) {
+            updateIndex(0);
+          } else {
+            updateIndex(activeIndex + 1);
+          }
         }}
       >
         <HiChevronRight className="icon" size="6rem" />

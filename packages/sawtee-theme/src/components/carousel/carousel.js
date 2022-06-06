@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
-const Carousel = ({ data }) => {
+const Carousel = ({ data, slides, title }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const CarouselItemNum = data.length / slides;
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
@@ -22,23 +23,29 @@ const Carousel = ({ data }) => {
     onSwipedRight: () => updateIndex(activeIndex - 1),
   });
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!paused) {
-        updateIndex(activeIndex + 1);
-      }
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (!paused) {
+  //       if (activeIndex === data.length - 1) {
+  //         updateIndex(0);
+  //       } else {
+  //         updateIndex(activeIndex + 1);
+  //       }
+  //     }
+  //   }, 3000);
 
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
-  });
+  //   return () => {
+  //     if (interval) {
+  //       clearInterval(interval);
+  //     }
+  //   };
+  // });
 
   return (
     <>
       <CarouselWrapper {...handlers}>
+        {title ? <CarouselTitle>{title}</CarouselTitle> : null}
+
         <CarouselInner
           css={css`
             transform: translateX(-${activeIndex * 100}%);
@@ -46,7 +53,7 @@ const Carousel = ({ data }) => {
         >
           {data.map((item, i) => {
             return (
-              <CarouselItem width="30%" key={i}>
+              <CarouselItem width="150" key={i}>
                 <CarouselImage src={item} alt={"image" + i} />
               </CarouselItem>
             );
@@ -76,28 +83,29 @@ export default Carousel;
 const CarouselWrapper = styled.div`
   overflow: hidden;
   position: relative;
+  width: 50%;
+`;
+
+const CarouselTitle = styled.h3`
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 1rem auto 2rem;
 `;
 
 const CarouselInner = styled.div`
-  white-space: wrap;
   transition: transform 0.5s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  overflow: hidden;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6rem;
+  margin: 0 3em;
 `;
 
 const CarouselItem = styled.div`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
+  height: 190px;
   color: #fff;
-  width: ${(props) => props.width || "30%"};
+  width: ${(props) => props.width + "px" || "30%"};
   position: relative;
-  overflow: hidden;
-  gap: 1rem;
 `;
 
 const CarouselImage = styled.img`
@@ -110,18 +118,13 @@ const CarouselImage = styled.img`
 const PrevButton = styled.button`
   position: absolute;
   top: 50%;
-  left: 5%;
-  background: hsla(195, 100%, 25%, 0.3);
+  left: -3%;
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   pointer: cursor;
-  border-radius: 50%;
   cursor: pointer;
-  &:hover {
-    background: hsla(195, 100%, 25%, 0.8);
-    border-radius: 50%;
-  }
   &:hover .icon {
     color: #fff;
   }
@@ -130,34 +133,14 @@ const PrevButton = styled.button`
 const NextButton = styled.button`
   position: absolute;
   top: 50%;
-  right: 5%;
-  background: hsla(195, 100%, 25%, 0.3);
+  right: -3%;
   display: flex;
+  background: transparent;
   justify-content: center;
   align-items: center;
   pointer: cursor;
-  border-radius: 50%;
   cursor: pointer;
-  &:hover {
-    background: hsla(195, 100%, 25%, 0.8);
-    border-radius: 50%;
-  }
   &:hover .icon {
     color: #fff;
   }
-`;
-
-const RoundButtons = styled.button`
-  height: 2rem;
-  width: 2rem;
-  border-radius: 50%;
-  color: #fff;
-  padding: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: ${(props) =>
-    props.index === props.activeIndex
-      ? "	hsla(195, 100%, 25%, 0.6)"
-      : "hsla(0, 0%, 0%, 0.6)"};
 `;

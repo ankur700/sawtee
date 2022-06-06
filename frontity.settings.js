@@ -24,7 +24,7 @@ const settings = {
             primary: "#006181",
             headerBg: "#D9DAE1",
             footerBg: "#ffffff",
-            bodyBg: "#828990",
+            bodyBg: "transparent",
           },
           showSearchInHeader: true,
           showAllContentOnArchive: false,
