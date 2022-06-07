@@ -1,7 +1,8 @@
-import { styled, connect } from "frontity";
+import { styled, connect, css } from "frontity";
 import Slider from "../slider/slider";
 import Carousel from "../carousel/carousel";
 import HeroImage from "../../assets/hero-image.jpg";
+import TwitterTimeline from "../twitterTimeline/twitterTimeline";
 
 const Home = ({ state }) => {
   const data = state.source.get(state.router.link);
@@ -21,24 +22,42 @@ const Home = ({ state }) => {
       <HeroSection>
         <Slider slides={slides} />
       </HeroSection>
-      <Content>
+      <Grid
+        columns="repeat(2, 1fr)"
+        rows="minmax(300px, auto)"
+        overflow="hidden"
+      >
         <AboutSection>
-          <AboutImage src={HeroImage} alt="" />
           <Overlay className="after" />
-          <AboutContent>
+          <AboutImage src={HeroImage} alt="" />
+          <AboutFirstSection>
             Dedicated to fair, equitable, inclusive, and sustainable growth and
             development in South Asia, SAWTEE is working towards poverty
             reduction, food and livelihood security, gender equity, and
             biodiversity conservation and environmental sustainability.
-          </AboutContent>
+          </AboutFirstSection>
         </AboutSection>
-        <PublicationSlider>
+        <PostSlider>
           <Carousel data={postdata} slides={3} title={"Publications"} />
-        </PublicationSlider>
-        <MediaSlider>
+        </PostSlider>
+        <PostSlider
+          css={css`
+            grid-row: 2/3;
+          `}
+        >
           <Carousel data={postdata} slides={3} title={"Sawtee in Media"} />
-        </MediaSlider>
-      </Content>
+        </PostSlider>
+      </Grid>
+      <Grid
+        columns="repeat(2, 1fr)"
+        rows="minmax(500px, auto)"
+        overflow="hidden"
+      >
+        <Visualizer />
+        <TwitterBox>
+          <TwitterTimeline height="700px" width="100%" handle="sawteenp" />
+        </TwitterBox>
+      </Grid>
     </>
   );
 };
@@ -50,15 +69,8 @@ const HeroSection = styled.section`
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
+  justify-firstsection: center;
   align-items: center;
-`;
-
-const Content = styled.section`
-  width: 100%;
-  display: grid;
-  grid-auto-rows: minmax(300px, auto);
-  grid-template-columns: repeat(2, 1fr);
 `;
 
 const AboutSection = styled.div`
@@ -82,6 +94,7 @@ const AboutSection = styled.div`
 
   & .after:hover {
     background: hsl(0, 0%, 0%, 0.4);
+    transition: all 0.3s;
   }
 `;
 
@@ -92,7 +105,7 @@ const AboutImage = styled.img`
   object-fit: cover;
 `;
 
-const AboutContent = styled.p`
+const AboutFirstSection = styled.p`
   color: #fff;
   font-size: 2.5rem;
   text-align: center;
@@ -102,25 +115,15 @@ const AboutContent = styled.p`
   padding: 0 3em;
 `;
 
-const PublicationSlider = styled.div`
+const PostSlider = styled.div`
   grid-column: 2/3;
   grid-row: 1/2;
   background: #463737;
-  padding: 1rem 3rem;
   margin: 0 auto;
   border-bottom: 1px solid #707070;
   overflow: hidden;
-`;
-
-const MediaSlider = styled.div`
-  grid-column: 2/3;
-  grid-row: 2/3;
-  background: #463737;
-  padding: 1rem 3rem;
-  margin: 0 auto;
-  color: #fff;
-  border-top: 1px solid #707070;
-  overflow: hidden;
+  width: 100%;
+  position: relative;
 `;
 
 const Overlay = styled.div`
@@ -131,4 +134,25 @@ const Overlay = styled.div`
   height: 100%;
   display: none;
   color: #fff;
+  z-index: 10;
+`;
+
+const Visualizer = styled.div`
+  grid-column: 1/2;
+  grid-row: 1/2;
+  background: aqua;
+`;
+
+const TwitterBox = styled.div`
+  grid-column: 2/3;
+  grid-row: 1/2;
+  display: flex;
+  padding: 2rem 4rem;
+`;
+
+const Grid = styled.section`
+  display: grid;
+  overflow: ${(props) => props.overflow || "hidden"};
+  grid-template-columns: ${(props) => props.columns};
+  grid-auto-rows: ${(props) => props.rows || "auto"};
 `;

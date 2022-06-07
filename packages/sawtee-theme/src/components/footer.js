@@ -28,30 +28,83 @@ const Footer = ({ state }) => {
 
   return (
     <SiteFooter bg={footerBg} role="contentinfo">
-      <SiteFooterInner>
-        <Credits>
-          <Copyright>
-            &copy; {currentYear}{" "}
-            <Link link={state.frontity.url}>{state.frontity.title}</Link>
-          </Copyright>
-          <PoweredBy>Powered by Frontity</PoweredBy>
-        </Credits>
-        <BackToTop />
-      </SiteFooterInner>
+      <Container>
+        <TopFooter>
+          <FooterWidget item="1">
+            <WidgetTitle size="20px" color="#fff">
+              Contact Us
+            </WidgetTitle>
+            <WidgetList>
+              <li>
+                Phone: <a href="phoneto:+977-1-4444438">+977-1-4444438</a>
+              </li>
+              <li>
+                Email: <a href="mailto:sawtee@sawtee.org">sawtee@sawtee.org</a>
+              </li>
+              <li>
+                Address: <a>Tukucha Marga, Baluwatar</a>
+              </li>
+              <li></li>
+              <li></li>
+            </WidgetList>
+          </FooterWidget>
+          <FooterWidget item="2" />
+          <FooterWidget item="3" />
+          <FooterWidget item="4" />
+        </TopFooter>
+        <FooterBottom>
+          <Credits>
+            <Copyright>
+              &copy; {currentYear}{" "}
+              <Link link={state.frontity.url}>{state.frontity.title}</Link>
+            </Copyright>
+            <PoweredBy>Powered by Frontity</PoweredBy>
+          </Credits>
+          <BackToTop />
+        </FooterBottom>
+      </Container>
     </SiteFooter>
   );
 };
 
 export default connect(Footer);
 
-const SiteFooterInner = styled(SectionContainer)`
+const FooterBottom = styled(SectionContainer)`
   align-items: baseline;
   display: flex;
   justify-content: space-between;
 `;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+`;
+
+const TopFooter = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(fit-content, auto);
+  background: #006181;
+  padding: 4rem;
+`;
+
+const FooterWidget = styled.div`
+  grid-column: ${(props) => props.item + "/" + (props.item + Number(1))};
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+`;
+
+const WidgetTitle = styled.h3`
+  margin: 0;
+  font-size: ${(props) => props.size};
+  color: ${(props) => props.color};
+  text-transform: uppercase;
+`;
+
 const SiteFooter = styled.footer`
-  margin-top: 5rem;
   border-color: #dcd7ca;
   border-style: solid;
   border-width: 0;
@@ -94,4 +147,13 @@ const PoweredBy = styled.p`
   @media (min-width: 700px) {
     display: block;
   }
+`;
+
+const WidgetList = styled.ul`
+  list-style: none;
+  text-align: left;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;

@@ -1,12 +1,12 @@
 import { styled, css } from "frontity";
 import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
-import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 
 const Carousel = ({ data, slides, title }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const CarouselItemNum = data.length / slides;
+  const totalItems = data.length;
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
@@ -51,27 +51,29 @@ const Carousel = ({ data, slides, title }) => {
             transform: translateX(-${activeIndex * 100}%);
           `}
         >
-          {data.map((item, i) => {
-            return (
-              <CarouselItem width="150" key={i}>
-                <CarouselImage src={item} alt={"image" + i} />
-              </CarouselItem>
-            );
-          })}
+          <Inner total={totalItems}>
+            {data.map((item, i) => {
+              return (
+                <CarouselItem width="140" key={i}>
+                  <CarouselImage src={item} alt={"image" + i} />
+                </CarouselItem>
+              );
+            })}
+          </Inner>
         </CarouselInner>
         <PrevButton
           onClick={() => {
             updateIndex(activeIndex - 1);
           }}
         >
-          <HiChevronLeft className="icon" size="6rem" />
+          <AiFillCaretLeft className="icon" size="6rem" />
         </PrevButton>
         <NextButton
           onClick={() => {
             updateIndex(activeIndex + 1);
           }}
         >
-          <HiChevronRight className="icon" size="6rem" />
+          <AiFillCaretRight className="icon" size="6rem" />
         </NextButton>
       </CarouselWrapper>
     </>
@@ -82,29 +84,32 @@ export default Carousel;
 
 const CarouselWrapper = styled.div`
   overflow: hidden;
-  position: relative;
-  width: 50%;
+  position: absolute;
+  width: 95%;
 `;
 
 const CarouselTitle = styled.h3`
   font-size: 2.5rem;
   color: #fff;
-  margin: 1rem auto 2rem;
+  margin: 2rem 5rem;
 `;
 
 const CarouselInner = styled.div`
   transition: transform 0.5s;
-  width: 100%;
+  white-space: nowrap;
+  padding: 0 7rem;
+`;
+
+const Inner = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 6rem;
-  margin: 0 3em;
+  grid-template-columns: ${(props) => `repeat(${props.total}, 1fr)`};
+  gap: 8rem;
 `;
 
 const CarouselItem = styled.div`
   height: 190px;
   color: #fff;
-  width: ${(props) => props.width + "px" || "30%"};
+  width: ${(props) => props.width + "px" || "140px"};
   position: relative;
 `;
 
@@ -118,7 +123,7 @@ const CarouselImage = styled.img`
 const PrevButton = styled.button`
   position: absolute;
   top: 50%;
-  left: -3%;
+  left: -1%;
   background: transparent;
   display: flex;
   justify-content: center;
@@ -133,7 +138,7 @@ const PrevButton = styled.button`
 const NextButton = styled.button`
   position: absolute;
   top: 50%;
-  right: -3%;
+  right: -1%;
   display: flex;
   background: transparent;
   justify-content: center;

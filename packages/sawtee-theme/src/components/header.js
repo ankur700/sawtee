@@ -77,7 +77,7 @@ const TitleWrapper = styled.div`
 `;
 
 const PageHeader = styled.header`
-  z-index: 1;
+  z-index: 100;
   background: ${(props) => props.bg};
   position: sticky;
   top: 0;
