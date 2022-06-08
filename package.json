@@ -23,6 +23,7 @@
     "@frontity/wp-source": "^1.11.7",
     "frontity": "^1.17.2",
     "react-icons": "^4.3.1",
+    "react-items-carousel": "^2.8.0",
     "react-swipeable": "^7.0.0",
     "sawtee-theme": "file:packages/sawtee-theme"
   }

@@ -3,12 +3,19 @@ import Slider from "../slider/slider";
 import Carousel from "../carousel/carousel";
 import HeroImage from "../../assets/hero-image.jpg";
 import TwitterTimeline from "../twitterTimeline/twitterTimeline";
+import ItemsCarousel from "../itemsCarousel/itemsCarousel";
 
 const Home = ({ state }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
   const postdata = [
+    "https://www.sawtee.org/page_gallery/big/329ti-vol-17-no-3-4-2022.jpg",
+    "https://www.sawtee.org/page_gallery/big/700ti-cover-vol-17-01-2021.jpg",
+    "https://www.sawtee.org/page_gallery/big/79volume-16-no-3-2020.jpg",
+    "https://www.sawtee.org/page_gallery/big/921discussion.jpg",
+    "https://www.sawtee.org/page_gallery/big/752greeneconomy.jpg",
+    "https://www.sawtee.org/page_gallery/big/969disussionpaper17.jpg",
     "https://www.sawtee.org/page_gallery/big/329ti-vol-17-no-3-4-2022.jpg",
     "https://www.sawtee.org/page_gallery/big/700ti-cover-vol-17-01-2021.jpg",
     "https://www.sawtee.org/page_gallery/big/79volume-16-no-3-2020.jpg",
@@ -23,7 +30,7 @@ const Home = ({ state }) => {
         <Slider slides={slides} />
       </HeroSection>
       <Grid
-        columns="repeat(2, 1fr)"
+        columns="repeat(2, 50vw)"
         rows="minmax(300px, auto)"
         overflow="hidden"
       >
@@ -38,18 +45,26 @@ const Home = ({ state }) => {
           </AboutFirstSection>
         </AboutSection>
         <PostSlider>
-          <Carousel data={postdata} slides={3} title={"Publications"} />
+          <ItemsCarousel
+            data={postdata}
+            slidesToShow={3}
+            title={"Publications"}
+          />
         </PostSlider>
         <PostSlider
           css={css`
             grid-row: 2/3;
           `}
         >
-          <Carousel data={postdata} slides={3} title={"Sawtee in Media"} />
+          <ItemsCarousel
+            data={postdata}
+            slidesToShow={3}
+            title={"Sawtee in Media"}
+          />
         </PostSlider>
       </Grid>
       <Grid
-        columns="repeat(2, 1fr)"
+        columns="repeat(2, 50vw)"
         rows="minmax(500px, auto)"
         overflow="hidden"
       >
@@ -121,9 +136,7 @@ const PostSlider = styled.div`
   background: #463737;
   margin: 0 auto;
   border-bottom: 1px solid #707070;
-  overflow: hidden;
   width: 100%;
-  position: relative;
 `;
 
 const Overlay = styled.div`
