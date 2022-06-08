@@ -1,4 +1,4 @@
-import { styled, connect } from "frontity";
+import { css, styled, connect } from "frontity";
 import Link from "./link";
 import SectionContainer from "./styles/section-container";
 
@@ -73,7 +73,7 @@ const Footer = ({ state }) => {
               </AwesomeLink>
             </WidgetList>
           </FooterWidget>
-          <FooterWidget item="2">
+          <FooterWidget item="2" maxWidth={"200px"}>
             <WidgetTitle size="20px" color="#fff">
               Publications
             </WidgetTitle>
@@ -95,7 +95,7 @@ const Footer = ({ state }) => {
               </AwesomeLink>
             </WidgetList>
           </FooterWidget>
-          <FooterWidget item="3">
+          <FooterWidget item="3" maxWidth={"200px"}>
             <WidgetTitle size="20px" color="#fff">
               Useful Links
             </WidgetTitle>
@@ -163,7 +163,16 @@ const TopFooter = styled.div`
   grid-auto-rows: minmax(max-content, auto);
   background: #006181;
   padding: 4rem 8rem;
-  gap: 2rem;
+  row-gap: 4rem;
+  column-gap: 2rem;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(2, minmax(max-content, auto));
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(1, minmax(max-content, auto));
+  }
 `;
 
 const FooterWidget = styled.div`
@@ -172,6 +181,12 @@ const FooterWidget = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  max-width: ${(props) => props.maxWidth};
+
+  @media (max-width: 1400px) {
+    grid-column: auto;
+    justify-self: center;
+  }
 `;
 
 const WidgetTitle = styled.h3`
@@ -179,6 +194,10 @@ const WidgetTitle = styled.h3`
   font-size: ${(props) => props.size};
   color: ${(props) => props.color};
   text-transform: uppercase;
+
+  @media (max-width: 1400px) {
+    text-align: center;
+  }
 `;
 
 const SiteFooter = styled.footer`
@@ -228,16 +247,21 @@ const PoweredBy = styled.p`
 
 const WidgetList = styled.ul`
   list-style: none;
-  text-align: left;
   color: #fff;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin: 0;
+
+  @media (max-width: 1400px) {
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const AwesomeLink = styled.li`
   margin: 0;
+  width: max-content;
 
   a {
     font-size: 1.5rem;
@@ -286,6 +310,10 @@ const Wrapper = styled.div`
 const ActionSection = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 1400px) {
+    flex-direction: column;
+  }
 `;
 
 const Input = styled.input`
@@ -300,13 +328,15 @@ const Input = styled.input`
     border: none;
     outline: none;
   }
+  @media (max-width: 1440px) {
+    width: 100%;
+  }
 `;
 
 const SubscribeButton = styled.button`
-  width: 35%;
   border-radius: 0.75rem;
   background: #fff;
-  padding: 0 2rem;
+  padding: 1rem 2rem;
   color: #006181;
   text-align: center;
   cursor: pointer;
@@ -315,5 +345,9 @@ const SubscribeButton = styled.button`
   :hover {
     background: #7fc4fd;
     color: #fff;
+  }
+  @media (max-width: 1440px) {
+    width: 60%;
+    align-self: center;
   }
 `;

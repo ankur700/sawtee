@@ -7,7 +7,7 @@ export default ({ data, slidesToShow, title }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   return (
     <Wrapper>
-      {title ? <CarouselTitle>{title}</CarouselTitle> : null}
+      {title ? <CarouselTitle>{title}</CarouselTitle> : ""}
       <ItemsCarousel
         infiniteLoop={false}
         gutter={60}

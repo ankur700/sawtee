@@ -28,6 +28,7 @@ const Home = ({ state }) => {
     <>
       <HeroSection>
         <Slider slides={slides} />
+        {/* <Carousel data={slides} slidesToShow={1} /> */}
       </HeroSection>
       <Grid
         columns="repeat(2, 50vw)"
@@ -54,6 +55,8 @@ const Home = ({ state }) => {
         <PostSlider
           css={css`
             grid-row: 2/3;
+            border-top: 2px solid #707070;
+            border-bottom: none;
           `}
         >
           <ItemsCarousel
@@ -135,8 +138,12 @@ const PostSlider = styled.div`
   grid-row: 1/2;
   background: #463737;
   margin: 0 auto;
-  border-bottom: 1px solid #707070;
+  border-bottom: 2px solid #707070;
   width: 100%;
+
+  @media (max-width: 992px) {
+    grid-column: unset;
+  }
 `;
 
 const Overlay = styled.div`
@@ -168,4 +175,10 @@ const Grid = styled.section`
   overflow: ${(props) => props.overflow || "hidden"};
   grid-template-columns: ${(props) => props.columns};
   grid-auto-rows: ${(props) => props.rows || "auto"};
+
+  @media (max-width: 992px) {
+    // grid-template-columns: repeat(1, minmax(max-content, auto));
+    display: flex;
+    flex-direction: column;
+  }
 `;

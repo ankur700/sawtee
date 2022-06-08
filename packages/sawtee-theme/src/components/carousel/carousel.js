@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 
-const Carousel = ({ data, slides, title }) => {
+const Carousel = ({ data, slidesToShow, title }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const totalItems = data.length;
+  const NumOfInners = totalItems / slidesToShow;
 
   const updateIndex = (newIndex) => {
     if (newIndex < 0) {
@@ -23,23 +24,23 @@ const Carousel = ({ data, slides, title }) => {
     onSwipedRight: () => updateIndex(activeIndex - 1),
   });
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (!paused) {
-  //       if (activeIndex === data.length - 1) {
-  //         updateIndex(0);
-  //       } else {
-  //         updateIndex(activeIndex + 1);
-  //       }
-  //     }
-  //   }, 3000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!paused) {
+        if (activeIndex === data.length - 1) {
+          updateIndex(0);
+        } else {
+          updateIndex(activeIndex + 1);
+        }
+      }
+    }, 3000);
 
-  //   return () => {
-  //     if (interval) {
-  //       clearInterval(interval);
-  //     }
-  //   };
-  // });
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  });
 
   return (
     <>
@@ -51,7 +52,7 @@ const Carousel = ({ data, slides, title }) => {
             transform: translateX(-${activeIndex * 100}%);
           `}
         >
-          <Inner total={totalItems}>
+          <Inner total={totalItems} slidesToShow={slidesToShow}>
             {data.map((item, i) => {
               return (
                 <CarouselItem width="140" key={i}>
@@ -98,12 +99,13 @@ const CarouselInner = styled.div`
   transition: transform 0.5s;
   white-space: nowrap;
   padding: 0 7rem;
+  width: 95%;
 `;
 
 const Inner = styled.div`
   display: grid;
   grid-template-columns: ${(props) => `repeat(${props.total}, 1fr)`};
-  gap: 8rem;
+  gap: 10rem;
 `;
 
 const CarouselItem = styled.div`
@@ -130,6 +132,9 @@ const PrevButton = styled.button`
   align-items: center;
   pointer: cursor;
   cursor: pointer;
+  & .icon {
+    color: #006181;
+  }
   &:hover .icon {
     color: #fff;
   }
@@ -138,13 +143,16 @@ const PrevButton = styled.button`
 const NextButton = styled.button`
   position: absolute;
   top: 50%;
-  right: -1%;
+  right: -2%;
   display: flex;
   background: transparent;
   justify-content: center;
   align-items: center;
   pointer: cursor;
   cursor: pointer;
+  & .icon {
+    color: #006181;
+  }
   &:hover .icon {
     color: #fff;
   }
