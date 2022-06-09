@@ -15,6 +15,7 @@ const BackToTop = () => {
   return (
     <Link
       href="#site-header"
+      link="#site-header"
       onClick={scrollToTop}
       style={{ cursor: "pointer" }}
     >
@@ -56,21 +57,30 @@ const Footer = ({ state }) => {
               Contact Us
             </WidgetTitle>
             <WidgetList>
-              <AwesomeLink>
-                Phone: <a href="tel:+977-1-4444438">+977-1-4444438</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                Fax: <a href="tel:+977 1 4444570">+977-1-4444570</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                Email: <a href="mailto:sawtee@sawtee.org">sawtee@sawtee.org</a>
-              </AwesomeLink>
-              {/* <AwesomeLink>
-                P.O.Box: <a href="#">19366</a>
-              </AwesomeLink> */}
-              <AwesomeLink>
-                Address: <a>Tukucha Marg, Baluwatar, Kathmandu</a>
-              </AwesomeLink>
+              <ListItem>
+                Phone:{" "}
+                <AwesomeLink href="tel:+977-1-4444438">
+                  <span>+977-1-4444438</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                Fax:{" "}
+                <AwesomeLink href="tel:+977 1 4444570">
+                  <span>+977-1-4444570</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                Email:{" "}
+                <AwesomeLink href="mailto:sawtee@sawtee.org">
+                  <span>sawtee@sawtee.org</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                Address:{" "}
+                <AwesomeLink>
+                  <span>Tukucha Marg, Baluwatar, Kathmandu</span>
+                </AwesomeLink>
+              </ListItem>
             </WidgetList>
           </FooterWidget>
           <FooterWidget item="2" maxWidth={"200px"}>
@@ -78,21 +88,31 @@ const Footer = ({ state }) => {
               Publications
             </WidgetTitle>
             <WidgetList>
-              <AwesomeLink>
-                <a href="">Trade Insight</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                <a href="">Issue Paper</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                <a href="">Newsletter</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                <a href="">Workinig Paper</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                <a href="">Research Paper</a>
-              </AwesomeLink>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Trade Insight</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Issue Paper</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Newsletter</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Workinig Paper</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Research Paper</span>
+                </AwesomeLink>
+              </ListItem>
             </WidgetList>
           </FooterWidget>
           <FooterWidget item="3" maxWidth={"200px"}>
@@ -100,21 +120,31 @@ const Footer = ({ state }) => {
               Useful Links
             </WidgetTitle>
             <WidgetList>
-              <AwesomeLink>
-                <a href="">Map</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                <a href="">Work With Us</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                <a href="">Organization Policy</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                <a href="">Press Releases</a>
-              </AwesomeLink>
-              <AwesomeLink>
-                <a href="">News</a>
-              </AwesomeLink>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Map</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Work With Us</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Organization Policy</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>Press Releases</span>
+                </AwesomeLink>
+              </ListItem>
+              <ListItem>
+                <AwesomeLink href="">
+                  <span>News</span>
+                </AwesomeLink>
+              </ListItem>
             </WidgetList>
           </FooterWidget>
           <FooterWidget item="4">
@@ -132,7 +162,9 @@ const Footer = ({ state }) => {
             </Copyright>
             <PoweredBy>
               Made with 💙 by{" "}
-              <Link link="https://ankursingh.com.np">Ankur</Link>
+              <AwesomeLink bg={"#000"} href="https://ankursingh.com.np/">
+                <span>Ankur</span>
+              </AwesomeLink>
             </PoweredBy>
           </Credits>
           <BackToTop />
@@ -259,29 +291,31 @@ const WidgetList = styled.ul`
   }
 `;
 
-const AwesomeLink = styled.li`
+const ListItem = styled.li`
   margin: 0;
   width: max-content;
+`;
 
-  a {
-    font-size: 1.5rem;
-    color: #fff;
+const AwesomeLink = styled.a`
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: #fff;
+  & span {
     position: relative;
-
-    ::after {
-      content: "";
-      width: 0%;
-      opacity: 0;
-      height: 2px;
-      background: #fff;
-      position: absolute;
-      top: 20px;
-      left: 0;
-      transition: all 0.3s ease-in;
-    }
+  }
+  & span::after {
+    content: "";
+    width: 0%;
+    opacity: 0;
+    height: 2px;
+    background: ${(props) => props.bg || "#fff"};
+    position: absolute;
+    top: 20px;
+    left: 0;
+    transition: all 0.3s ease-in;
   }
 
-  &:hover > a::after {
+  &:hover span::after {
     width: 100%;
     opacity: 1;
   }

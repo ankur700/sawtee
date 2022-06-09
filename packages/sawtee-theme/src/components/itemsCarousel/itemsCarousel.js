@@ -28,7 +28,7 @@ export default ({ data, slidesToShow, title }) => {
         slidesToScroll={3}
         activePosition={"center"}
         disableSwipe={false}
-        alwaysShowChevrons={true}
+        alwaysShowChevrons={false}
         outsideChevron={true}
         showSlither={false}
         firstAndLastGutter={false}
@@ -55,6 +55,10 @@ const CarouselTitle = styled.h3`
   font-size: 3.5rem;
   color: #fff;
   margin: 2rem 0;
+
+  @media (max-width: 762px) {
+    font-size: 2rem;
+  }
 `;
 
 const CarouselItem = styled.div`

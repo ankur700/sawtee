@@ -1,4 +1,3 @@
-// Import Swiper React components
 import { css, styled } from "frontity";
 import React, { useState, useEffect } from "react";
 import { useSwipeable } from "react-swipeable";
@@ -58,32 +57,10 @@ const Slider = ({ slides }) => {
           return (
             <CarouselItem key={index} width="100%">
               <CarouselImage src={slide.slide_image} alt={slide.slide_title} />
-              <Overlay className="after" />
+              <div className="after"></div>
               <Content>
-                <Title
-                  css={css`
-                    @media (max-width: 768px) {
-                      font-size: 2rem;
-                    }
-                    @media (max-width: 992px) {
-                      font-size: 2.5rem;
-                    }
-                  `}
-                >
-                  {slide.slide_title}
-                </Title>
-                <Caption
-                  css={css`
-                    @media (max-width: 768px) {
-                      font-size: 1rem;
-                    }
-                    @media (max-width: 992px) {
-                      font-size: 1.65rem;
-                    }
-                  `}
-                >
-                  {slide.slide_caption}
-                </Caption>
+                <Title>{slide.slide_title}</Title>
+                <Caption>{slide.slide_caption}</Caption>
               </Content>
             </CarouselItem>
           );
@@ -156,7 +133,7 @@ const CarouselItem = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 12.125rem);
+  height: calc(100vh - 10.25rem);
   color: #fff;
   width: ${(props) => props.width || "100%"};
   position: relative;
@@ -192,7 +169,7 @@ const PrevButton = styled.button`
   position: absolute;
   top: 50%;
   left: 5%;
-  background: hsla(195, 100%, 25%, 0.3);
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -201,7 +178,6 @@ const PrevButton = styled.button`
   cursor: pointer;
   &:hover {
     background: hsla(195, 100%, 25%, 0.8);
-    border-radius: 50%;
   }
   &:hover .icon {
     color: #fff;
@@ -212,7 +188,7 @@ const NextButton = styled.button`
   position: absolute;
   top: 50%;
   right: 5%;
-  background: hsla(195, 100%, 25%, 0.3);
+  background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -260,6 +236,13 @@ const Title = styled.p`
   text-align: center;
   padding: 0.5rem 1.5rem;
   margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+  @media (max-width: 992px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const Caption = styled.p`
@@ -268,14 +251,11 @@ const Caption = styled.p`
   text-align: center;
   padding: 0.5rem 1.5rem;
   margin: 0;
-`;
 
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-  color: #fff;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 992px) {
+    font-size: 1.65rem;
+  }
 `;
