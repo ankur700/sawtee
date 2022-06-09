@@ -1,8 +1,13 @@
 import { styled, css } from "frontity";
 
-const Section = ({ title, children }) => {
+const Section = ({ title, children, styles }) => {
   return (
-    <Wrapper title={title}>
+    <Wrapper
+      title={title}
+      css={css`
+        ${styles}
+      `}
+    >
       {title ? <SectionTitle>{title}</SectionTitle> : ""}
       {children}
     </Wrapper>

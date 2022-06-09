@@ -1,118 +1,118 @@
-import { styled, css } from "frontity";
 import React, { useState, useEffect } from "react";
-import { useSwipeable } from "react-swipeable";
-import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
+import { css, styled } from "frontity";
+import ItemsCarousel from "react-items-carousel";
+import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
 
-const Carousel = ({ data, slidesToShow, title }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+export default ({ data, slidesToShow, title }) => {
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const totalItems = data.length;
-  const NumOfInners = totalItems / slidesToShow;
 
   const updateIndex = (newIndex) => {
-    if (newIndex < 0) {
+    if (newIndex <= 0) {
       newIndex = 0;
     } else if (newIndex >= data.length) {
       newIndex = data.length - 1;
     }
 
-    setActiveIndex(newIndex);
+    setActiveItemIndex(newIndex);
   };
 
-  const handlers = useSwipeable({
-    onSwipedLeft: () => updateIndex(activeIndex + 1),
-    onSwipedRight: () => updateIndex(activeIndex - 1),
-  });
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (!paused) {
+  //       updateIndex(activeItemIndex + 1);
+  //       if (activeItemIndex === data.length - 1) {
+  //         updateIndex(0);
+  //       } else {
+  //         updateIndex(activeItemIndex + 1);
+  //       }
+  //     }
+  //   }, 3000);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!paused) {
-        if (activeIndex === data.length - 1) {
-          updateIndex(0);
-        } else {
-          updateIndex(activeIndex + 1);
-        }
-      }
-    }, 3000);
-
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
-  });
-
+  //   return () => {
+  //     if (interval) {
+  //       clearInterval(interval);
+  //     }
+  //   };
+  // });
   return (
-    <>
-      <CarouselWrapper {...handlers}>
-        {title ? <CarouselTitle>{title}</CarouselTitle> : null}
-
-        <CarouselInner
-          css={css`
-            transform: translateX(-${activeIndex * 100}%);
-          `}
-        >
-          <Inner total={totalItems} slidesToShow={slidesToShow}>
-            {data.map((item, i) => {
-              return (
-                <CarouselItem width="140" key={i}>
-                  <CarouselImage src={item} alt={"image" + i} />
-                </CarouselItem>
-              );
-            })}
-          </Inner>
-        </CarouselInner>
-        <PrevButton
-          onClick={() => {
-            updateIndex(activeIndex - 1);
-          }}
-        >
-          <AiFillCaretLeft className="icon" size="6rem" />
-        </PrevButton>
-        <NextButton
-          onClick={() => {
-            updateIndex(activeIndex + 1);
-          }}
-        >
-          <AiFillCaretRight className="icon" size="6rem" />
-        </NextButton>
-      </CarouselWrapper>
-    </>
+    <Wrapper
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {title ? <CarouselTitle>{title}</CarouselTitle> : ""}
+      <ItemsCarousel
+        infiniteLoop={true}
+        numberOfCards={slidesToShow || 3}
+        activeItemIndex={activeItemIndex}
+        requestToChangeActive={setActiveItemIndex}
+        leftChevron={
+          <PrevButton>
+            <HiChevronLeft className="icon" size="10rem" />
+          </PrevButton>
+        }
+        rightChevron={
+          <NextButton>
+            <HiChevronRight className="icon" size="10rem" />
+          </NextButton>
+        }
+        chevronWidth={60}
+        slidesToScroll={1}
+        activePosition={"center"}
+        disableSwipe={false}
+        alwaysShowChevrons={true}
+        outsideChevron={false}
+        showSlither={false}
+        firstAndLastGutter={false}
+      >
+        {data.map((item, i) => {
+          return (
+            <CarouselItem key={i}>
+              <div className="after"></div>
+              <CarouselImage src={item.slide_image} alt={"image" + i} />
+              <Content>
+                <Title>{item.slide_title}</Title>
+                <Caption>{item.slide_caption}</Caption>
+              </Content>
+            </CarouselItem>
+          );
+        })}
+      </ItemsCarousel>
+    </Wrapper>
   );
 };
 
-export default Carousel;
-
-const CarouselWrapper = styled.div`
-  overflow: hidden;
-  position: absolute;
-  width: 95%;
+const Wrapper = styled.div`
+  padding: 0;
+  width: 100%;
+  margin: 0;
+  position: relative;
 `;
 
 const CarouselTitle = styled.h3`
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   color: #fff;
-  margin: 2rem 5rem;
-`;
+  margin: 2rem 0;
 
-const CarouselInner = styled.div`
-  transition: transform 0.5s;
-  white-space: nowrap;
-  padding: 0 7rem;
-  width: 95%;
-`;
-
-const Inner = styled.div`
-  display: grid;
-  grid-template-columns: ${(props) => `repeat(${props.total}, 1fr)`};
-  gap: 10rem;
+  @media (max-width: 762px) {
+    font-size: 2rem;
+  }
 `;
 
 const CarouselItem = styled.div`
-  height: 190px;
+  height: auto;
   color: #fff;
-  width: ${(props) => props.width + "px" || "140px"};
   position: relative;
+  height: calc(100vh - 10rem);
+
+  & .after {
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    content: "";
+    background: hsl(0, 0%, 0%, 0.4);
+  }
 `;
 
 const CarouselImage = styled.img`
@@ -125,15 +125,16 @@ const CarouselImage = styled.img`
 const PrevButton = styled.button`
   position: absolute;
   top: 50%;
-  left: -1%;
+  left: 5%;
   background: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
   pointer: cursor;
+  border-radius: 50%;
   cursor: pointer;
-  & .icon {
-    color: #006181;
+  &:hover {
+    background: hsla(195, 100%, 25%, 0.8);
   }
   &:hover .icon {
     color: #fff;
@@ -143,17 +144,63 @@ const PrevButton = styled.button`
 const NextButton = styled.button`
   position: absolute;
   top: 50%;
-  right: -2%;
-  display: flex;
+  right: 5%;
   background: transparent;
+  display: flex;
   justify-content: center;
   align-items: center;
   pointer: cursor;
+  border-radius: 50%;
   cursor: pointer;
-  & .icon {
-    color: #006181;
+  &:hover {
+    background: hsla(195, 100%, 25%, 0.8);
+    border-radius: 50%;
   }
   &:hover .icon {
     color: #fff;
+  }
+`;
+
+const Content = styled.div`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  bottom: 15%;
+  left: 40%;
+  z-index: 99;
+  word-break: break-word;
+  padding: 0 2.5rem;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.3);
+`;
+
+const Title = styled.p`
+  font-size: 2.5rem;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+  @media (max-width: 992px) {
+    font-size: 2.5rem;
+  }
+`;
+
+const Caption = styled.p`
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem 1.5rem;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 992px) {
+    font-size: 1.65rem;
   }
 `;

@@ -4,7 +4,7 @@ import Carousel from "../carousel/carousel";
 import HeroImage from "../../assets/hero-image.jpg";
 import TwitterTimeline from "../twitterTimeline/twitterTimeline";
 import ItemsCarousel from "../itemsCarousel/itemsCarousel";
-import Section from "../reusable/Section/section";
+import Section from "../reusable/section/section";
 import Image from "../reusable/image/image";
 import Grid, { GridItem } from "../reusable/grid/grid";
 import Chart from "../chart/chart";
@@ -51,6 +51,9 @@ const Home = ({ state }) => {
 
   const Visualizer = `
   // background: aqua;
+    -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.3);
 `;
 
   const TwitterBox = `
@@ -60,10 +63,10 @@ const Home = ({ state }) => {
 
   return (
     <>
-      <Section>
-        <Slider slides={slides} />
-        {/* <Carousel data={slides} slidesToShow={1} /> */}
-      </Section>
+      <SliderSection>
+        {/* <Slider slides={slides} /> */}
+        <Carousel data={slides} slidesToShow={1} />
+      </SliderSection>
       <Section>
         <Grid columns="repeat(2, 50vw)" overflow="hidden">
           <GridItem
@@ -127,6 +130,12 @@ const Home = ({ state }) => {
 };
 
 export default connect(Home);
+
+const SliderSection = styled(Section)`
+  padding: 0;
+  margin: 0;
+  width: 100%;
+`;
 
 const AboutText = styled.p`
   color: #fff;

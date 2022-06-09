@@ -1,11 +1,12 @@
 import { css, styled } from "frontity";
+import Link from "../link";
 
 const TwitterTimeline = ({ height, width, handle }) => {
   let link = `https://twitter.com/${handle}?ref_src=twsrc%5Etfw`;
 
   return (
     <>
-      <a
+      <TwitterEmbed
         className="twitter-timeline"
         data-lang="en"
         data-width={width}
@@ -14,9 +15,17 @@ const TwitterTimeline = ({ height, width, handle }) => {
         href={link}
       >
         Tweets by SAWTEE
-      </a>
+      </TwitterEmbed>
     </>
   );
 };
 
 export default TwitterTimeline;
+
+const TwitterEmbed = styled.a`
+  display: flex;
+
+  & .timeline-Footer {
+    display: none !important;
+  }
+`;
