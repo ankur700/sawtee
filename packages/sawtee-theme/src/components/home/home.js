@@ -134,7 +134,7 @@ export default connect(Home);
 const SliderSection = styled(Section)`
   padding: 0;
   margin: 0;
-  width: 100%;
+  width: 100vw;
 `;
 
 const AboutText = styled.p`

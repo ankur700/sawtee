@@ -17,24 +17,24 @@ export default ({ data, slidesToShow, title }) => {
     setActiveItemIndex(newIndex);
   };
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (!paused) {
-  //       updateIndex(activeItemIndex + 1);
-  //       if (activeItemIndex === data.length - 1) {
-  //         updateIndex(0);
-  //       } else {
-  //         updateIndex(activeItemIndex + 1);
-  //       }
-  //     }
-  //   }, 3000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!paused) {
+        updateIndex(activeItemIndex + 1);
+        if (activeItemIndex === data.length - 1) {
+          updateIndex(0);
+        } else {
+          updateIndex(activeItemIndex + 1);
+        }
+      }
+    }, 3000);
 
-  //   return () => {
-  //     if (interval) {
-  //       clearInterval(interval);
-  //     }
-  //   };
-  // });
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  });
   return (
     <Wrapper
       onMouseEnter={() => setPaused(true)}
@@ -43,20 +43,21 @@ export default ({ data, slidesToShow, title }) => {
       {title ? <CarouselTitle>{title}</CarouselTitle> : ""}
       <ItemsCarousel
         infiniteLoop={true}
+        gutter={12}
         numberOfCards={slidesToShow || 3}
         activeItemIndex={activeItemIndex}
         requestToChangeActive={setActiveItemIndex}
         leftChevron={
-          <PrevButton>
-            <HiChevronLeft className="icon" size="10rem" />
+          <PrevButton className="leftChevronWrapper">
+            <HiChevronLeft className="icon" size="8rem" />
           </PrevButton>
         }
         rightChevron={
           <NextButton>
-            <HiChevronRight className="icon" size="10rem" />
+            <HiChevronRight className="icon" size="8rem" />
           </NextButton>
         }
-        chevronWidth={60}
+        chevronWidth={120}
         slidesToScroll={1}
         activePosition={"center"}
         disableSwipe={false}
@@ -124,9 +125,10 @@ const CarouselImage = styled.img`
 
 const PrevButton = styled.button`
   position: absolute;
-  top: 50%;
-  left: 5%;
-  background: transparent;
+  // margin-left: 2rem;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -134,7 +136,7 @@ const PrevButton = styled.button`
   border-radius: 50%;
   cursor: pointer;
   &:hover {
-    background: hsla(195, 100%, 25%, 0.8);
+    background: hsla(195, 100%, 25%, 0.4);
   }
   &:hover .icon {
     color: #fff;
@@ -143,9 +145,9 @@ const PrevButton = styled.button`
 
 const NextButton = styled.button`
   position: absolute;
-  top: 50%;
-  right: 5%;
-  background: transparent;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background-color: rgba(255, 255, 255, 0.3);
   display: flex;
   justify-content: center;
   align-items: center;
