@@ -186,7 +186,7 @@ const SearchInput = styled.input`
   display: block;
   font-size: 2rem;
   letter-spacing: -0.0277em;
-  height: 8.4rem;
+  height: 8rem;
   margin: 0 0 0 -2rem;
   max-width: calc(100% + 2rem);
   padding: 0 0 0 2rem;
@@ -203,7 +203,7 @@ const SearchInput = styled.input`
   @media (min-width: 700px) {
     border: none;
     font-size: 3.2rem;
-    height: 14rem;
+    height: 8.25rem;
   }
 
   &:focus {

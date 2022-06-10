@@ -1,9 +1,10 @@
 import { styled, css } from "frontity";
 
-const Section = ({ title, children, styles }) => {
+const Section = ({ title, children, styles, border }) => {
   return (
     <Wrapper
       title={title}
+      border={border}
       css={css`
         ${styles}
       `}
@@ -22,8 +23,6 @@ const Wrapper = styled.section`
 `;
 
 const SectionTitle = styled.h3`
-  font-size: ${(props) => props.fontSize};
-  color: ${(props) => props.color};
   margin: 0;
   padding: 2rem 3rem;
 `;

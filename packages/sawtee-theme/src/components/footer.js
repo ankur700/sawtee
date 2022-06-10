@@ -161,7 +161,7 @@ const Footer = ({ state }) => {
               <Link link={state.frontity.url}>{state.frontity.title}</Link>
             </Copyright>
             <PoweredBy>
-              Made with 💙 by{" "}
+              Made with ❤ by{" "}
               <AwesomeLink bg={"#000"} href="https://ankursingh.com.np/">
                 <span>Ankur</span>
               </AwesomeLink>
@@ -241,9 +241,8 @@ const SiteFooter = styled.footer`
   color: #000000;
 
   @media (min-width: 700px) {
-    // margin-top: 8rem;
     font-size: 1.8rem;
-    // padding: 4.3rem 0;
+    padding: 4.3rem 0;
   }
 
   a {
@@ -268,7 +267,7 @@ const Copyright = styled.p`
 `;
 
 const PoweredBy = styled.p`
-  color: #6d6d6d;
+  color: #fff;
   display: none;
   margin: 0 0 0 2.4rem;
 

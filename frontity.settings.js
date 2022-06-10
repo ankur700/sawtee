@@ -23,8 +23,8 @@ const settings = {
           colors: {
             primary: "#006181",
             headerBg: "#D9DAE1",
-            footerBg: "#ffffff",
-            bodyBg: "transparent",
+            footerBg: "#006181",
+            bodyBg: "AliceBlue",
           },
           showSearchInHeader: true,
           showAllContentOnArchive: false,

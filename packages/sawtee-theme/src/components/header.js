@@ -56,6 +56,7 @@ const TitleGroup = styled.div`
     flex-wrap: wrap;
     justify-content: flex-start;
     margin: -1rem 0 0 -2.4rem;
+    align-items: center;
   }
 `;
 
@@ -88,7 +89,7 @@ const HeaderInner = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  padding: 2rem 0;
+  padding: 1rem 0;
   max-width: 168rem;
   z-index: 100;
   margin-left: auto;
@@ -123,7 +124,7 @@ const SiteLogo = styled.img`
 
 const SiteDescription = styled.div`
   margin: 0;
-  margin-top: 0.5rem;
+  // margin-top: 0.5rem;
   color: #006181;
   font-size: 1.2rem;
   font-weight: 500;
@@ -132,7 +133,7 @@ const SiteDescription = styled.div`
   transition: all 0.15s linear;
 
   @media (min-width: 1000px) {
-    margin: 0.5rem 0 0 3.05rem;
+    // margin: 0 0 0 3.05rem;
   }
 
   @media (min-width: 700px) {

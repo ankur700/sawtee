@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { css, styled } from "frontity";
 import ItemsCarousel from "react-items-carousel";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi";
+import { BsDot } from "react-icons/bs";
 
-export default ({ data, slidesToShow, title }) => {
+export default ({ data, slidesToShow, title, enableCaption, dots }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [paused, setPaused] = useState(false);
 
@@ -17,24 +18,24 @@ export default ({ data, slidesToShow, title }) => {
     setActiveItemIndex(newIndex);
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!paused) {
-        updateIndex(activeItemIndex + 1);
-        if (activeItemIndex === data.length - 1) {
-          updateIndex(0);
-        } else {
-          updateIndex(activeItemIndex + 1);
-        }
-      }
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (!paused) {
+  //       updateIndex(activeItemIndex + 1);
+  //       if (activeItemIndex === data.length - 1) {
+  //         updateIndex(0);
+  //       } else {
+  //         updateIndex(activeItemIndex + 1);
+  //       }
+  //     }
+  //   }, 3000);
 
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
-  });
+  //   return () => {
+  //     if (interval) {
+  //       clearInterval(interval);
+  //     }
+  //   };
+  // });
   return (
     <Wrapper
       onMouseEnter={() => setPaused(true)}
@@ -42,26 +43,26 @@ export default ({ data, slidesToShow, title }) => {
     >
       {title ? <CarouselTitle>{title}</CarouselTitle> : ""}
       <ItemsCarousel
-        infiniteLoop={true}
+        infiniteLoop={false}
         gutter={12}
-        numberOfCards={slidesToShow || 3}
+        numberOfCards={slidesToShow || 1}
         activeItemIndex={activeItemIndex}
         requestToChangeActive={setActiveItemIndex}
         leftChevron={
           <PrevButton className="leftChevronWrapper">
-            <HiChevronLeft className="icon" size="8rem" />
+            <HiChevronLeft className="icon" size="6rem" />
           </PrevButton>
         }
         rightChevron={
           <NextButton>
-            <HiChevronRight className="icon" size="8rem" />
+            <HiChevronRight className="icon" size="6rem" />
           </NextButton>
         }
         chevronWidth={120}
         slidesToScroll={1}
         activePosition={"center"}
         disableSwipe={false}
-        alwaysShowChevrons={true}
+        alwaysShowChevrons={false}
         outsideChevron={false}
         showSlither={false}
         firstAndLastGutter={false}
@@ -71,14 +72,30 @@ export default ({ data, slidesToShow, title }) => {
             <CarouselItem key={i}>
               <div className="after"></div>
               <CarouselImage src={item.slide_image} alt={"image" + i} />
-              <Content>
-                <Title>{item.slide_title}</Title>
-                <Caption>{item.slide_caption}</Caption>
-              </Content>
+              {enableCaption === true ? (
+                <Content>
+                  <Title>{item.slide_title}</Title>
+                  <Caption>{item.slide_caption}</Caption>
+                </Content>
+              ) : null}
             </CarouselItem>
           );
         })}
       </ItemsCarousel>
+      <Indicators>
+        {data.map((slide, index) => {
+          return (
+            <RoundButtons
+              index={index}
+              activeIndex={activeItemIndex}
+              key={index + Math.random()}
+              onClick={() => {
+                updateIndex(index);
+              }}
+            />
+          );
+        })}
+      </Indicators>
     </Wrapper>
   );
 };
@@ -86,8 +103,7 @@ export default ({ data, slidesToShow, title }) => {
 const Wrapper = styled.div`
   padding: 0;
   width: 100%;
-  margin: 0;
-  position: relative;
+  margin: 0 auto;
 `;
 
 const CarouselTitle = styled.h3`
@@ -104,7 +120,7 @@ const CarouselItem = styled.div`
   height: auto;
   color: #fff;
   position: relative;
-  height: calc(100vh - 10rem);
+  height: calc(100vh - 10.25rem);
 
   & .after {
     display: block;
@@ -168,18 +184,24 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   bottom: 15%;
-  left: 40%;
   z-index: 99;
   word-break: break-word;
   padding: 0 2.5rem;
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-  background-color: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  // color: hsla(195, 100%, 25%, 0.8);
+  color: #fff;
+  & p {
+    // -webkit-backdrop-filter: blur(5px);
+    // backdrop-filter: blur(5px);
+    // background-color: rgba(255, 255, 255, 0.3);
+    // background-color: hsla(195, 100%, 25%, 0.3);
+    width: fit-content;
+    margin: 0 auto;
+  }
 `;
 
 const Title = styled.p`
   font-size: 2.5rem;
-  color: #fff;
   text-align: center;
   padding: 0.5rem 1.5rem;
   margin: 0;
@@ -194,15 +216,45 @@ const Title = styled.p`
 
 const Caption = styled.p`
   font-size: 1.5rem;
-  color: #fff;
-  text-align: center;
-  padding: 0.5rem 1.5rem;
-  margin: 0;
-
   @media (max-width: 768px) {
     font-size: 1rem;
   }
   @media (max-width: 992px) {
     font-size: 1.65rem;
   }
+`;
+
+const Indicators = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  position: absolute;
+  bottom: 5%;
+  left: 45%;
+  gap: 1rem;
+
+  @media (max-width: 762px) {
+    display: none;
+  }
+`;
+
+const RoundButtons = styled.button`
+  height: 0.75rem;
+  width: 0.75rem;
+  border-radius: 50%;
+  color: #fff;
+  padding: 0.5rem;
+  display: flex;
+  cursor: pointer;
+  border: ${(props) =>
+    props.index === props.activeIndex
+      ? "6px solid rgba(255, 255, 255, 0.3)"
+      : "6px solid hsla(195, 100%, 25%, 0.6)"};
+  justify-content: center;
+  align-items: center;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background: ${(props) =>
+    props.index === props.activeIndex
+      ? "	hsla(195, 100%, 25%, 1)"
+      : "rgba(255, 255, 255, 1)"};
 `;
