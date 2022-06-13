@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { css, styled } from "frontity";
+import { styled } from "frontity";
 import ItemsCarousel from "react-items-carousel";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 
-export default ({ data, slidesToShow, title }) => {
+export default ({ data, slidesToShow }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   return (
     <Wrapper>
-      {title ? <CarouselTitle>{title}</CarouselTitle> : ""}
       <ItemsCarousel
         infiniteLoop={false}
         gutter={60}
@@ -51,20 +50,9 @@ const Wrapper = styled.div`
   margin: 0 2.5rem;
 `;
 
-const CarouselTitle = styled.h3`
-  font-size: 3.5rem;
-  color: #fff;
-  margin: 2rem 0;
-
-  @media (max-width: 762px) {
-    font-size: 2rem;
-  }
-`;
-
 const CarouselItem = styled.div`
   height: auto;
   color: #fff;
-  //   width: ${(props) => props.width + "px" || "140px"};
   position: relative;
   margin-left: 1rem;
 `;

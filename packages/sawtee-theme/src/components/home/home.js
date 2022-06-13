@@ -8,6 +8,7 @@ import Image from "../reusable/image/image";
 import Grid, { GridItem } from "../reusable/grid/grid";
 import Chart from "../chart/chart";
 import GridBlog from "../GridBlog/gridBlog";
+import { HiArrowRight } from "react-icons/hi";
 
 const Home = ({ state }) => {
   const data = state.source.get(state.router.link);
@@ -57,10 +58,13 @@ const Home = ({ state }) => {
       }
   `;
 
+  const InfoSectionStyles = `
+      justify-content: center;
+  `;
+
   const Visualizer = `
-    // -webkit-backdrop-filter: blur(5px);
-    // backdrop-filter: blur(5px);
-    // background-color: rgba(255, 255, 255, 0.3);
+    // write custom css tyles for visualizer
+    min-width: 700px;
 `;
 
   const TwitterBox = `
@@ -71,9 +75,10 @@ const Home = ({ state }) => {
   const OutreachStyles = `
     padding: 2rem 4rem;
     border-top: 2px solid #707070;
+    flex-direction: column;
 
     & h3 {
-      font-size: 3.5rem;
+      font-size: 4rem;
       color: #333;
     }
   `;
@@ -89,7 +94,13 @@ const Home = ({ state }) => {
         />
       </SliderSection>
       <Section>
-        <Grid columns="repeat(2, 50vw)" overflow="hidden">
+        <Grid
+          columns="repeat(2, 50vw)"
+          overflow="hidden"
+          css={css`
+            justify-content: center;
+          `}
+        >
           <GridItem
             column={"1/2"}
             row={"1/3"}
@@ -106,29 +117,25 @@ const Home = ({ state }) => {
             </AboutText>
           </GridItem>
           <GridItem row={"1/2"} column={"2/3"} bg={"#463737"} bottom>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              title={"Publications"}
-            />
+            <Title>{"Publication"}</Title>
+            <ItemsCarousel data={postdata} slidesToShow={3} />
           </GridItem>
           <GridItem row={"2/3"} column={"2/3"} bg={"#463737"} top>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              title={"Sawtee in Media"}
-            />
+            <Title>{"Sawtee in Media"}</Title>
+
+            <ItemsCarousel data={postdata} slidesToShow={3} />
           </GridItem>
         </Grid>
       </Section>
       <Section styles={TwitterSectionStyles}>
         <Grid
-          columns="repeat(2, 50vw)"
+          columns="repeat(5, 1fr)"
           rows="minmax(500px, auto)"
           overflow="hidden"
+          styles={InfoSectionStyles}
         >
           <GridItem
-            column={"1/2"}
+            column={"1/4"}
             row={"1/2"}
             bg={"transparent"}
             styles={Visualizer}
@@ -136,24 +143,26 @@ const Home = ({ state }) => {
             <Chart />
           </GridItem>
           <GridItem
-            column={"2/3"}
+            column={"4/6"}
             row={"1/2"}
             bg={"transparent"}
             styles={TwitterBox}
           >
+            {/* <Title>{"Track SAWTEE on TWITTER"}</Title> */}
             <TwitterTimeline height="700px" width="100%" handle="sawteenp" />
           </GridItem>
         </Grid>
       </Section>
-      <Section title={"Policy Outreach"} styles={OutreachStyles}>
-        {/* <Grid
-          columns={"40% 60%"}
-          overflow={"hidden"}
-          rows="minmax(500px, auto)"
-        >
-          <GridItem column={"1/2"} row={"1/2"} bg={"Beige"}></GridItem>
-          <GridItem column={"2/3"} row={"1/2"} bg={"SkyBlue"}></GridItem>
-        </Grid> */}
+      <Section styles={OutreachStyles}>
+        <SectionTop>
+          <h3>Policy Outreach</h3>
+          <a href="#">
+            <ViewButton>
+              {`View all `}
+              <HiArrowRight className="icon" />
+            </ViewButton>
+          </a>
+        </SectionTop>
         <GridBlog />
       </Section>
     </>
@@ -180,5 +189,54 @@ const AboutText = styled.p`
 
   @media (max-width: 762px) {
     font-size: 1.5rem;
+  }
+`;
+
+const Title = styled.h3`
+  font-size: 4rem;
+  color: #fff;
+  margin: 2rem 0;
+  padding: 0 2rem;
+
+  @media (max-width: 762px) {
+    font-size: 2rem;
+  }
+`;
+
+const SectionTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4rem;
+  align-items: center;
+  margin-bottom: 3rem;
+
+  & a {
+    text-decoration: none;
+  }
+
+  & h3 {
+    margin: 0;
+    padding: 2rem 3rem;
+    font-size: 4rem;
+    color: #000;
+  }
+`;
+
+const ViewButton = styled.button`
+  padding: 1rem 3rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+  display: flex;
+  height: 4rem;
+  line-height: 2rem;
+  gap: 1rem;
+  backdrop-filter: blur(5px);
+  background-color: hsla(195, 100%, 25%, 0.6);
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:hover .icon {
+    transform: translateX(10px);
   }
 `;

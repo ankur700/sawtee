@@ -172,11 +172,11 @@ const Band = styled.div`
     }
   }
 
-  @media (min-width: 30em) {
+  @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
   }
 
-  @media (min-width: 60em) {
+  @media (min-width: 992px) {
     grid-template-columns: repeat(4, 1fr);
   }
 `;
@@ -198,6 +198,13 @@ const Card = styled.a`
   &:hover {
     top: -2px;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  &:hover article > h1 {
+    text-decoration: underline;
+    // text-decoration-style: wavy;
+    text-decoration-offset: 3px;
+    transition: text-decoration 0.3s ease;
   }
 
   & article {

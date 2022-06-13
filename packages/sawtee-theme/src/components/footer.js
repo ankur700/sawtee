@@ -32,8 +32,8 @@ const SubscriptionCall = () => {
     <>
       <Wrapper>
         <Title>
-          <h4> {"Latest news about Trade, Economics & Environment"}</h4>
-          <span>We won't spam you..</span>
+          New research, insightful graphics, and event invites in your inbox
+          every month.
         </Title>
         <ActionSection>
           <Input type="text" placeholder="example@example.com" />
@@ -53,9 +53,7 @@ const Footer = ({ state }) => {
       <Container>
         <TopFooter>
           <FooterWidget item="1">
-            <WidgetTitle size="20px" color="#fff">
-              Contact Us
-            </WidgetTitle>
+            <WidgetTitle>Contact Us</WidgetTitle>
             <WidgetList>
               <ListItem>
                 Phone:{" "}
@@ -83,10 +81,8 @@ const Footer = ({ state }) => {
               </ListItem>
             </WidgetList>
           </FooterWidget>
-          <FooterWidget item="2" maxWidth={"200px"}>
-            <WidgetTitle size="20px" color="#fff">
-              Publications
-            </WidgetTitle>
+          <FooterWidget item="2" maxWidth={"max-content"}>
+            <WidgetTitle>Publications</WidgetTitle>
             <WidgetList>
               <ListItem>
                 <AwesomeLink href="">
@@ -115,10 +111,8 @@ const Footer = ({ state }) => {
               </ListItem>
             </WidgetList>
           </FooterWidget>
-          <FooterWidget item="3" maxWidth={"200px"}>
-            <WidgetTitle size="20px" color="#fff">
-              Useful Links
-            </WidgetTitle>
+          <FooterWidget item="3" maxWidth={"max-content"}>
+            <WidgetTitle>Useful Links</WidgetTitle>
             <WidgetList>
               <ListItem>
                 <AwesomeLink href="">
@@ -148,9 +142,7 @@ const Footer = ({ state }) => {
             </WidgetList>
           </FooterWidget>
           <FooterWidget item="4">
-            <WidgetTitle size="20px" color="#fff">
-              Subscribe to our Newsletter
-            </WidgetTitle>
+            <WidgetTitle>Sign up to stay informed</WidgetTitle>
             <SubscriptionCall />
           </FooterWidget>
         </TopFooter>
@@ -162,7 +154,7 @@ const Footer = ({ state }) => {
             </Copyright>
             <PoweredBy>
               Made with ❤ by{" "}
-              <AwesomeLink bg={"#000"} href="https://ankursingh.com.np/">
+              <AwesomeLink href="https://ankursingh.com.np/">
                 <span>Ankur</span>
               </AwesomeLink>
             </PoweredBy>
@@ -191,7 +183,7 @@ const Container = styled.div`
 
 const TopFooter = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, minmax(min-content, auto));
+  grid-template-columns: repeat(4, minmax(250px, auto));
   grid-auto-rows: minmax(max-content, auto);
   background: #006181;
   padding: 4rem 8rem;
@@ -199,11 +191,11 @@ const TopFooter = styled.div`
   column-gap: 2rem;
 
   @media (max-width: 1400px) {
-    grid-template-columns: repeat(2, minmax(max-content, auto));
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 700px) {
-    grid-template-columns: repeat(1, minmax(max-content, auto));
+  @media (max-width: 762px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
@@ -213,23 +205,17 @@ const FooterWidget = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  max-width: ${(props) => props.maxWidth};
 
   @media (max-width: 1400px) {
     grid-column: auto;
-    justify-self: center;
   }
 `;
 
 const WidgetTitle = styled.h3`
   margin: 0;
-  font-size: ${(props) => props.size};
-  color: ${(props) => props.color};
+  font-size: ${(props) => props.size || "20px"};
+  color: ${(props) => props.color || "#fff"};
   text-transform: uppercase;
-
-  @media (max-width: 1400px) {
-    text-align: center;
-  }
 `;
 
 const SiteFooter = styled.footer`
@@ -283,11 +269,6 @@ const WidgetList = styled.ul`
   flex-direction: column;
   gap: 1rem;
   margin: 0;
-
-  @media (max-width: 1400px) {
-    align-items: center;
-    text-align: center;
-  }
 `;
 
 const ListItem = styled.li`
@@ -322,16 +303,6 @@ const AwesomeLink = styled.a`
 
 const Title = styled.div`
   color: #7fc4fd;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-
-  h4,
-  span {
-    font-size: 1.5rem;
-    margin: 0;
-    padding: 0;
-  }
 `;
 
 const Wrapper = styled.div`
@@ -342,45 +313,73 @@ const Wrapper = styled.div`
 
 const ActionSection = styled.div`
   display: flex;
-  gap: 1rem;
+  padding: 1.5rem 0;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.75rem;
+  & input {
+    width: 100%;
+  }
 
-  @media (max-width: 1400px) {
-    flex-direction: column;
+  @media (min-width: 992px) {
+    flex-direction: row;
+    gap: 0;
+    & input {
+      width: calc(100% - 150px);
+    }
   }
 `;
 
 const Input = styled.input`
   height: 4rem;
-  border-radius: 0.75rem;
-  width: 65%;
+  border-radius: 0;
+  width: calc(100% - 150px);
   border: none;
+  font-size: inherit;
   padding: 0 2rem;
+  color: #fff;
+  background-color: transparent;
+  border-bottom: 0.125rem solid #fff;
+  ::placeholder {
+    color: #fff;
+    font-size: inherit;
+  }
+
   :focus,
   :active,
   :focus-within {
     border: none;
+    color: #fff;
+    border-bottom: 0.125rem solid #000;
     outline: none;
+
+    ::placeholder {
+      color: #000;
+    }
   }
-  @media (max-width: 1440px) {
-    width: 100%;
+  @media (min-width: 768px) {
+    width: calc(100% - 100px);
   }
 `;
 
 const SubscribeButton = styled.button`
-  border-radius: 0.75rem;
   background: #fff;
   padding: 1rem 2rem;
   color: #006181;
   text-align: center;
   cursor: pointer;
   font-weight: 600;
+  font-size: inherit;
+  height: 4rem;
+  width: 130px;
 
   :hover {
-    background: #7fc4fd;
+    background: #000;
     color: #fff;
+    transition: background-color 0.4s ease;
   }
-  @media (max-width: 1440px) {
-    width: 60%;
+  @media (min-width: 768px) {
     align-self: center;
+    width: 150px;
   }
 `;

@@ -1,8 +1,15 @@
 import { styled, css } from "frontity";
 
-const Grid = ({ overflow, columns, rows, children }) => {
+const Grid = ({ overflow, columns, rows, children, styles }) => {
   return (
-    <Section overflow={overflow} columns={columns} rows={rows}>
+    <Section
+      overflow={overflow}
+      columns={columns}
+      rows={rows}
+      css={css`
+        ${styles}
+      `}
+    >
       {children}
     </Section>
   );
@@ -13,7 +20,7 @@ const Section = styled.div`
   overflow: ${(props) => props.overflow || "hidden"};
   grid-template-columns: ${(props) => props.columns || "1fr"};
   grid-auto-rows: ${(props) => props.rows || "auto"};
-
+  margin: 0 auto;
   @media (max-width: 992px) {
     display: flex;
     flex-direction: column;
