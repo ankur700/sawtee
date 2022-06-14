@@ -20,7 +20,7 @@ const Section = styled.div`
   overflow: ${(props) => props.overflow || "hidden"};
   grid-template-columns: ${(props) => props.columns || "1fr"};
   grid-auto-rows: ${(props) => props.rows || "auto"};
-  margin: 0 auto;
+  width: 100%;
   @media (max-width: 992px) {
     display: flex;
     flex-direction: column;

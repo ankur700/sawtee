@@ -102,7 +102,7 @@ const Card = styled.a`
   }
 
   & p {
-    // flex: 1;
+    flex: 1;
     line-height: 1.4;
     margin: 0;
   }

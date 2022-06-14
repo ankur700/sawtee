@@ -181,7 +181,7 @@ const Footer = ({ state }) => {
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
-                  allowfullscreen=""
+                  allowFullScreen=""
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
@@ -240,7 +240,7 @@ const TopFooter = styled.div`
   column-gap: 2rem;
   position: relative;
 
-  @media (max-width: 1400px) {
+  @media (max-width: 992px) {
     grid-template-columns: repeat(2, 1fr);
   }
 

@@ -9,30 +9,50 @@ import Grid, { GridItem } from "../reusable/grid/grid";
 import Chart from "../chart/chart";
 import GridBlog from "../GridBlog/gridBlog";
 import { HiArrowRight } from "react-icons/hi";
+import Image1 from "../../assets/1.jpg";
+import Image2 from "../../assets/2.jpg";
+import Image3 from "../../assets/3.jpg";
+import Image4 from "../../assets/4.jpg";
+import Image5 from "../../assets/5.jpg";
+import Image6 from "../../assets/6.jpg";
+import Image7 from "../../assets/7.jpg";
+import Image8 from "../../assets/8.jpg";
+import Image9 from "../../assets/9.jpg";
+import Image10 from "../../assets/10.jpg";
+import Image11 from "../../assets/11.jpg";
+import Image12 from "../../assets/12.jpg";
+
+import FE1 from "../../assets/FE-1.jpg";
+import FE2 from "../../assets/FE-2.jpg";
+import FE3 from "../../assets/FE-3.jpg";
+import FE4 from "../../assets/FE-4.jpg";
+import FE5 from "../../assets/FE-5.jpg";
+import FE6 from "../../assets/FE-6.jpg";
+import FE7 from "../../assets/FE-7.jpg";
 
 const Home = ({ state }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
   const postdata = [
-    "https://www.sawtee.org/page_gallery/big/329ti-vol-17-no-3-4-2022.jpg",
-    "https://www.sawtee.org/page_gallery/big/700ti-cover-vol-17-01-2021.jpg",
-    "https://www.sawtee.org/page_gallery/big/79volume-16-no-3-2020.jpg",
-    "https://www.sawtee.org/page_gallery/big/921discussion.jpg",
-    "https://www.sawtee.org/page_gallery/big/752greeneconomy.jpg",
-    "https://www.sawtee.org/page_gallery/big/969disussionpaper17.jpg",
-    "https://www.sawtee.org/page_gallery/big/329ti-vol-17-no-3-4-2022.jpg",
-    "https://www.sawtee.org/page_gallery/big/700ti-cover-vol-17-01-2021.jpg",
-    "https://www.sawtee.org/page_gallery/big/79volume-16-no-3-2020.jpg",
-    "https://www.sawtee.org/page_gallery/big/921discussion.jpg",
-    "https://www.sawtee.org/page_gallery/big/752greeneconomy.jpg",
-    "https://www.sawtee.org/page_gallery/big/969disussionpaper17.jpg",
+    Image1,
+    Image2,
+    Image3,
+    Image4,
+    Image5,
+    Image6,
+    Image7,
+    Image8,
+    Image9,
+    Image10,
+    Image11,
+    Image12,
   ];
   const featuredEvents = [
     {
       id: 1,
       title: "SAWTEE and FNCCI interaction on Nepal’s LDC graduation",
-      imageUrl: "https://sawtee.org/images/LDC-GRADUATION-Short-Flyer.jpg",
+      imageUrl: FE1,
       excerpt:
         "SAWTEE and the Export Promotion Committee (EPC) at the Federation of Nepalese Chambers of Commerce and Industry (FNCCI) held a virtual dialogue on 23 February 2022 to discuss the implications of Nepal’s graduation from the least developed country (LDC) category.",
       date: "2022-02-23",
@@ -41,7 +61,7 @@ const Home = ({ state }) => {
       id: 2,
       title:
         "SAWTEE participates in private sector dialogue to discuss Nepal’s LDC graduation",
-      imageUrl: "https://sawtee.org/page_gallery/802022-02-16-meeting.jpg",
+      imageUrl: FE2,
       excerpt:
         "SAWTEE participated in a dialogue with the private sector in an interaction event virtually organized by the National Planning Commission (NPC) on 15 February 2022.",
       date: "2022-02-16",
@@ -49,8 +69,7 @@ const Home = ({ state }) => {
     {
       id: 3,
       title: "SAWTEE-NCC dialogue on Nepal’s LDC graduation",
-      imageUrl:
-        "https://sawtee.org/Featured_Events/Nepals-ldc-graduation-meeting-2022-02-06.jpg",
+      imageUrl: FE3,
       date: "2022-02-06",
       excerpt:
         "SAWTEE and Nepal Chamber of Commerce (NCC) on 6 February 2022 held a virtual dialogue on the implications of Nepal’s LDC graduation with the objective of informing the government of the concerns of the private sector to ensure a smooth transition out of the LDC category for Nepal.",
@@ -59,8 +78,7 @@ const Home = ({ state }) => {
       id: 4,
       title:
         "Building Local Resilient Food Systems to end Hunger- Leaving no one behind",
-      imageUrl:
-        "https://sawtee.org/page_gallery/28other-events--building-resilient-food-systems.jpg",
+      imageUrl: FE4,
       date: "2021-12-07",
       excerpt:
         "SDPI Pakistan organized a session: Building Local Resilient Food Systems to end Hunger- Leaving no one behind in partnership with World Food Programme, Pakistan, and SAWTEE at their 24th annual International Conference.",
@@ -69,8 +87,7 @@ const Home = ({ state }) => {
       id: 5,
       title:
         "International Support Measures for the Graduating LDCs: Perspectives from South Asia",
-      imageUrl:
-        "https://sawtee.org/page_gallery/30other-events-industrial-support-measures.jpg",
+      imageUrl: FE5,
       date: "2021-12-02",
       excerpt:
         "Perspectives from South Asia” with Citizen’s Platform for SDGs (CPD), Bangladesh, and Centre for Research on Bhutanese Society, Bhutan at International Institute for Sustainable Development(IISD)’s inaugural Trade and Sustainability Hub on 2nd December 2021.  ",
@@ -78,8 +95,7 @@ const Home = ({ state }) => {
     {
       id: 6,
       title: "Industrial Policy in the Age of the Fourth Industrial Revolution",
-      imageUrl:
-        "https://sawtee.org/page_gallery/15other-events--industrial-policy-in-the-age-of-4th-ir.jpg",
+      imageUrl: FE6,
       date: "2021-12-02",
       excerpt:
         "SAWTEE co-organized a session “Industrial Policy in the Age of the Fourth Industrial Revolution” at International Institute for Sustainable Development (IISD)’s inaugural Trade and Sustainability Hub on 2nd December 2021.",
@@ -87,7 +103,7 @@ const Home = ({ state }) => {
     {
       id: 7,
       title: "Awareness workshop on gender dimensions of entrepreneurship",
-      imageUrl: "https://sawtee.org/page_gallery/5423-sept-webinar-2.jpg",
+      imageUrl: FE7,
       date: "2021-09-23",
       excerpt:
         "SAWTEE, in partnership with the Federation of Women Entrepreneurs Association of Nepal (FWEAN), organized an awareness generation workshop for the women entrepreneurs in Gandaki and Lumbini Provinces on 23 September 2021. ",
@@ -124,7 +140,7 @@ const Home = ({ state }) => {
   `;
 
   const InfoSectionStyles = `
-      justify-content: center;
+      justify-content: space-between;
   `;
 
   const Visualizer = `
@@ -194,13 +210,13 @@ const Home = ({ state }) => {
       </Section>
       <Section styles={TwitterSectionStyles}>
         <Grid
-          columns="repeat(5, 1fr)"
+          columns="repeat(3, 1fr)"
           rows="minmax(500px, auto)"
           overflow="hidden"
           styles={InfoSectionStyles}
         >
           <GridItem
-            column={"1/4"}
+            column={"1/3"}
             row={"1/2"}
             bg={"transparent"}
             styles={Visualizer}
@@ -208,7 +224,7 @@ const Home = ({ state }) => {
             <Chart />
           </GridItem>
           <GridItem
-            column={"4/6"}
+            column={"3/4"}
             row={"1/2"}
             bg={"transparent"}
             styles={TwitterBox}
