@@ -1,6 +1,8 @@
 import { css, styled, connect } from "frontity";
 import Link from "./link";
 import SectionContainer from "./styles/section-container";
+import React, { useState } from "react";
+import { HiOutlineXCircle } from "react-icons/hi";
 
 // Component that provides scroll to top functionality
 const BackToTop = () => {
@@ -45,6 +47,12 @@ const SubscriptionCall = () => {
 };
 
 const Footer = ({ state }) => {
+  const [showMap, setShowMap] = useState(false);
+
+  const showMapPreview = () => {
+    setShowMap(!showMap);
+  };
+
   const currentYear = new Date().getFullYear();
   const { footerBg } = state.theme.colors;
 
@@ -75,9 +83,28 @@ const Footer = ({ state }) => {
               </ListItem>
               <ListItem>
                 Address:{" "}
-                <AwesomeLink>
-                  <span>Tukucha Marg, Baluwatar, Kathmandu</span>
-                </AwesomeLink>
+                <a
+                  css={css`
+                    &:hover {
+                      text-decoration: underline !important;
+                      text-underline-offset: 3px;
+                      text-underline-position: under;
+                      cursor: pointer;
+                    }
+                  `}
+                  title={"Click to toggle map view"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    showMapPreview();
+                  }}
+                >
+                  <span
+                  // onMouseEnter={showMapPreview}
+                  // onMouseLeave={showMapPreview}
+                  >
+                    Tukucha Marg, Baluwatar, Kathmandu
+                  </span>
+                </a>
               </ListItem>
             </WidgetList>
           </FooterWidget>
@@ -145,6 +172,28 @@ const Footer = ({ state }) => {
             <WidgetTitle>Sign up to stay informed</WidgetTitle>
             <SubscriptionCall />
           </FooterWidget>
+
+          {showMap ? (
+            <MapPreview>
+              <div>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.857532011193!2d85.32714031452029!3d27.721684731469765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1913dfb0b0b3%3A0x4d5d3519d24d3c38!2sSouth%20Asia%20Watch%20on%20Trade%2C%20Economics%20and%20Environment%20(SAWTEE)!5e0!3m2!1sen!2snp!4v1655187906617!5m2!1sen!2snp"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+              <div
+                className="close"
+                onClick={() => (showMap === true ? showMapPreview() : null)}
+              >
+                <HiOutlineXCircle size={"3rem"} />
+              </div>
+            </MapPreview>
+          ) : null}
         </TopFooter>
         <FooterBottom>
           <Credits>
@@ -189,6 +238,7 @@ const TopFooter = styled.div`
   padding: 4rem 8rem;
   row-gap: 4rem;
   column-gap: 2rem;
+  position: relative;
 
   @media (max-width: 1400px) {
     grid-template-columns: repeat(2, 1fr);
@@ -273,7 +323,7 @@ const WidgetList = styled.ul`
 
 const ListItem = styled.li`
   margin: 0;
-  width: max-content;
+  width: 29.5rem;
 `;
 
 const AwesomeLink = styled.a`
@@ -381,5 +431,39 @@ const SubscribeButton = styled.button`
   @media (min-width: 768px) {
     align-self: center;
     width: 150px;
+  }
+`;
+
+const MapPreview = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding: 5rem;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(5px);
+
+  & div {
+    width: 700px;
+    height: 450px;
+  }
+  & .close {
+    right: -45px;
+    height: 80px;
+    width: 80px;
+    top: 15px;
+    position: absolute;
+    cursor: pointer;
+  }
+
+  @media (min-width: 992px) {
+    left: 30%;
+    top: -75%;
+    width: 700px;
+    height: auto;
   }
 `;
