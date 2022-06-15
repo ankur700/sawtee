@@ -351,8 +351,10 @@ const AwesomeLink = styled.a`
   }
 `;
 
-const Title = styled.div`
+const Title = styled.p`
   color: #7fc4fd;
+  font-size: 1.5rem;
+  font-family: monospace;
 `;
 
 const Wrapper = styled.div`
@@ -385,6 +387,7 @@ const Input = styled.input`
   border-radius: 0;
   width: calc(100% - 150px);
   border: none;
+  font-family: monospace;
   font-size: inherit;
   padding: 0 2rem;
   color: #fff;

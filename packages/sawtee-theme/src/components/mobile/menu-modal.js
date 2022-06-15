@@ -55,13 +55,13 @@ const MobileMenuModal = ({ state, actions }) => {
             >
               <MenuList>
                 {isThereLinks &&
-                  menu.map(([name, link]) => (
+                  menu.map(({ name, href }) => (
                     <MenuListItem key={name}>
                       <MenuLinkWrapper>
                         <MenuLink
-                          link={link}
+                          link={href}
                           aria-current={
-                            state.router.link === link ? "page" : undefined
+                            state.router.link === href ? "page" : undefined
                           }
                         >
                           {name}

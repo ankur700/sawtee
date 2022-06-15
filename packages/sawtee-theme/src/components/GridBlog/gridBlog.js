@@ -17,7 +17,7 @@ const GridBlog = ({ data }) => {
                   }}
                 ></div>
                 <article>
-                  <h1>{article.title}</h1>
+                  <h3>{article.title}</h3>
                   {article.excerpt ? <p>{article.excerpt}</p> : null}
                   <span>{article.date}</span>
                 </article>
@@ -43,7 +43,7 @@ const Band = styled.div`
     @media (min-width: 60em) {
       grid-column: 1 / span 2;
 
-      & h1 {
+      & h3 {
         font-size: 24px;
       }
     }
@@ -77,7 +77,7 @@ const Card = styled.a`
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
   }
 
-  &:hover article > h1 {
+  &:hover article > h3 {
     text-decoration: underline;
     // text-decoration-style: wavy;
     text-decoration-offset: 3px;
@@ -94,7 +94,7 @@ const Card = styled.a`
     gap: 1.5rem;
   }
 
-  & h1 {
+  & h3 {
     font-size: 20px;
     margin: 0;
     color: #333;
@@ -102,9 +102,13 @@ const Card = styled.a`
   }
 
   & p {
-    flex: 1;
+    // flex: 1;
     line-height: 1.4;
     margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   & span {

@@ -28,7 +28,8 @@ const MenuLink = styled(Link)`
   transition: 0.3s calc(var(--_i, 0) * 0.3s),
     background-position 0.3s calc(0.3s - calc(var(--_i, 0) * 0.3s));
 
-  &:hover {
+  &:hover,
+  &[aria-current="page"] {
     --_i: 1;
   }
 `;

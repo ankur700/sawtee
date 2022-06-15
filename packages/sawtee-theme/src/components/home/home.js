@@ -53,8 +53,8 @@ const Home = ({ state }) => {
       id: 1,
       title: "SAWTEE and FNCCI interaction on Nepal’s LDC graduation",
       imageUrl: FE1,
-      excerpt:
-        "SAWTEE and the Export Promotion Committee (EPC) at the Federation of Nepalese Chambers of Commerce and Industry (FNCCI) held a virtual dialogue on 23 February 2022 to discuss the implications of Nepal’s graduation from the least developed country (LDC) category.",
+      // excerpt:
+      //   "SAWTEE and the Export Promotion Committee (EPC) at the Federation of Nepalese Chambers of Commerce and Industry (FNCCI) held a virtual dialogue on 23 February 2022 to discuss the implications of Nepal’s graduation from the least developed country (LDC) category.",
       date: "2022-02-23",
     },
     {
@@ -230,7 +230,7 @@ const Home = ({ state }) => {
             styles={TwitterBox}
           >
             {/* <Title>{"Track SAWTEE on TWITTER"}</Title> */}
-            <TwitterTimeline height="700px" width="100%" handle="sawteenp" />
+            <TwitterTimeline height="600px" width="100%" handle="sawteenp" />
           </GridItem>
         </Grid>
       </Section>

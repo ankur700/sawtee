@@ -15,10 +15,66 @@ const settings = {
       state: {
         theme: {
           menu: [
-            ["Know Us", "/about"],
-            ["Our Work", "/our-work"],
-            ["Publications", "/publications"],
-            ["Events", "/events"],
+            {
+              name: "Know Us",
+              href: "/about/",
+              submenu: [
+                {
+                  name: "Genesis",
+                  href: "#Genesis",
+                },
+                {
+                  name: "Registration and Recognition",
+                  href: "#",
+                },
+                {
+                  name: "Vision Goal and Objective",
+                  href: "#",
+                },
+                {
+                  name: "Strategies",
+                  href: "#",
+                },
+                {
+                  name: "Resources",
+                  href: "#",
+                },
+                {
+                  name: "Governance Structure",
+                  href: "#",
+                },
+                {
+                  name: "Member Institution",
+                  href: "#",
+                },
+              ],
+            },
+            {
+              name: "Our Work",
+              href: "/our-work/",
+              submenu: [
+                {
+                  name: "Themes",
+                  href: "#",
+                },
+                {
+                  name: "Programme",
+                  href: "#",
+                },
+                {
+                  name: "Research",
+                  href: "#",
+                },
+              ],
+            },
+            {
+              name: "Publications",
+              href: "/publications/",
+            },
+            {
+              name: "Events",
+              href: "/events/",
+            },
           ],
           colors: {
             primary: "#006181",
@@ -27,6 +83,11 @@ const settings = {
             bodyBg: "AliceBlue",
           },
           showSearchInHeader: true,
+          // State for the menu on mobile
+          isMobileMenuOpen: false,
+          // State for the search modal on mobile
+          isSearchModalOpen: false,
+          // Whether to show all post content or only excerpt (summary) in archive view
           showAllContentOnArchive: false,
           featuredMedia: {
             showOnArchive: true,

@@ -10,7 +10,7 @@ const TwitterTimeline = ({ height, width, handle }) => {
       data-lang="en"
       data-width={width}
       data-height={height}
-      data-dnt="true"
+      // data-dnt="true"
       href={link}
     >
       Track SAWTEE on twitter
@@ -20,11 +20,4 @@ const TwitterTimeline = ({ height, width, handle }) => {
 
 export default TwitterTimeline;
 
-const TwitterEmbed = styled.a`
-  display: flex;
-  position: absolute;
-
-  & .timeline-Footer {
-    display: none !important;
-  }
-`;
+const TwitterEmbed = styled.a``;
