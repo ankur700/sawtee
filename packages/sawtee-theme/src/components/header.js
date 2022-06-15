@@ -89,7 +89,8 @@ const HeaderInner = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-  padding: 1rem 0;
+  align-items: center;
+  padding: 2rem 0;
   max-width: 168rem;
   z-index: 100;
   margin-left: auto;
