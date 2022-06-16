@@ -177,7 +177,7 @@ const Home = ({ state }) => {
       <Section>
         <Grid
           columns="repeat(2, 50vw)"
-          overflow="hidden"
+          rowsauto={"repeat(500px, auto)"}
           css={css`
             justify-content: center;
           `}
@@ -211,8 +211,7 @@ const Home = ({ state }) => {
       <Section styles={TwitterSectionStyles}>
         <Grid
           columns="repeat(3, 1fr)"
-          rows="minmax(500px, auto)"
-          overflow="hidden"
+          rowsauto="minmax(500px, auto)"
           styles={InfoSectionStyles}
         >
           <GridItem

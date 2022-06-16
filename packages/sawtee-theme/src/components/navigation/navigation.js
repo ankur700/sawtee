@@ -1,4 +1,5 @@
-import { css, connect, styled } from "frontity";
+import React, { useState } from "react";
+import { connect, styled } from "frontity";
 import PrimaryMenuLink from "../reusable/menuLink/menuLink";
 import Link from "../link";
 import Image from "../reusable/image/image";
@@ -10,7 +11,7 @@ import PSImage from "../../assets/puspa_sharma.jpg";
 
 const Experts = [
   {
-    name: "Posh Raj Pandey",
+    name: "posh R. pandey",
     image: PRPImage,
     designation: "Director",
   },
@@ -26,14 +27,27 @@ const Experts = [
   },
 ];
 
-const MegaGridStyles = `
+const AboutMegaGridStyles = `
 column-gap: 4rem;
+`;
+
+const ExpertStyles = `
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  & .expert-wrapper {
+    display: flex;
+    gap: 1rem;
+  }
 `;
 
 const AboutSectionGridSyles = `
   position: relative;
   display: flex;
   align-items: center;
+  max-height: 500px;
+  border: 1px solid hsla(0, 0%, 44%, 1);
 
   & .overlay {
     display: block;
@@ -53,113 +67,6 @@ const AboutSectionGridSyles = `
       backdrop-filter: blur(5px);
     }
 `;
-
-const AboutMegaMenu = ({ data }) => {
-  return (
-    <Wrapper className="mega-menu">
-      <Grid
-        columns={"300px 1fr 450px"}
-        rows={"minmax(500px, auto)"}
-        overflow={"hidden"}
-        styles={MegaGridStyles}
-      >
-        <GridItem column={"1/2"}>
-          <StyledMenu submenu={data}>
-            {data.map(({ name, href }) => {
-              // Check if the link matched the current page url
-              return (
-                <MenuItem key={name}>
-                  {/* If link url is the current page, add `aria-current` for a11y */}
-                  <MenuLink link={href}>
-                    <span>{name}</span>
-                  </MenuLink>
-                </MenuItem>
-              );
-            })}
-          </StyledMenu>
-        </GridItem>
-        <GridItem column={"2/3"} styles={AboutSectionGridSyles}>
-          <div className="overlay"></div>
-          <Image src={GlobeImage} />
-          <AboutText>
-            South Asia Watch on Trade, Economics and Environment (SAWTEE) was
-            launched in 1994 as a loose regional network of non-governmental
-            organizations (NGOs) from five South Asian countries: Bangladesh,
-            India, Nepal, Pakistan and Sri Lanka. Taking into consideration the
-            emerging need for fair, effective and meaningful integration of
-            South Asian countries into the regional as well as global economies,
-            the major motto of this regional initiative has been “GLOBALIZATION
-            YES, BUT WITH SAFETY NETS”
-          </AboutText>
-        </GridItem>
-        <GridItem column={"3/4"}>
-          <div
-            css={css`
-              display: flex;
-            `}
-          >
-            {Experts.map((item) => {
-              return (
-                <ExpertCard key={item.name}>
-                  <img src={item.image} />
-                  <p>{item.name}</p>
-                  <p>{item.designation}</p>
-                </ExpertCard>
-              );
-            })}
-          </div>
-        </GridItem>
-      </Grid>
-    </Wrapper>
-  );
-};
-
-const Menu = ({ options, currentPageLink, submenu }) => (
-  <StyledMenu submenu={submenu}>
-    {options.map(({ name, href, submenu }) => {
-      // Check if the link matched the current page url
-      const isCurrentPage = currentPageLink === href;
-      return (
-        <MenuItem key={name}>
-          {/* If link url is the current page, add `aria-current` for a11y */}
-          <PrimaryMenuLink
-            link={href}
-            aria-current={isCurrentPage ? "page" : undefined}
-            text={name}
-          >
-            {name}
-          </PrimaryMenuLink>
-          {submenu &&
-            // <Menu options={submenu} currentPageLink={currentPageLink} submenu />
-
-            (name === "Know Us" ? (
-              <AboutMegaMenu data={submenu} isCurrentPage={isCurrentPage} />
-            ) : null)}
-        </MenuItem>
-      );
-    })}
-  </StyledMenu>
-);
-
-/**
- * Navigation Component
- *
- * It renders the navigation links
- */
-const Navigation = ({ state }) => {
-  const menus = state.theme.menu;
-  const currentPageLink = state.router.link;
-
-  return (
-    <NavWrapper>
-      <MenuNav>
-        <Menu options={menus} currentPageLink={currentPageLink} />
-      </MenuNav>
-    </NavWrapper>
-  );
-};
-
-export default connect(Navigation);
 
 const NavWrapper = styled.div`
   align-items: center;
@@ -186,7 +93,7 @@ const MenuItem = styled.li`
 `;
 
 const Wrapper = styled.div`
-  visibility: hidden;
+  visibility: ${(props) => (props.show === true ? "visible" : "hidden")};
   position: absolute;
   top: 10rem;
   left: 0;
@@ -194,7 +101,9 @@ const Wrapper = styled.div`
   padding: 3rem 6rem;
   background-color: hsla(195, 100%, 25%, 0.7);
   backdrop-filter: blur(5px);
-  height: calc(100vh - 8rem);
+  height: 55rem;
+  display: flex;
+  align-items: center;
 
   & * {
     color: #fff;
@@ -204,20 +113,13 @@ const Wrapper = styled.div`
 const StyledMenu = styled.ul`
   display: flex;
   flex-direction: ${({ submenu }) => submenu && "column"};
-  gap: ${({ submenu }) => submenu && "4rem"};
-  // position: ${({ submenu }) => submenu && "absolute"};
+  gap: ${({ submenu }) => submenu && "3rem"};
   font-size: 1.8rem;
   font-weight: 500;
   letter-spacing: -0.0277em;
   flex-wrap: wrap;
   justify-content: flex-end;
   list-style: none;
-  // width: ${({ submenu }) => submenu && "100%"};
-
-  ${MenuItem}:hover .mega-menu {
-    visibility: visible;
-    transition: visibility 0.3s ease-in-out;
-  }
 
   @media (min-width: 1220px) {
     margin-top: ${({ submenu }) => (submenu ? "10px" : "-0.8rem")};
@@ -231,8 +133,8 @@ const MenuLink = styled(Link)`
   display: block;
   text-decoration: none;
   text-transform: uppercase;
-  font-size: 1.85rem;
-  color: #fff;
+  font-size: 1.5rem;
+  color: hsla(0, 17%, 95%, 1);
   & span {
     position: relative;
   }
@@ -254,9 +156,9 @@ const MenuLink = styled(Link)`
   }
 `;
 
-const AboutText = styled.p`
-  color: #fff;
-  font-size: 2.25rem;
+const TextContent = styled.p`
+  color: hsla(0, 17%, 95%, 1);
+  font-size: 2rem;
   text-align: left;
   word-break: break-word;
   position: absolute;
@@ -270,22 +172,269 @@ const AboutText = styled.p`
 `;
 
 const ExpertCard = styled.div`
-  padding: 1rem;
+  padding: 1.25rem 0.75rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 250px;
+  width: 180px;
   background-color: hsla(255, 255, 255, 0.4);
   backdrop-filter: blur(5px);
+  align-items: center;
+  height: 200px;
+  border-radius: 10px;
+  justify-content: space-between;
+  border: 1px solid hsla(0, 0%, 44%, 1);
 
   & img {
     display: block;
-    width: 4rem;
-    height: 4rem;
+    width: 8rem;
+    height: 8rem;
     border-radius: 50%;
     object-fit: cover;
   }
-  & p {
-    margin: 0;
+
+  & div {
+    display: flex;
+    flex-direction: column;
+    background-color: hsla(0, 0%, 0%, 0.4);
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    & p {
+      margin: 0;
+      font-size: 1.25rem;
+      text-align: center;
+      letter-spacing: 1px;
+      font-family: monospace;
+      color: hsla(0, 17%, 95%, 1);
+      text-transform: capitalize;
+    }
+    & .designation {
+      font-size: 0.85rem;
+    }
+  }
+`;
+
+const AboutMegaMenu = ({ data, show }) => {
+  return (
+    <Wrapper className="mega-menu" show={show}>
+      <Grid
+        columns={"300px 1fr 450px"}
+        rows={"minmax(500px, auto)"}
+        styles={AboutMegaGridStyles}
+      >
+        <GridItem column={"1/2"}>
+          <StyledMenu submenu={data}>
+            {data.map(({ name, href }) => {
+              // Check if the link matched the current page url
+              return (
+                <MenuItem key={name}>
+                  {/* If link url is the current page, add `aria-current` for a11y */}
+                  <MenuLink link={href}>
+                    <span>{name}</span>
+                  </MenuLink>
+                </MenuItem>
+              );
+            })}
+          </StyledMenu>
+        </GridItem>
+        <GridItem column={"2/3"} styles={AboutSectionGridSyles}>
+          <div className="overlay"></div>
+          <Image src={GlobeImage} />
+          <TextContent>
+            South Asia Watch on Trade, Economics and Environment (SAWTEE) was
+            launched in 1994 as a loose regional network of non-governmental
+            organizations (NGOs) from five South Asian countries: Bangladesh,
+            India, Nepal, Pakistan and Sri Lanka. Taking into consideration the
+            emerging need for fair, effective and meaningful integration of
+            South Asian countries into the regional as well as global economies,
+            the major motto of this regional initiative has been “GLOBALIZATION
+            YES, BUT WITH SAFETY NETS”
+          </TextContent>
+        </GridItem>
+        <GridItem column={"3/4"} styles={ExpertStyles}>
+          <div className="expert-wrapper">
+            {Experts.map((item) => {
+              return (
+                <ExpertCard key={item.name}>
+                  <img src={item.image} />
+                  <div>
+                    <p>{item.name}</p>
+                    <p className="designation">{item.designation}</p>
+                  </div>
+                </ExpertCard>
+              );
+            })}
+          </div>
+          <div className="expert-wrapper">
+            {Experts.map((item) => {
+              return (
+                <ExpertCard key={item.name}>
+                  <img src={item.image} />
+                  <div>
+                    <p>{item.name}</p>
+                    <p className="designation">{item.designation}</p>
+                  </div>
+                </ExpertCard>
+              );
+            })}
+          </div>
+        </GridItem>
+      </Grid>
+    </Wrapper>
+  );
+};
+
+const OurWorkMegaMenu = ({ data, show }) => {
+  return (
+    <Wrapper className="mega-menu" show={show}>
+      <Grid
+        columns={"1fr 2fr"}
+        rows={"repeat(2, 1fr)"}
+        styles={WorkMegaGridStyles}
+      >
+        {data.map((item, i) => {
+          return (
+            <GridItem
+              key={item.name}
+              column={i === 0 ? "1/3" : i === 1 ? "1/2" : "2/3"}
+              row={i === 0 ? "1/2" : "2/3"}
+              styles={WorkGridStyles}
+              className={"grid-" + (i + 1)}
+            >
+              <p className="parent">{item.name}</p>
+              <div className={"children-list-" + (i + 1)}>
+                {item.submenu?.map((children) => {
+                  return (
+                    <MenuLink key={children.name} link={children.href}>
+                      {children.name}
+                    </MenuLink>
+                  );
+                })}
+              </div>
+            </GridItem>
+          );
+        })}
+      </Grid>
+    </Wrapper>
+  );
+};
+
+const Menu = ({ options, currentPageLink, submenu }) => {
+  const [showAboutMegaMenu, setShowAboutMegaMenu] = useState(false);
+  const [showWorkMegaMenu, setShowWorkMegaMenu] = useState(false);
+  return (
+    <StyledMenu submenu={submenu}>
+      {options.map(({ name, href, submenu }) => {
+        // Check if the link matched the current page url
+        const isCurrentPage = currentPageLink === href;
+        return (
+          <MenuItem
+            key={name}
+            onMouseEnter={() =>
+              name === "Know Us"
+                ? setShowAboutMegaMenu(!showAboutMegaMenu)
+                : name === "Our Work"
+                ? setShowWorkMegaMenu(!showWorkMegaMenu)
+                : null
+            }
+            onMouseLeave={() =>
+              name === "Know Us"
+                ? setShowAboutMegaMenu(!showAboutMegaMenu)
+                : name === "Our Work"
+                ? setShowWorkMegaMenu(!showWorkMegaMenu)
+                : null
+            }
+          >
+            {/* If link url is the current page, add `aria-current` for a11y */}
+            <PrimaryMenuLink
+              link={href}
+              aria-current={isCurrentPage ? "page" : undefined}
+              text={name}
+            >
+              {name}
+            </PrimaryMenuLink>
+            {submenu &&
+              (showAboutMegaMenu === true ? (
+                <AboutMegaMenu data={submenu} show={showAboutMegaMenu} />
+              ) : showWorkMegaMenu === true ? (
+                <OurWorkMegaMenu data={submenu} show={showWorkMegaMenu} />
+              ) : null)}
+          </MenuItem>
+        );
+      })}
+    </StyledMenu>
+  );
+};
+
+/**
+ * Navigation Component
+ *
+ * It renders the navigation links
+ */
+const Navigation = ({ state }) => {
+  const menus = state.theme.menu;
+  const currentPageLink = state.router.link;
+
+  return (
+    <NavWrapper>
+      <MenuNav>
+        <Menu options={menus} currentPageLink={currentPageLink} />
+      </MenuNav>
+    </NavWrapper>
+  );
+};
+
+export default connect(Navigation);
+
+const WorkMegaGridStyles = `
+  row-gap: 2rem;
+
+   & .grid-1 {
+    border-bottom: 5px solid hsla(0, 12%, 25%, 1);
+    padding-bottom: 4rem;
+   }
+
+   & .grid-2 {
+    border-right: 5px solid hsla(0, 12%, 25%, 1);
+   }
+`;
+
+const WorkGridStyles = `
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & .parent {
+    font-size: 2.75rem;
+  }
+  & div {
+    display: grid;
+    grid-auto-rows: minmax(max-content, 1fr);
+    column-gap: 2rem;
+    row-gap: 2rem;
+      & a {
+      display: inline-block;
+      font-size: 1.5rem;
+      text-transform: none;
+    }
+
+  }
+
+  & .children-list-1 {
+    grid-template-columns: repeat(4, 1fr);
+    // padding-bottom: 3.5rem;
+    // border-bottom: 5px solid hsla(0, 0%, 44%, 1);
+
+  }
+
+  & .children-list-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  & .children-list-3 {
+    grid-template-columns: repeat(5, 1fr);
   }
 `;

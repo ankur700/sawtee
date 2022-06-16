@@ -56,14 +56,80 @@ const settings = {
                 {
                   name: "Themes",
                   href: "#",
+                  submenu: [
+                    {
+                      name: "Covid 19",
+                      href: "#",
+                    },
+                    {
+                      name: "Economics and social reform, growth and poverty",
+                      href: "#",
+                    },
+                    {
+                      name: "Trade integration and supply-side constraints",
+                      href: "#",
+                    },
+                    {
+                      name: "Trade and climate change",
+                      href: "#",
+                    },
+                    {
+                      name: "Competition, regulation and competitiveness",
+                      href: "#",
+                    },
+                    {
+                      name: "Remittance and development",
+                      href: "#",
+                    },
+                    {
+                      name: "Financial resource management",
+                      href: "#",
+                    },
+                    {
+                      name: "Agriculture politics, biodiversity management and food security",
+                      href: "#",
+                    },
+                  ],
                 },
                 {
                   name: "Programme",
                   href: "#",
+                  submenu: [
+                    {
+                      name: "Completed Programmes",
+                      href: "#",
+                    },
+                    {
+                      name: "Ongoing Programmes",
+                      href: "#",
+                    },
+                  ],
                 },
                 {
                   name: "Research",
                   href: "#",
+                  submenu: [
+                    {
+                      name: "2000-2005",
+                      href: "#",
+                    },
+                    {
+                      name: "2005-2010",
+                      href: "#",
+                    },
+                    {
+                      name: "2010-2015",
+                      href: "#",
+                    },
+                    {
+                      name: "2015-2020",
+                      href: "#",
+                    },
+                    {
+                      name: "2020-2025",
+                      href: "#",
+                    },
+                  ],
                 },
               ],
             },

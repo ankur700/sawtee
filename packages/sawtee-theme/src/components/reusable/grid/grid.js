@@ -1,11 +1,12 @@
 import { styled, css } from "frontity";
 
-const Grid = ({ overflow, columns, rows, children, styles }) => {
+const Grid = ({ overflow, columns, rows, rowsauto, children, styles }) => {
   return (
     <Section
       overflow={overflow}
       columns={columns}
       rows={rows}
+      rowsauto={rowsauto}
       css={css`
         ${styles}
       `}
@@ -19,7 +20,8 @@ const Section = styled.div`
   display: grid;
   overflow: ${(props) => props.overflow || "hidden"};
   grid-template-columns: ${(props) => props.columns || "1fr"};
-  grid-auto-rows: ${(props) => props.rows || "auto"};
+  grid-auto-rows: ${(props) => props.rowsauto && props.rowsauto};
+  grid-template-rows: ${(props) => props.rows && props.rows};
   width: 100%;
   @media (max-width: 992px) {
     display: flex;
@@ -37,6 +39,7 @@ export const GridItem = ({
   top,
   bottom,
   styles,
+  className,
 }) => {
   return (
     <Item
@@ -45,6 +48,7 @@ export const GridItem = ({
       bg={bg}
       top={top}
       bottom={bottom}
+      className={className}
       css={css`
         ${styles}
       `}
@@ -57,7 +61,7 @@ export const GridItem = ({
 const Item = styled.div`
   grid-column: ${(props) => props.column};
   grid-row: ${(props) => props.row};
-  background: ${(props) => props.bg};
+  background-color: ${(props) => props.bg};
   width: 100%;
   margin: 0 auto;
   border-top: ${(props) => (props.top ? "3px solid #707070" : "none")};
