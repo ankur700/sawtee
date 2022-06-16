@@ -8,6 +8,7 @@ import GlobeImage from "../../assets/undraw_connected_world_wuay.png";
 import PKImage from "../../assets/paras foto.jpg";
 import PRPImage from "../../assets/PRP.jpg";
 import PSImage from "../../assets/puspa_sharma.jpg";
+import { HiChevronDown } from "react-icons/hi";
 
 const Experts = [
   {
@@ -82,6 +83,7 @@ const MenuNav = styled.nav`
 `;
 
 const MenuItem = styled.li`
+  display: flex;
   font-size: 1.8rem;
   line-height: 1.2;
   width: max-content;
@@ -330,23 +332,7 @@ const Menu = ({ options, currentPageLink, submenu }) => {
         // Check if the link matched the current page url
         const isCurrentPage = currentPageLink === href;
         return (
-          <MenuItem
-            key={name}
-            onMouseEnter={() =>
-              name === "Know Us"
-                ? setShowAboutMegaMenu(!showAboutMegaMenu)
-                : name === "Our Work"
-                ? setShowWorkMegaMenu(!showWorkMegaMenu)
-                : null
-            }
-            onMouseLeave={() =>
-              name === "Know Us"
-                ? setShowAboutMegaMenu(!showAboutMegaMenu)
-                : name === "Our Work"
-                ? setShowWorkMegaMenu(!showWorkMegaMenu)
-                : null
-            }
-          >
+          <MenuItem key={name}>
             {/* If link url is the current page, add `aria-current` for a11y */}
             <PrimaryMenuLink
               link={href}
@@ -356,11 +342,23 @@ const Menu = ({ options, currentPageLink, submenu }) => {
               {name}
             </PrimaryMenuLink>
             {submenu &&
-              (showAboutMegaMenu === true ? (
+              (name === "Know Us" ? (
                 <AboutMegaMenu data={submenu} show={showAboutMegaMenu} />
-              ) : showWorkMegaMenu === true ? (
+              ) : name === "Our Work" ? (
                 <OurWorkMegaMenu data={submenu} show={showWorkMegaMenu} />
               ) : null)}
+
+            {submenu && (
+              <HiChevronDown
+                onClick={() =>
+                  name === "Know Us"
+                    ? setShowAboutMegaMenu(!showAboutMegaMenu)
+                    : name === "Our Work"
+                    ? setShowWorkMegaMenu(!showWorkMegaMenu)
+                    : null
+                }
+              />
+            )}
           </MenuItem>
         );
       })}
