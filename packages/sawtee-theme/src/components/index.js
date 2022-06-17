@@ -13,6 +13,7 @@ import MetaTitle from "./page-meta-title";
 import PageError from "./page-error";
 import Home from "./home/home";
 import Page from "./page";
+import Publication from "./publication/publication";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -59,7 +60,10 @@ const Theme = ({ state }) => {
             <SearchResults when={data.isSearch} />
             <Archive when={data.isArchive} />
             <Home when={data.isHome} />
+            <Publication when={data.route === "/publications/"} />
+
             <Page when={data.isPage} />
+
             <Post when={data.isPostType} />
             <PageError when={data.isError} />
           </Switch>

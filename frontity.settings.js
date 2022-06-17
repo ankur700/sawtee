@@ -143,6 +143,11 @@ const settings = {
             },
           ],
           colors: {
+            gray: {
+              base: "#6D6D6D",
+              light: "#DCD7CA",
+              lighter: "#F5EFE0",
+            },
             primary: "#006181",
             headerBg: "#D9DAE1",
             footerBg: "#006181",
@@ -155,10 +160,12 @@ const settings = {
           isSearchModalOpen: false,
           // Whether to show all post content or only excerpt (summary) in archive view
           showAllContentOnArchive: false,
+
           featuredMedia: {
             showOnArchive: true,
             showOnPost: true,
           },
+
           autoPreFetch: "hover",
           fontSets: "us-ascii",
         },

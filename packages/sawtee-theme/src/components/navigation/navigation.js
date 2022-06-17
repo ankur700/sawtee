@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { connect, styled } from "frontity";
+import React, { useState, useRef, useEffect } from "react";
+import { css, connect, styled } from "frontity";
 import PrimaryMenuLink from "../reusable/menuLink/menuLink";
 import Link from "../link";
 import Image from "../reusable/image/image";
@@ -218,9 +218,13 @@ const ExpertCard = styled.div`
   }
 `;
 
-const AboutMegaMenu = ({ data, show }) => {
+const AboutMegaMenu = ({ data, show, ToggleMegaMenu }) => {
   return (
-    <Wrapper className="mega-menu" show={show}>
+    <Wrapper
+      className="mega-menu"
+      show={show}
+      onClick={() => ToggleMegaMenu("Know Us")}
+    >
       <Grid
         columns={"300px 1fr 450px"}
         rows={"minmax(500px, auto)"}
@@ -288,9 +292,13 @@ const AboutMegaMenu = ({ data, show }) => {
   );
 };
 
-const OurWorkMegaMenu = ({ data, show }) => {
+const OurWorkMegaMenu = ({ data, show, ToggleMegaMenu }) => {
   return (
-    <Wrapper className="mega-menu" show={show}>
+    <Wrapper
+      className="mega-menu"
+      show={show}
+      onClick={() => ToggleMegaMenu("Our Work")}
+    >
       <Grid
         columns={"1fr 2fr"}
         rows={"repeat(2, 1fr)"}
@@ -326,6 +334,21 @@ const OurWorkMegaMenu = ({ data, show }) => {
 const Menu = ({ options, currentPageLink, submenu }) => {
   const [showAboutMegaMenu, setShowAboutMegaMenu] = useState(false);
   const [showWorkMegaMenu, setShowWorkMegaMenu] = useState(false);
+
+  const ToggleMegaMenu = (name) => {
+    if (name === "Know Us") {
+      if (showWorkMegaMenu === true) {
+        setShowWorkMegaMenu(false);
+      }
+      setShowAboutMegaMenu(!showAboutMegaMenu);
+    } else if (name === "Our Work") {
+      if (showAboutMegaMenu === true) {
+        setShowAboutMegaMenu(false);
+      }
+      setShowWorkMegaMenu(!showWorkMegaMenu);
+    }
+  };
+
   return (
     <StyledMenu submenu={submenu}>
       {options.map(({ name, href, submenu }) => {
@@ -341,24 +364,27 @@ const Menu = ({ options, currentPageLink, submenu }) => {
             >
               {name}
             </PrimaryMenuLink>
-            {submenu &&
-              (name === "Know Us" ? (
-                <AboutMegaMenu data={submenu} show={showAboutMegaMenu} />
-              ) : name === "Our Work" ? (
-                <OurWorkMegaMenu data={submenu} show={showWorkMegaMenu} />
-              ) : null)}
-
             {submenu && (
-              <HiChevronDown
-                onClick={() =>
-                  name === "Know Us"
-                    ? setShowAboutMegaMenu(!showAboutMegaMenu)
-                    : name === "Our Work"
-                    ? setShowWorkMegaMenu(!showWorkMegaMenu)
-                    : null
-                }
+              <DropDownIcon
+                size={"3rem"}
+                // onMouseEnter={() => ToggleMegaMenu(name)}
+                onClick={() => ToggleMegaMenu(name)}
               />
             )}
+            {submenu &&
+              (name === "Know Us" ? (
+                <AboutMegaMenu
+                  data={submenu}
+                  show={showAboutMegaMenu}
+                  ToggleMegaMenu={ToggleMegaMenu}
+                />
+              ) : name === "Our Work" ? (
+                <OurWorkMegaMenu
+                  data={submenu}
+                  show={showWorkMegaMenu}
+                  ToggleMegaMenu={ToggleMegaMenu}
+                />
+              ) : null)}
           </MenuItem>
         );
       })}
@@ -434,5 +460,14 @@ const WorkGridStyles = `
 
   & .children-list-3 {
     grid-template-columns: repeat(5, 1fr);
+  }
+`;
+
+const DropDownIcon = styled(HiChevronDown)`
+  cursor: pointer;
+  &:hover {
+    transform: rotate(180deg);
+    transition: all 0.4s ease-out;
+    outline: none;
   }
 `;

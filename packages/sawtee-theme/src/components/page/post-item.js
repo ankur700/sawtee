@@ -150,6 +150,7 @@ export const PostItemTitle = styled.h2`
 
 export const PostTitle = styled.h1`
   margin: 0;
+  z-index: 99;
 `;
 
 export const PostCaption = styled(SectionContainer)`
