@@ -29,13 +29,36 @@ const Experts = [
 ];
 
 const AboutMegaGridStyles = `
-column-gap: 4rem;
+grid-template-columns: minmax(350px, 20%) 1fr;
+grid-template-rows: repeat(2, minmax(500px , 40%));
+gap: 4rem;
+
+@media (min-width:1500px){
+  grid-template-columns: 300px 1fr minmax(500px, 35%);
+  grid-template-rows: minmax(500px, 1fr);
+}
+`;
+
+const AboutSubmenu = `
+  grid-column: 1/2;
+  grid-row: 1/2;
+
 `;
 
 const ExpertStyles = `
+  grid-column: 1/3;
+  grid-row: 2/3;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: nowrap;
   gap: 2rem;
+  justify-content: center;
+
+  @media (min-width:1500px){
+    grid-column: 3/4;
+    grid-row: 1/2;
+    flex-direction: column;
+  }
 
   & .expert-wrapper {
     display: flex;
@@ -45,10 +68,16 @@ const ExpertStyles = `
 
 const AboutSectionGridSyles = `
   position: relative;
+  grid-column: 2/4;
+  grid-row: 1/2;
   display: flex;
   align-items: center;
   max-height: 500px;
   border: 1px solid hsla(0, 0%, 44%, 1);
+
+  @media (min-width: 1500px) {
+    grid-column: 2/3;
+  }
 
   & .overlay {
     display: block;
@@ -84,13 +113,14 @@ const MenuNav = styled.nav`
 
 const MenuItem = styled.li`
   display: flex;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   line-height: 1.2;
   width: max-content;
   overflow: hidden;
   padding: 0.75rem;
   @media (min-width: 1220px) {
     margin: 0.8rem 0 0 2.5rem !important;
+    font-size: 1.8rem;
   }
 `;
 
@@ -103,7 +133,7 @@ const Wrapper = styled.div`
   padding: 3rem 6rem;
   background-color: hsla(195, 100%, 25%, 0.7);
   backdrop-filter: blur(5px);
-  height: 55rem;
+  min-height: 55rem;
   display: flex;
   align-items: center;
 
@@ -116,8 +146,10 @@ const StyledMenu = styled.ul`
   display: flex;
   flex-direction: ${({ submenu }) => submenu && "column"};
   gap: ${({ submenu }) => submenu && "3rem"};
+  font-weight: 500;
+  margin: 0;
   flex-wrap: nowrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   list-style: none;
   margin: 0;
 
@@ -223,12 +255,8 @@ const AboutMegaMenu = ({ data, show, ToggleMegaMenu }) => {
       show={show}
       onClick={() => ToggleMegaMenu("Know Us")}
     >
-      <Grid
-        columns={"300px 1fr 450px"}
-        rows={"minmax(500px, auto)"}
-        styles={AboutMegaGridStyles}
-      >
-        <GridItem column={"1/2"}>
+      <Grid styles={AboutMegaGridStyles}>
+        <GridItem styles={AboutSubmenu}>
           <StyledMenu submenu={data}>
             {data.map(({ name, href }) => {
               // Check if the link matched the current page url
@@ -243,7 +271,7 @@ const AboutMegaMenu = ({ data, show, ToggleMegaMenu }) => {
             })}
           </StyledMenu>
         </GridItem>
-        <GridItem column={"2/3"} styles={AboutSectionGridSyles}>
+        <GridItem styles={AboutSectionGridSyles}>
           <div className="overlay"></div>
           <Image src={GlobeImage} />
           <TextContent>
@@ -257,7 +285,7 @@ const AboutMegaMenu = ({ data, show, ToggleMegaMenu }) => {
             YES, BUT WITH SAFETY NETS”
           </TextContent>
         </GridItem>
-        <GridItem column={"3/4"} styles={ExpertStyles}>
+        <GridItem styles={ExpertStyles}>
           <div className="expert-wrapper">
             {Experts.map((item) => {
               return (

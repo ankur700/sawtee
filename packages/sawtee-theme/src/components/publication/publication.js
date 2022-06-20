@@ -203,100 +203,6 @@ const Publication = ({ state, actions, libraries }) => {
           {/* <PostMeta item={post} /> */}
         </SectionContainer>
       </Header>
-
-      <Grid styles={PublicationGridStyles}>
-        <GridItem styles={CarouselGridSection}>
-          <Section>
-            <Title>Trade Insight</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Discussion Paper</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Policy Brief</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Briefing Paper</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Issue Paper</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Working Paper</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Books</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Others</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Research Briefs</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Book Chapters</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-        </GridItem>
-        <GridItem styles={SideBarGridSection}>
-          <SIM data={featuredEvents} />
-
-          <TwitterTimeline height="1200px" width="100%" handle="sawteenp" />
-
-          <Wrapper>
-            <Title color={"#006181"}>Subscribe</Title>
-          </Wrapper>
-        </GridItem>
-      </Grid>
     </PostArticle>
   ) : null;
 };
@@ -314,11 +220,10 @@ const Header = styled(PostHeader)`
   @media (min-width: 700px) {
     padding: 8rem 0;
   }
-  min-height: 385px;
   > div {
     position: absolute;
     margin: 0;
-    left: 275px;
+    left: 10rem;
     bottom: 0;
     width: max-content;
 
@@ -350,8 +255,7 @@ const FeaturedImage = styled(FeaturedMedia)`
   }
   & img {
     width: 100%;
-    height: auto;
-    max-height: 390px;
+    height: 390px;
     object-fit: cover;
     display: block;
   }
