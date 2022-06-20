@@ -199,12 +199,20 @@ const Home = ({ state }) => {
           </GridItem>
           <GridItem row={"1/2"} column={"2/3"} bg={"#463737"} bottom>
             <Title>{"Publication"}</Title>
-            <ItemsCarousel data={postdata} slidesToShow={3} />
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
           </GridItem>
           <GridItem row={"2/3"} column={"2/3"} bg={"#463737"} top>
             <Title>{"Sawtee in Media"}</Title>
 
-            <ItemsCarousel data={postdata} slidesToShow={3} />
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
           </GridItem>
         </Grid>
       </Section>

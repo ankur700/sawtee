@@ -116,12 +116,10 @@ const StyledMenu = styled.ul`
   display: flex;
   flex-direction: ${({ submenu }) => submenu && "column"};
   gap: ${({ submenu }) => submenu && "3rem"};
-  font-size: 1.8rem;
-  font-weight: 500;
-  letter-spacing: -0.0277em;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: flex-end;
   list-style: none;
+  margin: 0;
 
   @media (min-width: 1220px) {
     margin-top: ${({ submenu }) => (submenu ? "10px" : "-0.8rem")};

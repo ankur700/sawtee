@@ -37,10 +37,10 @@ const SubscriptionCall = () => {
           New research, insightful graphics, and event invites in your inbox
           every month.
         </Title>
-        <ActionSection>
+        <Form>
           <Input type="text" placeholder="example@example.com" />
           <SubscribeButton>Subscribe</SubscribeButton>
-        </ActionSection>
+        </Form>
       </Wrapper>
     </>
   );
@@ -363,7 +363,7 @@ const Wrapper = styled.div`
   gap: 2rem;
 `;
 
-const ActionSection = styled.div`
+const Form = styled.div`
   display: flex;
   padding: 1.5rem 0;
   width: 100%;

@@ -11,8 +11,88 @@ import {
   SectionContainer,
 } from "../page/post-item";
 import PostCategories from "../page/post-categories";
-import PostMeta from "../page/post-meta";
 import PostTags from "../page/post-tags";
+import Link from "../link";
+import ItemsCarousel from "../itemsCarousel/itemsCarousel";
+import Grid, { GridItem } from "../reusable/grid/grid";
+import Image1 from "../../assets/1.jpg";
+import Image2 from "../../assets/2.jpg";
+import Image3 from "../../assets/3.jpg";
+import Image4 from "../../assets/4.jpg";
+import Image5 from "../../assets/5.jpg";
+import Image6 from "../../assets/6.jpg";
+import Image7 from "../../assets/7.jpg";
+import Image8 from "../../assets/8.jpg";
+import Image9 from "../../assets/9.jpg";
+import Image10 from "../../assets/10.jpg";
+import Image11 from "../../assets/11.jpg";
+import Image12 from "../../assets/12.jpg";
+import TwitterTimeline from "../twitterTimeline/twitterTimeline";
+
+const postdata = [
+  Image1,
+  Image2,
+  Image3,
+  Image4,
+  Image5,
+  Image6,
+  Image7,
+  Image8,
+  Image9,
+  Image10,
+  Image11,
+  Image12,
+];
+
+const featuredEvents = [
+  {
+    id: 1,
+    title: "Electricity could emerge as key export for Nepal—in the long run",
+    publisher: "The Kathmandu Post",
+    date: "2022-06-03",
+  },
+  {
+    id: 2,
+    title:
+      "Populism and ad-hocism in policymaking: How it will aggravate Nepal’s economic troubles",
+    publisher: "Nepal Live Today",
+    date: "2022-05-29",
+  },
+  {
+    id: 3,
+    title:
+      "On petro business, policies have been utterly inconsistent for many years",
+    date: "2022-05-24",
+    publisher: "The Kathmandu Post",
+  },
+  {
+    id: 4,
+    title:
+      "२० राष्ट्रले गरे विभिन्न खाद्यान्न निर्यात रोक, किन विश्वभर भइरहेको छ खाद्य संकटको चिन्ता?",
+    date: "2022-05-23",
+    publisher: "Seto Pati",
+  },
+  {
+    id: 5,
+    title: "अब आयातित ग्यासलाई होइन,विद्युतीय ऊर्जामा अनुदान",
+    date: "2022-05-25",
+    publisher: "Nepali Purbadhar",
+  },
+  {
+    id: 6,
+    title:
+      "Government revising law to allow private sector to engage in power trade",
+    date: "2021-05-21",
+    publisher: "The Kathmandu Post",
+  },
+  {
+    id: 7,
+    title:
+      "Once reluctant, India now open to power trade to and from Nepal, and beyond",
+    date: "2021-04-05",
+    publisher: "The Kathmandu Post",
+  },
+];
 
 /**
  * The Post component that the TwentyTwenty theme uses for rendering any kind of
@@ -70,6 +150,34 @@ const Publication = ({ state, actions, libraries }) => {
     actions.source.fetch("/");
   }, [actions.source]);
 
+  const SIM = ({ data }) => {
+    return (
+      <Wrapper>
+        <Title color={state.theme.colors.primary}>Sawtee in Media</Title>
+        <ul>
+          {data.map((event, index) => {
+            return (
+              <li key={index}>
+                <div className="title">
+                  <h4>
+                    <Link link={"#"}>{event.title}</Link>
+                  </h4>
+                </div>
+                <div className="content">
+                  <p>
+                    <span>{event.publisher}</span>
+                    {" | "}
+                    <span>{event.date}</span>
+                  </p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </Wrapper>
+    );
+  };
+
   // Load the post, but only if the data is ready.
   return data.isReady ? (
     <PostArticle>
@@ -96,33 +204,99 @@ const Publication = ({ state, actions, libraries }) => {
         </SectionContainer>
       </Header>
 
-      {/*
-       * If the want to show featured media in the
-       * list of featured posts, we render the media.
-       */}
-      {/* {state.theme.featuredMedia.showOnPost && (
-        <FeaturedImage id={post.featured_media} isSinglePost={true} />
-      )} */}
+      <Grid styles={PublicationGridStyles}>
+        <GridItem styles={CarouselGridSection}>
+          <Section>
+            <Title>Trade Insight</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Discussion Paper</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Policy Brief</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Briefing Paper</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Issue Paper</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Working Paper</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Books</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Others</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Research Briefs</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+          <Section>
+            <Title>Book Chapters</Title>
+            <ItemsCarousel
+              data={postdata}
+              slidesToShow={3}
+              slidesToScroll={3}
+            />
+          </Section>
+        </GridItem>
+        <GridItem styles={SideBarGridSection}>
+          <SIM data={featuredEvents} />
 
-      {/* If the post has a description (like attachments), we render it */}
-      {post.description && (
-        <PostInner size="thin">
-          <EntryContent
-            dangerouslySetInnerHTML={{ __html: post.description.rendered }}
-          />
-        </PostInner>
-      )}
+          <TwitterTimeline height="1200px" width="100%" handle="sawteenp" />
 
-      {/* If the post has content, we render it */}
-      {post.content && (
-        <PostInner size="thin">
-          <EntryContent>
-            <Html2React html={post.content.rendered} />
-          </EntryContent>
-          {/* If the post has tags, render it */}
-          {post.tags && <PostTags tags={tags} />}
-        </PostInner>
-      )}
+          <Wrapper>
+            <Title color={"#006181"}>Subscribe</Title>
+          </Wrapper>
+        </GridItem>
+      </Grid>
     </PostArticle>
   ) : null;
 };
@@ -180,5 +354,88 @@ const FeaturedImage = styled(FeaturedMedia)`
     max-height: 390px;
     object-fit: cover;
     display: block;
+  }
+`;
+
+const Section = styled.section`
+  padding: 3rem;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+`;
+
+const PublicationGridStyles = `
+  grid-template-columns: 65% 35%;
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 1rem;
+  padding: 1.5rem 3rem;
+  background-color: #828990;
+  align-items: start;
+`;
+
+const CarouselGridSection = `
+  grid-column: 1/2;
+  grid-row: 1/2;
+
+`;
+const SideBarGridSection = `
+  grid-column: 2/3;
+  grid-row: 1/2;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+const Title = styled.h3`
+  font-size: 3rem;
+  color: ${(props) => props.color || "#FFF"};
+  margin: 2rem 0;
+  padding: 0 2rem;
+
+  @media (max-width: 762px) {
+    font-size: 2rem;
+  }
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem;
+  background-color: #fff;
+  border-radius: 1.25rem;
+
+  > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    > li {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+
+      .title > h4 {
+        font-size: 1.75rem;
+        margin: 0;
+        font-weight: 700;
+
+        a {
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+          }
+        }
+      }
+      .content {
+        p {
+          font-size: 1.15rem;
+        }
+        p > span {
+          margin: 0 0.5rem;
+        }
+      }
+    }
   }
 `;

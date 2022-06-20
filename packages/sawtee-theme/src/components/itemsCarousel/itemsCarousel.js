@@ -3,7 +3,7 @@ import { styled } from "frontity";
 import ItemsCarousel from "react-items-carousel";
 import { AiFillCaretRight, AiFillCaretLeft } from "react-icons/ai";
 
-export default ({ data, slidesToShow }) => {
+export default ({ data, slidesToShow, slidesToScroll }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   return (
     <Wrapper>
@@ -24,7 +24,7 @@ export default ({ data, slidesToShow }) => {
           </NextButton>
         }
         chevronWidth={60}
-        slidesToScroll={3}
+        slidesToScroll={slidesToScroll}
         activePosition={"center"}
         disableSwipe={false}
         alwaysShowChevrons={false}
