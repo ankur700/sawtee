@@ -1,17 +1,14 @@
 import { styled, connect } from "frontity";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FeaturedMedia from "../page/featured-media";
 import {
-  EntryContent,
   Post as _Post,
   PostHeader,
-  PostInner,
   PostTitle,
   PostCaption,
   SectionContainer,
 } from "../page/post-item";
 import PostCategories from "../page/post-categories";
-import PostTags from "../page/post-tags";
 import Link from "../link";
 import ItemsCarousel from "../itemsCarousel/itemsCarousel";
 import Grid, { GridItem } from "../reusable/grid/grid";
@@ -119,27 +116,7 @@ const Publication = ({ state, actions, libraries }) => {
   // Get the data of the post.
   const post = state.source[data.type][data.id];
 
-  // Get the html2react component.
-  const Html2React = libraries.html2react.Component;
-
-  // Get all categories
-  const allCategories = state.source.category;
-
-  /**
-   * The item's categories is an array of each category id. So, we'll look up
-   * the details of each category in allCategories.
-   */
-  const categories =
-    post.categories && post.categories.map((catId) => allCategories[catId]);
-
-  // Get all tags
-  const allTags = state.source.tag;
-
-  /**
-   * The item's categories is an array of each tag id. So, we'll look up the
-   * details of each tag in allTags.
-   */
-  const tags = post.tags && post.tags.map((tagId) => allTags[tagId]);
+  const [loadAll, setLoadAll] = useState(false);
 
   /**
    * Once the post has loaded in the DOM, prefetch both the
@@ -155,6 +132,24 @@ const Publication = ({ state, actions, libraries }) => {
       <Wrapper>
         <Title color={state.theme.colors.primary}>Sawtee in Media</Title>
         <ul>
+          {data.map((event, index) => {
+            return (
+              <li key={index}>
+                <div className="title">
+                  <h4>
+                    <Link link={"#"}>{event.title}</Link>
+                  </h4>
+                </div>
+                <div className="content">
+                  <p>
+                    <span>{event.publisher}</span>
+                    {" | "}
+                    <span>{event.date}</span>
+                  </p>
+                </div>
+              </li>
+            );
+          })}
           {data.map((event, index) => {
             return (
               <li key={index}>
@@ -262,30 +257,38 @@ const Publication = ({ state, actions, libraries }) => {
               slidesToScroll={3}
             />
           </Section>
-          <Section>
-            <Title>Others</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Research Briefs</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
-          <Section>
-            <Title>Book Chapters</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
-          </Section>
+          {loadAll ? (
+            <>
+              <Section>
+                <Title>Others</Title>
+                <ItemsCarousel
+                  data={postdata}
+                  slidesToShow={3}
+                  slidesToScroll={3}
+                />
+              </Section>
+              <Section>
+                <Title>Research Briefs</Title>
+                <ItemsCarousel
+                  data={postdata}
+                  slidesToShow={3}
+                  slidesToScroll={3}
+                />
+              </Section>
+              <Section>
+                <Title>Book Chapters</Title>
+                <ItemsCarousel
+                  data={postdata}
+                  slidesToShow={3}
+                  slidesToScroll={3}
+                />
+              </Section>
+            </>
+          ) : (
+            <Section>
+              <LoadBtn onClick={() => setLoadAll(!loadAll)}>Load All</LoadBtn>
+            </Section>
+          )}
         </GridItem>
         <GridItem styles={SideBarGridSection}>
           <SIM data={featuredEvents} />
@@ -362,6 +365,22 @@ const Section = styled.section`
   width: 100%;
   margin: 0 auto;
   position: relative;
+
+  > button::after {
+    content: "";
+    background-color: hsla(195, 100%, 25%, 0.5);
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    top: 7px;
+    left: 7px;
+  }
+
+  > button:hover::after {
+    top: 0px;
+    left: 0px;
+  }
 `;
 
 const PublicationGridStyles = `
@@ -438,4 +457,21 @@ const Wrapper = styled.div`
       }
     }
   }
+`;
+
+const LoadBtn = styled.button`
+  font-size: 1.8rem;
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 13px 50px 13px;
+  outline: 0;
+  margin: 0 auto;
+  display: block;
+  color: #eee;
+  z-index: 9 !important;
+  border: 2px solid black;
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
 `;

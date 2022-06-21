@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import { css, connect, styled } from "frontity";
+import React, { useState } from "react";
+import { connect, styled } from "frontity";
 import PrimaryMenuLink from "../reusable/menuLink/menuLink";
 import Link from "../link";
 import Image from "../reusable/image/image";
 import Grid, { GridItem } from "../reusable/grid/grid";
-import GlobeImage from "../../assets/undraw_connected_world_wuay.png";
+import Map from "../../assets/Airports_Network_Map.png";
 import PKImage from "../../assets/paras foto.jpg";
 import PRPImage from "../../assets/PRP.jpg";
 import PSImage from "../../assets/puspa_sharma.jpg";
@@ -89,19 +89,19 @@ const MenuItem = styled.li`
   width: max-content;
   overflow: hidden;
   padding: 0.75rem;
-  @media (min-width: 1220px) {
-    margin: 0.8rem 0 0 2.5rem !important;
-  }
+  // @media (min-width: 1220px) {
+  //   margin: 0.8rem 0 0 2.5rem !important;
+  // }
 `;
 
 const Wrapper = styled.div`
-  visibility: ${(props) => (props.show === true ? "visible" : "hidden")};
+  visibility: ${(props) => (props.show ? "visible" : "hidden")};
   position: absolute;
   top: 10rem;
-  left: 0;
-  width: 100%;
+  left: ${(props) => props.left || "0"};
+  width: ${(props) => props.width || "100%"};
   padding: 3rem 6rem;
-  background-color: hsla(195, 100%, 25%, 0.7);
+  background-color: hsla(195, 100%, 25%, ${(props) => props.opacity || "1"});
   backdrop-filter: blur(5px);
   height: 55rem;
   display: flex;
@@ -145,7 +145,7 @@ const MenuLink = styled(Link)`
     height: 2px;
     background: ${(props) => props.bg || "#fff"};
     position: absolute;
-    top: 20px;
+    top: 22px;
     left: 0;
     transition: all 0.3s ease-in;
   }
@@ -221,6 +221,7 @@ const AboutMegaMenu = ({ data, show, ToggleMegaMenu }) => {
     <Wrapper
       className="mega-menu"
       show={show}
+      opacity={"0.7"}
       onClick={() => ToggleMegaMenu("Know Us")}
     >
       <Grid
@@ -245,7 +246,7 @@ const AboutMegaMenu = ({ data, show, ToggleMegaMenu }) => {
         </GridItem>
         <GridItem column={"2/3"} styles={AboutSectionGridSyles}>
           <div className="overlay"></div>
-          <Image src={GlobeImage} />
+          <Image src={Map} />
           <TextContent>
             South Asia Watch on Trade, Economics and Environment (SAWTEE) was
             launched in 1994 as a loose regional network of non-governmental
@@ -295,6 +296,7 @@ const OurWorkMegaMenu = ({ data, show, ToggleMegaMenu }) => {
     <Wrapper
       className="mega-menu"
       show={show}
+      opacity={"0.7"}
       onClick={() => ToggleMegaMenu("Our Work")}
     >
       <Grid
@@ -329,21 +331,59 @@ const OurWorkMegaMenu = ({ data, show, ToggleMegaMenu }) => {
   );
 };
 
+const PublicationsMenu = ({ data, show, ToggleMegaMenu }) => {
+  return (
+    <Wrapper
+      width={"max-content"}
+      left={"53%"}
+      show={show}
+      opacity={"0.8"}
+      onClick={() => ToggleMegaMenu("Publications")}
+      style={{ padding: "1rem 2rem", height: "auto" }}
+    >
+      <PublicationSubmenu>
+        {data.map(({ name, href }) => {
+          return (
+            <MenuItem key={name}>
+              <MenuLink link={href}>
+                <span>{name}</span>
+              </MenuLink>
+            </MenuItem>
+          );
+        })}
+      </PublicationSubmenu>
+    </Wrapper>
+  );
+};
+
 const Menu = ({ options, currentPageLink, submenu }) => {
   const [showAboutMegaMenu, setShowAboutMegaMenu] = useState(false);
   const [showWorkMegaMenu, setShowWorkMegaMenu] = useState(false);
+  const [showPublicationsMegaMenu, setShowPublicationsMegaMenu] =
+    useState(false);
 
   const ToggleMegaMenu = (name) => {
     if (name === "Know Us") {
-      if (showWorkMegaMenu === true) {
-        setShowWorkMegaMenu(false);
+      if (showWorkMegaMenu) {
+        setShowWorkMegaMenu(!showWorkMegaMenu);
+      } else if (showPublicationsMegaMenu) {
+        setShowPublicationsMegaMenu(!showPublicationsMegaMenu);
       }
       setShowAboutMegaMenu(!showAboutMegaMenu);
     } else if (name === "Our Work") {
-      if (showAboutMegaMenu === true) {
-        setShowAboutMegaMenu(false);
+      if (showAboutMegaMenu) {
+        setShowAboutMegaMenu(!showAboutMegaMenu);
+      } else if (showPublicationsMegaMenu) {
+        setShowPublicationsMegaMenu(!showPublicationsMegaMenu);
       }
       setShowWorkMegaMenu(!showWorkMegaMenu);
+    } else if (name === "Publications") {
+      if (showAboutMegaMenu) {
+        setShowAboutMegaMenu(!showAboutMegaMenu);
+      } else if (showWorkMegaMenu) {
+        setShowWorkMegaMenu(!showWorkMegaMenu);
+      }
+      setShowPublicationsMegaMenu(!showPublicationsMegaMenu);
     }
   };
 
@@ -365,7 +405,6 @@ const Menu = ({ options, currentPageLink, submenu }) => {
             {submenu && (
               <DropDownIcon
                 size={"3rem"}
-                // onMouseEnter={() => ToggleMegaMenu(name)}
                 onClick={() => ToggleMegaMenu(name)}
               />
             )}
@@ -380,6 +419,12 @@ const Menu = ({ options, currentPageLink, submenu }) => {
                 <OurWorkMegaMenu
                   data={submenu}
                   show={showWorkMegaMenu}
+                  ToggleMegaMenu={ToggleMegaMenu}
+                />
+              ) : name === "Publications" ? (
+                <PublicationsMenu
+                  data={submenu}
+                  show={showPublicationsMegaMenu}
                   ToggleMegaMenu={ToggleMegaMenu}
                 />
               ) : null)}
@@ -468,4 +513,12 @@ const DropDownIcon = styled(HiChevronDown)`
     transition: all 0.4s ease-out;
     outline: none;
   }
+`;
+
+const PublicationSubmenu = styled.ul`
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;

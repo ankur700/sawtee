@@ -136,6 +136,48 @@ const settings = {
             {
               name: "Publications",
               href: "/publications/",
+              submenu: [
+                {
+                  name: "Trade Insight",
+                  href: "#",
+                },
+                {
+                  name: "Discussion Papers",
+                  href: "#",
+                },
+                {
+                  name: "Policy Brief",
+                  href: "#",
+                },
+                {
+                  name: "Briefing Paper",
+                  href: "#",
+                },
+                {
+                  name: "Issue Paper",
+                  href: "#",
+                },
+                {
+                  name: "Working Paper",
+                  href: "#",
+                },
+                {
+                  name: "Books",
+                  href: "#",
+                },
+                {
+                  name: "Others",
+                  href: "#",
+                },
+                {
+                  name: "Research Briefs",
+                  href: "#",
+                },
+                {
+                  name: "Book Chapters",
+                  href: "#",
+                },
+              ],
             },
             {
               name: "Events",

@@ -14,6 +14,7 @@ import PageError from "./page-error";
 import Home from "./home/home";
 import Page from "./page";
 import Publication from "./publication/publication";
+import OurWork from "./OurWork/OurWork";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -61,7 +62,7 @@ const Theme = ({ state }) => {
             <Archive when={data.isArchive} />
             <Home when={data.isHome} />
             <Publication when={data.route === "/publications/"} />
-
+            <OurWork when={data.route === "/our-work/"} />
             <Page when={data.isPage} />
 
             <Post when={data.isPostType} />
