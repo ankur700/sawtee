@@ -198,7 +198,6 @@ const Publication = ({ state, actions, libraries }) => {
           {/* <PostMeta item={post} /> */}
         </SectionContainer>
       </Header>
-
       <Grid styles={PublicationGridStyles}>
         <GridItem styles={CarouselGridSection}>
           <Section>
@@ -317,11 +316,10 @@ const Header = styled(PostHeader)`
   @media (min-width: 700px) {
     padding: 8rem 0;
   }
-  min-height: 385px;
   > div {
     position: absolute;
     margin: 0;
-    left: 275px;
+    left: 10rem;
     bottom: 0;
     width: max-content;
 
@@ -353,8 +351,7 @@ const FeaturedImage = styled(FeaturedMedia)`
   }
   & img {
     width: 100%;
-    height: auto;
-    max-height: 390px;
+    height: 390px;
     object-fit: cover;
     display: block;
   }
