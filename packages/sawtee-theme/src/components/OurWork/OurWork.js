@@ -8,6 +8,9 @@ import {
   PostCaption,
   SectionContainer,
 } from "../page/post-item";
+import Grid, { GridItem } from "../reusable/grid/grid";
+import TI_IMAGE from "../../assets/publications-2.jpg";
+import Globe from "../../assets/Article-1_img_1.jpg";
 
 /**
  * The Post component that the TwentyTwenty theme uses for rendering any kind of
@@ -108,6 +111,54 @@ const OurWork = ({ state, actions, libraries }) => {
               })}
             </ul>
           </div>
+          <div className="intro">
+            {/* <div className="blob"> </div> */}
+            <p>
+              Description about our work such as: In order to complement the
+              efforts of South Asian governments and stakeholders, and to bring
+              to the fore the views and concerns of the marginalized and poor
+              segments of society, South Asia Watch on Trade, Economics and
+              Environment (SAWTEE) was launched in 1994 as a loose regional
+              network of non-governmental organizations (NGOs) from five South
+              Asian countries: Bangladesh, India, Nepal, Pakistan and Sri Lanka.
+              Taking into consideration the emerging need for fair, effective
+              and meaningful integration of South Asian countries into the
+              regional as well as global economies, the major motto of this
+              regional initiative has been “GLOBALIZATION YES, BUT WITH SAFETY
+              NETS”.
+            </p>
+          </div>
+          <div className="cards">
+            <div className="card" style={{ backgroundImage: `url(${Globe})` }}>
+              <div>
+                <h4 className="title"> Our Programmes</h4>
+                <p className="content">
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                  sea takimata sanctus est
+                </p>
+              </div>
+            </div>
+            <div
+              className="card"
+              style={{
+                backgroundImage: `url(${TI_IMAGE})`,
+              }}
+            >
+              <div>
+                <h4 className="title">Research</h4>
+                <p className="content">
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                  sea takimata sanctus est
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </Wrapper>
     </PostArticle>
@@ -171,25 +222,30 @@ const FeaturedImage = styled(FeaturedMedia)`
 `;
 
 const Wrapper = styled.section`
-  padding: 0;
+  padding: 0 4rem 2rem;
   background-color: #828990;
 
   & .inner {
-    max-width: 75%;
+    max-width: 90%;
     margin: 0 auto;
     background-color: transparent;
+
+    @media (min-width: 1200px) {
+      max-width: 80%;
+    }
 
     & .top-section {
       background-color: hsla(255, 100%, 100%, 0.3);
       padding: 2rem;
+      margin-bottom: 2rem;
 
       & ul {
         list-style: none;
         margin: 0;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         grid-auto-rows: minmax(30px, auto);
-        gap: 2rem;
+        gap: 1.5rem;
         justify-items: center;
 
         & li {
@@ -204,6 +260,107 @@ const Wrapper = styled.section`
 
             &:hover {
               text-decoration: underline;
+              color: #006181;
+            }
+          }
+        }
+      }
+    }
+    & .intro {
+      background-color: transparent;
+      padding: 1rem 3rem;
+      margin: 2rem auto;
+      text-align: left;
+      color: #000;
+      font-size: 2.25rem;
+      position: relative;
+
+      // & .blob {
+      //   width: 1000px;
+      //   position: absolute;
+      //   top: 0;
+      //   left: 0;
+      //   height: 1000px;
+      //   background-size: cover;
+      //   background-repeat: no-repeat;
+      //   background-image: url("data:image/svg+xml;utf8, %3Csvg width=%22100%25%22 height=%22100%25%22 viewBox=%220 0 1000 1000%22 xmlns=%22http:%2F%2Fwww.w3.org%2F2000%2Fsvg%22 %3E %3Cdefs%3E %3CclipPath id=%22shape%22%3E %3Cpath fill=%22currentColor%22 d=%22M636.5%2C681.5Q290%2C863%2C283.5%2C488.5Q277%2C114%2C630%2C307Q983%2C500%2C636.5%2C681.5Z%22%3E%3C%2Fpath%3E %3C%2FclipPath%3E %3C%2Fdefs%3E %3Cg clip-path=%22url(%23shape)%22%3E %3Cpath fill=%22%23444cf7%22 d=%22M636.5%2C681.5Q290%2C863%2C283.5%2C488.5Q277%2C114%2C630%2C307Q983%2C500%2C636.5%2C681.5Z%22 %2F%3E %3C%2Fg%3E %3C%2Fsvg%3E");
+      // }
+
+      @media (max-width: 992px) {
+        font-size: 1.75rem;
+      }
+    }
+
+    & .cards {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      @media (max-width: 992px) {
+        flex-direction: column;
+        > .card {
+          width: 100% !important;
+        }
+      }
+
+      & .card {
+        position: relative;
+        border-radius: 20px;
+        max-width: 700px;
+        width: 50%;
+        height: 600px;
+        border: 3px solid #000;
+        overflow: hidden;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        background-blend-mode: multiply;
+        background-color: darkgrey;
+
+        & div {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          cursor: pointer;
+          &:hover {
+            backdrop-filter: blur(2px);
+            transition: all 0.4s ease;
+            .title {
+              background-color: hsla(195, 100%, 25%, 0.6);
+            }
+            > p {
+              visibility: visible;
+              background-color: hsla(0, 17%, 95%, 0.6);
+            }
+          }
+
+          & .title {
+            text-transform: uppercase;
+            color: #f5f1f1;
+            height: 25%;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+            margin: 0;
+          }
+
+          & .content {
+            padding: 0 6rem;
+            align-self: center;
+            visibility: hidden;
+            height: 75%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: justify;
+            margin: 0;
+            font-size: 2.5rem;
+
+            @media (max-width: 1140px) {
+              font-size: 2.25rem;
             }
           }
         }

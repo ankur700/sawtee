@@ -92,32 +92,31 @@ const Card = styled.a`
     flex-direction: column;
     justify-content: space-between;
     gap: 1.5rem;
-  }
 
-  & h3 {
-    font-size: 20px;
-    margin: 0;
-    color: #333;
-    line-height: 1.4;
-  }
+    & h3 {
+      font-size: 20px;
+      margin: 0;
+      color: #333;
+      line-height: 1.4;
+    }
 
-  & p {
-    // flex: 1;
-    line-height: 1.4;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+    & p {
+      line-height: 1.4;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
-  & span {
-    font-size: 12px;
-    font-weight: bold;
-    color: #999;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin: 2em 0 0 0;
+    & span {
+      font-size: 12px;
+      font-weight: bold;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin: 2em 0 0 0;
+    }
   }
 
   & .thumb {

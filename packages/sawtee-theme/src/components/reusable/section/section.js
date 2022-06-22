@@ -16,6 +16,7 @@ const Section = ({ children, styles, border }) => {
 const Wrapper = styled.section`
   width: 100%;
   display: flex;
+  overflow: hidden;
 `;
 
 export default Section;

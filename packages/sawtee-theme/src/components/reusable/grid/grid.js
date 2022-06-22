@@ -1,9 +1,8 @@
 import { styled, css } from "frontity";
 
-const Grid = ({ overflow, columns, rows, rowsauto, children, styles }) => {
+const Grid = ({ columns, rows, rowsauto, children, styles }) => {
   return (
     <Section
-      overflow={overflow}
       columns={columns}
       rows={rows}
       rowsauto={rowsauto}
@@ -18,7 +17,6 @@ const Grid = ({ overflow, columns, rows, rowsauto, children, styles }) => {
 
 const Section = styled.div`
   display: grid;
-  overflow: ${(props) => props.overflow || "hidden"};
   grid-template-columns: ${(props) => props.columns};
   grid-auto-rows: ${(props) => props.rowsauto && props.rowsauto};
   grid-template-rows: ${(props) => props.rows && props.rows};

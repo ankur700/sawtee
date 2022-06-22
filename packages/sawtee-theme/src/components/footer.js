@@ -314,7 +314,7 @@ const PoweredBy = styled.p`
 
 const WidgetList = styled.ul`
   list-style: none;
-  color: #fff;
+  color: #eee;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -329,7 +329,7 @@ const ListItem = styled.li`
 const AwesomeLink = styled.a`
   text-decoration: none;
   font-size: 1.5rem;
-  color: #fff;
+  color: #eee;
   & span {
     position: relative;
   }
@@ -352,7 +352,7 @@ const AwesomeLink = styled.a`
 `;
 
 const Title = styled.p`
-  color: #7fc4fd;
+  color: hsla(195, 100%, 75%, 1);
   font-size: 1.5rem;
   font-family: monospace;
 `;
@@ -390,11 +390,11 @@ const Input = styled.input`
   font-family: monospace;
   font-size: inherit;
   padding: 0 2rem;
-  color: #fff;
+  color: #f5f1f1;
   background-color: transparent;
-  border-bottom: 0.125rem solid #fff;
+  border-bottom: 0.125rem solid #f5f1f1;
   ::placeholder {
-    color: #fff;
+    color: #f5f1f1;
     font-size: inherit;
   }
 
@@ -402,13 +402,9 @@ const Input = styled.input`
   :active,
   :focus-within {
     border: none;
-    color: #fff;
-    border-bottom: 0.125rem solid #000;
+    color: #f5f1f1;
+    border-bottom: 0.125rem solid #f5f1f1;
     outline: none;
-
-    ::placeholder {
-      color: #000;
-    }
   }
   @media (min-width: 768px) {
     width: calc(100% - 100px);
@@ -416,19 +412,19 @@ const Input = styled.input`
 `;
 
 const SubscribeButton = styled.button`
-  background: #fff;
-  padding: 1rem 2rem;
-  color: #006181;
+  background-color: transparent;
+  color: #f5f1f1;
   text-align: center;
   cursor: pointer;
   font-weight: 600;
   font-size: inherit;
   height: 4rem;
   width: 130px;
+  border: 2px solid #f5f1f1;
 
   :hover {
-    background: #000;
-    color: #fff;
+    background-color: hsla(0, 0%, 0%, 0.9);
+    color: #eee;
     transition: background-color 0.4s ease;
   }
   @media (min-width: 768px) {

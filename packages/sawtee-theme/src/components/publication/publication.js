@@ -386,7 +386,6 @@ const PublicationGridStyles = `
   grid-gap: 1rem;
   padding: 1.5rem 3rem;
   background-color: #828990;
-  align-items: start;
 `;
 
 const CarouselGridSection = `
@@ -400,6 +399,9 @@ const SideBarGridSection = `
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  position: sticky;
+  top: 12rem;
+  align-self: start;
 `;
 
 const Title = styled.h3`
