@@ -194,11 +194,12 @@ export const PostInner = styled(SectionContainer)`
   @media (min-width: 700px) {
     padding-top: 8rem;
   }
+  max-width: 80rem;
 `;
 
 export const EntryContent = styled.div`
   line-height: 1.5;
-  max-width: 58rem;
+  max-width: 80rem;
   font-family: "Hoefler Text", Garamond, "Times New Roman", serif;
   letter-spacing: normal;
 

@@ -193,7 +193,7 @@ const settings = {
             primary: "#006181",
             headerBg: "#D9DAE1",
             footerBg: "#006181",
-            bodyBg: "AliceBlue",
+            bodyBg: "hsla(210, 6%, 54%, 1)",
           },
           showSearchInHeader: true,
           // State for the menu on mobile

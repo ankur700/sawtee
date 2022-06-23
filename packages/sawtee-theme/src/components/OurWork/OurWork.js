@@ -129,7 +129,11 @@ const OurWork = ({ state, actions, libraries }) => {
             </p>
           </div>
           <div className="cards">
-            <div className="card" style={{ backgroundImage: `url(${Globe})` }}>
+            <a
+              className="card"
+              href="/programmes/"
+              style={{ backgroundImage: `url(${Globe})` }}
+            >
               <div>
                 <h4 className="title"> Our Programmes</h4>
                 <p className="content">
@@ -140,9 +144,10 @@ const OurWork = ({ state, actions, libraries }) => {
                   sea takimata sanctus est
                 </p>
               </div>
-            </div>
-            <div
+            </a>
+            <a
               className="card"
+              href="/research-output/"
               style={{
                 backgroundImage: `url(${TI_IMAGE})`,
               }}
@@ -157,7 +162,7 @@ const OurWork = ({ state, actions, libraries }) => {
                   sea takimata sanctus est
                 </p>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </Wrapper>
@@ -222,22 +227,33 @@ const FeaturedImage = styled(FeaturedMedia)`
 `;
 
 const Wrapper = styled.section`
-  padding: 0 4rem 2rem;
-  background-color: #828990;
+  padding: 2rem 4rem;
+  // background-color: hsla(210, 6%, 54%, 1);
 
   & .inner {
     max-width: 90%;
     margin: 0 auto;
     background-color: transparent;
+    display: flex;
+    flex-direction: column;
 
     @media (min-width: 1200px) {
       max-width: 80%;
     }
 
     & .top-section {
-      background-color: hsla(255, 100%, 100%, 0.3);
+      background-color: hsla(0, 0%, 0%, 0.2);
       padding: 2rem;
       margin-bottom: 2rem;
+      border-radius: 15px;
+      background: hsla(210, 6%, 54%, 0.6);
+      box-shadow: inset 7px 7px 14px #555a5e, inset -7px -7px 14px #b1bac4;
+      backdrop-filter: blur(5px);
+      z-index: 99;
+      @media (min-width: 1140px) {
+        position: sticky;
+        top: 10rem;
+      }
 
       & ul {
         list-style: none;
@@ -249,14 +265,13 @@ const Wrapper = styled.section`
         justify-items: center;
 
         & li {
-          color: #fff;
           text-transform: capitalize;
-          font-size: 2rem;
+          font-size: 1.75rem;
           text-align: center;
 
           & a {
             text-decoration: none;
-            color: #fff;
+            color: #f5f1f1;
 
             &:hover {
               text-decoration: underline;
@@ -294,6 +309,7 @@ const Wrapper = styled.section`
     & .cards {
       display: flex;
       gap: 0.5rem;
+      margin: 2rem 0;
       justify-content: center;
       @media (max-width: 992px) {
         flex-direction: column;
@@ -326,13 +342,14 @@ const Wrapper = styled.section`
           cursor: pointer;
           &:hover {
             backdrop-filter: blur(2px);
-            transition: all 0.4s ease;
             .title {
               background-color: hsla(195, 100%, 25%, 0.6);
+              transition: background-color 0.4s ease-in;
             }
             > p {
               visibility: visible;
               background-color: hsla(0, 17%, 95%, 0.6);
+              transition: all 0.4s ease-in;
             }
           }
 

@@ -83,6 +83,12 @@ const documentSetup = (colors) => css`
     font-size: 1.8rem;
     letter-spacing: -0.015em;
     text-align: left;
+
+    & h1,
+    h2,
+    h3 {
+      color: #fff;
+    }
   }
 
   *,
@@ -570,8 +576,6 @@ const tableStyles = (colors) => css`
     font-weight: 700;
   }
 `;
-
-
 
 /**
  * Global styles for the TwentyTwenty theme.

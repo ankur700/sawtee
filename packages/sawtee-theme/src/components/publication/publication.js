@@ -385,7 +385,7 @@ const PublicationGridStyles = `
   grid-auto-rows: minmax(100px, auto);
   grid-gap: 1rem;
   padding: 1.5rem 3rem;
-  background-color: #828990;
+  // background-color: #828990;
 `;
 
 const CarouselGridSection = `
