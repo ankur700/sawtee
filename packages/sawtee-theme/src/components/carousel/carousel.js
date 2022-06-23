@@ -18,24 +18,24 @@ export default ({ data, slidesToShow, title, enableCaption, dots }) => {
     setActiveItemIndex(newIndex);
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!paused) {
-        updateIndex(activeItemIndex + 1);
-        if (activeItemIndex === data.length - 1) {
-          updateIndex(0);
-        } else {
-          updateIndex(activeItemIndex + 1);
-        }
-      }
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (!paused) {
+  //       updateIndex(activeItemIndex + 1);
+  //       if (activeItemIndex === data.length - 1) {
+  //         updateIndex(0);
+  //       } else {
+  //         updateIndex(activeItemIndex + 1);
+  //       }
+  //     }
+  //   }, 3000);
 
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
-  });
+  //   return () => {
+  //     if (interval) {
+  //       clearInterval(interval);
+  //     }
+  //   };
+  // });
   return (
     <Wrapper
       onMouseEnter={() => setPaused(true)}
@@ -121,6 +121,8 @@ const CarouselItem = styled.div`
   color: #fff;
   position: relative;
   height: calc(100vh - 10.25rem);
+  display: flex;
+  justify-content: center;
 
   & .after {
     display: block;
@@ -184,17 +186,12 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   bottom: 15%;
-  z-index: 99;
+  // z-index: 99;
   word-break: break-word;
   padding: 0 2.5rem;
   width: 100%;
-  // color: hsla(195, 100%, 25%, 0.8);
   color: #fff;
   & p {
-    // -webkit-backdrop-filter: blur(5px);
-    // backdrop-filter: blur(5px);
-    // background-color: rgba(255, 255, 255, 0.3);
-    // background-color: hsla(195, 100%, 25%, 0.3);
     width: fit-content;
     margin: 0 auto;
   }
@@ -226,10 +223,10 @@ const Caption = styled.p`
 
 const Indicators = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   position: absolute;
+  width: 100%;
   bottom: 5%;
-  left: 45%;
   gap: 1rem;
 
   @media (max-width: 762px) {
@@ -238,11 +235,11 @@ const Indicators = styled.div`
 `;
 
 const RoundButtons = styled.button`
-  height: 0.5rem;
-  width: 0.5rem;
+  height: 5px;
+  width: 5px;
   border-radius: 50%;
   color: #fff;
-  padding: 0.5rem;
+  padding: 0.25rem;
   display: flex;
   cursor: pointer;
   border: ${(props) =>

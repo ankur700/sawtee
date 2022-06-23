@@ -232,7 +232,7 @@ const Container = styled.div`
 
 const TopFooter = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, minmax(250px, auto));
+  grid-template-columns: repeat(4, minmax(350px, auto));
   grid-auto-rows: minmax(max-content, auto);
   background: #006181;
   padding: 4rem 8rem;

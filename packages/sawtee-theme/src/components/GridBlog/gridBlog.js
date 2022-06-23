@@ -66,15 +66,16 @@ const Card = styled.a`
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  overflow: hidden;
 
   // sets up hover state
   position: relative;
   top: 0;
-  transition: all 0.1s ease-in;
 
   &:hover {
     top: -2px;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.1s ease-in;
   }
 
   &:hover article > h3 {
@@ -126,6 +127,7 @@ const Card = styled.a`
 
     &:hover {
       transform: scale(1.08);
+      transition: transform 0.4s ease-out;
     }
   }
 `;

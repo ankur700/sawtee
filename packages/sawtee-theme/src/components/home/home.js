@@ -112,6 +112,7 @@ const Home = ({ state }) => {
 
   const TwitterSectionStyles = `
     border-bottom: 2px solid #707070;
+    background-color: #fff;
 
   `;
 
@@ -157,6 +158,7 @@ const Home = ({ state }) => {
     padding: 2rem 4rem;
     border-top: 2px solid #707070;
     flex-direction: column;
+    background-color: #fff;
 
     & h3 {
       font-size: 4rem;
@@ -225,7 +227,7 @@ const Home = ({ state }) => {
           <GridItem
             column={"1/3"}
             row={"1/2"}
-            bg={"transparent"}
+            bg={"white"}
             styles={Visualizer}
           >
             <Chart />
@@ -233,11 +235,11 @@ const Home = ({ state }) => {
           <GridItem
             column={"3/4"}
             row={"1/2"}
-            bg={"transparent"}
+            bg={"white"}
             styles={TwitterBox}
           >
             {/* <Title>{"Track SAWTEE on TWITTER"}</Title> */}
-            <TwitterTimeline height="600px" width="100%" handle="sawteenp" />
+            <TwitterTimeline height="700px" width="100%" handle="sawteenp" />
           </GridItem>
         </Grid>
       </Section>

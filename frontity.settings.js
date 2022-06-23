@@ -191,9 +191,9 @@ const settings = {
               lighter: "#F5EFE0",
             },
             primary: "#006181",
-            headerBg: "#D9DAE1",
+            headerBg: "white",
             footerBg: "#006181",
-            bodyBg: "hsla(210, 6%, 54%, 1)",
+            bodyBg: "gainsboro",
           },
           showSearchInHeader: true,
           // State for the menu on mobile

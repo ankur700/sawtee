@@ -73,7 +73,7 @@ const KnowUs = ({ state, actions, libraries }) => {
         <PostInner size="thin">
           <EntryContent>
             {/* <Html2React html={post.content.rendered} /> */}
-            <Section>
+            <Section id="Genesis">
               <h2>Genesis</h2>
               <p>
                 Beginning the mid-1980s, most countries, across all regions of
@@ -115,7 +115,7 @@ const KnowUs = ({ state, actions, libraries }) => {
                 international levels.
               </p>
             </Section>
-            <Section>
+            <Section id="registration">
               <h2>Registration and Recognition</h2>
               <p>
                 SAWTEE was registered with the District Administration Office,
@@ -137,7 +137,7 @@ const KnowUs = ({ state, actions, libraries }) => {
                 rights and food security issues.
               </p>
             </Section>
-            <Section>
+            <Section id="VGO">
               <h2>Vision, Goal and Objectives</h2>
               <div className="tabs">
                 <input
@@ -203,19 +203,19 @@ const KnowUs = ({ state, actions, libraries }) => {
               <h2>Strategies</h2>
               <ul>
                 <li>
-                  <a>Policy research</a>
+                  <a href="#">Policy research</a>
                 </li>
                 <li>
-                  <a>Advocacy</a>
+                  <a href="#">Advocacy</a>
                 </li>
                 <li>
-                  <a>Capicity Building</a>
+                  <a href="#">Capicity Building</a>
                 </li>
                 <li>
-                  <a>Sensitization</a>
+                  <a href="#">Sensitization</a>
                 </li>
                 <li>
-                  <a>Networking and alliance building</a>
+                  <a href="#">Networking and alliance building</a>
                 </li>
               </ul>
             </Section>
@@ -344,25 +344,30 @@ export default connect(KnowUs);
 const Header = styled(PostHeader)`
   background-color: #fff;
   margin: 0;
-  padding: 4rem 0;
+  padding: 4rem 2rem 0;
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: flex-end;
   height: 390px;
   @media (min-width: 700px) {
-    padding: 8rem 0;
+    padding: 8rem 4rem 0;
   }
-  min-height: 385px;
   > div {
     position: absolute;
+    display: flex;
+    justify-content: flex-start;
     margin: 0;
-    left: 275px;
-    bottom: 0;
-    width: max-content;
+    width: 100%;
+
+    @media (min-width: 992px) {
+      h1 {
+        width: 80rem;
+      }
+    }
 
     > h1 {
       color: #fff;
-      font-size: 2.5em;
       text-transform: uppercase;
     }
   }
@@ -378,18 +383,17 @@ const FeaturedImage = styled(FeaturedMedia)`
   width: 100%;
   left: 0;
   top: 0;
-  max-height: 100%;
 
   > div {
     position: relative;
     width: 100% !important;
     max-width: 100%;
     margin: 0;
+    height: 390px;
   }
   & img {
     width: 100%;
-    height: auto;
-    max-height: 390px;
+    height: 100%;
     object-fit: cover;
     display: block;
   }
@@ -399,8 +403,26 @@ const Section = styled.section`
   display: block;
   margin: 4rem auto;
 
+  h2 {
+    color: #006181;
+  }
+  h3 {
+    color: #333;
+  }
+  a {
+    text-decoration: none;
+    letter-spacing: 2px;
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-style: dotted;
+      text-decoration-color: #000;
+    }
+  }
+
   & p {
-    font-weight: 600 !important;
+    // font-weight: 600 !important;
+    font-style: bold;
   }
 
   .tabs {
@@ -418,7 +440,7 @@ const Section = styled.section`
     padding: 1rem 2rem;
     margin-right: 0.2rem;
     cursor: pointer;
-    background-color: #fff;
+    background-color: transparent;
     font-weight: bold;
     transition: background ease 0.3s;
     border: 1px solid #000;
@@ -431,7 +453,7 @@ const Section = styled.section`
     height: 100%;
     display: none;
     padding: 1rem;
-    background: #fff;
+    background: transparent;
     padding: 20px;
     box-shadow: -10px 10px 0px 0px rgba(0, 0, 0, 1);
     & p {
@@ -446,6 +468,7 @@ const Section = styled.section`
   .tabs input[type="radio"]:checked + label {
     background: #006181;
     border: none;
+    color: #fff;
   }
 
   .tabs input[type="radio"]:checked + label + .tab {
