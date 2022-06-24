@@ -30,7 +30,7 @@ const Experts = [
 
 const AboutMegaGridStyles = `
 grid-template-columns: minmax(350px, 20%) 1fr;
-grid-template-rows: repeat(2, minmax(500px , 40%));
+grid-template-rows: repeat(2, minmax(300px , 30%));
 gap: 4rem;
 
 @media (min-width:1500px){
@@ -50,9 +50,8 @@ const ExpertStyles = `
   grid-row: 2/3;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
   gap: 2rem;
-  justify-content: center;
+  justify-content: flex-start;
 
   @media (min-width:1500px){
     grid-column: 3/4;
@@ -74,6 +73,8 @@ const AboutSectionGridSyles = `
   align-items: center;
   max-height: 500px;
   border: 1px solid hsla(0, 0%, 44%, 1);
+  border-radius: 15px;
+  overflow: hidden;
 
   @media (min-width: 1500px) {
     grid-column: 2/3;
@@ -114,13 +115,10 @@ const MenuNav = styled.nav`
 const MenuItem = styled.li`
   display: flex;
   font-size: 1.5rem;
-  line-height: 1.2;
+  line-height: 1.5;
   width: max-content;
   overflow: hidden;
   padding: 0.75rem;
-  // @media (min-width: 1220px) {
-  //   margin: 0.8rem 0 0 2.5rem !important;
-  // }
 `;
 
 const Wrapper = styled.div`
@@ -132,7 +130,7 @@ const Wrapper = styled.div`
   padding: 3rem 6rem;
   background-color: hsla(195, 100%, 25%, ${(props) => props.opacity || "1"});
   backdrop-filter: blur(5px);
-  min-height: 55rem;
+  height: auto;
   display: flex;
   align-items: center;
 
@@ -144,7 +142,7 @@ const Wrapper = styled.div`
 const StyledMenu = styled.ul`
   display: flex;
   flex-direction: ${({ submenu }) => submenu && "column"};
-  gap: ${({ submenu }) => submenu && "3rem"};
+  gap: ${({ submenu }) => submenu && "1rem"};
   font-weight: 500;
   margin: 0;
   flex-wrap: nowrap;
@@ -157,6 +155,9 @@ const StyledMenu = styled.ul`
     margin-right: 0px;
     margin-bottom: 0px;
     margin-left: -2.5rem;
+  }
+  @media (min-width: 1500px) {
+    gap: ${({ submenu }) => submenu && "3rem"};
   }
 `;
 
@@ -176,7 +177,7 @@ const MenuLink = styled(Link)`
     height: 2px;
     background: ${(props) => props.bg || "#fff"};
     position: absolute;
-    top: 22px;
+    top: 20px;
     left: 0;
     transition: all 0.3s ease-in;
   }
@@ -189,7 +190,7 @@ const MenuLink = styled(Link)`
 
 const TextContent = styled.p`
   color: hsla(0, 17%, 95%, 1);
-  font-size: 2rem;
+  font-size: 1.25rem;
   text-align: left;
   word-break: break-word;
   position: absolute;
@@ -197,17 +198,17 @@ const TextContent = styled.p`
   z-index: 99;
   line-height: 1.8;
 
-  @media (max-width: 762px) {
-    font-size: 1rem;
+  @media (min-width: 1140px) {
+    font-size: 1.75rem;
   }
 `;
 
 const ExpertCard = styled.div`
-  padding: 1.25rem 0.75rem;
+  padding: 1.5rem 0 0;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 180px;
+  width: 16rem;
   background-color: hsla(255, 255, 255, 0.4);
   backdrop-filter: blur(5px);
   align-items: center;
@@ -215,6 +216,7 @@ const ExpertCard = styled.div`
   border-radius: 10px;
   justify-content: space-between;
   border: 1px solid hsla(0, 0%, 44%, 1);
+  overflow: hidden;
 
   & img {
     display: block;
@@ -229,6 +231,7 @@ const ExpertCard = styled.div`
     flex-direction: column;
     background-color: hsla(0, 0%, 0%, 0.4);
     padding: 0.5rem;
+    width: 100%;
     justify-content: center;
     align-items: center;
     height: 5rem;

@@ -13,7 +13,7 @@ const MenuLink = styled(Link)`
   display: block;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.2rem;
   padding: 0.5rem 1rem;
   --c: #006181; /* the color  */
   --h: 1.8em; /* the height */
