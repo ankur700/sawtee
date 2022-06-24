@@ -8,7 +8,8 @@ import Image from "../reusable/image/image";
 import Grid, { GridItem } from "../reusable/grid/grid";
 import Chart from "../chart/chart";
 import GridBlog from "../GridBlog/gridBlog";
-import { HiArrowRight } from "react-icons/hi";
+import { HiArrowRight, HiChevronRight } from "react-icons/hi";
+import ViewAllBtn from "../reusable/ViewAllBtn/ViewAllBtn";
 import Image1 from "../../assets/1.jpg";
 import Image2 from "../../assets/2.jpg";
 import Image3 from "../../assets/3.jpg";
@@ -120,6 +121,7 @@ const Home = ({ state }) => {
     position: relative;
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     & .overlay {
         display: block;
@@ -224,20 +226,10 @@ const Home = ({ state }) => {
           rowsauto="minmax(500px, auto)"
           styles={InfoSectionStyles}
         >
-          <GridItem
-            column={"1/3"}
-            row={"1/2"}
-            bg={"white"}
-            styles={Visualizer}
-          >
+          <GridItem column={"1/3"} row={"1/2"} bg={"white"} styles={Visualizer}>
             <Chart />
           </GridItem>
-          <GridItem
-            column={"3/4"}
-            row={"1/2"}
-            bg={"white"}
-            styles={TwitterBox}
-          >
+          <GridItem column={"3/4"} row={"1/2"} bg={"white"} styles={TwitterBox}>
             {/* <Title>{"Track SAWTEE on TWITTER"}</Title> */}
             <TwitterTimeline height="700px" width="100%" handle="sawteenp" />
           </GridItem>
@@ -247,10 +239,7 @@ const Home = ({ state }) => {
         <SectionTop>
           <h3>Policy Outreach</h3>
           <a href="#">
-            <ViewButton>
-              {`View all `}
-              <HiArrowRight className="icon" />
-            </ViewButton>
+            <ViewAllBtn text={"View All"} />
           </a>
         </SectionTop>
         <GridBlog data={featuredEvents} />
@@ -321,12 +310,27 @@ const ViewButton = styled.button`
   line-height: 2rem;
   gap: 1rem;
   backdrop-filter: blur(5px);
-  background-color: hsla(195, 100%, 25%, 0.6);
+  border: 2px solid #000;
+
   &:hover {
     cursor: pointer;
+    background-color: #006181;
+    color: #fff;
+    border: none;
+    .icon-arrow {
+      visibility: visible;
+    }
+    .icon-chevron {
+      visibility: hidden;
+    }
+    transition: visibility 0.4s ease-in-out;
   }
 
-  &:hover .icon {
-    transform: translateX(10px);
+  .icon-arrow {
+    visibility: hidden;
+  }
+
+  .icon-chevron {
+    visibility: visible;
   }
 `;

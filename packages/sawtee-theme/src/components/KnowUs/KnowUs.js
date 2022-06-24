@@ -9,6 +9,8 @@ import {
   PostTitle,
   SectionContainer,
 } from "../page/post-item";
+import Link from "../link";
+import { HiOutlineExternalLink, HiOutlineLink } from "react-icons/hi";
 
 /**
  * The Post component that the TwentyTwenty theme uses for rendering any kind of
@@ -47,6 +49,78 @@ const KnowUs = ({ state, actions, libraries }) => {
    */
   const categories =
     post.categories && post.categories.map((catId) => allCategories[catId]);
+
+  const Members = [
+    {
+      country: "Bangladesh",
+      institutions: [
+        {
+          name: "Bangladesh Environmental Lawyers’ Association (BELA), Dhaka",
+          link: "http://www.belabangla.org/",
+        },
+        {
+          name: "Unnayan Shamannay, Dhaka",
+          link: "https://www.unsy.org/",
+        },
+      ],
+    },
+    {
+      country: "India",
+      institutions: [
+        {
+          name: "Citizen consumer and civic Action Group (CAG), Chennai",
+          link: "http://www.cag.org.in/",
+        },
+        {
+          name: "Consumer Unity & Trust Society (CUTS), Jaipur",
+          link: "http://www.cuts-international.org/",
+        },
+        {
+          name: "Development Research and Action Group (DRAG), New Delhi",
+          link: "https://dragindia.org/",
+        },
+      ],
+    },
+    {
+      country: "Nepal",
+      institutions: [
+        {
+          name: "Society for Legal and Environmental Analysis and Development Research (LEADERS), Kathmandu",
+          link: "http://leadersnepal.org.np/",
+        },
+        {
+          name: "Forum for Protection of Public Interest (Pro Public), Kathmandu",
+          link: "http://www.propublic.org/",
+        },
+      ],
+    },
+    {
+      country: "Pakistan",
+      institutions: [
+        {
+          name: "Journalists for Democracy and Human Rights (JDHR), Islamabad",
+          link: "http://www.jdhr.org/",
+        },
+        {
+          name: "Sustainable Development Policy Institute (SDPI), Islamabad",
+          link: "http://www.sdpi.org/",
+        },
+      ],
+    },
+    {
+      country: "Sri Lanka",
+      institutions: [
+        {
+          name: "Institute of Policy Studies (IPS), Colombo",
+          link: "http://www.ips.lk/",
+        },
+        {
+          name: "Law & Society Trust (LST), Colombo",
+          link: "https://lstlanka.org/",
+        },
+      ],
+    },
+  ];
 
   useEffect(() => {
     actions.source.fetch("/");
@@ -261,76 +335,26 @@ const KnowUs = ({ state, actions, libraries }) => {
             </Section>
             <Section>
               <h2>Member Institutions</h2>
-              <h3>Bangladesh</h3>
-              <ol>
-                <li>
-                  <a href="http://www.belabangla.org/">
-                    Bangladesh Environmental Lawyers’ Association (BELA), Dhaka
-                  </a>
-                </li>
-                <li>
-                  <a href="https://www.unsy.org/">Unnayan Shamannay, Dhaka</a>
-                </li>
-              </ol>
-              <h3>India</h3>
-              <ol>
-                <li>
-                  <a href="http://www.cag.org.in">
-                    Citizen consumer and civic Action Group (CAG), Chennai
-                  </a>
-                </li>
-                <li>
-                  <a href="http://www.cuts-international.org">
-                    Consumer Unity &amp; Trust Society (CUTS), Jaipur
-                  </a>
-                </li>
-                <li>
-                  <a href="https://dragindia.org/">
-                    Development Research and Action Group (DRAG), New Delhi
-                  </a>
-                </li>
-              </ol>
-              <h3>Nepal</h3>
-              <ol>
-                <li>
-                  <a href="http://leadersnepal.org.np/">
-                    Society for Legal and Environmental Analysis and Development
-                    Research (LEADERS), Kathmandu
-                  </a>
-                </li>
-                <li>
-                  <a href="http://www.propublic.org">
-                    Forum for Protection of Public Interest (Pro Public),
-                    Kathmandu
-                  </a>
-                </li>
-              </ol>
-              <h3>Pakistan</h3>
-              <ol>
-                <li>
-                  <a href="http://www.jdhr.org">
-                    Journalists for Democracy and Human Rights (JDHR), Islamabad
-                  </a>
-                </li>
-                <li>
-                  <a href="http://www.sdpi.org">
-                    Sustainable Development Policy Institute (SDPI), Islamabad
-                  </a>
-                </li>
-              </ol>
-              <h3>Sri Lanka</h3>
-              <ol>
-                <li>
-                  <a href="http://www.ips.lk">
-                    Institute of Policy Studies (IPS), Colombo
-                  </a>
-                </li>
-                <li>
-                  <a href="https://lstlanka.org/">
-                    Law &amp; Society Trust (LST), Colombo
-                  </a>
-                </li>
-              </ol>
+
+              {Members.map(({ country, institutions }, i) => {
+                return (
+                  <div key={country}>
+                    <h3>{country}</h3>
+                    <ol className="members-list">
+                      {institutions.map((item, i) => {
+                        return (
+                          <li key={i} className="members-list-item">
+                            <ExternalLink link={item.link} target="__blank">
+                              {item.name}
+                              <HiOutlineExternalLink className="link-icon" />
+                            </ExternalLink>
+                          </li>
+                        );
+                      })}
+                    </ol>
+                  </div>
+                );
+              })}
             </Section>
           </EntryContent>
         </PostInner>
@@ -409,20 +433,10 @@ const Section = styled.section`
   h3 {
     color: #333;
   }
-  a {
-    text-decoration: none;
-    letter-spacing: 2px;
-    &:hover {
-      text-decoration: underline;
-      text-underline-offset: 4px;
-      text-decoration-style: dotted;
-      text-decoration-color: #000;
-    }
-  }
 
-  & p {
-    // font-weight: 600 !important;
-    font-style: bold;
+  & p,
+  ul {
+    font-weight: bold;
   }
 
   .tabs {
@@ -474,5 +488,23 @@ const Section = styled.section`
   .tabs input[type="radio"]:checked + label + .tab {
     display: block;
     margin-top: 2rem;
+  }
+`;
+
+const ExternalLink = styled(Link)`
+  text-decoration: none;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-style: dotted;
+    text-decoration-color: #000;
+  }
+
+  & .link-icon {
+    justify-self: flex-end;
   }
 `;
