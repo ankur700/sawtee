@@ -18,24 +18,24 @@ export default ({ data, slidesToShow, title, enableCaption, dots }) => {
     setActiveItemIndex(newIndex);
   };
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (!paused) {
-  //       updateIndex(activeItemIndex + 1);
-  //       if (activeItemIndex === data.length - 1) {
-  //         updateIndex(0);
-  //       } else {
-  //         updateIndex(activeItemIndex + 1);
-  //       }
-  //     }
-  //   }, 3000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!paused) {
+        updateIndex(activeItemIndex + 1);
+        if (activeItemIndex === data.length - 1) {
+          updateIndex(0);
+        } else {
+          updateIndex(activeItemIndex + 1);
+        }
+      }
+    }, 3000);
 
-  //   return () => {
-  //     if (interval) {
-  //       clearInterval(interval);
-  //     }
-  //   };
-  // });
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  });
   return (
     <Wrapper
       onMouseEnter={() => setPaused(true)}
@@ -130,7 +130,7 @@ const CarouselItem = styled.div`
     width: 100%;
     position: absolute;
     content: "";
-    background: hsl(0, 0%, 0%, 0.4);
+    background: hsl(0, 0%, 0%, 0.6);
   }
 `;
 

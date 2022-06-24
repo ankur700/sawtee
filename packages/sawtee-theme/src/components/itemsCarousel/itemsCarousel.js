@@ -35,7 +35,9 @@ export default ({ data, slidesToShow, slidesToScroll }) => {
         {data.map((item, i) => {
           return (
             <CarouselItem key={i}>
-              <CarouselImage src={item} alt={"image" + i} />
+              <a href={"#"}>
+                <CarouselImage src={item} alt={"image" + i} />
+              </a>
             </CarouselItem>
           );
         })}
