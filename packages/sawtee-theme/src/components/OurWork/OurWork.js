@@ -217,6 +217,16 @@ const FeaturedImage = styled(FeaturedMedia)`
     max-width: 100%;
     margin: 0;
   }
+
+  > div::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0, 0%, 0%, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   & img {
     width: 100%;
     height: auto;
@@ -242,18 +252,11 @@ const Wrapper = styled.section`
     }
 
     & .top-section {
-      background-color: hsla(0, 0%, 0%, 0.2);
       padding: 2rem;
       margin-bottom: 2rem;
       border-radius: 15px;
-      background: hsla(210, 6%, 54%, 0.6);
+      background: hsla(210, 6%, 54%, 0.7);
       box-shadow: inset 7px 7px 14px #555a5e, inset -7px -7px 14px #b1bac4;
-      backdrop-filter: blur(5px);
-      z-index: 99;
-      @media (min-width: 1140px) {
-        position: sticky;
-        top: 10rem;
-      }
 
       & ul {
         list-style: none;
@@ -266,40 +269,47 @@ const Wrapper = styled.section`
 
         & li {
           text-transform: capitalize;
-          font-size: 1.75rem;
+          font-size: 2.25rem;
           text-align: center;
 
           & a {
             text-decoration: none;
-            color: #f5f1f1;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.1rem;
 
             &:hover {
-              text-decoration: underline;
-              color: #006181;
+              color: #222;
             }
           }
         }
       }
     }
     & .intro {
-      background-color: transparent;
-      padding: 1rem 3rem;
+      background: rgb(220, 220, 220);
+      background: linear-gradient(
+        43deg,
+        rgba(220, 220, 220, 1) 0%,
+        rgba(0, 97, 129, 0.5) 100%,
+        rgba(34, 211, 238, 1) 100%
+      );
+
+      padding: 2rem 4rem;
       margin: 2rem auto;
       text-align: left;
-      color: #000;
+      color: #1f2937;
+      border-radius: 15px;
       font-size: 2.25rem;
       position: relative;
 
-      // & .blob {
-      //   width: 1000px;
-      //   position: absolute;
-      //   top: 0;
-      //   left: 0;
-      //   height: 1000px;
-      //   background-size: cover;
-      //   background-repeat: no-repeat;
-      //   background-image: url("data:image/svg+xml;utf8, %3Csvg width=%22100%25%22 height=%22100%25%22 viewBox=%220 0 1000 1000%22 xmlns=%22http:%2F%2Fwww.w3.org%2F2000%2Fsvg%22 %3E %3Cdefs%3E %3CclipPath id=%22shape%22%3E %3Cpath fill=%22currentColor%22 d=%22M636.5%2C681.5Q290%2C863%2C283.5%2C488.5Q277%2C114%2C630%2C307Q983%2C500%2C636.5%2C681.5Z%22%3E%3C%2Fpath%3E %3C%2FclipPath%3E %3C%2Fdefs%3E %3Cg clip-path=%22url(%23shape)%22%3E %3Cpath fill=%22%23444cf7%22 d=%22M636.5%2C681.5Q290%2C863%2C283.5%2C488.5Q277%2C114%2C630%2C307Q983%2C500%2C636.5%2C681.5Z%22 %2F%3E %3C%2Fg%3E %3C%2Fsvg%3E");
-      // }
+      p {
+        font-family: "Poppins", sans-serif;
+        text-align: justify;
+
+        @media (min-width: 700px) {
+          line-height: 1.8;
+        }
+      }
 
       @media (max-width: 992px) {
         font-size: 1.75rem;
@@ -338,6 +348,7 @@ const Wrapper = styled.section`
           left: 0;
           display: flex;
           flex-direction: column;
+          // font-family: "Poppins", sans-serif;
           height: 100%;
           cursor: pointer;
           &:hover {
@@ -369,6 +380,7 @@ const Wrapper = styled.section`
             align-self: center;
             visibility: hidden;
             height: 75%;
+            color: #000;
             display: flex;
             align-items: center;
             justify-content: center;

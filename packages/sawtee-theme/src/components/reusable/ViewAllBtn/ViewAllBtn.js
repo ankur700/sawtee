@@ -42,7 +42,7 @@ const ViewButton = styled.button`
     background-color: #333;
     color: #fff;
     border: none;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.2s ease-in-out;
     .icon {
       color: #fff;
     }

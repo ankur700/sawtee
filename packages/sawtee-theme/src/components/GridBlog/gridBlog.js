@@ -66,6 +66,7 @@ const Card = styled.a`
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  border-radius: 15px;
   overflow: hidden;
 
   // sets up hover state

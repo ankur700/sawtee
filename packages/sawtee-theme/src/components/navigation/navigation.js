@@ -143,7 +143,6 @@ const StyledMenu = styled.ul`
   display: flex;
   flex-direction: ${({ submenu }) => submenu && "column"};
   gap: ${({ submenu }) => submenu && "1rem"};
-  font-weight: 500;
   margin: 0;
   flex-wrap: nowrap;
   justify-content: flex-start;
@@ -163,8 +162,10 @@ const StyledMenu = styled.ul`
 
 const MenuLink = styled(Link)`
   display: block;
-  text-decoration: none;
+  text-decoration: none !important;
   text-transform: uppercase;
+  font-family: "Roboto", "Source Sans Pro";
+  font-weight: 600;
   font-size: 1.5rem;
   color: hsla(0, 17%, 95%, 1);
   & span {

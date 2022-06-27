@@ -131,7 +131,7 @@ const Publication = ({ state, actions, libraries }) => {
   const SIM = ({ data }) => {
     return (
       <Wrapper>
-        <Title color={state.theme.colors.primary}>Sawtee in Media</Title>
+        <Title>Sawtee in Media</Title>
         <ul>
           {data.map((event, index) => {
             return (
@@ -372,6 +372,16 @@ const FeaturedImage = styled(FeaturedMedia)`
     max-width: 100%;
     margin: 0;
   }
+
+  > div::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0, 0%, 0%, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   & img {
     width: 100%;
     height: 390px;
@@ -385,22 +395,6 @@ const Section = styled.section`
   width: 100%;
   margin: 0 auto;
   position: relative;
-
-  > button::after {
-    content: "";
-    background-color: hsla(195, 100%, 25%, 0.5);
-    width: 100%;
-    z-index: -1;
-    position: absolute;
-    height: 100%;
-    top: 7px;
-    left: 7px;
-  }
-
-  > button:hover::after {
-    top: 0px;
-    left: 0px;
-  }
 `;
 
 const PublicationGridStyles = `
@@ -457,7 +451,7 @@ const SideBarGridSection = `
     span {
       font-style: italic;
       letter-spacing: 0.1rem;
-      font-size: 10px;
+      font-size: 12px;
     }
 
     .email-box {
@@ -504,7 +498,6 @@ const SideBarGridSection = `
       .modal {
         width: 30rem;
         &__icon {
-          margin-left: -105px;
           padding: 3rem 6rem 0 6rem;
           border-radius: 50%;
         }
@@ -521,7 +514,7 @@ const SideBarGridSection = `
 
 const Title = styled.h3`
   font-size: 3rem;
-  color: ${(props) => props.color || "#FFF"};
+  color: ${(props) => props.color || "#333"};
   margin: 2rem 0;
   padding: 0 2rem;
 
@@ -550,7 +543,8 @@ const Wrapper = styled.div`
       .title > h4 {
         font-size: 1.75rem;
         margin: 0;
-        font-weight: 700;
+        font-weight: 500;
+        letter-spacing: 0.1rem;
 
         a {
           text-decoration: none;
@@ -576,16 +570,22 @@ const Wrapper = styled.div`
 const LoadBtn = styled.button`
   font-size: 1.8rem;
   font-family: monospace;
-  text-transform: uppercase;
+  text-transform: lowercase;
   letter-spacing: 1px;
   padding: 13px 50px 13px;
   outline: 0;
   margin: 0 auto;
   display: block;
-  color: #eee;
+  color: #333;
   z-index: 9 !important;
-  border: 2px solid black;
+  border: 3px solid black;
   cursor: pointer;
   position: relative;
   background-color: transparent;
+
+  &:hover {
+    background-color: #006181;
+    color: #f5f1f1;
+    transition: all 0.3s ease-in;
+  }
 `;

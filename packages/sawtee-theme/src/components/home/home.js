@@ -8,7 +8,6 @@ import Image from "../reusable/image/image";
 import Grid, { GridItem } from "../reusable/grid/grid";
 import Chart from "../chart/chart";
 import GridBlog from "../GridBlog/gridBlog";
-import { HiArrowRight, HiChevronRight } from "react-icons/hi";
 import ViewAllBtn from "../reusable/ViewAllBtn/ViewAllBtn";
 import Image1 from "../../assets/1.jpg";
 import Image2 from "../../assets/2.jpg";
@@ -113,8 +112,7 @@ const Home = ({ state }) => {
 
   const TwitterSectionStyles = `
     border-bottom: 2px solid #707070;
-    background-color: #fff;
-
+    // background: #dcdcdc;
   `;
 
   const AboutSectionGridSyles = `
@@ -144,23 +142,29 @@ const Home = ({ state }) => {
 
   const InfoSectionStyles = `
       justify-content: space-between;
+      gap: 2rem;
   `;
 
   const Visualizer = `
-    // write custom css tyles for visualizer
+  padding: 3rem;
     min-width: 700px;
+      box-shadow: inset 10px 10px 15px #bbbbbb,
+            inset -10px -10px 15px #fdfdfd;
 `;
 
   const TwitterBox = `
   display: flex;
   padding: 2rem 4rem;
+  background: #dcdcdc;
+  box-shadow: inset 10px 10px 15px #bbbbbb,
+            inset -10px -10px 15px #fdfdfd;
 `;
 
   const OutreachStyles = `
     padding: 2rem 4rem;
     border-top: 2px solid #707070;
     flex-direction: column;
-    background-color: #fff;
+    // background-color: #fff;
 
     & h3 {
       font-size: 4rem;
@@ -226,10 +230,20 @@ const Home = ({ state }) => {
           rowsauto="minmax(500px, auto)"
           styles={InfoSectionStyles}
         >
-          <GridItem column={"1/3"} row={"1/2"} bg={"white"} styles={Visualizer}>
+          <GridItem
+            column={"1/3"}
+            row={"1/2"}
+            bg={"transparent"}
+            styles={Visualizer}
+          >
             <Chart />
           </GridItem>
-          <GridItem column={"3/4"} row={"1/2"} bg={"white"} styles={TwitterBox}>
+          <GridItem
+            column={"3/4"}
+            row={"1/2"}
+            bg={"transparent"}
+            styles={TwitterBox}
+          >
             {/* <Title>{"Track SAWTEE on TWITTER"}</Title> */}
             <TwitterTimeline height="700px" width="100%" handle="sawteenp" />
           </GridItem>
@@ -297,40 +311,6 @@ const SectionTop = styled.div`
     margin: 0;
     padding: 2rem 3rem;
     font-size: 4rem;
-    color: #000;
-  }
-`;
-
-const ViewButton = styled.button`
-  padding: 1rem 3rem;
-  font-size: 1.75rem;
-  font-weight: 600;
-  display: flex;
-  height: 4rem;
-  line-height: 2rem;
-  gap: 1rem;
-  backdrop-filter: blur(5px);
-  border: 2px solid #000;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #006181;
-    color: #fff;
-    border: none;
-    .icon-arrow {
-      visibility: visible;
-    }
-    .icon-chevron {
-      visibility: hidden;
-    }
-    transition: visibility 0.4s ease-in-out;
-  }
-
-  .icon-arrow {
-    visibility: hidden;
-  }
-
-  .icon-chevron {
-    visibility: visible;
+    color: #292524;
   }
 `;

@@ -11,10 +11,12 @@ const PrimaryMenuLink = ({ link, ariaCurrent, text }) => {
 
 const MenuLink = styled(Link)`
   display: block;
-  text-decoration: none;
+  text-decoration: none !important;
   text-transform: uppercase;
   letter-spacing: 0.2rem;
   padding: 0.5rem 1rem;
+  font-family: "Roboto", "Source Sans Pro";
+  font-weight: 700;
   --c: #006181; /* the color  */
   --h: 1.8em; /* the height */
   line-height: var(--h);

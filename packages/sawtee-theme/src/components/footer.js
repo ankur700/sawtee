@@ -64,29 +64,29 @@ const Footer = ({ state }) => {
             <WidgetTitle>Contact Us</WidgetTitle>
             <WidgetList>
               <ListItem>
-                Phone:{" "}
+                Phone :{" "}
                 <AwesomeLink href="tel:+977-1-4444438">
                   <span>+977-1-4444438</span>
                 </AwesomeLink>
               </ListItem>
               <ListItem>
-                Fax:{" "}
+                Fax :{" "}
                 <AwesomeLink href="tel:+977 1 4444570">
                   <span>+977-1-4444570</span>
                 </AwesomeLink>
               </ListItem>
               <ListItem>
-                Email:{" "}
+                Email :{" "}
                 <AwesomeLink href="mailto:sawtee@sawtee.org">
                   <span>sawtee@sawtee.org</span>
                 </AwesomeLink>
               </ListItem>
               <ListItem>
-                Address:{" "}
+                Address :{" "}
                 <a
                   css={css`
                     &:hover {
-                      text-decoration: underline !important;
+                      text-decoration: underline dotted !important;
                       text-underline-offset: 3px;
                       text-underline-position: under;
                       cursor: pointer;
@@ -98,12 +98,7 @@ const Footer = ({ state }) => {
                     showMapPreview();
                   }}
                 >
-                  <span
-                  // onMouseEnter={showMapPreview}
-                  // onMouseLeave={showMapPreview}
-                  >
-                    Tukucha Marg, Baluwatar, Kathmandu
-                  </span>
+                  <span>Tukucha Marg, Baluwatar, Kathmandu</span>
                 </a>
               </ListItem>
             </WidgetList>
@@ -232,7 +227,7 @@ const Container = styled.div`
 
 const TopFooter = styled.div`
   display: grid;
-  grid-template-columns: 30% 15% 15% 1fr;
+  grid-template-columns: 30% 17% 17% 1fr;
   grid-auto-rows: minmax(max-content, auto);
   background: #006181;
   padding: 4rem 8rem;
@@ -271,6 +266,8 @@ const WidgetTitle = styled.h3`
 const SiteFooter = styled.footer`
   border-color: #dcd7ca;
   border-style: solid;
+  font-family: "Source Sans Pro", monospace;
+  font-size: 1.5rem;
   border-width: 0;
   padding: 0 0 2rem;
   background-color: ${(props) => props.bg};
@@ -281,9 +278,15 @@ const SiteFooter = styled.footer`
     padding: 4.3rem 0;
   }
 
+  li {
+    letter-spacing: 0.1rem;
+    max-width: max-content;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
+    letter-spacing: 0.1rem;
   }
 `;
 

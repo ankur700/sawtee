@@ -75,10 +75,10 @@ const PrevButton = styled.button`
   cursor: pointer;
 
   & .icon {
-    color: hsla(195, 100%, 25%, 0.6);
+    color: hsla(195, 100%, 25%, 1);
   }
   &:hover .icon {
-    color: #fff;
+    color: #333;
   }
 `;
 
@@ -90,9 +90,9 @@ const NextButton = styled.button`
   pointer: cursor;
   cursor: pointer;
   & .icon {
-    color: hsla(195, 100%, 25%, 0.6);
+    color: hsla(195, 100%, 25%, 1);
   }
   &:hover .icon {
-    color: #fff;
+    color: #333;
   }
 `;
