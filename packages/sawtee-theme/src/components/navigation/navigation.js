@@ -539,10 +539,10 @@ const WorkGridStyles = `
 
 const DropDownIcon = styled(HiChevronDown)`
   cursor: pointer;
+  transition: all 0.4s ease-out;
+  outline: none;
   &:hover {
     transform: rotate(180deg);
-    transition: all 0.4s ease-out;
-    outline: none;
   }
 `;
 
