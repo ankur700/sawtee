@@ -104,7 +104,7 @@ const OurWork = ({ state, actions, libraries }) => {
             <ul>
               {OurThemes.map((theme, index) => {
                 return (
-                  <li key={index}>
+                  <li className="heading-size-6" key={index}>
                     <a href={theme.href}>{theme.name}</a>
                   </li>
                 );
@@ -113,7 +113,7 @@ const OurWork = ({ state, actions, libraries }) => {
           </div>
           <div className="intro">
             {/* <div className="blob"> </div> */}
-            <p>
+            <p className="heading-size-5">
               Description about our work such as: In order to complement the
               efforts of South Asian governments and stakeholders, and to bring
               to the fore the views and concerns of the marginalized and poor
@@ -255,8 +255,12 @@ const Wrapper = styled.section`
       padding: 2rem;
       margin-bottom: 2rem;
       border-radius: 15px;
-      background: hsla(210, 6%, 54%, 0.7);
-      box-shadow: inset 7px 7px 14px #555a5e, inset -7px -7px 14px #b1bac4;
+      background: #dcdcdc;
+      box-shadow: inset 10px 10px 15px #bbbbbb, inset -10px -10px 15px #fdfdfd;
+      backdrop-filter: blur(15px);
+      // position: sticky;
+      // top: 12rem;
+      // z-index: 99;
 
       & ul {
         list-style: none;
@@ -269,13 +273,14 @@ const Wrapper = styled.section`
 
         & li {
           text-transform: capitalize;
-          font-size: 2.25rem;
           text-align: center;
+          font-family: cursive;
+          margin: 0;
 
           & a {
             text-decoration: none;
-            color: #fff;
-            font-weight: 700;
+            color: #555;
+            font-weight: normal;
             letter-spacing: 0.1rem;
 
             &:hover {
@@ -286,13 +291,7 @@ const Wrapper = styled.section`
       }
     }
     & .intro {
-      background: rgb(220, 220, 220);
-      background: linear-gradient(
-        43deg,
-        rgba(220, 220, 220, 1) 0%,
-        rgba(0, 97, 129, 0.5) 100%,
-        rgba(34, 211, 238, 1) 100%
-      );
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 
       padding: 2rem 4rem;
       margin: 2rem auto;
@@ -303,16 +302,10 @@ const Wrapper = styled.section`
       position: relative;
 
       p {
-        font-family: "Poppins", sans-serif;
+        font-family: "Hoefler Text", Garamond, "Times New Roman", serif;
         text-align: justify;
-
-        @media (min-width: 700px) {
-          line-height: 1.8;
-        }
-      }
-
-      @media (max-width: 992px) {
-        font-size: 1.75rem;
+        font-weight: 500;
+        line-height: 1.5;
       }
     }
 

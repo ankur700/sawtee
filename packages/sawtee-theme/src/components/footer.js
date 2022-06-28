@@ -62,46 +62,48 @@ const Footer = ({ state }) => {
         <TopFooter>
           <FooterWidget item="1">
             <WidgetTitle>Contact Us</WidgetTitle>
-            <WidgetList>
-              <ListItem>
-                Phone :{" "}
-                <AwesomeLink href="tel:+977-1-4444438">
-                  <span>+977-1-4444438</span>
-                </AwesomeLink>
-              </ListItem>
-              <ListItem>
-                Fax :{" "}
-                <AwesomeLink href="tel:+977 1 4444570">
-                  <span>+977-1-4444570</span>
-                </AwesomeLink>
-              </ListItem>
-              <ListItem>
-                Email :{" "}
-                <AwesomeLink href="mailto:sawtee@sawtee.org">
-                  <span>sawtee@sawtee.org</span>
-                </AwesomeLink>
-              </ListItem>
-              <ListItem>
-                Address :{" "}
-                <a
-                  css={css`
-                    &:hover {
-                      text-decoration: underline dotted !important;
-                      text-underline-offset: 3px;
-                      text-underline-position: under;
-                      cursor: pointer;
-                    }
-                  `}
-                  title={"Click to toggle map view"}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    showMapPreview();
-                  }}
-                >
-                  <span>Tukucha Marg, Baluwatar, Kathmandu</span>
-                </a>
-              </ListItem>
-            </WidgetList>
+            <address>
+              <WidgetList>
+                <ListItem>
+                  Phone :{" "}
+                  <AwesomeLink href="tel:+977-1-4444438">
+                    <span>+977-1-4444438</span>
+                  </AwesomeLink>
+                </ListItem>
+                <ListItem>
+                  Fax :{" "}
+                  <AwesomeLink href="tel:+977 1 4444570">
+                    <span>+977-1-4444570</span>
+                  </AwesomeLink>
+                </ListItem>
+                <ListItem>
+                  Email :{" "}
+                  <AwesomeLink href="mailto:sawtee@sawtee.org">
+                    <span>sawtee@sawtee.org</span>
+                  </AwesomeLink>
+                </ListItem>
+                <ListItem>
+                  Address :{" "}
+                  <a
+                    css={css`
+                      &:hover {
+                        text-decoration: underline dotted !important;
+                        text-underline-offset: 3px;
+                        text-underline-position: under;
+                        cursor: pointer;
+                      }
+                    `}
+                    title={"Click to toggle map view"}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      showMapPreview();
+                    }}
+                  >
+                    <span>Tukucha Marg, Baluwatar, Kathmandu</span>
+                  </a>
+                </ListItem>
+              </WidgetList>
+            </address>
           </FooterWidget>
           <FooterWidget item="2" maxWidth={"max-content"}>
             <WidgetTitle>Publications</WidgetTitle>

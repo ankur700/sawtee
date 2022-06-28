@@ -58,7 +58,6 @@ const Accordian = ({ data }) => {
 export default Accordian;
 
 const Wrapper = styled.ul`
-  list-style: none;
   margin: 0;
   position: relative;
 
@@ -66,19 +65,17 @@ const Wrapper = styled.ul`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: auto;
     cursor: pointer;
     padding: 2rem 4rem;
-    margin-bottom: 1.5rem;
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(5px);
-    & {
-      ul {
-        list-style: disc !important;
-        & li {
-          background-color: transparent;
-          cursor: initial;
-        }
+
+    ul {
+      & li {
+        background-color: transparent;
+        cursor: initial;
+        padding: 1rem;
+        margin: 0;
       }
     }
 

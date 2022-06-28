@@ -125,10 +125,9 @@ const SiteLogo = styled.img`
 
 const SiteDescription = styled.div`
   margin: 0;
-  // margin-top: 0.5rem;
   color: #006181;
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
   display: none;
   letter-spacing: -0.0311em;
   transition: all 0.15s linear;

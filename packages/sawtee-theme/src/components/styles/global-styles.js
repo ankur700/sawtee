@@ -78,21 +78,15 @@ const documentSetup = (colors) => css`
     background: ${colors.bodyBg};
     box-sizing: border-box;
     color: #000;
-    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Source Sans Pro",
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Source Sans Pro",
       Helvetica, sans-serif;
     font-size: 1.8rem;
+    font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.015em;
     text-align: left;
 
-    & h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      color: #fff;
-      font-family: "Roboto", sans-serif;
-    }
     button,
     span {
       font-family: "Source Sans Pro", monospace;
@@ -149,6 +143,7 @@ const elementBase = (colors) => css`
     letter-spacing: -0.0415625em;
     line-height: 1.25;
     margin: 3.5rem 0 2rem;
+    font-family: "Roboto", sans-serif;
   }
 
   h1,

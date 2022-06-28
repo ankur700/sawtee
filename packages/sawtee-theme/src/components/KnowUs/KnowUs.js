@@ -132,7 +132,7 @@ const KnowUs = ({ state, actions, libraries }) => {
         <p>Policy research conducted by SAWTEE includes: &nbsp;</p>
         <ul><li>Mechanism for pruning the sensitive list under SAFTA </li><li>Trade and climate change in the context of South Asia</li><li>Traditional health services in South Asia</li><li>Liberalization of services trade in South Asia </li><li>Mechanisms for protecting farmers’ rights to livelihood in the Hindu-Kush Himalayan Region </li><li>Positive trade agenda for South Asian LDCs</li><li>Agricultural liberalization in South Asia </li><li>Gender implications of Nepal’s accession to the WTO&nbsp;								</li></ul>
         `,
-      open: true,
+      open: false,
     },
     {
       id: 2,
@@ -481,7 +481,6 @@ const Section = styled.section`
 
   & p,
   ul {
-    font-weight: bold;
     color: #404040;
   }
 
