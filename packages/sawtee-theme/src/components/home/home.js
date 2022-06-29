@@ -197,7 +197,7 @@ const Home = ({ state }) => {
             styles={AboutSectionGridSyles}
           >
             <div className="overlay"></div>
-            <Image src={HeroImage} alt="Hero Image" />
+            <Image loading="lazy" src={HeroImage} alt="Hero Image" />
             <AboutText>
               Dedicated to fair, equitable, inclusive, and sustainable growth
               and development in South Asia, SAWTEE is working towards poverty

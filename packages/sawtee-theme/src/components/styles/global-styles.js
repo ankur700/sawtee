@@ -1,4 +1,7 @@
 import { css } from "frontity";
+import gutenbergStyles from "./style.js";
+import gutenbergTheme from "./theme.js";
+import shortcodesUltimateStyles from "./shortcodes.js";
 
 const cssReset = css`
   html,
@@ -81,9 +84,6 @@ const documentSetup = (colors) => css`
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Source Sans Pro",
       Helvetica, sans-serif;
     font-size: 1.8rem;
-    font-smoothing: antialiased;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.015em;
     text-align: left;
 
@@ -253,13 +253,13 @@ const elementBase = (colors) => css`
 
   a {
     color: ${colors.primary};
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   a:hover,
   a:focus {
-    text-decoration: underline;
-    text-underline-offset: 3px;
+    text-decoration: none;
   }
 `;
 
@@ -595,6 +595,9 @@ const globalStyle = (colors) =>
     elementBase(colors),
     elementBase700,
     elementBase1220,
+    gutenbergTheme,
+    gutenbergStyles,
+    // shortcodesUltimateStyles,
     listStyle,
     quoteStyle(colors),
     codeStyle(colors),
