@@ -275,6 +275,7 @@ const Wrapper = styled.section`
           text-transform: capitalize;
           text-align: center;
           font-family: cursive;
+          font-size: 1.6rem;
           margin: 0;
 
           & a {

@@ -31,11 +31,13 @@ const Experts = [
 const AboutMegaGridStyles = `
 grid-template-columns: minmax(350px, 20%) 1fr;
 grid-template-rows: repeat(2, minmax(300px , 30%));
+gap: 2rem;
+
+@media (min-width:1200px){
+  grid-template-columns: 250px 1fr minmax(400px, 35%);
+  grid-template-rows: minmax(400px, 1fr);
 gap: 4rem;
 
-@media (min-width:1500px){
-  grid-template-columns: 300px 1fr minmax(500px, 35%);
-  grid-template-rows: minmax(500px, 1fr);
 }
 `;
 
@@ -51,9 +53,9 @@ const ExpertStyles = `
   display: flex;
   flex-direction: row;
   gap: 2rem;
-  justify-content: flex-start;
+  justify-content: center;
 
-  @media (min-width:1500px){
+  @media (min-width:1200px){
     grid-column: 3/4;
     grid-row: 1/2;
     flex-direction: column;
@@ -61,7 +63,7 @@ const ExpertStyles = `
 
   & .expert-wrapper {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
   }
 `;
 
@@ -76,7 +78,7 @@ const AboutSectionGridSyles = `
   border-radius: 15px;
   overflow: hidden;
 
-  @media (min-width: 1500px) {
+  @media (min-width: 1200px) {
     grid-column: 2/3;
   }
 
@@ -121,13 +123,13 @@ const MenuItem = styled.li`
   padding: 0.75rem;
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div` 
   visibility: ${(props) => (props.show ? "visible" : "hidden")};
   position: absolute;
   top: 10rem;
   left: ${(props) => props.left || "0"};
   width: ${(props) => props.width || "100%"};
-  padding: 3rem 6rem;
+  padding: 1rem;
   background-color: hsla(195, 100%, 25%, ${(props) => props.opacity || "1"});
   backdrop-filter: blur(5px);
   height: auto;
@@ -137,12 +139,16 @@ const Wrapper = styled.div`
   & * {
     color: #fff;
   }
+
+  @media (min-width: 1200px) {
+    padding: 3rem 6rem;
+  }
 `;
 
 const StyledMenu = styled.ul`
   display: flex;
   flex-direction: ${({ submenu }) => submenu && "column"};
-  gap: ${({ submenu }) => submenu && "1rem"};
+  // gap: ${({ submenu }) => submenu && "1rem"};
   margin: 0;
   flex-wrap: nowrap;
   justify-content: flex-start;
@@ -200,7 +206,7 @@ const TextContent = styled.p`
   line-height: 1.8;
 
   @media (min-width: 1140px) {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -209,7 +215,7 @@ const ExpertCard = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 16rem;
+  width: 14rem;
   background-color: hsla(255, 255, 255, 0.4);
   backdrop-filter: blur(5px);
   align-items: center;

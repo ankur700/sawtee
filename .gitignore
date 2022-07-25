@@ -20,6 +20,7 @@ lib-cov
 
 # Dependency directories
 node_modules/
+node_modules_old/
 jspm_packages/
 
 # TypeScript cache
