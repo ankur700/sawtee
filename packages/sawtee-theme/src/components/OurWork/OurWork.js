@@ -8,7 +8,6 @@ import {
   PostCaption,
   SectionContainer,
 } from "../page/post-item";
-import Grid, { GridItem } from "../reusable/grid/grid";
 import TI_IMAGE from "../../assets/publications-2.jpg";
 import Globe from "../../assets/Article-1_img_1.jpg";
 

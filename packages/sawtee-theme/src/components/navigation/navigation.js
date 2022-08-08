@@ -17,14 +17,14 @@ const Experts = [
     designation: "Director",
   },
   {
-    name: "Pushpa Sharma",
-    image: PSImage,
+    name: "Paras Kharel",
+    image: PKImage,
     designation: "Executive Director",
   },
   {
-    name: "Paras Kharel",
-    image: PKImage,
-    designation: "Programe Director",
+    name: "Dikshya Singh",
+    image: PSImage,
+    designation: "Programme Coordinator",
   },
 ];
 
@@ -123,7 +123,7 @@ const MenuItem = styled.li`
   padding: 0.75rem;
 `;
 
-const Wrapper = styled.div` 
+const Wrapper = styled.div`
   visibility: ${(props) => (props.show ? "visible" : "hidden")};
   position: absolute;
   top: 10rem;

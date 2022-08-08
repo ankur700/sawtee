@@ -16,6 +16,7 @@ import Page from "./page";
 import Publication from "./publication/publication";
 import OurWork from "./OurWork/OurWork";
 import KnowUs from "./KnowUs/KnowUs";
+import Events from "./events/events";
 
 /**
  * Theme is the root React component of our theme. The one we will export
@@ -71,6 +72,7 @@ const Theme = ({ state }) => {
             <Publication when={data.route === "/publications/"} />
             <OurWork when={data.route === "/our-work/"} />
             <KnowUs when={data.route === "/about/"} />
+            <Events when={data.route === "/events/"} />
             <Page when={data.isPage} />
 
             <Post when={data.isPostType} />
