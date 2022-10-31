@@ -58,11 +58,11 @@ const Theme = ({ state }) => {
       </SkipLink>
 
       <div style={{ minHeight: "calc(100vh - 190px)" }}>
-        {/* Add the header of the site. */}
         <Header />
 
         {/* Add the main section. It renders a different component depending
         on the type of URL we are in. */}
+
         <Main id="main">
           <Switch>
             <Loading when={data.isFetching} />

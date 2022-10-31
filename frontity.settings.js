@@ -139,43 +139,43 @@ const settings = {
               submenu: [
                 {
                   name: "Trade Insight",
-                  href: "#",
+                  href: "/publications/trade-insight",
                 },
                 {
                   name: "Discussion Papers",
-                  href: "#",
+                  href: "/publications/discussion-paper",
                 },
                 {
                   name: "Policy Brief",
-                  href: "#",
+                  href: "/publications/policy-brief",
                 },
                 {
                   name: "Briefing Paper",
-                  href: "#",
+                  href: "/publications/briefing-paper",
                 },
                 {
                   name: "Issue Paper",
-                  href: "#",
+                  href: "/publications/issue-paper",
                 },
                 {
                   name: "Working Paper",
-                  href: "#",
+                  href: "/publications/working-paper",
                 },
                 {
                   name: "Books",
-                  href: "#",
+                  href: "/publications/books",
                 },
                 {
                   name: "Others",
-                  href: "#",
+                  href: "/publications/others",
                 },
                 {
                   name: "Research Briefs",
-                  href: "#",
+                  href: "/publications/research-brief",
                 },
                 {
                   name: "Book Chapters",
-                  href: "#",
+                  href: "/publications/book-chapters",
                 },
               ],
             },
