@@ -1,18 +1,18 @@
 import { styled, connect } from "frontity";
 import { useEffect, useState } from "react";
-import FeaturedMedia from "../page/featured-media";
+import FeaturedMedia from "../../components/page/featured-media";
 import {
   Post as _Post,
   PostHeader,
   PostTitle,
   PostCaption,
   SectionContainer,
-} from "../page/post-item";
-import PostCategories from "../page/post-categories";
-import Link from "../link";
-import ItemsCarousel from "../itemsCarousel/itemsCarousel";
-import Grid, { GridItem } from "../reusable/grid/grid";
-import SubscriptionCard from "../reusable/subscriptionCard/subscriptionCard";
+} from "../../components/page/post-item";
+import PostCategories from "../../components/page/post-categories";
+import Link from "../../components/link";
+import ItemsCarousel from "../../components/itemsCarousel/itemsCarousel";
+import Grid, { GridItem } from "../../components/reusable/grid/grid";
+import SubscriptionCard from "../../components/reusable/subscriptionCard/subscriptionCard";
 import Image1 from "../../assets/1.jpg";
 import Image2 from "../../assets/2.jpg";
 import Image3 from "../../assets/3.jpg";
@@ -25,7 +25,7 @@ import Image9 from "../../assets/9.jpg";
 import Image10 from "../../assets/10.jpg";
 import Image11 from "../../assets/11.jpg";
 import Image12 from "../../assets/12.jpg";
-import TwitterTimeline from "../twitterTimeline/twitterTimeline";
+import TwitterTimeline from "../../components/twitterTimeline/twitterTimeline";
 
 const postdata = [
   Image1,

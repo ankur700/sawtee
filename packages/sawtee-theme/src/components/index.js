@@ -11,12 +11,12 @@ import SearchResults from "./search/search-results";
 import SkipLink from "./styles/skip-link";
 import MetaTitle from "./page-meta-title";
 import PageError from "./page-error";
-import Home from "./home/home";
+import Home from "../pages/home/home";
 import Page from "./page";
-import Publication from "./publication/publication";
-import OurWork from "./OurWork/OurWork";
-import KnowUs from "./KnowUs/KnowUs";
-import Events from "./events/events";
+import Publication from "../pages/publication/publication";
+import OurWork from "../pages//OurWork/OurWork";
+import KnowUs from "../pages/KnowUs/KnowUs";
+import Events from "../pages/events/events";
 
 /**
  * Theme is the root React component of our theme. The one we will export
