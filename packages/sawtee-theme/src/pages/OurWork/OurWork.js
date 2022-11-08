@@ -273,7 +273,7 @@ const Wrapper = styled.section`
         & li {
           text-transform: capitalize;
           text-align: center;
-          font-family: cursive;
+          // font-family: cursive;
           font-size: 1.6rem;
           margin: 0;
 
@@ -314,7 +314,7 @@ const Wrapper = styled.section`
       gap: 0.5rem;
       margin: 2rem 0;
       justify-content: center;
-      @media (max-width: 992px) {
+      @media (max-width: 900px) {
         flex-direction: column;
         > .card {
           width: 100% !important;
@@ -325,8 +325,8 @@ const Wrapper = styled.section`
         position: relative;
         border-radius: 20px;
         max-width: 700px;
-        width: 50%;
-        height: 600px;
+        width: 40%;
+        height: 500px;
         border: 3px solid #000;
         overflow: hidden;
         background-repeat: no-repeat;
@@ -334,6 +334,9 @@ const Wrapper = styled.section`
         background-size: cover;
         background-blend-mode: multiply;
         background-color: darkgrey;
+        @media (min-width: 900px) {
+          width: 50%;
+        }
 
         & div {
           position: absolute;
@@ -379,10 +382,10 @@ const Wrapper = styled.section`
             justify-content: center;
             text-align: justify;
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 2.25rem;
 
             @media (max-width: 1140px) {
-              font-size: 2.25rem;
+              font-size: 1.75rem;
             }
           }
         }

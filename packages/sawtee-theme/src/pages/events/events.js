@@ -12,6 +12,8 @@ import Grid, { GridItem } from "../../components/reusable/grid/grid";
 import TI_IMAGE from "../../assets/publications-2.jpg";
 import Globe from "../../assets/Article-1_img_1.jpg";
 
+import { Box, Flex } from "@chakra-ui/react";
+
 /**
  * The Post component that the TwentyTwenty theme uses for rendering any kind of
  * "post type" (posts, pages, attachments, etc.).
@@ -71,7 +73,15 @@ const Events = ({ state, actions, libraries }) => {
           {/* <PostMeta item={post} /> */}
         </SectionContainer>
       </Header>
-      <h1>This is the event page.</h1>
+      <Box
+        as="header"
+        transition="transform ease .25s"
+        width="100%"
+        bg="primary.700"
+        zIndex="90"
+      >
+        Event page.
+      </Box>
     </PostArticle>
   ) : null;
 };

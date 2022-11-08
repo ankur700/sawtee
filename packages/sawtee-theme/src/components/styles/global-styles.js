@@ -252,7 +252,7 @@ const elementBase = (colors) => css`
   }
 
   a {
-    color: ${colors.primary};
+    color: ${colors.footerBg};
     text-decoration: underline;
     text-underline-offset: 3px;
   }
