@@ -11,7 +11,7 @@ const settings = {
   },
   packages: [
     {
-      name: "sawtee-theme",
+      name: "custom-theme",
       state: {
         theme: {
           menu: [

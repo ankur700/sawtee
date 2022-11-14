@@ -1,7 +1,6 @@
 import { css } from "frontity";
 import gutenbergStyles from "./style.js";
 import gutenbergTheme from "./theme.js";
-import shortcodesUltimateStyles from "./shortcodes.js";
 
 const cssReset = css`
   html,

@@ -21,6 +21,7 @@
     "@frontity/html2react": "^1.7.0",
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
+    "custom-theme": "file:packages/custom-theme",
     "frontity": "^1.17.2",
     "react-icons": "^4.3.1",
     "react-items-carousel": "^2.8.0",
