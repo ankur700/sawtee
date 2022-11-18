@@ -10,7 +10,7 @@ const MenuButton = forwardRef((props, ref) => (
     alignItems="center"
     justifyContent="center"
     flexShrink="0"
-    mr={{ base: "auto", lg: "0" }}
+    // mr={{ base: "auto", lg: "0" }}
     ml={{ base: "12px", sm: "0" }}
     {...props}
   >

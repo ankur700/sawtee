@@ -15,12 +15,12 @@ const MenuItem = ({ index, children, mb, link, ...rest }) => (
       _hover={{
         bg: "rgba(236, 164, 25, 0.14)",
         borderColor: "accent.400",
-        color: "accent.400"
+        color: "accent.400",
       }}
       _focus={{
         bg: "rgba(236, 164, 25, 0.14)",
         borderColor: "accent.400",
-        color: "accent.400"
+        color: "accent.400",
       }}
       transition="all 0.3s"
       padding="12px"
@@ -42,7 +42,7 @@ const MenuItem = ({ index, children, mb, link, ...rest }) => (
         letterSpacing="-0.004em"
         lineHeight="1.39"
         fontWeight="medium"
-        fontSize="24px"
+        fontSize="1.125rem"
         cursor="pointer"
       >
         {children}

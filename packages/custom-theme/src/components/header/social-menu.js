@@ -3,9 +3,9 @@ import React from "react";
 import { SiteMenu } from "./navigation";
 import {
   IoLogoTwitter,
-  IoLogoPinterest,
   IoLogoFacebook,
-  IoLogoInstagram
+  IoLogoLinkedin,
+  IoLogoYoutube,
 } from "react-icons/io";
 import Link from "../link";
 
@@ -40,9 +40,9 @@ const SocialMenuItem = ({ icon, label, link, ...props }) => (
 
 const icons = {
   twitter: IoLogoTwitter,
-  pinterest: IoLogoPinterest,
+  linkedin: IoLogoLinkedin,
   facebook: IoLogoFacebook,
-  instagram: IoLogoInstagram
+  youtube: IoLogoYoutube,
 };
 
 const SocialNav = ({ menu, ...props }) => (

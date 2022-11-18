@@ -1,11 +1,11 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
 import { styled } from "frontity";
 import React from "react";
 import FrontityLink from "../link";
 
 const Link = styled(FrontityLink)`
   position: relative;
-  color: #fff;
+  // color: #fff;
   text-decoration: none;
 
   &:after {
@@ -36,6 +36,7 @@ export const SiteMenu = (props) => (
     align="center"
     direction="row"
     color="white"
+    justifyContent={"center"}
     {...props}
   />
 );
@@ -43,13 +44,14 @@ export const SiteMenu = (props) => (
 const SiteMenuItem = ({ link, ...props }) => (
   <Box
     as="li"
-    color="white"
+    color={useColorModeValue("primary.700", "whiteAlpha.900")}
     fontSize={{ base: "sm", lg: "md" }}
     fontWeight="medium"
     fontFamily="Kelson"
     textTransform="uppercase"
     position="relative"
     cursor="pointer"
+    letterSpacing={"1px"}
     {...props}
   >
     <Link link={link}>{props.children}</Link>

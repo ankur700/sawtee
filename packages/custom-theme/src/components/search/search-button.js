@@ -1,23 +1,25 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import { IoIosSearch } from "react-icons/io";
+import { useColorModeValue } from "@chakra-ui/react";
 
-const SearchButton = props => (
+const SearchButton = (props) => (
   <Box
     aria-label="Search this site"
     as="button"
     display="flex"
     alignItems="center"
     justifyContent="center"
-    transition="background-color ease 0.25s"
-    _hover={{ bg: "white" }}
     flexShrink="0"
-    boxSize="46px"
-    bg="accent.400"
-    ml={{ base: "auto", lg: "3rem" }}
+    boxSize="40px"
+    // ml={{ base: "auto", lg: "3rem" }}
     {...props}
   >
-    <Box boxSize={6} color="primary.700" as={IoIosSearch} />
+    <Box
+      boxSize={6}
+      color={useColorModeValue("primary.700", "white")}
+      as={IoIosSearch}
+    />
   </Box>
 );
 

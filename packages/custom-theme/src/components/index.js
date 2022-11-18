@@ -20,13 +20,18 @@ const Theme = ({ state }) => {
 
   const overrides = extendTheme({
     fonts: {
-      heading: "Kelson, system-ui, Helvetica, sans-serif"
+      heading: "Kelson, system-ui, Helvetica, sans-serif",
     },
-    colors: { ...state.theme.colors }
+    colors: { ...state.theme.colors },
   });
 
+  const config = {
+    initialColorMode: "light",
+    useSystemColorMode: true,
+  };
+
   return (
-    <ChakraProvider theme={{ ...overrides }}>
+    <ChakraProvider theme={{ config, ...overrides }}>
       <FontFace />
       {/* Add some metatags to the <head> of the HTML. */}
       <Title />
