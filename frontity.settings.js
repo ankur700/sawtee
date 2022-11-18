@@ -27,6 +27,11 @@ const settings = {
           ],
           menu: [
             {
+              name: "Home",
+              href: "/",
+              submenu: null,
+            },
+            {
               name: "Know Us",
               href: "/about/",
               submenu: [
