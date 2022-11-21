@@ -7,7 +7,6 @@ import Footer from "./footer";
 import Header from "./header";
 import Loading from "./loading";
 import Page404 from "./page404";
-import Post from "./post/post";
 import SearchResults from "./search";
 import Title from "./title";
 import FontFace from "./styles/font-face";
@@ -27,6 +26,9 @@ const Theme = ({ state }) => {
   const overrides = extendTheme({
     fonts: {
       heading: "Kelson, system-ui, Helvetica, sans-serif",
+      body: "Inter, serif",
+      roboto: "Roboto, serif",
+      poppins: "Poppins, sans-serif",
     },
     colors: { ...state.theme.colors },
   });
@@ -64,7 +66,7 @@ const Theme = ({ state }) => {
       on the type of URL we are in. */}
       <Box
         as="main"
-        mt={{ base: "40px", md: "70px" }}
+        mt={{ base: "5.5rem", md: "6.5rem" }}
         minH="calc(100vh - 320px)"
       >
         <Switch>
