@@ -1,7 +1,7 @@
 import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
 import { styled } from "frontity";
 import React from "react";
-import FrontityLink from "../link";
+import FrontityLink from "../../atoms/link";
 
 const Link = styled(FrontityLink)`
   position: relative;

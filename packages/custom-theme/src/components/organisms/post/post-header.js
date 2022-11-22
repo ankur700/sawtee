@@ -1,8 +1,8 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
 import React from "react";
-import Link from "../link";
+import Link from "../../atoms/link";
 import PostCategories from "./post-categories";
-import { formatDate } from "../helpers";
+import { formatDate } from "../../helpers";
 import { decode } from "frontity";
 
 const PostHeader = ({

@@ -1,9 +1,9 @@
 import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
-import { FeaturedPostSection } from "../featured-post/featured-post";
-import { formatPostData, splitPosts } from "../helpers";
-import { Newsletter } from "../atoms/newsletter";
+import { FeaturedPostSection } from "../../molecules/featured-post/featured-post";
+import { formatPostData, splitPosts } from "../../helpers";
+import { Newsletter } from "../../atoms/newsletter";
 import ArchiveItem from "./archive-item";
 import { PaginationButton } from "./pagination";
 

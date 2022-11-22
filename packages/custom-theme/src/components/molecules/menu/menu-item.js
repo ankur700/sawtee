@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import Link from "../../link";
+import Link from "../../atoms/link";
 
 const MenuItem = ({ index, children, mb, link, ...rest }) => (
   <Box as="li" listStyleType="none" mb={mb} {...rest}>

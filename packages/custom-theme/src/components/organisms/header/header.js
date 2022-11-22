@@ -1,8 +1,8 @@
 import { Box, Flex, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
-import Link from "../link";
-import MobileMenu from "../menu";
-import { isUrl, omitConnectProps } from "../helpers";
+import Link from "../../atoms/link";
+import MobileMenu from "../../molecules/menu";
+import { isUrl, omitConnectProps } from "../../helpers";
 import { connect } from "frontity";
 
 const SiteHeader = (props) => (

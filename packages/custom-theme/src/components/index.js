@@ -2,20 +2,20 @@ import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { connect, Global, Head } from "frontity";
 import Switch from "@frontity/components/switch";
 import React from "react";
-import Archive from "./archive";
-import Footer from "./footer";
-import Header from "./header";
-import Loading from "./loading";
-import Page404 from "./page404";
-import SearchResults from "./search";
-import Title from "./title";
+import Archive from "./organisms/archive";
+import Footer from "./molecules/footer";
+import Header from "./organisms/header";
+import Loading from "./atoms/loading";
+import Page404 from "./atoms/page404";
+import SearchResults from "./molecules/search";
+import PageTitle from "./atoms/title";
 import FontFace from "./styles/font-face";
 import Home from "../pages/home/home";
 import Publication from "../pages/publication/publication";
 import OurWork from "../pages//OurWork/OurWork";
 import KnowUs from "../pages/KnowUs/KnowUs";
 import Events from "../pages/events/events";
-import Page from "../components/page";
+import Page from "../components/organisms/page";
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
@@ -42,7 +42,7 @@ const Theme = ({ state }) => {
     <ChakraProvider theme={{ config, ...overrides }}>
       <FontFace />
       {/* Add some metatags to the <head> of the HTML. */}
-      <Title />
+      <PageTitle />
       <Head>
         <meta name="description" content={state.frontity.description} />
         <html lang="en" />

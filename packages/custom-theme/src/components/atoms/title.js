@@ -2,7 +2,7 @@ import React from "react";
 import { Head, connect } from "frontity";
 import { decode } from "frontity";
 
-const Title = ({ state }) => {
+const PageTitle = ({ state }) => {
   // Get data about the current URL.
   const data = state.source.get(state.router.link);
   // Set the default title.
@@ -43,4 +43,4 @@ const Title = ({ state }) => {
   );
 };
 
-export default connect(Title);
+export default connect(PageTitle);

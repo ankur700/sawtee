@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import Image from "@frontity/components/image";
 import { connect } from "frontity";
 import React from "react";
-import { getMediaAttributes } from "../helpers";
+import { getMediaAttributes } from "../../helpers";
 
 // eslint-disable-next-line
 const FeaturedMedia = ({ state, actions, libraries, id, ...props }) => {

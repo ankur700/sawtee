@@ -1,6 +1,6 @@
 import { styled, connect } from "frontity";
 import { useEffect } from "react";
-import FeaturedMedia from "../../components/page/featured-media";
+import FeaturedMedia from "../../components/organisms/page/featured-media";
 import {
   EntryContent,
   Post as _Post,
@@ -8,10 +8,10 @@ import {
   PostInner,
   PostTitle,
   SectionContainer,
-} from "../../components/page/post-item";
-import Link from "../../components/link";
+} from "../../components/organisms/page/post-item";
+import Link from "../../components/atoms/link";
 import { HiOutlineExternalLink, HiOutlineLink } from "react-icons/hi";
-import Accordian from "../../components/reusable/accordian/accordian";
+import Accordian from "../../components/atoms/accordian/accordian";
 
 /**
  * The Post component that the TwentyTwenty theme uses for rendering any kind of

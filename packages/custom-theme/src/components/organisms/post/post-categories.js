@@ -1,6 +1,6 @@
 import { Box, Flex } from "@chakra-ui/react";
 import React from "react";
-import Link from "../link";
+import Link from "../../atoms/link";
 import { decode } from "frontity";
 
 export const PostCategory = props => (

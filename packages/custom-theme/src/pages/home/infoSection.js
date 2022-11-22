@@ -1,7 +1,7 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import Chart from "../../components/molecules/chart/chart";
-import Section from "../../components/atoms/reusable/section/section";
-import TwitterTimeline from "../../components/atoms/reusable/twitterTimeline/twitterTimeline";
+import Section from "../../components/atoms/section/section";
+import TwitterTimeline from "../../components/atoms/twitterTimeline/twitterTimeline";
 
 const InfoSection = () => {
   return (

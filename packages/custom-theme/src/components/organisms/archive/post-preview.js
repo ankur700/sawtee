@@ -1,7 +1,7 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import React from "react";
-import { PostImageWithOverlay } from "../featured-post/components";
-import Link from "../link";
+import { PostImageWithOverlay } from "../../molecules/featured-post/components";
+import Link from "../../atoms/link";
 import PostCategories from "../post/post-categories";
 
 const PostPreview = ({ data, ...rest }) => {

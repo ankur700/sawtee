@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import MenuButton from "./menu-button";
 import MenuDrawer from "./menu-drawer";
 import MenuItem from "./menu-item";
-import { SocialMenu } from "../header/social-menu";
+import { SocialMenu } from "../../organisms/header/social-menu";
 
 const Menu = ({ state, actions }) => {
   const { isMobileMenuOpen } = state.theme;

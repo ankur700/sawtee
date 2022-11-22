@@ -1,18 +1,18 @@
 import { styled, connect } from "frontity";
 import { useEffect, useState } from "react";
-import FeaturedMedia from "../../components/page/featured-media";
+import FeaturedMedia from "../../components/organisms/page/featured-media";
 import {
   Post as _Post,
   PostHeader,
   PostTitle,
   PostCaption,
   SectionContainer,
-} from "../../components/page/post-item";
-import PostCategories from "../../components/page/post-categories";
-import Link from "../../components/link";
-import ItemsCarousel from "../../components/itemsCarousel/itemsCarousel";
-import Grid, { GridItem } from "../../components/reusable/grid/grid";
-import SubscriptionCard from "../../components/reusable/subscriptionCard/subscriptionCard";
+} from "../../components/organisms/page/post-item";
+import PostCategories from "../../components/organisms/page/post-categories";
+import Link from "../../components/atoms/link";
+import ItemsCarousel from "../../components/molecules/itemsCarousel/itemsCarousel";
+import Grid, { GridItem } from "../../components/atoms/grid/grid";
+import SubscriptionCard from "../../components/atoms/subscriptionCard/subscriptionCard";
 import Image1 from "../../assets/1.jpg";
 import Image2 from "../../assets/2.jpg";
 import Image3 from "../../assets/3.jpg";
@@ -25,7 +25,7 @@ import Image9 from "../../assets/9.jpg";
 import Image10 from "../../assets/10.jpg";
 import Image11 from "../../assets/11.jpg";
 import Image12 from "../../assets/12.jpg";
-import TwitterTimeline from "../../components/twitterTimeline/twitterTimeline";
+import TwitterTimeline from "../../components/atoms/twitterTimeline/twitterTimeline";
 
 const postdata = [
   Image1,

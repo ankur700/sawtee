@@ -1,12 +1,13 @@
 import HeroImage from "../../assets/hero-image.jpg";
 import ItemsCarousel from "../../components/molecules/itemsCarousel/itemsCarousel";
-import Image from "../../components/atoms/reusable/image/image";
-import Title from "../../components/atoms/reusable/title";
-import Section from "../../components/atoms/reusable/section/section";
+import Image from "../../components/atoms/image/image";
+import Title from "../../components/atoms/Title/title";
+import Section from "../../components/atoms/section/section";
 import { Grid, GridItem, useColorModeValue, Text } from "@chakra-ui/react";
 import { styled } from "frontity";
 
 const AboutSection = ({ postdata }) => {
+  
   const CustomGridItem = styled(GridItem)`
     justify-content: center;
     align-items: center;

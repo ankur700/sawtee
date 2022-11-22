@@ -1,6 +1,6 @@
 import { styled } from "frontity";
 import { Grid, GridItem } from "@chakra-ui/react";
-import { TopImageCard, NoImageCard } from "../cards/cards";
+import { TopImageCard, NoImageCard } from "../../molecules/cards/cards";
 
 const GridBlog = ({ data }) => {
   return (

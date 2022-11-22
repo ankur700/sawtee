@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Heading, Text, Flex } from "@chakra-ui/react";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import tile from "../assets/pattern-tile-green.svg";
+import tile from "../../assets/pattern-tile-green.svg";
 
 export const PatternBox = ({ showPattern = true, ...props }) => (
   <Box

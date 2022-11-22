@@ -7,7 +7,7 @@ import {
   IoLogoLinkedin,
   IoLogoYoutube,
 } from "react-icons/io";
-import Link from "../link";
+import Link from "../../atoms/link";
 
 // warning for showSocialLinks and menu.length
 export const SocialMenu = ({ menu, ...props }) => (

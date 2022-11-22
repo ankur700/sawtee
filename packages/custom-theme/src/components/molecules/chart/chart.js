@@ -1,4 +1,3 @@
-import { styled } from "frontity";
 import React, { PureComponent } from "react";
 import {
   ResponsiveContainer,

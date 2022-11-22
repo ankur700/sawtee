@@ -1,7 +1,7 @@
 import { Box, Heading } from "@chakra-ui/react";
 import { styled } from "frontity";
 import React from "react";
-import Link from "../../link";
+import Link from "../../atoms/link";
 import Image from "@frontity/components/image";
 
 export const PostLink = styled(Link)`

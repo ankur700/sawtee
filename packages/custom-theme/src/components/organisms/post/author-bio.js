@@ -1,6 +1,6 @@
 import { Avatar, Box, Text, Flex } from "@chakra-ui/react";
 import React from "react";
-import Link from "../link";
+import Link from "../../atoms/link";
 import { decode } from "frontity";
 
 const AuthorBio = ({ image, description, name, link }) => (

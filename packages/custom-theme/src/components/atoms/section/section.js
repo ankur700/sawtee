@@ -1,22 +1,7 @@
-import { styled, css } from "frontity";
+import { Box } from "@chakra-ui/react";
 
-const Section = ({ children, styles, border }) => {
-  return (
-    <Wrapper
-      border={border}
-      css={css`
-        ${styles}
-      `}
-    >
-      {children}
-    </Wrapper>
-  );
+const Section = ({ children, ...rest }) => {
+  return <Box {...rest}>{children}</Box>;
 };
-
-const Wrapper = styled.section`
-  width: 100%;
-  display: flex;
-  overflow: hidden;
-`;
 
 export default Section;

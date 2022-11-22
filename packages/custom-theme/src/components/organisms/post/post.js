@@ -3,13 +3,13 @@ import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
 import List from "../archive";
 import useScrollProgress from "../hooks/useScrollProgress";
-import { LightPatternBox } from "../styles/pattern-box";
-import Section from "../styles/section";
+import { LightPatternBox } from "../../styles/pattern-box";
+import Section from "../../styles/section";
 import AuthorBio from "./author-bio";
 import FeaturedMedia from "./featured-media";
 import PostHeader from "./post-header";
 import PostProgressBar from "./post-progressbar";
-import { getPostData, formatPostData } from "../helpers";
+import { getPostData, formatPostData } from "../../helpers";
 
 const Post = ({ state, actions, libraries }) => {
   const postData = getPostData(state);

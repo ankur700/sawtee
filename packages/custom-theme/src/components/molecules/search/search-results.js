@@ -1,7 +1,7 @@
 import { Box, Button, Heading, Input, Text, Stack } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
-import Archive from "../../archive";
+import Archive from "../../organisms/archive";
 import { PatternBox, PatternBoxInner } from "../../atoms/newsletter";
 import useSearch from "../../hooks/useSearch";
 

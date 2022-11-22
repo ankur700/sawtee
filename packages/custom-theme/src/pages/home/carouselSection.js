@@ -1,5 +1,5 @@
 import Carousel from "../../components/organisms/carousel/carousel";
-import Section from "../../components/atoms/reusable/section/section";
+import Section from "../../components/atoms/section/section";
 
 const CarouselSection = ({ data }) => {
   return (

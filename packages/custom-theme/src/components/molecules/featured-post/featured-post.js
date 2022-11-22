@@ -9,8 +9,8 @@ import {
 } from "./components";
 import generateGradient from "./genarate-gradient";
 import { Flex, Box } from "@chakra-ui/react";
-import PostCategories from "../../post/post-categories";
-import Link from "../../link";
+import PostCategories from "../../organisms/post/post-categories";
+import Link from "../../atoms/link";
 
 export const PrimaryPostPreview = ({ data, ...props }) => {
   const { title, categories, featured_media, link } = data;

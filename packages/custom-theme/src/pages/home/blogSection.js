@@ -1,9 +1,9 @@
 import { Stack, Show } from "@chakra-ui/react";
-import Section from "../../components/atoms/reusable/section/section";
-import GridBlog from "../../components/GridBlog/gridBlog";
-import ViewAllBtn from "../../components/atoms/reusable/ViewAllBtn/ViewAllBtn";
+import Section from "../../components/atoms/section/section";
+import GridBlog from "../../components/organisms/GridBlog/gridBlog";
+import ViewAllBtn from "../../components/atoms/ViewAllBtn/ViewAllBtn";
 import Link from "../../components/atoms/link";
-import Title from "../../components/atoms/reusable/title";
+import Title from "../../components/atoms/Title/title";
 
 const BlogSection = ({ data }) => {
   return (
