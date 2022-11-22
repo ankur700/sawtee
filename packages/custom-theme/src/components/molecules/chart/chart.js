@@ -64,7 +64,7 @@ export default class Example extends PureComponent {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          padding: "2rem",
+          padding: "1rem",
         }}
       >
         <ResponsiveContainer>
@@ -73,10 +73,10 @@ export default class Example extends PureComponent {
             height={"100%"}
             data={data}
             margin={{
-              top: 20,
-              right: 20,
-              bottom: 20,
-              left: 20,
+              top: 10,
+              right: 10,
+              bottom: 10,
+              left: 10,
             }}
           >
             <CartesianGrid stroke="#f5f5f5" />

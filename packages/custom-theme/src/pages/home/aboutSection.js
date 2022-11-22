@@ -7,10 +7,7 @@ import { Grid, GridItem, useColorModeValue, Text } from "@chakra-ui/react";
 import { styled } from "frontity";
 
 const AboutSection = ({ postdata }) => {
-  
   const CustomGridItem = styled(GridItem)`
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
     min-height: 500px;
 
@@ -27,17 +24,10 @@ const AboutSection = ({ postdata }) => {
       backdrop-filter: blur(5px);
     }
     & blockquote {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 90%;
-      height: auto%;
       background-color: hsla(0, 0%, 0%, 0.2);
       content: "";
       display: block;
       position: absolute;
-      margin: 2rem;
       border-radius: 5%;
       padding: 20px 30px;
     }
@@ -57,18 +47,20 @@ const AboutSection = ({ postdata }) => {
   return (
     <Section width="full" overflow="hidden" id="about-section" display="flex">
       <Grid
-        templateColumns="repeat(2, 50vw)"
-        templateRows={"repeat(2, (500px, auto))"}
+        templateColumns={{ base: "100vw", lg: "repeat(2, 50vw)" }}
+        templateRows="auto"
         h="auto"
       >
         <CustomGridItem
-          colSpan={{ base: "2", md: "1" }}
-          rowSpan={2}
+          colSpan={1}
+          rowSpan={{ base: "1", lg: "2" }}
           bg={"transparent"}
           h="100%"
           pos={"relative"}
           display="flex"
           overflow={"hidden"}
+          justifyContent="center"
+          alignItems="center"
         >
           {/* <div className="overlay"></div> */}
 
@@ -79,7 +71,7 @@ const AboutSection = ({ postdata }) => {
               zIndex="50"
               color={"gray.50"}
               maxW="xl"
-              margin={"1rem auto"}
+              margin={{ base: "1rem 20px", lg: "1rem auto" }}
               fontFamily="heading"
             >
               Dedicated to fair, equitable, inclusive, and sustainable growth
@@ -90,17 +82,25 @@ const AboutSection = ({ postdata }) => {
           </blockquote>
         </CustomGridItem>
         <GridItem
-          colSpan={{ base: "2", md: "1" }}
+          colSpan={1}
           bg={useColorModeValue("whiteAlpha.600", "#463737")}
         >
-          <Title text="Publication" />
+          <Title
+            px={["6", "12", "16"]}
+            py={["4", "6", "8"]}
+            text="Publication"
+          />
           <ItemsCarousel data={postdata} slidesToShow={3} slidesToScroll={3} />
         </GridItem>
         <GridItem
-          colSpan={{ base: "2", md: "1" }}
+          colSpan={1}
           bg={useColorModeValue("whiteAlpha.600", "#463737")}
         >
-          <Title text="Sawtee in Media" />
+          <Title
+            px={["6", "12", "16"]}
+            py={["4", "6", "8"]}
+            text="Sawtee in Media"
+          />
 
           <ItemsCarousel data={postdata} slidesToShow={3} slidesToScroll={3} />
         </GridItem>

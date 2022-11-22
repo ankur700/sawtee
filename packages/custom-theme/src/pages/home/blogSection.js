@@ -10,27 +10,31 @@ const BlogSection = ({ data }) => {
     <Section
       width="full"
       display="flex"
-      py={["6", "12", "16"]}
-      px={["10", "16", "20"]}
+      py={{ base: "6", md: "12", lg: "16" }}
+      px={{ base: "10", md: "16", lg: "20" }}
       flexDir="column"
       id="blog-section"
     >
       <Stack
-        direction={["column", "row"]}
-        justifyContent={["center", "center", "space-between"]}
+        direction={{ base: "column", lg: "row" }}
+        justifyContent={{ base: "center", lg: "space-between" }}
         alignItems="center"
       >
-        <Title text="Policy Outreach" />
+        <Title
+          px={["6", "12", "16"]}
+          py={["4", "6", "8"]}
+          text="Policy Outreach"
+        />
         <Show above="lg">
           <Link href="#">
-            <ViewAllBtn text={"View All"} />
+            <ViewAllBtn w="12em" text={"View All"} />
           </Link>
         </Show>
       </Stack>
       <GridBlog data={data} />
       <Show below="lg">
         <Link href="#">
-          <ViewAllBtn text={"View All"} mt="1rem" w="full" py="6" />
+          <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
         </Link>
       </Show>
     </Section>

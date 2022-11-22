@@ -1,12 +1,11 @@
 import { Text, useColorModeValue } from "@chakra-ui/react";
 
-const Title = ({ text, color }) => {
+const Title = ({ text, color, ...rest }) => {
   return (
     <Text
-      fontSize={{ base: "lg", md: "2xl", lg: "3xl" }}
+      {...rest}
+      fontSize={{ base: "lg", sm: "3xl", md: "3xl", lg: "4xl" }}
       color={color ? color : useColorModeValue("primary.700", "whiteAlpha.900")}
-      px='12'
-      py='8'
     >
       {text}
     </Text>
