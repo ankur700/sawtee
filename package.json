@@ -23,7 +23,6 @@
     "@frontity/wp-source": "^1.11.7",
     "custom-theme": "file:packages/custom-theme",
     "frontity": "^1.17.2",
-    "module-alias": "^2.2.2",
     "react-icons": "^4.3.1",
     "react-items-carousel": "^2.8.0",
     "react-swipeable": "^7.0.0",
