@@ -1,7 +1,7 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
-import Chart from "../../components/molecules/chart/chart";
-import Section from "../../components/atoms/section/section";
-import TwitterTimeline from "../../components/atoms/twitterTimeline/twitterTimeline";
+import Chart from "../../components/molecules/chart";
+import Section from "../../components/atoms/section";
+import TwitterTimeline from "../../components/atoms/twitterTimeline";
 
 const InfoSection = () => {
   return (
@@ -21,9 +21,9 @@ const InfoSection = () => {
         <Chart />
       </Box>
       <Box
-        bg={useColorModeValue("white", "gray.500")}
+        bg={useColorModeValue("rgba(0,0, 0, 0.1)", "rgba(0,0, 0, 0.3)")}
         w={{ base: "100%", lg: "30%" }}
-        p="12"
+        p={{ base: "6", lg: "12" }}
         display={"flex"}
         id="twitter-wrapper"
       >

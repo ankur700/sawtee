@@ -1,35 +1,57 @@
 import HeroImage from "../../assets/hero-image.jpg";
-import ItemsCarousel from "../../components/molecules/itemsCarousel/itemsCarousel";
-import Image from "../../components/atoms/image/image";
-import Title from "../../components/atoms/Title/title";
-import Section from "../../components/atoms/section/section";
-import { Grid, GridItem, useColorModeValue, Text } from "@chakra-ui/react";
+import ItemsCarousel from "../../components/molecules/itemsCarousel";
+import Image from "../../components/atoms/image";
+import Title from "../../components/atoms/title";
+import Section from "../../components/atoms/section";
+import { Grid, GridItem, useColorModeValue, Text, Box } from "@chakra-ui/react";
 import { styled } from "frontity";
 
 const AboutSection = ({ postdata }) => {
   const CustomGridItem = styled(GridItem)`
-    cursor: pointer;
+    position: relative;
     min-height: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 
-    &:after {
+    & #image-wrapper {
+      background-image: url(${HeroImage});
+      background-blend-mode: saturation;
+      background-size: cover;
+      filter: grayscale(100%);
+      position: absolute;
       width: 100%;
-      height: 100%;
-      background-color: hsla(0, 0%, 0%, 0.3);
-      content: "";
-      display: block;
-      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      transform: scale(1.1);
+      transition: all 0.3s ease;
+      z-index: 1;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 35, 52, 0.75);
+        z-index: 0;
+      }
+
+      &:hover {
+        transform: scale(1);
+      }
     }
 
-    &:hover blockquote {
-      backdrop-filter: blur(5px);
-    }
     & blockquote {
-      background-color: hsla(0, 0%, 0%, 0.2);
-      content: "";
-      display: block;
-      position: absolute;
-      border-radius: 5%;
-      padding: 20px 30px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 14%;
+      z-index: 1;
     }
     & blockquote p {
       &:before {
@@ -49,27 +71,17 @@ const AboutSection = ({ postdata }) => {
       <Grid
         templateColumns={{ base: "100vw", lg: "repeat(2, 50vw)" }}
         templateRows="auto"
-        h="auto"
       >
         <CustomGridItem
           colSpan={1}
           rowSpan={{ base: "1", lg: "2" }}
           bg={"transparent"}
-          h="100%"
-          pos={"relative"}
-          display="flex"
-          overflow={"hidden"}
-          justifyContent="center"
-          alignItems="center"
         >
-          {/* <div className="overlay"></div> */}
-
-          <Image loading="lazy" src={HeroImage} alt="Hero Image" />
+          <Box id="image-wrapper" />
           <blockquote>
             <Text
               fontSize={["1.25rem", "1.5rem", "2rem"]}
-              zIndex="50"
-              color={"gray.50"}
+              color={"whiteAlpha.800"}
               maxW="xl"
               margin={{ base: "1rem 20px", lg: "1rem auto" }}
               fontFamily="heading"

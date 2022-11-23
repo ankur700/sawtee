@@ -10,10 +10,16 @@ const ThemeToggle = () => {
       size="md"
       onClick={toggleColorMode}
       color={`mode.${colorMode}.text`}
-      border="1px solid"
-      borderColor={`mode.${colorMode}.text`}
+      // border="1px solid"
+      // borderColor={`mode.${colorMode}.text`}
       aria-label="toggle theme"
-      icon={colorMode === "light" ? <IoIosMoon /> : <IoIosSunny />}
+      icon={
+        colorMode === "light" ? (
+          <IoIosMoon id="moon" />
+        ) : (
+          <IoIosSunny id="sun" color="white" />
+        )
+      }
       zIndex="sticky"
       mr={"1rem"}
       bg={useColorModeValue("white", "whiteAlpha.100")}

@@ -23,13 +23,14 @@ const SiteHeader = (props) => (
 
 const SiteHeaderInner = (props) => (
   <Flex
-    align="center"
+    // align="center"
     width={{ base: "auto", sm: "92%" }}
     mx="auto"
     height={{ base: "5.5rem", sm: "6.5rem" }}
     maxW="1550px"
     {...props}
     justifyContent="space-between"
+    alignItems="center"
   />
 );
 

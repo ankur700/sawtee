@@ -2,27 +2,29 @@ import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { connect, Global, Head } from "frontity";
 import Switch from "@frontity/components/switch";
 import React from "react";
+import SkipLink from "./styles/skip-link";
 import Archive from "./organisms/archive";
-import Footer from "./molecules/footer";
+import Footer from "./organisms/footer";
 import Header from "./organisms/header";
 import Loading from "./atoms/loading";
 import Page404 from "./atoms/page404";
 import SearchResults from "./molecules/search";
-import PageTitle from "./atoms/title";
+import PageTitle from "./atoms/pageTitle";
 import FontFace from "./styles/font-face";
-import Home from "../pages/home/home";
-import Publication from "../pages/publication/publication";
-import OurWork from "../pages//OurWork/OurWork";
-import KnowUs from "../pages/KnowUs/KnowUs";
-import Events from "../pages/events/events";
+import Home from "../pages/home";
+import Publication from "../pages/publication";
+import OurWork from "../pages/OurWork";
+import KnowUs from "../pages/KnowUs";
+import Events from "../pages/events";
 import Page from "../components/organisms/page";
+import globalStyles from "./styles/global-styles";
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
 const Theme = ({ state }) => {
   // Get information about the current URL.
   const data = state.source.get(state.router.link);
-
+  const { bodyBg } = state.theme.colors;
   const overrides = extendTheme({
     fonts: {
       heading: "Kelson, system-ui, Helvetica, sans-serif",
@@ -39,7 +41,8 @@ const Theme = ({ state }) => {
   };
 
   return (
-    <ChakraProvider theme={{ config, ...overrides }}>
+    <ChakraProvider resetCSS theme={{ config, ...overrides }}>
+      <Global styles={globalStyles(state.theme.colors)} />
       <FontFace />
       {/* Add some metatags to the <head> of the HTML. */}
       <PageTitle />
@@ -58,10 +61,12 @@ const Theme = ({ state }) => {
           charset="utf-8"
         ></script>
       </Head>
-
+      {/* Accessibility: Provides ability to skip to main content */}
+      <SkipLink as="a" href="#main">
+        Skip to main content
+      </SkipLink>
       {/* Add the header of the site. */}
       <Header />
-
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
       <Box
@@ -84,7 +89,6 @@ const Theme = ({ state }) => {
           <Page when={data.isPage} />
         </Switch>
       </Box>
-
       <Footer />
     </ChakraProvider>
   );

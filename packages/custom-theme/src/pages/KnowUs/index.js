@@ -11,7 +11,7 @@ import {
 } from "../../components/organisms/page/post-item";
 import Link from "../../components/atoms/link";
 import { HiOutlineExternalLink, HiOutlineLink } from "react-icons/hi";
-import Accordian from "../../components/atoms/accordian/accordian";
+import Accordian from "../../components/atoms/accordian";
 
 /**
  * The Post component that the TwentyTwenty theme uses for rendering any kind of

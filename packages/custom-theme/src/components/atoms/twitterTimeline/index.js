@@ -1,11 +1,20 @@
 import { styled } from "frontity";
+import { Link } from "@chakra-ui/react";
+import GlassBox from "../glassBox";
 
 const TwitterTimeline = ({ height, width, handle }) => {
   let link = `https://twitter.com/${handle}?ref_src=twsrc%5Etfw`;
 
   return (
-    <TwitterEmbed>
-      <a
+    <GlassBox
+      display="flex"
+      px="6"
+      py="4"
+      alignItems="center"
+      rounded="lg"
+      justifyContent="center"
+    >
+      <Link
         className="twitter-timeline"
         data-lang="en"
         data-width={width}
@@ -14,18 +23,9 @@ const TwitterTimeline = ({ height, width, handle }) => {
         href={link}
       >
         Track SAWTEE on twitter
-      </a>
-    </TwitterEmbed>
+      </Link>
+    </GlassBox>
   );
 };
 
 export default TwitterTimeline;
-
-const TwitterEmbed = styled.div`
-  display: flex;
-  padding: 1.25rem;
-  background-color: #fff;
-  border-radius: 1.25rem;
-  width: 100%;
-  justify-content: center;
-`;

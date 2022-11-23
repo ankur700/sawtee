@@ -12,7 +12,7 @@ import Image10 from "./assets/10.jpg";
 import Image11 from "./assets/11.jpg";
 import Image12 from "./assets/12.jpg";
 
-export const featuredEvents = [
+export const policyOutreach = [
   {
     id: 1,
     title: "SAWTEE and FNCCI interaction on Nepal’s LDC graduation",
@@ -91,4 +91,54 @@ export const postdata = [
   Image10,
   Image11,
   Image12,
+];
+
+export const featuredEvents = [
+  {
+    id: 1,
+    title: "Electricity could emerge as key export for Nepal—in the long run",
+    publisher: "The Kathmandu Post",
+    date: "2022-06-03",
+  },
+  {
+    id: 2,
+    title:
+      "Populism and ad-hocism in policymaking: How it will aggravate Nepal’s economic troubles",
+    publisher: "Nepal Live Today",
+    date: "2022-05-29",
+  },
+  {
+    id: 3,
+    title:
+      "On petro business, policies have been utterly inconsistent for many years",
+    date: "2022-05-24",
+    publisher: "The Kathmandu Post",
+  },
+  {
+    id: 4,
+    title:
+      "२० राष्ट्रले गरे विभिन्न खाद्यान्न निर्यात रोक, किन विश्वभर भइरहेको छ खाद्य संकटको चिन्ता?",
+    date: "2022-05-23",
+    publisher: "Seto Pati",
+  },
+  {
+    id: 5,
+    title: "अब आयातित ग्यासलाई होइन,विद्युतीय ऊर्जामा अनुदान",
+    date: "2022-05-25",
+    publisher: "Nepali Purbadhar",
+  },
+  {
+    id: 6,
+    title:
+      "Government revising law to allow private sector to engage in power trade",
+    date: "2021-05-21",
+    publisher: "The Kathmandu Post",
+  },
+  {
+    id: 7,
+    title:
+      "Once reluctant, India now open to power trade to and from Nepal, and beyond",
+    date: "2021-04-05",
+    publisher: "The Kathmandu Post",
+  },
 ];

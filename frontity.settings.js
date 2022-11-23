@@ -1,5 +1,12 @@
+import image from "@frontity/html2react/processors/image";
+import link from "@frontity/html2react/processors/link";
+// import Theme from "./packages/custom-theme/src/components";
+
 const settings = {
   name: "sawtee-frontend",
+  // roots: {
+  //   theme: Theme,
+  // },
   state: {
     frontity: {
       url: "https://sawtee.ankursingh.com.np/",
@@ -213,6 +220,11 @@ const settings = {
               800: "#1e2530",
               900: "#070c18",
             },
+            darkgray: {
+              base: "#6D6D6D",
+              light: "#DCD7CA",
+              lighter: "#F5EFE0",
+            },
             primary: {
               50: "#e1f8ff",
               100: "#bee4f1",
@@ -251,7 +263,7 @@ const settings = {
             },
             headerBg: "white",
             footerBg: "#006181",
-            bodyBg: "gainsboro",
+            bodyBg: { light: "gainsboro", dark: "gray.800" },
           },
           showSearchInHeader: true,
           // State for the menu on mobile
@@ -281,9 +293,20 @@ const settings = {
         },
       },
     },
+
     "@frontity/tiny-router",
     "@frontity/html2react",
   ],
+  libraries: {
+    html2react: {
+      /**
+       * Add a processor to `html2react` so it processes the `<img>` tags
+       * and internal link inside the content HTML.
+       * You can add your own processors too.
+       */
+      processors: [image, link],
+    },
+  },
 };
 
 export default settings;

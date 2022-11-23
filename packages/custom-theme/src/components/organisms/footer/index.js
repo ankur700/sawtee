@@ -1,6 +1,6 @@
 import { Box, SimpleGrid } from "@chakra-ui/react";
 import React from "react";
-import { SocialMenu } from "../organisms/header/social-menu";
+import { SocialMenu } from "../header/social-menu";
 import { connect } from "frontity";
 
 const FooterSection = (props) => (

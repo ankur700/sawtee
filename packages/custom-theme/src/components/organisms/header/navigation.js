@@ -29,11 +29,12 @@ const Link = styled(FrontityLink)`
 
 export const SiteMenu = (props) => (
   <Stack
+    m="0"
     ml="50px"
     spacing="50px"
     as="ul"
     listStyleType="none"
-    align="center"
+    alignItems="center"
     direction="row"
     color="white"
     justifyContent={"center"}
@@ -44,6 +45,7 @@ export const SiteMenu = (props) => (
 const SiteMenuItem = ({ link, ...props }) => (
   <Box
     as="li"
+    m="0"
     color={useColorModeValue("primary.700", "whiteAlpha.900")}
     fontSize={{ base: "sm", lg: "md" }}
     fontWeight="medium"

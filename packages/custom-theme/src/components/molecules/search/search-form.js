@@ -9,11 +9,11 @@ const SearchForm = (props) => {
   return (
     <Flex
       as="form"
-      maxWidth="md"
+      maxWidth="lg"
       mx="auto"
       pos="relative"
       width="100%"
-      height="80%"
+      height="100%"
       justifyContent="center"
       alignItems="center"
       {...form}
