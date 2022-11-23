@@ -21,6 +21,7 @@ const defaultValues = {
   content:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestie parturient et sem ipsum volutpat vel. Natoque sem et aliquam mauris egestas quam volutpat viverra. In pretium nec senectus erat. Et malesuada lobortis.",
   author: "",
+  showAvatar: false,
   date: today.getDate(),
   categoryLink: "#",
   imageUrl:
@@ -38,6 +39,7 @@ export const TopImageCard = (props) => {
     date,
     categoryLink,
     avatar,
+    showAvatar,
   } = props;
 
   return (
@@ -45,7 +47,7 @@ export const TopImageCard = (props) => {
       as="article"
       rounded="lg"
       shadow="md"
-      bg={useColorModeValue("white", "gray.800")}
+      bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "rgba(0,0,0,0.3)")}
       maxW="5xl"
       paddingTop={"4"}
       px="4"
@@ -107,14 +109,18 @@ export const TopImageCard = (props) => {
           >
             <Show above="md">
               <Flex alignItems="center">
-                <Image
-                  h={10}
-                  w={10}
-                  fit="cover"
-                  rounded="full"
-                  src={avatar ? avatar : defaultValues.avatar}
-                  alt="Avatar"
-                />
+                {showAvatar
+                  ? showAvatar
+                  : defaultValues.showAvatar && (
+                      <Image
+                        h={10}
+                        w={10}
+                        fit="cover"
+                        rounded="full"
+                        src={avatar ? avatar : defaultValues.avatar}
+                        alt="Avatar"
+                      />
+                    )}
                 <Link
                   mx={2}
                   fontWeight="bold"
@@ -140,8 +146,17 @@ export const TopImageCard = (props) => {
 };
 
 export const NoImageCard = (props) => {
-  const { category, title, href, content, author, categoryLink, avatar, date } =
-    props;
+  const {
+    category,
+    title,
+    href,
+    content,
+    author,
+    categoryLink,
+    avatar,
+    date,
+    showAvatar,
+  } = props;
 
   return (
     <LinkBox
@@ -150,7 +165,7 @@ export const NoImageCard = (props) => {
       py={4}
       rounded="lg"
       shadow="lg"
-      bg={useColorModeValue("white", "gray.800")}
+      bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "rgba(0,0,0,0.3)")}
       maxW="2xl"
       minH={"80"}
       display="flex"
@@ -255,9 +270,10 @@ export const NoImageCard = (props) => {
 };
 
 export const LeftImageCard = (props) => {
+  const { imageUrl, title, href, content } = props;
   return (
     <Box
-      bg={useColorModeValue("white", "gray.800")}
+      bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "gray.800")}
       mx={{
         lg: 8,
       }}

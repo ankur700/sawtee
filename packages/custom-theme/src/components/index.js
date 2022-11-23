@@ -18,7 +18,7 @@ import KnowUs from "../pages/KnowUs";
 import Events from "../pages/events";
 import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
-
+import { Post } from "./organisms/page/post-item";
 // Theme is the root React component of our theme. The one we will export
 // in roots.
 const Theme = ({ state }) => {
@@ -78,7 +78,6 @@ const Theme = ({ state }) => {
           <Loading when={data.isFetching} />
           <SearchResults when={data.isSearch} />
           <Archive when={data.isArchive} />
-          {/* <Post when={data.isPostType} /> */}
           <Page404 when={data.is404} />
 
           <Home when={data.isHome} />
@@ -87,6 +86,7 @@ const Theme = ({ state }) => {
           <KnowUs when={data.route === "/about/"} />
           <Events when={data.route === "/events/"} />
           <Page when={data.isPage} />
+          <Post when={data.isPostType} />
         </Switch>
       </Box>
       <Footer />

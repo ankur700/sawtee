@@ -14,7 +14,7 @@ const InfoSection = () => {
     >
       <Box
         id="chart-wrapper"
-        bg={"transparent"}
+        bg={useColorModeValue("rgba(0,0, 0, 0.1)", "rgba(0,0, 0, 0.3)")}
         w={{ base: "100%", lg: "70%" }}
         p={{ base: "6", lg: "12" }}
       >

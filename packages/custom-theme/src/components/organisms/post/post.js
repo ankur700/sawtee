@@ -2,7 +2,7 @@ import { Box, Divider } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
 import List from "../archive";
-import useScrollProgress from "../hooks/useScrollProgress";
+import useScrollProgress from "../../hooks/useScrollProgress";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
 import AuthorBio from "./author-bio";
