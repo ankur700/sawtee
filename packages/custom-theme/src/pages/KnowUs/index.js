@@ -1,4 +1,14 @@
-import { Box, Divider } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Text,
+  useColorModeValue,
+  Tabs,
+  Tab,
+  TabList,
+  TabPanels,
+  TabPanel,
+} from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
 import List from "../../components/organisms/archive";
@@ -32,7 +42,11 @@ const KnowUs = ({ state, actions, libraries }) => {
   if (!postData.isReady) return null;
 
   return (
-    <LightPatternBox showPattern={state.theme.showBackgroundPattern} ref={ref}>
+    <LightPatternBox
+      bg={useColorModeValue("accent.50", "accent.800")}
+      showPattern={state.theme.showBackgroundPattern}
+      ref={ref}
+    >
       <Box pb={{ base: "2rem", lg: "50px" }}>
         <PostHeader
           mt={{ base: "20px", lg: "4rem" }}
@@ -45,10 +59,10 @@ const KnowUs = ({ state, actions, libraries }) => {
         />
       </Box>
 
-      {!postData.isPage && <PostProgressBar value={scroll} />}
+      <PostProgressBar value={scroll} />
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section bg="white" pb="80px" size="lg">
+      <Section bg={useColorModeValue("white", "gray.800")} pb="80px" size="lg">
         {post.featured_media != null && (
           <FeaturedMedia id={post.featured_media.id} />
         )}
@@ -61,19 +75,49 @@ const KnowUs = ({ state, actions, libraries }) => {
           size="md"
           pt="50px"
         >
-          <Html2React html={post.content} />
+          {/* <Html2React html={post.content} /> */}
+          {post.sections.map((section) => {
+            //  const {
+            //     contentRepeater, title, content, hasTabOrHasAccordian
+            //   } = section;
+            return (
+              <div key={section.title}>
+                <Text>{section.title}</Text>
+                {section.hasTabOrHasAccordian ? (
+                  <Tabs variant="soft-rounded" colorScheme="green">
+                    <TabList>
+                      {Object.entries(section.contentRepeater).map((item) => (
+                        <Tab key={item.tabTitle}>{item.tabTitle}</Tab>
+                      ))}
+                    </TabList>
+                    <TabPanels>
+                      {Object.entries(section.contentRepeater).map(
+                        (item, index) => (
+                          <TabPanel key={index}>
+                            <Html2React html={item.tabContent} />
+                          </TabPanel>
+                        )
+                      )}
+                    </TabPanels>
+                  </Tabs>
+                ) : (
+                  <Html2React html={section.content} />
+                )}
+              </div>
+            );
+          })}
         </Content>
 
         <Divider borderBottom="1px solid" my="80px" />
 
-        <Section px={{ base: "32px", md: "0" }}>
+        {/* <Section px={{ base: "32px", md: "0" }}>
           <AuthorBio
             image={post.author.avatar_urls["96"]}
             name={post.author.name}
             description={post.author.description}
             link={post.author.link}
           />
-        </Section>
+        </Section> */}
       </Section>
     </LightPatternBox>
   );

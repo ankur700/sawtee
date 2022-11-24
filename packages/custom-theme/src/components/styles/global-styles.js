@@ -70,8 +70,8 @@ const globalStyle = (colors) =>
   css([
     documentSetup(colors),
     accessibilitySettings,
-    // gutenbergTheme,
-    // gutenbergStyles,
+    gutenbergTheme,
+    gutenbergStyles,
     // shortcodesUltimateStyles,
   ]);
 
