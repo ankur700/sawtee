@@ -23,7 +23,7 @@ const settings = {
         theme: {
           logo: "https://www.sawtee.org/images/logo-sawtee.webp",
           // show background pattern
-          showBackgroundPattern: true,
+          showBackgroundPattern: false,
           // show social links
           showSocialLinks: true,
           socialLinks: [

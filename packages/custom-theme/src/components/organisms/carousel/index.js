@@ -168,7 +168,8 @@ export default ({ data, slidesToShow, title, enableCaption, dots }) => {
                   >
                     <Text
                       id="caption-title"
-                      zIndex={"50"}
+                      m="0"
+                      zIndex={"1"}
                       fontSize={{ base: "1.5rem", sm: "2.5rem", md: "3rem" }}
                       color="whiteAlpha.700"
                     >
@@ -177,7 +178,8 @@ export default ({ data, slidesToShow, title, enableCaption, dots }) => {
                     {item.slide_caption && (
                       <Text
                         id="caption-subtitle"
-                        zIndex={"50"}
+                        zIndex={"1"}
+                        m="0"
                         fontSize={{ base: "0.75rem", sm: "1rem", md: "1.5rem" }}
                         color="whiteAlpha.700"
                       >

@@ -8,6 +8,11 @@ import {
   TabList,
   TabPanels,
   TabPanel,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
@@ -41,9 +46,99 @@ const KnowUs = ({ state, actions, libraries }) => {
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
+  const PageSection = ({ section }) => {
+    const { contentRepeater, title, content, hasTabOrHasAccordian } = section;
+    return (
+      <Box my="4">
+        <Text
+          as="h3"
+          fontSize={["2xl", "3xl", "4xl"]}
+          fontFamily="heading"
+          py={"4"}
+          mb="4"
+        >
+          {title}
+        </Text>
+        {hasTabOrHasAccordian ? (
+          title !== "Strategies" ? (
+            <Tabs variant="enclosed" size="md" isFitted colorScheme="primary">
+              <TabList>
+                {contentRepeater.map(({ tabTitle }) => (
+                  <Tab key={tabTitle}>
+                    <Text
+                      fontSize={["lg", "xl"]}
+                      fontWeight="semibold"
+                      fontFamily={"heading"}
+                    >
+                      {tabTitle}
+                    </Text>
+                  </Tab>
+                ))}
+              </TabList>
+              <TabPanels>
+                {contentRepeater.map(({ tabContent }, index) => (
+                  <TabPanel
+                    px={["5", "10"]}
+                    key={index}
+                    border={"1px solid #b5bdcc"}
+                    display="flex"
+                    py={["2", "4"]}
+                    minH="250px"
+                    justifyContent="center"
+                    alignItems="center"
+                  >
+                    <Html2React html={tabContent} />
+                  </TabPanel>
+                ))}
+              </TabPanels>
+            </Tabs>
+          ) : (
+            <Accordion allowToggle>
+              {contentRepeater.map(({ tabTitle, tabContent }) => {
+                return (
+                  <AccordionItem key={tabTitle} border="none">
+                    <AccordionButton
+                      size="lg"
+                      py="4"
+                      _expanded={{
+                        bg: useColorModeValue(
+                          "rgba(0, 0, 0, 0.1)",
+                          "rgba(0,0,0,0.3)"
+                        ),
+                      }}
+                    >
+                      <Text
+                        as="h4"
+                        fontSize={"2xl"}
+                        flex="1"
+                        textAlign="left"
+                        fontFamily={"roboto"}
+                      >
+                        {tabTitle}
+                      </Text>
+                      <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel px={["5", "10"]}>
+                      <Html2React html={tabContent} />
+                    </AccordionPanel>
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
+          )
+        ) : (
+          <Box>
+            <Html2React html={content} />
+          </Box>
+        )}
+        <Divider my="60px" />
+      </Box>
+    );
+  };
+
   return (
     <LightPatternBox
-      bg={useColorModeValue("accent.50", "accent.800")}
+      bg={useColorModeValue("whiteAlpha.300", "gray.900")}
       showPattern={state.theme.showBackgroundPattern}
       ref={ref}
     >
@@ -51,6 +146,7 @@ const KnowUs = ({ state, actions, libraries }) => {
         <PostHeader
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "0" }}
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
           categories={post.categories}
           heading={post.title}
           author={post.author}
@@ -62,7 +158,11 @@ const KnowUs = ({ state, actions, libraries }) => {
       <PostProgressBar value={scroll} />
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section bg={useColorModeValue("white", "gray.800")} pb="80px" size="lg">
+      <Section
+        bg={useColorModeValue("whiteAlpha.600", "gray.800")}
+        pb="80px"
+        size="lg"
+      >
         {post.featured_media != null && (
           <FeaturedMedia id={post.featured_media.id} />
         )}
@@ -74,50 +174,16 @@ const KnowUs = ({ state, actions, libraries }) => {
           px={{ base: "32px", md: "0" }}
           size="md"
           pt="50px"
+          fontFamily="openSans"
+          fontWeight="normal"
+          fontSize={["lg", "xl", "xl"]}
+          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           {/* <Html2React html={post.content} /> */}
-          {post.sections.map((section) => {
-            //  const {
-            //     contentRepeater, title, content, hasTabOrHasAccordian
-            //   } = section;
-            return (
-              <div key={section.title}>
-                <Text>{section.title}</Text>
-                {section.hasTabOrHasAccordian ? (
-                  <Tabs variant="soft-rounded" colorScheme="green">
-                    <TabList>
-                      {Object.entries(section.contentRepeater).map((item) => (
-                        <Tab key={item.tabTitle}>{item.tabTitle}</Tab>
-                      ))}
-                    </TabList>
-                    <TabPanels>
-                      {Object.entries(section.contentRepeater).map(
-                        (item, index) => (
-                          <TabPanel key={index}>
-                            <Html2React html={item.tabContent} />
-                          </TabPanel>
-                        )
-                      )}
-                    </TabPanels>
-                  </Tabs>
-                ) : (
-                  <Html2React html={section.content} />
-                )}
-              </div>
-            );
-          })}
+          {post.sections.map((section) => (
+            <PageSection key={section.title} section={section} />
+          ))}
         </Content>
-
-        <Divider borderBottom="1px solid" my="80px" />
-
-        {/* <Section px={{ base: "32px", md: "0" }}>
-          <AuthorBio
-            image={post.author.avatar_urls["96"]}
-            name={post.author.name}
-            description={post.author.description}
-            link={post.author.link}
-          />
-        </Section> */}
       </Section>
     </LightPatternBox>
   );
@@ -128,7 +194,7 @@ export default connect(KnowUs);
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.
 const Content = styled.div`
-  color: rgba(12, 17, 43, 0.8);
+  // color: rgba(12, 17, 43, 0.8);
   word-break: break-word;
 
   * {

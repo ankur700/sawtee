@@ -4,8 +4,9 @@ const Title = ({ text, color, ...rest }) => {
   return (
     <Text
       {...rest}
+      m="0"
       fontSize={{ base: "lg", sm: "3xl", md: "3xl", lg: "4xl" }}
-      color={color ? color : useColorModeValue("primary.700", "whiteAlpha.900")}
+      color={color ? color : useColorModeValue("gray.900", "whiteAlpha.900")}
     >
       {text}
     </Text>

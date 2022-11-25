@@ -19,6 +19,8 @@ import Events from "../pages/events";
 import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
 import { Post } from "./organisms/page/post-item";
+import "focus-visible/dist/focus-visible";
+
 // Theme is the root React component of our theme. The one we will export
 // in roots.
 const Theme = ({ state }) => {
@@ -29,8 +31,9 @@ const Theme = ({ state }) => {
     fonts: {
       heading: "Kelson, system-ui, Helvetica, sans-serif",
       body: "Inter, serif",
-      roboto: "Roboto, serif",
+      roboto: "Roboto, sans-serif",
       poppins: "Poppins, sans-serif",
+      openSans: "Open Sans, sans-serif",
     },
     colors: { ...state.theme.colors },
   });
@@ -50,9 +53,9 @@ const Theme = ({ state }) => {
         <meta name="description" content={state.frontity.description} />
         <html lang="en" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700;1,900&family=Poppins:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700;1,900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet"
         />
         <script

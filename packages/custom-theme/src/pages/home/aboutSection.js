@@ -82,6 +82,7 @@ const AboutSection = ({ postdata }) => {
             <Text
               fontSize={["1.25rem", "1.5rem", "2rem"]}
               color={"whiteAlpha.800"}
+              m="0"
               maxW="xl"
               margin={{ base: "1rem 20px", lg: "1rem auto" }}
               fontFamily="heading"
