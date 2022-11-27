@@ -78,7 +78,7 @@ export const TopImageCard = (props) => {
           <LinkOverlay href={href ? href : "#"}>
             <Text
               display="block"
-              color={useColorModeValue("gray.800", "white")}
+              color={useColorModeValue("gray.800", "whiteAlpha.800")}
               fontWeight="bold"
               fontSize={{ base: "lg", md: "xl" }}
               mt={2}
@@ -94,7 +94,7 @@ export const TopImageCard = (props) => {
             mt={2}
             fontSize={{ base: "sm", md: "md" }}
             noOfLines={3}
-            color={useColorModeValue("gray.600", "gray.400")}
+            color={useColorModeValue("gray.600", "whiteAlpha.600")}
           >
             {content ? content : defaultValues.content}
           </Text>
@@ -124,7 +124,7 @@ export const TopImageCard = (props) => {
                 <Link
                   mx={2}
                   fontWeight="bold"
-                  color={useColorModeValue("gray.700", "gray.200")}
+                  color={useColorModeValue("gray.700", "whiteAlpha.700")}
                 >
                   {author ? author : defaultValues.author}
                 </Link>
@@ -134,7 +134,7 @@ export const TopImageCard = (props) => {
               as="time"
               mx={1}
               fontSize="sm"
-              color={useColorModeValue("gray.600", "gray.300")}
+              color={useColorModeValue("gray.600", "whiteAlpha.600")}
             >
               {date ? date : defaultValues.date()}
             </Box>
@@ -176,7 +176,7 @@ export const NoImageCard = (props) => {
         <Box
           as="time"
           fontSize="sm"
-          color={useColorModeValue("gray.600", "gray.400")}
+          color={useColorModeValue("gray.600", "whiteAlpha.600")}
         >
           {date ? date : defaultValues.date()}
         </Box>
@@ -201,12 +201,12 @@ export const NoImageCard = (props) => {
       <Box mt={2}>
         <Text
           fontSize={{ base: "md", md: "xl" }}
-          color={useColorModeValue("gray.700", "white")}
+          color={useColorModeValue("gray.800", "whiteAlpha.800")}
           fontWeight="700"
           _hover={{
-            color: "gray.600",
+            color: "gray.700",
             _dark: {
-              color: "gray.200",
+              color: "whiteAlpha.700",
             },
             textDecor: "underline",
           }}
@@ -219,7 +219,7 @@ export const NoImageCard = (props) => {
           mt={2}
           color="gray.600"
           _dark={{
-            color: "gray.300",
+            color: "whiteAlpha.600",
           }}
           noOfLines={3}
           fontSize={{ base: "sm", md: "md" }}
@@ -231,9 +231,9 @@ export const NoImageCard = (props) => {
       <Flex justifyContent="space-between" alignItems="center" mt={4}>
         <Text
           as="a"
-          color="brand.600"
+          color="primary.600"
           _dark={{
-            color: "brand.400",
+            color: "primray.400",
           }}
           _hover={{
             textDecor: "underline",
@@ -243,19 +243,21 @@ export const NoImageCard = (props) => {
         </Text>
         <Show above="md">
           <Flex alignItems="center">
-            <Image
-              mx={4}
-              w={10}
-              h={10}
-              rounded="full"
-              fit="cover"
-              src={avatar ? avatar : defaultValues.avatar}
-              alt="avatar"
-            />
+            {showAvatar && (
+              <Image
+                mx={4}
+                w={10}
+                h={10}
+                rounded="full"
+                fit="cover"
+                src={avatar ? avatar : defaultValues.avatar}
+                alt="avatar"
+              />
+            )}
             <Link
               color="gray.700"
               _dark={{
-                color: "gray.200",
+                color: "whiteAlpha.700",
               }}
               fontWeight="700"
               cursor="pointer"

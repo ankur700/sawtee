@@ -1,10 +1,9 @@
 import HeroImage from "../../assets/hero-image.jpg";
-import ItemsCarousel from "../../components/molecules/itemsCarousel";
-import Image from "../../components/atoms/image";
 import Title from "../../components/atoms/title";
 import Section from "../../components/atoms/section";
 import { Grid, GridItem, useColorModeValue, Text, Box } from "@chakra-ui/react";
 import { styled } from "frontity";
+import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 
 const AboutSection = ({ postdata }) => {
   const CustomGridItem = styled(GridItem)`
@@ -85,7 +84,7 @@ const AboutSection = ({ postdata }) => {
               m="0"
               maxW="xl"
               margin={{ base: "1rem 20px", lg: "1rem auto" }}
-              fontFamily="heading"
+              fontFamily="Open Sans"
             >
               Dedicated to fair, equitable, inclusive, and sustainable growth
               and development in South Asia, SAWTEE is working towards poverty
@@ -97,17 +96,19 @@ const AboutSection = ({ postdata }) => {
         <GridItem
           colSpan={1}
           bg={useColorModeValue("whiteAlpha.600", "#463737")}
+          px={"4"}
         >
           <Title
             px={["6", "12", "16"]}
             py={["4", "6", "8"]}
             text="Publication"
           />
-          <ItemsCarousel data={postdata} slidesToShow={3} slidesToScroll={3} />
+          <MultiItemCarousel my="6" slides={postdata} />
         </GridItem>
         <GridItem
           colSpan={1}
           bg={useColorModeValue("whiteAlpha.600", "#463737")}
+          px={"4"}
         >
           <Title
             px={["6", "12", "16"]}
@@ -115,7 +116,7 @@ const AboutSection = ({ postdata }) => {
             text="Sawtee in Media"
           />
 
-          <ItemsCarousel data={postdata} slidesToShow={3} slidesToScroll={3} />
+          <MultiItemCarousel my="6" slides={postdata} />
         </GridItem>
       </Grid>
     </Section>

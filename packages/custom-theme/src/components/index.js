@@ -26,13 +26,10 @@ import "focus-visible/dist/focus-visible";
 const Theme = ({ state }) => {
   // Get information about the current URL.
   const data = state.source.get(state.router.link);
-  const { bodyBg } = state.theme.colors;
   const overrides = extendTheme({
     fonts: {
-      heading: "Kelson, system-ui, Helvetica, sans-serif",
+      heading: "Inter, system-ui, Helvetica, sans-serif",
       body: "Inter, serif",
-      roboto: "Roboto, sans-serif",
-      poppins: "Poppins, sans-serif",
       openSans: "Open Sans, sans-serif",
     },
     colors: { ...state.theme.colors },
@@ -55,7 +52,7 @@ const Theme = ({ state }) => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500;1,700;1,900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
         <script
@@ -75,7 +72,7 @@ const Theme = ({ state }) => {
       <Box
         as="main"
         mt={{ base: "5.5rem", md: "6.5rem" }}
-        minH="calc(100vh - 320px)"
+        minH="calc(100vh - 6.5rem)"
       >
         <Switch>
           <Loading when={data.isFetching} />

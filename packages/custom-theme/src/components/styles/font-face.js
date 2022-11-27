@@ -1,7 +1,5 @@
 import React from "react";
 import { Global, css, connect } from "frontity";
-import kelsonBoldWOFF from "../../fonts/KelsonSans-Bold.woff";
-import kelsonBoldTTF from "../../fonts/KelsonSans-Bold.ttf";
 import InterMedium from "../../fonts/inter/Inter-Medium.woff2";
 import InterBold from "../../fonts/inter/Inter-Bold.woff2";
 import InterSemiBold from "../../fonts/inter/Inter-SemiBold.woff2";
@@ -23,13 +21,6 @@ const FontFace = ({ state }) => {
   return (
     <Global
       styles={css`
-        @font-face {
-          font-family: "Kelson";
-          src: url(${kelsonBoldWOFF}) format("woff"),
-            url(${kelsonBoldTTF}) format("ttf");
-          font-weight: 700;
-          font-display: swap;
-        }
         ,
         @font-face {
           font-family: "Inter";

@@ -18,7 +18,7 @@ const Home = ({ state }) => {
       <AboutSection postdata={postdata} />
       <InfoSection />
       <BlogSection data={policyOutreach} />
-      <Section w="full">
+      {/* <Section w="full">
         <Box h="500px" bg="orange">
           Multimedia Section(sawtee youtube videos
         </Box>
@@ -32,7 +32,7 @@ const Home = ({ state }) => {
         <Box h="500px" bg="orange">
           Upcoming Events section(Zoom meetings and physical programs info)
         </Box>
-      </Section>
+      </Section> */}
     </>
   );
 };

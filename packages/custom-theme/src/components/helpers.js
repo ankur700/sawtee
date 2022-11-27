@@ -64,6 +64,7 @@ export function formatPostData(state, post) {
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
     sections: post.acf.sections,
+    memberInstitutions: post.acf.memberInstitutions,
   };
 }
 

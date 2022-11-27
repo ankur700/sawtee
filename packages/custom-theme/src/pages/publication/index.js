@@ -10,11 +10,11 @@ import {
 } from "../../components/organisms/page/post-item";
 import PostCategories from "../../components/organisms/page/post-categories";
 import Link from "../../components/atoms/link";
-import ItemsCarousel from "../../components/molecules/itemsCarousel";
 import Grid, { GridItem } from "../../components/atoms/grid";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { postdata, featuredEvents } from "../../data";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
+import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 
 /**
  * The Post component that the TwentyTwenty theme uses for rendering any kind of
@@ -127,85 +127,45 @@ const Publication = ({ state, actions, libraries }) => {
         <GridItem styles={CarouselGridSection}>
           <Section>
             <Title>Trade Insight</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
+            <MultiItemCarousel my="6" slides={postdata} />
           </Section>
           <Section>
             <Title>Discussion Paper</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
+            <MultiItemCarousel my="6" slides={postdata} />
           </Section>
           <Section>
             <Title>Policy Brief</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
+            <MultiItemCarousel my="6" slides={postdata} />
           </Section>
           <Section>
             <Title>Briefing Paper</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
+            <MultiItemCarousel my="6" slides={postdata} />
           </Section>
           <Section>
             <Title>Issue Paper</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
+            <MultiItemCarousel my="6" slides={postdata} />
           </Section>
           <Section>
             <Title>Working Paper</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
+            <MultiItemCarousel my="6" slides={postdata} />
           </Section>
           <Section>
             <Title>Books</Title>
-            <ItemsCarousel
-              data={postdata}
-              slidesToShow={3}
-              slidesToScroll={3}
-            />
+            <MultiItemCarousel my="6" slides={postdata} />
           </Section>
           {loadAll ? (
             <>
               <Section>
                 <Title>Others</Title>
-                <ItemsCarousel
-                  data={postdata}
-                  slidesToShow={3}
-                  slidesToScroll={3}
-                />
+                <MultiItemCarousel my="6" slides={postdata} />
               </Section>
               <Section>
                 <Title>Research Briefs</Title>
-                <ItemsCarousel
-                  data={postdata}
-                  slidesToShow={3}
-                  slidesToScroll={3}
-                />
+                <MultiItemCarousel my="6" slides={postdata} />
               </Section>
               <Section>
                 <Title>Book Chapters</Title>
-                <ItemsCarousel
-                  data={postdata}
-                  slidesToShow={3}
-                  slidesToScroll={3}
-                />
+                <MultiItemCarousel my="6" slides={postdata} />
               </Section>
             </>
           ) : (

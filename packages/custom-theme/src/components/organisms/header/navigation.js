@@ -49,7 +49,6 @@ const SiteMenuItem = ({ link, ...props }) => (
     color={useColorModeValue("primary.700", "whiteAlpha.900")}
     fontSize={{ base: "sm", lg: "md" }}
     fontWeight="medium"
-    fontFamily="Kelson"
     textTransform="uppercase"
     position="relative"
     cursor="pointer"

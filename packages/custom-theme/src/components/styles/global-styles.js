@@ -26,14 +26,15 @@ const documentSetup = (colors) => css`
   body {
     box-sizing: border-box;
     color: #000;
-    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Source Sans Pro", sans-serif;
+    font-family: "Inter", "Open Sans", -apple-system, BlinkMacSystemFont, "Source Sans Pro", sans-serif;
       Helvetica, sans-serif;
     letter-spacing: -0.015em;
     text-align: left;
+    font-weight: normal;
 
     button,
     span {
-      font-family: "Source Sans Pro", monospace;
+      font-family: "Open Sans", monospace;
     }
   }
 
@@ -49,6 +50,8 @@ const documentSetup = (colors) => css`
   #site-content {
     overflow: hidden;
   }
+
+
 `;
 
 const accessibilitySettings = css`
@@ -78,7 +81,7 @@ const elementBase = (colors) => css`
     letter-spacing: -0.0415625em;
     line-height: 1.25;
     margin: 3.5rem 0 2rem;
-    font-family: "Roboto", sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
   h1,

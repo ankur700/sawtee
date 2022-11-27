@@ -1,37 +1,20 @@
-import {
-  Box,
-  Divider,
-  Text,
-  useColorModeValue,
-  Tabs,
-  Tab,
-  TabList,
-  TabPanels,
-  TabPanel,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-} from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
 import List from "../../components/organisms/archive";
 import useScrollProgress from "../../components/hooks/useScrollProgress";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
-import AuthorBio from "../../components/organisms/post/author-bio";
 import FeaturedMedia from "../../components/organisms/post/featured-media";
 import PostHeader from "../../components/organisms/post/post-header";
 import PostProgressBar from "../../components/organisms/post/post-progressbar";
 import { getPostData, formatPostData } from "../../components/helpers";
+import PageSection from "./PageSection";
+import Members from "./Members";
 
 const KnowUs = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-
-  // Get the html2react component.
-  const Html2React = libraries.html2react.Component;
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -45,96 +28,6 @@ const KnowUs = ({ state, actions, libraries }) => {
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
-
-  const PageSection = ({ section }) => {
-    const { contentRepeater, title, content, hasTabOrHasAccordian } = section;
-    return (
-      <Box my="4">
-        <Text
-          as="h3"
-          fontSize={["2xl", "3xl", "4xl"]}
-          fontFamily="heading"
-          py={"4"}
-          mb="4"
-        >
-          {title}
-        </Text>
-        {hasTabOrHasAccordian ? (
-          title !== "Strategies" ? (
-            <Tabs variant="enclosed" size="md" isFitted colorScheme="primary">
-              <TabList>
-                {contentRepeater.map(({ tabTitle }) => (
-                  <Tab key={tabTitle}>
-                    <Text
-                      fontSize={["lg", "xl"]}
-                      fontWeight="semibold"
-                      fontFamily={"heading"}
-                    >
-                      {tabTitle}
-                    </Text>
-                  </Tab>
-                ))}
-              </TabList>
-              <TabPanels>
-                {contentRepeater.map(({ tabContent }, index) => (
-                  <TabPanel
-                    px={["5", "10"]}
-                    key={index}
-                    border={"1px solid #b5bdcc"}
-                    display="flex"
-                    py={["2", "4"]}
-                    minH="250px"
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    <Html2React html={tabContent} />
-                  </TabPanel>
-                ))}
-              </TabPanels>
-            </Tabs>
-          ) : (
-            <Accordion allowToggle>
-              {contentRepeater.map(({ tabTitle, tabContent }) => {
-                return (
-                  <AccordionItem key={tabTitle} border="none">
-                    <AccordionButton
-                      size="lg"
-                      py="4"
-                      _expanded={{
-                        bg: useColorModeValue(
-                          "rgba(0, 0, 0, 0.1)",
-                          "rgba(0,0,0,0.3)"
-                        ),
-                      }}
-                    >
-                      <Text
-                        as="h4"
-                        fontSize={"2xl"}
-                        flex="1"
-                        textAlign="left"
-                        fontFamily={"roboto"}
-                      >
-                        {tabTitle}
-                      </Text>
-                      <AccordionIcon />
-                    </AccordionButton>
-                    <AccordionPanel px={["5", "10"]}>
-                      <Html2React html={tabContent} />
-                    </AccordionPanel>
-                  </AccordionItem>
-                );
-              })}
-            </Accordion>
-          )
-        ) : (
-          <Box>
-            <Html2React html={content} />
-          </Box>
-        )}
-        <Divider my="60px" />
-      </Box>
-    );
-  };
 
   return (
     <LightPatternBox
@@ -159,7 +52,7 @@ const KnowUs = ({ state, actions, libraries }) => {
 
       {/* Look at the settings to see if we should include the featured image */}
       <Section
-        bg={useColorModeValue("whiteAlpha.600", "gray.800")}
+        bg={useColorModeValue("whiteAlpha.800", "gray.800")}
         pb="80px"
         size="lg"
       >
@@ -179,10 +72,14 @@ const KnowUs = ({ state, actions, libraries }) => {
           fontSize={["lg", "xl", "xl"]}
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
-          {/* <Html2React html={post.content} /> */}
           {post.sections.map((section) => (
-            <PageSection key={section.title} section={section} />
+            <PageSection
+              key={section.title}
+              libraries={libraries}
+              section={section}
+            />
           ))}
+          <Members memberInstitutions={post.memberInstitutions} />
         </Content>
       </Section>
     </LightPatternBox>
@@ -193,12 +90,30 @@ export default connect(KnowUs);
 
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.
-const Content = styled.div`
-  // color: rgba(12, 17, 43, 0.8);
+const Content = styled(Box)`
   word-break: break-word;
 
   * {
     max-width: 100%;
+  }
+
+  & ul,
+  li {
+    font-size: inherit;
+  }
+
+  a {
+    color: #006181;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
   }
 
   ul {
