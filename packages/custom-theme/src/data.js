@@ -265,3 +265,30 @@ export const Strategies = [
     open: false,
   },
 ];
+
+export const OurThemes = [
+  {
+    name: "COVID 19",
+    href: "#",
+  },
+  {
+    name: "Trade and Climate Change",
+    href: "#",
+  },
+  {
+    name: "Theme",
+    href: "#",
+  },
+  {
+    name: "Theme",
+    href: "#",
+  },
+  {
+    name: "Financial Mangement",
+    href: "#",
+  },
+  {
+    name: "Remittance and Development",
+    href: "#",
+  },
+];

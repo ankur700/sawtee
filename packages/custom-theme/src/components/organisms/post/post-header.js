@@ -15,7 +15,7 @@ const PostHeader = ({
   ...props
 }) => (
   <Box textAlign="center" {...props}>
-    {categories && (
+    {!isPage && categories && (
       <PostCategories
         color="black"
         categories={categories}
@@ -24,7 +24,7 @@ const PostHeader = ({
     )}
     <Heading
       fontWeight="bold"
-      size="2xl"
+      size={"3xl"}
       mt="30px"
       mb={{ base: "20px", lg: "32px" }}
       textTransform="uppercase"

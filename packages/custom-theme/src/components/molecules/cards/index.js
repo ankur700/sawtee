@@ -75,21 +75,21 @@ export const TopImageCard = (props) => {
           >
             {category ? category : defaultValues.category}
           </Text>
-          <LinkOverlay href={href ? href : "#"}>
-            <Text
-              display="block"
-              color={useColorModeValue("gray.800", "whiteAlpha.800")}
-              fontWeight="bold"
-              fontSize={{ base: "lg", md: "xl" }}
-              mt={2}
-              _hover={{
-                color: "gray.600",
-                textDecor: "underline",
-              }}
-            >
+          <Text
+            display="block"
+            color={useColorModeValue("gray.700", "whiteAlpha.700")}
+            fontWeight="bold"
+            fontSize={{ base: "lg", md: "xl" }}
+            mt={2}
+            _hover={{
+              color: `${useColorModeValue("gray.800", "whiteAlpha.800")}`,
+              textDecor: "underline",
+            }}
+          >
+            <LinkOverlay href={href ? href : "#"}>
               {title ? title : defaultValues.title}
-            </Text>
-          </LinkOverlay>
+            </LinkOverlay>
+          </Text>
           <Text
             mt={2}
             fontSize={{ base: "sm", md: "md" }}
@@ -124,7 +124,7 @@ export const TopImageCard = (props) => {
                 <Link
                   mx={2}
                   fontWeight="bold"
-                  color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                  color={useColorModeValue("gray.600", "whiteAlpha.600")}
                 >
                   {author ? author : defaultValues.author}
                 </Link>
@@ -201,12 +201,12 @@ export const NoImageCard = (props) => {
       <Box mt={2}>
         <Text
           fontSize={{ base: "md", md: "xl" }}
-          color={useColorModeValue("gray.800", "whiteAlpha.800")}
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
           fontWeight="700"
           _hover={{
-            color: "gray.700",
+            color: "gray.600",
             _dark: {
-              color: "whiteAlpha.700",
+              color: "whiteAlpha.600",
             },
             textDecor: "underline",
           }}
@@ -231,15 +231,15 @@ export const NoImageCard = (props) => {
       <Flex justifyContent="space-between" alignItems="center" mt={4}>
         <Text
           as="a"
-          color="primary.600"
+          color="gray.800"
           _dark={{
-            color: "primray.400",
+            color: "whiteAlpha.800",
           }}
           _hover={{
             textDecor: "underline",
           }}
         >
-          Read more
+          <LinkOverlay href="#">Read more</LinkOverlay>
         </Text>
         <Show above="md">
           <Flex alignItems="center">

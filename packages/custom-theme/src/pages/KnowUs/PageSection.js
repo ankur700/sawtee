@@ -36,9 +36,9 @@ const PageSection = ({ section, libraries }) => {
       {hasTabOrHasAccordian ? (
         title !== "Strategies" ? (
           <Tabs variant="enclosed" size="md" isFitted colorScheme="primary">
-            <TabList>
+            <TabList borderBottom={"none"}>
               {contentRepeater.map(({ tabTitle }) => (
-                <Tab key={tabTitle} borderBottomColor="transparent">
+                <Tab key={tabTitle}>
                   <Text
                     fontSize={["lg", "xl"]}
                     fontWeight="semibold"

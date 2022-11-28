@@ -34,17 +34,39 @@ const KnowUs = ({ state, actions, libraries }) => {
       bg={useColorModeValue("whiteAlpha.300", "gray.900")}
       showPattern={state.theme.showBackgroundPattern}
       ref={ref}
+      pt="0"
     >
-      <Box pb={{ base: "2rem", lg: "50px" }}>
+      <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
+        {post.featured_media != null && (
+          <FeaturedMedia
+            mt="0"
+            id={post.featured_media.id}
+            _after={{
+              display: "block",
+              content: '""',
+              width: "100%",
+              height: "500px",
+              background: "rgba(0,0,0,0.4)",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+            }}
+          />
+        )}
         <PostHeader
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "0" }}
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          color={"whiteAlpha.00"}
           categories={post.categories}
           heading={post.title}
           author={post.author}
           date={post.publishDate}
           isPage={postData.isPage}
+          position="absolute"
+          bottom="15%"
+          left="15%"
         />
       </Box>
 
@@ -56,10 +78,6 @@ const KnowUs = ({ state, actions, libraries }) => {
         pb="80px"
         size="lg"
       >
-        {post.featured_media != null && (
-          <FeaturedMedia id={post.featured_media.id} />
-        )}
-
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
         <Content
