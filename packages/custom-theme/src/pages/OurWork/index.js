@@ -156,8 +156,9 @@ const OurWork = ({ state, actions, libraries }) => {
                   href={link}
                   pos="relative"
                   h="500px"
-                  maxH="500px"
-                  width={{ base: "40%", md: "50%" }}
+                  w="100%"
+                  className="cards"
+                  width={{ base: "100%", md: "50%" }}
                   backgroundImage={`url(${bg_image})`}
                   backgroundSize="cover"
                   backgroundRepeat="no-repeat"
@@ -166,13 +167,36 @@ const OurWork = ({ state, actions, libraries }) => {
                   overflow="hidden"
                   key={title}
                   rounded="xl"
+                  display="flex"
+                  flexDir={"column"}
                 >
-                  <Box>
-                    <Heading as="h4" className="title">
-                      <LinkOverlay href={link}>{title}</LinkOverlay>
-                    </Heading>
-                    <Text className="content">{content}</Text>
-                  </Box>
+                  <Heading
+                    as="h4"
+                    className="title"
+                    textAlign={"center"}
+                    height="25%"
+                    py="10"
+                  >
+                    <LinkOverlay
+                      color={"whiteAlpha.800 !important"}
+                      href={link}
+                    >
+                      {title}
+                    </LinkOverlay>
+                  </Heading>
+                  <Text
+                    className="content"
+                    flex={1}
+                    height={"75%"}
+                    display="flex"
+                    alignItems={"center"}
+                    fontSize={{ base: "md", md: "lg", lg: "xl" }}
+                    fontWeight="bold"
+                    px={10}
+                    opacity="0"
+                  >
+                    {content}
+                  </Text>
                 </LinkBox>
               );
             })}
@@ -197,20 +221,6 @@ const Content = styled(Box)`
   & ul,
   li {
     font-size: inherit;
-  }
-
-  a {
-    color: #006181;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-      text-decoration-style: dotted;
-
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
-    }
   }
 
   ul {
@@ -307,5 +317,40 @@ const Content = styled(Box)`
       float: left;
       margin-right: 24px;
     }
+
+    & .cards {
+      & .title {
+        color: white !important;
+        z-index: 1;
+      }
+
+      & .content {
+        z-index: 1;
+      }
+      &:hover {
+        transition: all 0.4s ease-in-out;
+        & .title {
+          background: hsl(194, 100%, 25%, 0.4);
+        }
+        & .content {
+          color: #463737;
+          background: hsl(0, 17%, 95%, 0.4);
+          opacity: 1;
+        }
+      }
+    }
+    // a {
+    //   color: #006181;
+    //   text-decoration: none;
+
+    //   &:hover,
+    //   &:focus {
+    //     text-decoration: underline;
+    //     text-decoration-style: dotted;
+
+    //     text-decoration-thickness: 2px;
+    //     text-underline-offset: 3px;
+    //   }
+    // }
   }
 `;

@@ -68,7 +68,7 @@ const AboutSection = ({ postdata }) => {
   return (
     <Section width="full" overflow="hidden" id="about-section" display="flex">
       <Grid
-        templateColumns={{ base: "100vw", lg: "repeat(2, 50vw)" }}
+        templateColumns={{ base: "100vw", lg: "repeat(2, 1fr)" }}
         templateRows="auto"
       >
         <CustomGridItem
@@ -97,26 +97,28 @@ const AboutSection = ({ postdata }) => {
           colSpan={1}
           bg={useColorModeValue("whiteAlpha.600", "#463737")}
           px={"4"}
+          overflow="hidden"
         >
-          <Title
-            px={["6", "12", "16"]}
-            py={["4", "6", "8"]}
-            text="Publication"
+          <Title py={["4", "6", "8"]} text="Publication" />
+          <MultiItemCarousel
+            my="6"
+            slides={postdata}
+            gap={{ base: "5", md: "4", lg: "3" }}
           />
-          <MultiItemCarousel my="6" slides={postdata} />
         </GridItem>
         <GridItem
           colSpan={1}
           bg={useColorModeValue("whiteAlpha.600", "#463737")}
           px={"4"}
+          overflow="hidden"
         >
-          <Title
-            px={["6", "12", "16"]}
-            py={["4", "6", "8"]}
-            text="Sawtee in Media"
-          />
+          <Title py={["4", "6", "8"]} text="Sawtee in Media" />
 
-          <MultiItemCarousel my="6" slides={postdata} />
+          <MultiItemCarousel
+            my="6"
+            slides={postdata}
+            gap={{ base: "5", md: "4", lg: "3" }}
+          />
         </GridItem>
       </Grid>
     </Section>

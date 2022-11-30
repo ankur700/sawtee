@@ -2,7 +2,7 @@ import { Flex, Box, Text, Image, useBreakpointValue } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Link from "@frontity/components/link";
 
-const MultiItemCarousel = ({ slides, gap = 2 }) => {
+const MultiItemCarousel = ({ slides, gap = 3 }) => {
   const arrowStyles = {
     cursor: "pointer",
     pos: "absolute",
@@ -37,14 +37,14 @@ const MultiItemCarousel = ({ slides, gap = 2 }) => {
     transition: "all .5s",
     ml: `calc(-${
       currentSlide * (100 / useBreakpointValue([1, 2, 3], { ssr: false }))
-    }% - ${currentSlide * 3}px)`,
+    }%)`,
   };
   return (
-    <Flex w="full" overflow="hidden" pos="relative" mb="6" px={"2"} mx="auto">
+    <Flex w="full" overflow="hidden" pos="relative" mb="6" mx="auto">
       <Flex
-        h={["400px", "400px", "300px"]}
+        h={"300px"}
         rounded="xl"
-        w={["100%", "50%", `calc(${100 / 3}% - 5px)`]}
+        w={["100%", "50%", `calc(${100 / 3}%)`]}
         gap={gap}
         {...carouselStyle}
       >
@@ -55,7 +55,7 @@ const MultiItemCarousel = ({ slides, gap = 2 }) => {
             shadow="md"
             flex="none"
             pos={"relative"}
-            maxW="300px"
+            maxW="220px"
             rounded="xl"
             _after={{
               content: "''",
