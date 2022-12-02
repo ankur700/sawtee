@@ -26,9 +26,10 @@ const documentSetup = (colors) => css`
   body {
     box-sizing: border-box;
     color: #000;
-    font-family: "Inter", "Open Sans", -apple-system, BlinkMacSystemFont, "Source Sans Pro", sans-serif;
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Source Sans Pro", sans-serif;
       Helvetica, sans-serif;
     letter-spacing: -0.015em;
+    line-height: 1.5;
     text-align: left;
     font-weight: normal;
 
@@ -272,8 +273,8 @@ const globalStyle = (colors) =>
   css([
     documentSetup(colors),
     accessibilitySettings,
-    gutenbergTheme,
-    gutenbergStyles,
+    // gutenbergTheme,
+    // gutenbergStyles,
     // shortcodesUltimateStyles,
   ]);
 

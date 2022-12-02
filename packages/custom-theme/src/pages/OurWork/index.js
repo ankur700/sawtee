@@ -123,25 +123,11 @@ const OurWork = ({ state, actions, libraries }) => {
           px={{ base: "32px", md: "16px" }}
           size="lg"
           pt="50px"
-          fontFamily="openSans"
-          fontWeight="normal"
-          fontSize={["lg", "xl", "xl"]}
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
-          <Box className="intro" pos="relative" mb="12">
+          <Box className="intro" pos="relative" mb="20">
             <Text fontSize={["md", "lg", "xl"]} textAlign="justify">
-              Description about our work such as: In order to complement the
-              efforts of South Asian governments and stakeholders, and to bring
-              to the fore the views and concerns of the marginalized and poor
-              segments of society, South Asia Watch on Trade, Economics and
-              Environment (SAWTEE) was launched in 1994 as a loose regional
-              network of non-governmental organizations (NGOs) from five South
-              Asian countries: Bangladesh, India, Nepal, Pakistan and Sri Lanka.
-              Taking into consideration the emerging need for fair, effective
-              and meaningful integration of South Asian countries into the
-              regional as well as global economies, the major motto of this
-              regional initiative has been “GLOBALIZATION YES, BUT WITH SAFETY
-              NETS”.
+              {post.intro}
             </Text>
           </Box>
           <Box
@@ -216,6 +202,7 @@ const Content = styled(Box)`
 
   * {
     max-width: 100%;
+    line-height: 2 !important;
   }
 
   & ul,

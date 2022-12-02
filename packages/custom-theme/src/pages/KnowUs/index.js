@@ -85,9 +85,7 @@ const KnowUs = ({ state, actions, libraries }) => {
           px={{ base: "32px", md: "0" }}
           size="md"
           pt="50px"
-          fontFamily="openSans"
-          fontWeight="normal"
-          fontSize={["lg", "xl", "xl"]}
+          fontSize={["md", "lg", "xl"]}
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           {post.sections.map((section) => (
@@ -113,6 +111,7 @@ const Content = styled(Box)`
 
   * {
     max-width: 100%;
+    line-height: 2 !important;
   }
 
   & ul,

@@ -29,8 +29,7 @@ const Theme = ({ state }) => {
   const overrides = extendTheme({
     fonts: {
       heading: "Inter, system-ui, Helvetica, sans-serif",
-      body: "Inter, serif",
-      openSans: "Open Sans, sans-serif",
+      body: "Open Sans, sans-serif",
     },
     colors: { ...state.theme.colors },
   });

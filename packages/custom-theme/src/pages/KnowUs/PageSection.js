@@ -26,7 +26,7 @@ const PageSection = ({ section, libraries }) => {
     <Box my="4">
       <Text
         as="h3"
-        fontSize={["2xl", "3xl", "4xl"]}
+        fontSize={["lg", "xl", "2xl"]}
         fontFamily="heading"
         py={"4"}
         mb="4"
@@ -40,7 +40,7 @@ const PageSection = ({ section, libraries }) => {
               {contentRepeater.map(({ tabTitle }) => (
                 <Tab key={tabTitle}>
                   <Text
-                    fontSize={["lg", "xl"]}
+                    fontSize={["md", "lg", "xl"]}
                     fontWeight="semibold"
                     fontFamily={"heading"}
                   >
@@ -84,7 +84,7 @@ const PageSection = ({ section, libraries }) => {
                   >
                     <Text
                       as="h4"
-                      fontSize={"2xl"}
+                      fontSize={["md", "lg", "xl"]}
                       flex="1"
                       textAlign="left"
                       fontFamily={"roboto"}

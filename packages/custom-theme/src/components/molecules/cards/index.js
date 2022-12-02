@@ -46,10 +46,10 @@ export const TopImageCard = (props) => {
     <LinkBox
       as="article"
       rounded="lg"
-      shadow="md"
       bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "rgba(0,0,0,0.3)")}
-      maxW="5xl"
+      shadow="lg"
       paddingTop={"4"}
+      maxW="5xl"
       px="4"
     >
       <Image
