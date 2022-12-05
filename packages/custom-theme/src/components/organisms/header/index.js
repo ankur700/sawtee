@@ -15,7 +15,7 @@ const Header = ({ state, actions }) => (
     )} */}
 
     <Box as="div" display={"flex"}>
-      <ThemeToggle />
+      <ThemeToggle mr="4" />
       <SearchButton onClick={actions.theme.openSearchModal} />
     </Box>
     <SearchModal

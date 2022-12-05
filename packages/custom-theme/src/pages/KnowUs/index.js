@@ -111,7 +111,6 @@ const Content = styled(Box)`
 
   * {
     max-width: 100%;
-    line-height: 2 !important;
   }
 
   & ul,

@@ -1,360 +1,290 @@
-import { styled, connect } from "frontity";
-import { useEffect, useState } from "react";
-import FeaturedMedia from "../../components/organisms/page/featured-media";
 import {
-  Post as _Post,
-  PostHeader,
-  PostTitle,
-  PostCaption,
-  SectionContainer,
-} from "../../components/organisms/page/post-item";
-import PostCategories from "../../components/organisms/page/post-categories";
+  Box,
+  SimpleGrid,
+  useColorModeValue,
+  Text,
+  Stack,
+  chakra,
+} from "@chakra-ui/react";
+import { connect, styled } from "frontity";
 import Link from "../../components/atoms/link";
-import Grid, { GridItem } from "../../components/atoms/grid";
+import React, { useState, useEffect } from "react";
+import List from "../../components/organisms/archive";
+import useScrollProgress from "../../components/hooks/useScrollProgress";
+import { LightPatternBox } from "../../components/styles/pattern-box";
+import Section from "../../components/styles/section";
+import FeaturedMedia from "../../components/organisms/post/featured-media";
+import PostHeader from "../../components/organisms/post/post-header";
+import PostProgressBar from "../../components/organisms/post/post-progressbar";
+import { getPostData, formatPostData } from "../../components/helpers";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { postdata, featuredEvents } from "../../data";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
+import Title from "../../components/atoms/title";
+import GlassBox from "../../components/atoms/glassBox";
 
-/**
- * The Post component that the TwentyTwenty theme uses for rendering any kind of
- * "post type" (posts, pages, attachments, etc.).
- *
- * It doesn't receive any prop but the Frontity store, which it receives from
- * {@link connect}. The current Frontity state is used to know which post type
- * should be rendered.
- *
- * @param props - The Frontity store (state, actions, and libraries).
- *
- * @example
- * ```js
- * <Switch>
- *   <Post when={data.isPostType} />
- * </Switch>
- * ```
- *
- * @returns The {@link Post} element rendered.
- */
 const Publication = ({ state, actions, libraries }) => {
-  // Get information about the current URL.
-  const data = state.source.get(state.router.link);
-  // Get the data of the post.
-  const post = state.source[data.type][data.id];
-
+  const postData = getPostData(state);
+  const post = formatPostData(state, postData);
   const [loadAll, setLoadAll] = useState(false);
 
-  /**
-   * Once the post has loaded in the DOM, prefetch both the
-   * home posts and the list component so if the user visits
-   * the home page, everything is ready and it loads instantly.
-   */
+  // Once the post has loaded in the DOM, prefetch both the
+  // home posts and the list component so if the user visits
+  // the home page, everything is ready and it loads instantly.
   useEffect(() => {
     actions.source.fetch("/");
-  }, [actions.source]);
+    List.preload();
+  }, []);
 
-  const SIM = ({ data }) => {
-    return (
-      <Wrapper>
-        <Title>Sawtee in Media</Title>
-        <ul>
-          {data.map((event, index) => {
-            return (
-              <li key={index}>
-                <div className="title">
-                  <h4>
-                    <Link link={"#"}>{event.title}</Link>
-                  </h4>
-                </div>
-                <div className="content">
-                  <p>
-                    <span>{event.publisher}</span>
-                    {" | "}
-                    <span>{event.date}</span>
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-          {data.map((event, index) => {
-            return (
-              <li key={index}>
-                <div className="title">
-                  <h4>
-                    <Link link={"#"}>{event.title}</Link>
-                  </h4>
-                </div>
-                <div className="content">
-                  <p>
-                    <span>{event.publisher}</span>
-                    {" | "}
-                    <span>{event.date}</span>
-                  </p>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </Wrapper>
-    );
-  };
+  const [ref, scroll] = useScrollProgress();
 
   // Load the post, but only if the data is ready.
-  return data.isReady ? (
-    <PostArticle>
-      <Header backgroundImage={FeaturedImage}>
-        {state.theme.featuredMedia.showOnPost && (
-          <FeaturedImage id={post.featured_media} isSinglePost={true} />
-        )}
-        <SectionContainer>
-          {/* If the post has categories, render the categories */}
-          {post.categories && <PostCategories categories={categories} />}
-          <PostTitle
-            as="h1"
-            className="heading-size-1"
-            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-          />
-          {/* If the post has a caption (like attachments), render it */}
-          {post.caption && (
-            <PostCaption
-              dangerouslySetInnerHTML={{ __html: post.caption.rendered }}
-            />
-          )}
-          {/* The post's metadata like author, publish date, and comments */}
-          {/* <PostMeta item={post} /> */}
-        </SectionContainer>
-      </Header>
-      <Grid styles={PublicationGridStyles}>
-        <GridItem styles={CarouselGridSection}>
-          <Section>
-            <Title>Trade Insight</Title>
-            <MultiItemCarousel my="6" slides={postdata} />
-          </Section>
-          <Section>
-            <Title>Discussion Paper</Title>
-            <MultiItemCarousel my="6" slides={postdata} />
-          </Section>
-          <Section>
-            <Title>Policy Brief</Title>
-            <MultiItemCarousel my="6" slides={postdata} />
-          </Section>
-          <Section>
-            <Title>Briefing Paper</Title>
-            <MultiItemCarousel my="6" slides={postdata} />
-          </Section>
-          <Section>
-            <Title>Issue Paper</Title>
-            <MultiItemCarousel my="6" slides={postdata} />
-          </Section>
-          <Section>
-            <Title>Working Paper</Title>
-            <MultiItemCarousel my="6" slides={postdata} />
-          </Section>
-          <Section>
-            <Title>Books</Title>
-            <MultiItemCarousel my="6" slides={postdata} />
-          </Section>
-          {loadAll ? (
-            <>
-              <Section>
-                <Title>Others</Title>
-                <MultiItemCarousel my="6" slides={postdata} />
-              </Section>
-              <Section>
-                <Title>Research Briefs</Title>
-                <MultiItemCarousel my="6" slides={postdata} />
-              </Section>
-              <Section>
-                <Title>Book Chapters</Title>
-                <MultiItemCarousel my="6" slides={postdata} />
-              </Section>
-            </>
-          ) : (
-            <Section>
-              <LoadBtn onClick={() => setLoadAll(!loadAll)}>Load All</LoadBtn>
-            </Section>
-          )}
-        </GridItem>
-        <GridItem styles={SideBarGridSection}>
-          <SIM data={featuredEvents} />
+  if (!postData.isReady) return null;
 
-          <TwitterTimeline height="1200px" width="100%" handle="sawteenp" />
-          <SubscriptionCard />
-        </GridItem>
-      </Grid>
-    </PostArticle>
-  ) : null;
+  return (
+    <LightPatternBox
+      bg={useColorModeValue("whiteAlpha.300", "gray.900")}
+      showPattern={state.theme.showBackgroundPattern}
+      ref={ref}
+      pt="0"
+    >
+      <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
+        {post.featured_media != null && (
+          <FeaturedMedia
+            mt="0"
+            id={post.featured_media.id}
+            _after={{
+              display: "block",
+              content: '""',
+              width: "100%",
+              height: "500px",
+              background: "rgba(0,0,0,0.4)",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+            }}
+          />
+        )}
+        <PostHeader
+          mt={{ base: "20px", lg: "4rem" }}
+          px={{ base: "32px", md: "0" }}
+          color={"whiteAlpha.900"}
+          categories={post.categories}
+          heading={post.title}
+          author={post.author}
+          date={post.publishDate}
+          isPage={postData.isPage}
+          position="absolute"
+          bottom="15%"
+          left="15%"
+        />
+      </Box>
+
+      <PostProgressBar value={scroll} />
+
+      {/* Look at the settings to see if we should include the featured image */}
+      <Section
+        bg={useColorModeValue("whiteAlpha.800", "gray.800")}
+        pb="80px"
+        size="xl"
+      >
+        {/* Render the content using the Html2React component so the HTML is processed
+       by the processors we included in the libraries.html2react.processors array. */}
+        <Content
+          as={Section}
+          px={{ base: "32px", md: "0" }}
+          size="xl"
+          pt="50px"
+          fontSize={["md", "lg", "xl"]}
+          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        >
+          <SimpleGrid
+            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
+            spacing="8"
+            pos={"relative"}
+          >
+            <Stack spacing={8}>
+              <Stack spacing="4">
+                <Title text={"Trade Insight"} mb="3" />
+                <MultiItemCarousel slides={postdata} />
+              </Stack>
+
+              <Stack spacing="4">
+                <Title text={"Policy Brief"} mb="3" />
+                <MultiItemCarousel slides={postdata} />
+              </Stack>
+
+              <Stack spacing="4">
+                <Title text={"Research Brief"} mb="3" />
+                <MultiItemCarousel slides={postdata} />
+              </Stack>
+
+              <Stack spacing="4">
+                <Title text={"Working Paper"} mb="3" />
+                <MultiItemCarousel slides={postdata} />
+              </Stack>
+            </Stack>
+            <SIM data={featuredEvents} title="Sawtee in Media" />
+          </SimpleGrid>
+        </Content>
+      </Section>
+    </LightPatternBox>
+  );
 };
 
 export default connect(Publication);
 
-const Header = styled(PostHeader)`
-  background-color: #fff;
-  margin: 0;
-  padding: 4rem 0;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  height: 390px;
-  @media (min-width: 700px) {
-    padding: 8rem 0;
-  }
-  > div {
-    position: absolute;
-    margin: 0;
-    left: 10rem;
-    bottom: 0;
-    width: max-content;
+// This component is the parent of the `content.rendered` HTML. We can use nested
+// selectors to style that HTML.
+const Content = styled(Box)`
+  word-break: break-word;
 
-    > h1 {
-      color: #fff;
-      font-size: 2.5em;
-      text-transform: uppercase;
-    }
-  }
-`;
-
-const PostArticle = styled(_Post)`
-  padding-top: 0 !important;
-`;
-
-const FeaturedImage = styled(FeaturedMedia)`
-  margin-top: 0 !important;
-  position: absolute;
-  width: 100%;
-  left: 0;
-  top: 0;
-  max-height: 100%;
-
-  > div {
-    position: relative;
-    width: 100% !important;
+  * {
     max-width: 100%;
-    margin: 0;
   }
 
-  > div::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: hsla(0, 0%, 0%, 0.5);
-    position: absolute;
-    top: 0;
-    left: 0;
+  & ul,
+  li {
+    font-size: inherit;
   }
-  & img {
+
+  a {
+    color: #006181;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+  }
+
+  ul {
+    padding: 1rem;
+  }
+
+  img {
     width: 100%;
-    height: 390px;
     object-fit: cover;
+    object-position: center;
+  }
+
+  figure {
+    margin: 24px auto;
+    /* next line overrides an inline style of the figure element. */
+    width: 100% !important;
+  }
+
+  iframe {
     display: block;
+    margin: auto;
   }
-`;
 
-const Section = styled.section`
-  padding: 3rem;
-  width: 100%;
-  margin: 0 auto;
-  position: relative;
-`;
+  /* Input fields styles */
 
-const PublicationGridStyles = `
-  grid-template-columns: 65% 35%;
-  grid-auto-rows: minmax(100px, auto);
-  grid-gap: 1rem;
-  padding: 1.5rem 3rem;
-  // background-color: #828990;
-`;
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="date"],
+  textarea,
+  select {
+    display: block;
+    padding: 6px 12px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    outline-color: transparent;
+    transition: outline-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    margin: 8px 0 4px 0;
 
-const CarouselGridSection = `
-  grid-column: 1/2;
-  grid-row: 1/2;
-
-`;
-const SideBarGridSection = `
-  grid-column: 2/3;
-  grid-row: 1/2;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  position: sticky;
-  top: 12rem;
-  align-self: start;
-
-`;
-
-const Title = styled.h3`
-  font-size: 3rem;
-  color: ${(props) => props.color || "#333"};
-  margin: 2rem 0;
-  padding: 0 2rem;
-
-  @media (max-width: 762px) {
-    font-size: 2rem;
+    &:focus {
+      outline-color: #1f38c5;
+    }
   }
-`;
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem;
-  background-color: #fff;
-  border-radius: 1.25rem;
+  input[type="submit"] {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid #1f38c5;
+    padding: 12px 36px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #1f38c5;
+  }
 
-  > ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    > li {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+  /* WordPress Core Align Classes */
 
-      .title > h4 {
-        font-size: 1.75rem;
-        margin: 0;
-        font-weight: 500;
-        letter-spacing: 0.1rem;
+  @media (min-width: 420px) {
+    img.aligncenter,
+    img.alignleft,
+    img.alignright {
+      width: auto;
+    }
 
-        a {
-          text-decoration: none;
+    .aligncenter {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-          &:hover {
-            text-decoration: underline;
-            text-underline-offset: 3px;
-          }
-        }
-      }
-      .content {
-        p {
-          font-size: 1.15rem;
-        }
-        p > span {
-          margin: 0 0.5rem;
-        }
-      }
+    .alignright {
+      float: right;
+      margin-left: 24px;
+    }
+
+    .alignleft {
+      float: left;
+      margin-right: 24px;
     }
   }
 `;
 
-const LoadBtn = styled.button`
-  font-size: 1.8rem;
-  font-family: monospace;
-  text-transform: lowercase;
-  letter-spacing: 1px;
-  padding: 13px 50px 13px;
-  outline: 0;
-  margin: 0 auto;
-  display: block;
-  color: #333;
-  z-index: 9 !important;
-  border: 3px solid black;
-  cursor: pointer;
-  position: relative;
-  background-color: transparent;
-
-  &:hover {
-    background-color: #006181;
-    color: #f5f1f1;
-    transition: all 0.3s ease-in;
-  }
-`;
+export const SIM = ({ data, title }) => {
+  return (
+    <GlassBox p="4" rounded="xl" pos="sticky" top="7.5rem" height="max-content">
+      <Title text={title} />
+      <Stack spacing={8}>
+        {data.map((event, index) => {
+          return (
+            <Stack key={index * Math.random() + Math.random()}>
+              <Text className="title" lineHeight={"normal"}>
+                <Link link={"#"}>{event.title}</Link>
+              </Text>
+              <Box
+                display={"flex"}
+                justifyContent="space-between"
+                fontSize={"sm"}
+              >
+                <Text>{event.publisher}</Text>
+                <Text> {event.date}</Text>
+              </Box>
+            </Stack>
+          );
+        })}
+      </Stack>
+    </GlassBox>
+  );
+};

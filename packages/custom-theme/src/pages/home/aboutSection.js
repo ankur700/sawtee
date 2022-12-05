@@ -103,7 +103,6 @@ const AboutSection = ({ postdata }) => {
           <MultiItemCarousel
             my="6"
             slides={postdata}
-            gap={{ base: "5", md: "4", lg: "3" }}
           />
         </GridItem>
         <GridItem
@@ -117,7 +116,6 @@ const AboutSection = ({ postdata }) => {
           <MultiItemCarousel
             my="6"
             slides={postdata}
-            gap={{ base: "5", md: "4", lg: "3" }}
           />
         </GridItem>
       </Grid>

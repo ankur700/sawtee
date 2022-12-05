@@ -20,7 +20,6 @@ const Subscription = () => {
   return (
     <Container
       maxW={"lg"}
-      // bg={useColorModeValue("white", "whiteAlpha.100")}
       boxShadow={"xl"}
       rounded={"lg"}
       p={6}

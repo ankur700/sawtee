@@ -1,30 +1,23 @@
-import React from "react";
-import { IconButton, useColorMode, useColorModeValue } from "@chakra-ui/react";
-import { IoIosMoon, IoIosSunny } from "react-icons/io";
+import { Button, ButtonProps, Flex, useColorMode } from "@chakra-ui/react";
+import { BsSun, BsMoonStarsFill } from "react-icons/bs";
 
-const ThemeToggle = () => {
+const ThemeToggle = (props) => {
   const { colorMode, toggleColorMode } = useColorMode();
-
   return (
-    <IconButton
-      size="md"
+    /**
+     * Ideally, only the button component should be used (without Flex).
+     * Props compatible with <Button /> are supported.
+     */
+
+    <Button
+      aria-label="Toggle Color Mode"
       onClick={toggleColorMode}
-      color={`mode.${colorMode}.text`}
-      // border="1px solid"
-      // borderColor={`mode.${colorMode}.text`}
-      aria-label="toggle theme"
-      icon={
-        colorMode === "light" ? (
-          <IoIosMoon id="moon" />
-        ) : (
-          <IoIosSunny id="sun" color="white" />
-        )
-      }
-      zIndex="sticky"
-      mr={"1rem"}
-      bg={useColorModeValue("white", "whiteAlpha.100")}
       _focus={{ boxShadow: "none" }}
-    />
+      w="fit-content"
+      {...props}
+    >
+      {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
+    </Button>
   );
 };
 
