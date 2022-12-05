@@ -99,7 +99,7 @@ const Footer = ({ state }) => {
                       showMapPreview();
                     }}
                   >
-                    <span>Tukucha Marg, Baluwatar, Kathmandu</span>
+                    <span>z</span>
                   </a>
                 </ListItem>
               </WidgetList>

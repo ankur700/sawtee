@@ -18,6 +18,14 @@ const settings = {
   },
   packages: [
     {
+      name: "frontity-menu",
+      state: {
+        frontityMenu: {
+          menuSlugs: ["primary_menu", "footer_menu"],
+        },
+      },
+    },
+    {
       name: "custom-theme",
       state: {
         theme: {
