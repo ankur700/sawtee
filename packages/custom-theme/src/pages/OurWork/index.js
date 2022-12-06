@@ -125,7 +125,7 @@ const OurWork = ({ state, actions, libraries }) => {
           pt="50px"
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
-          <Box className="intro" pos="relative" mb="20">
+          <Box className="intro" pos="relative" mb="20" maxW='3xl' mx='auto'>
             <Text fontSize={["md", "lg", "xl"]} textAlign="justify">
               {post.intro}
             </Text>

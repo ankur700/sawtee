@@ -13,7 +13,7 @@ import {
 const today = new Date();
 
 const defaultValues = {
-  category: "Product",
+  category: "Events",
   avatar:
     "https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80",
   title: "",

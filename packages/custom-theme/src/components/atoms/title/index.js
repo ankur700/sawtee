@@ -8,7 +8,7 @@ const Title = ({ text, color, ...rest }) => {
       m="0"
       fontSize={{ base: "lg", sm: "3xl", md: "3xl", lg: "4xl" }}
       fontFamily="heading"
-      color={color ? color : useColorModeValue("gray.900", "whiteAlpha.900")}
+      color={color ? color : useColorModeValue("gray.800", "whiteAlpha.800")}
     >
       {text}
     </Text>

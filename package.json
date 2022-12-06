@@ -25,6 +25,7 @@
     "focus-visible": "^5.2.0",
     "frontity": "^1.17.2",
     "frontity-menu": "^0.1.1",
+    "moment": "^2.29.4",
     "react-icons": "^4.3.1",
     "react-items-carousel": "^2.8.0",
     "react-swipeable": "^7.0.0",

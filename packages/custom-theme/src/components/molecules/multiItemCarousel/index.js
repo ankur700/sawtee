@@ -1,8 +1,16 @@
-import { Flex, Box, Text, Image, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Text,
+  Image,
+  useBreakpointValue,
+  LinkBox,
+  LinkOverlay,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import Link from "@frontity/components/link";
 
-const MultiItemCarousel = ({ slides, gap = "10px" }) => {
+const MultiItemCarousel = ({ slides, gap }) => {
   const arrowStyles = {
     cursor: "pointer",
     pos: "absolute",
@@ -37,7 +45,7 @@ const MultiItemCarousel = ({ slides, gap = "10px" }) => {
     transition: "all .5s",
     ml: `calc(-${
       currentSlide * (100 / useBreakpointValue([1, 2, 3], { ssr: false }))
-    }% + 10px)`,
+    }%)`,
   };
 
   return (
@@ -47,15 +55,15 @@ const MultiItemCarousel = ({ slides, gap = "10px" }) => {
         rounded="xl"
         w={[
           "calc(100% - 10px)",
-          "calc(50% - 10px) ",
-          `calc(${100 / 3}% - 10px)`,
+          "calc(50% - 20px) ",
+          `calc(${100 / 3}% - 30px)`,
         ]}
-        gap={gap}
+        gap={gap ? gap : { base: "10px", sm: "20px", md: "30px" }}
         {...carouselStyle}
         className="wrapper"
       >
         {slides.map((slide, sid) => (
-          <Box
+          <LinkBox
             key={`slide-${sid}`}
             boxSize="full"
             shadow="md"
@@ -63,6 +71,7 @@ const MultiItemCarousel = ({ slides, gap = "10px" }) => {
             flex="none"
             pos={"relative"}
             rounded="xl"
+            ml={sid === 0 ? { base: "10px", md: "15px" } : "0"}
             _after={{
               content: "''",
               width: "100%",
@@ -84,7 +93,7 @@ const MultiItemCarousel = ({ slides, gap = "10px" }) => {
             >
               {sid + 1} / {slidesCount}
             </Text>
-            <Link link="#">
+            <LinkOverlay href="#">
               <Image
                 src={slide}
                 alt="carousel image"
@@ -92,14 +101,14 @@ const MultiItemCarousel = ({ slides, gap = "10px" }) => {
                 rounded="xl"
                 backgroundSize="cover"
               />
-            </Link>
-          </Box>
+            </LinkOverlay>
+          </LinkBox>
         ))}
       </Flex>
-      <Text {...arrowStyles} left="0" onClick={prevSlide}>
+      <Text {...arrowStyles} left="0" onClick={prevSlide} zIndex={1}>
         &#10094;
       </Text>
-      <Text {...arrowStyles} right="0" onClick={nextSlide}>
+      <Text {...arrowStyles} right="0" onClick={nextSlide} zIndex={1}>
         &#10095;
       </Text>
     </Flex>

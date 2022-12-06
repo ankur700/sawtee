@@ -80,7 +80,7 @@ const FullWidthCarousel = ({ slides, loop }) => {
       >
         {slides.map((slide, sid) => (
           <Box key={`slide-${sid}`} boxSize="full" shadow="md" flex="none">
-            <Text
+            {/* <Text
               color="white"
               fontSize="xs"
               p="8px 12px"
@@ -89,7 +89,7 @@ const FullWidthCarousel = ({ slides, loop }) => {
               zIndex={1}
             >
               {sid + 1} / {slidesCount}
-            </Text>
+            </Text> */}
             <Image
               src={slide.slide_image}
               alt="carousel image"
