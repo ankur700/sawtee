@@ -7,9 +7,9 @@ import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 const PublicationSliders = ({ data }) => {
   return (
     <Stack spacing={8}>
-      {data.map(({ title }) => {
+      {data.map(({ title }, i) => {
         return (
-          <Stack key={title} spacing="4">
+          <Stack key={i} spacing="4">
             <Title text={title} mb="3" />
             <MultiItemCarousel slides={postdata} />
           </Stack>

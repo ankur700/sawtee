@@ -9,7 +9,19 @@ import {
 import Section from "../../components/styles/section";
 
 const PublicationFilter = (props) => {
-  const { list, handleChange, handleClickAll } = props;
+  const { data, filterCategory, allChecked, checkedItems, setCheckedItems } =
+    props;
+
+  const defaultValues = () => {
+    let array = [];
+    data.map((item, i) => {
+      if (i <= 4) {
+        array.push(item.title);
+      }
+    });
+    return array;
+  };
+
   return (
     <Section
       bg={useColorModeValue("transparent")}
@@ -33,21 +45,31 @@ const PublicationFilter = (props) => {
         justifyContent="center"
       >
         <Button colorScheme={"primary"} variant="outline">
-          <Checkbox value="all" onChange={(event) => handleClickAll(event)}>
+          <Checkbox
+            value="all"
+            isChecked={allChecked}
+            onChange={() => setCheckedItems(...checkedItems)}
+          >
             All
           </Checkbox>
         </Button>
-        {list.map(({ title, checked }) => {
-          console.log(list);
+        {data.map(({ title }, i) => {
           return (
-            <Button key={title} colorScheme={"primary"} variant="outline">
+            <Button key={i} colorScheme={"primary"} variant="outline">
               <Checkbox
                 value={title}
-                defaultChecked={checked}
-                onChange={(event) => handleChange(event)}
+                isChecked={checkedItems[i]}
+                defaultChecked={checkedItems[i]}
+                onChange={(e) => {
+                  let newArray = [...checkedItems];
+                  newArray[i] = true ? false : true;
+                  setCheckedItems([...newArray]);
+                  filterCategory(e, title);
+                }}
               >
                 {title}
               </Checkbox>
+              {console.log(checkedItems[i])}
             </Button>
           );
         })}

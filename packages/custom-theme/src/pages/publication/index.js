@@ -18,54 +18,41 @@ import { featuredEvents } from "../../data";
 const Publication = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-  const [list, setList] = useState([]);
-  const [selectedPublications, setSelectedPublications] = useState([]);
+  const [checkedItems, setCheckedItems] = useState([]);
 
-  const defaultChecked = () => {
+  const defaultCheckedItems = () => {
     let array = [];
-    Publications.map((publication, i) => {
+    Publications.map((_, i) => {
       if (i <= 4) {
-        array.push({ title: publication.title, checked: true });
-      } else if (i > 4) {
-        array.push({ title: publication.title, checked: false });
+        array.push(true);
+      } else {
+        array.push(false);
       }
     });
     return array;
   };
 
-  const handleChange = (event) => {
-    if (!event.target.checked) {
-      const newSelections = Array.from(
-        selectedPublications.filter(
-          (publication) => publication.title !== event.target.value
-        )
-      );
-      setSelectedPublications([...newSelections]);
-    } else {
-      const publications = new Set([...selectedPublications]);
-      publications.add({ title: event.target.value });
-      setSelectedPublications([...publications]);
-    }
-  };
+  const allChecked = checkedItems.every(Boolean);
 
-  const handleClickAll = (event) => {
+  const [filteredData, setFilteredData] = useState(() => {
+    let array = [];
+    Publications.map((publication, i) => {
+      if (i <= 4) {
+        array.push({ title: publication.title });
+      }
+    });
+    return array;
+  });
+
+  const filterCategory = (event, title) => {
+    const newCategories = [...filteredData];
     if (event.target.checked) {
-      let array = [];
-      list.map((publication) => {
-        if (!publication.checked) {
-          array.push({
-            title: publication.title,
-            checked: true,
-          });
-        } else {
-          array.push(publication);
-        }
-      });
-      setList([...array]);
-      setSelectedPublications([...array]);
+      newCategories.push({ title: title });
+      setFilteredData([...newCategories]);
     } else {
-      setList([...defaultChecked()]);
-      setSelectedPublications([...defaultChecked]);
+      setFilteredData(
+        Array.from(newCategories.filter((item) => item.title !== title))
+      );
     }
   };
 
@@ -73,10 +60,7 @@ const Publication = ({ state, actions, libraries }) => {
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
   useEffect(() => {
-    setList(defaultChecked);
-    setSelectedPublications(
-      [...defaultChecked()].filter((item) => item.checked === true)
-    );
+    setCheckedItems([...defaultCheckedItems()]);
     actions.source.fetch("/");
     List.preload();
   }, []);
@@ -130,10 +114,11 @@ const Publication = ({ state, actions, libraries }) => {
       <PostProgressBar value={scroll} />
 
       <PublicationFilter
-        list={list}
-        handleChange={handleChange}
-        defaultChecked={defaultChecked}
-        handleClickAll={handleClickAll}
+        data={Publications}
+        filterCategory={filterCategory}
+        allChecked={allChecked}
+        checkedItems={checkedItems}
+        setCheckedItems={setCheckedItems}
       />
 
       <Section
@@ -154,7 +139,7 @@ const Publication = ({ state, actions, libraries }) => {
             spacing="8"
             pos={"relative"}
           >
-            <PublicationSliders data={selectedPublications} />
+            <PublicationSliders data={filteredData} />
             <Sidebar
               data={featuredEvents}
               title="Sawtee in Media"
