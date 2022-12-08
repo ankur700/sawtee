@@ -244,50 +244,40 @@ export const OurThemes = [
 
 export const Publications = [
   {
-    id: "1",
     title: "Trade Insight",
   },
   {
-    id: "2",
-    title: "Discussion Insight",
+    title: "Discussion Paper",
   },
   {
-    id: "3",
     title: "Policy Brief",
   },
   ,
   {
-    id: "4",
     title: "Briefing Paper",
   },
   ,
   {
-    id: "5",
     title: "Issue Paper",
   },
   ,
   {
-    id: "6",
     title: "Working Paper",
   },
   ,
   {
-    id: "7",
     title: "Books",
   },
   ,
   {
-    id: "8",
     title: "Research Brief",
   },
   ,
   {
-    id: "9",
     title: "Others",
   },
   ,
   {
-    id: "10",
     title: "Publications in Nepali",
   },
 ];

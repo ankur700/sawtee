@@ -1,17 +1,6 @@
-import {
-  Box,
-  SimpleGrid,
-  useColorModeValue,
-  Text,
-  Stack,
-  Divider,
-  CheckboxGroup,
-  Checkbox,
-  Button,
-} from "@chakra-ui/react";
-import { connect, styled } from "frontity";
-import Link from "../../components/atoms/link";
-import React, { useState, useEffect, useMemo } from "react";
+import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import { connect } from "frontity";
+import React, { useState, useEffect } from "react";
 import List from "../../components/organisms/archive";
 import useScrollProgress from "../../components/hooks/useScrollProgress";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -20,56 +9,77 @@ import FeaturedMedia from "../../components/organisms/post/featured-media";
 import PostHeader from "../../components/organisms/post/post-header";
 import PostProgressBar from "../../components/organisms/post/post-progressbar";
 import { getPostData, formatPostData } from "../../components/helpers";
-import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import { postdata, featuredEvents } from "../../data";
-import TwitterTimeline from "../../components/atoms/twitterTimeline";
-import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
-import Title from "../../components/atoms/title";
-import GlassBox from "../../components/atoms/glassBox";
-import moment from "moment/moment";
 import { Publications } from "../../data";
+import PublicationFilter from "./publicationFilter";
+import Sidebar from "./sidebar";
+import PublicationSliders from "./publicationSliders";
+import { featuredEvents } from "../../data";
 
 const Publication = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
   const [list, setList] = useState([]);
+  const [selectedPublications, setSelectedPublications] = useState([]);
 
-  const [selectedPublications, setSelectedPublications] = useState();
-
-  const defaultList = () => {
+  const defaultChecked = () => {
     let array = [];
-    Publications.map((publication) => {
-      array.push(publication);
+    Publications.map((publication, i) => {
+      if (i <= 4) {
+        array.push({ title: publication.title, checked: true });
+      } else if (i > 4) {
+        array.push({ title: publication.title, checked: false });
+      }
     });
     return array;
   };
 
   const handleChange = (event) => {
-    setSelectedPublications(event.target.value);
+    if (!event.target.checked) {
+      const newSelections = Array.from(
+        selectedPublications.filter(
+          (publication) => publication.title !== event.target.value
+        )
+      );
+      setSelectedPublications([...newSelections]);
+    } else {
+      const publications = new Set([...selectedPublications]);
+      publications.add({ title: event.target.value });
+      setSelectedPublications([...publications]);
+    }
   };
 
-  function getFilteredPublications() {
-    if (!selectedPublications) {
-      return list;
+  const handleClickAll = (event) => {
+    if (event.target.checked) {
+      let array = [];
+      list.map((publication) => {
+        if (!publication.checked) {
+          array.push({
+            title: publication.title,
+            checked: true,
+          });
+        } else {
+          array.push(publication);
+        }
+      });
+      setList([...array]);
+      setSelectedPublications([...array]);
+    } else {
+      setList([...defaultChecked()]);
+      setSelectedPublications([...defaultChecked]);
     }
-    return list.filter(
-      (publication) => publication.title === selectedPublications
-    );
-  }
+  };
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
   useEffect(() => {
-    setList(defaultList);
+    setList(defaultChecked);
+    setSelectedPublications(
+      [...defaultChecked()].filter((item) => item.checked === true)
+    );
     actions.source.fetch("/");
     List.preload();
   }, []);
-
-  var filteredList = useMemo(getFilteredPublications, [
-    selectedPublications,
-    list,
-  ]);
 
   const [ref, scroll] = useScrollProgress();
 
@@ -119,47 +129,12 @@ const Publication = ({ state, actions, libraries }) => {
 
       <PostProgressBar value={scroll} />
 
-      <Section
-        bg={useColorModeValue("transparent")}
-        size="lg"
-        mb="8"
-        h="auto"
-        px={{ base: "32px", md: "0" }}
-        py="6"
-        display="flex"
-        gap="4"
-        flexWrap="wrap"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <CheckboxGroup colorScheme="blue" defaultValue={["all"]}>
-          <Stack
-            spacing={[1, 5]}
-            rowGap="4"
-            direction={["column", "row"]}
-            wrap="wrap"
-            alignItems={"center"}
-            justifyContent="center"
-          >
-            <Button colorScheme={"primary"} variant="outline">
-              <Checkbox value="all">All</Checkbox>
-            </Button>
-            {Publications.map(({ title, id }) => {
-              return (
-                <Button colorScheme={"primary"} variant="outline">
-                  <Checkbox
-                    key={id}
-                    value={title}
-                    onChange={(event) => handleChange(event)}
-                  >
-                    {title}
-                  </Checkbox>
-                </Button>
-              );
-            })}
-          </Stack>
-        </CheckboxGroup>
-      </Section>
+      <PublicationFilter
+        list={list}
+        handleChange={handleChange}
+        defaultChecked={defaultChecked}
+        handleClickAll={handleClickAll}
+      />
 
       <Section
         bg={useColorModeValue("whiteAlpha.800", "gray.800")}
@@ -179,17 +154,14 @@ const Publication = ({ state, actions, libraries }) => {
             spacing="8"
             pos={"relative"}
           >
-            <Stack spacing={8}>
-              {filteredList.map(({ title, id }) => {
-                return (
-                  <Stack key={id} spacing="4">
-                    <Title text={title} mb="3" />
-                    <MultiItemCarousel slides={postdata} />
-                  </Stack>
-                );
-              })}
-            </Stack>
-            <Sidebar data={featuredEvents} title="Sawtee in Media" />
+            <PublicationSliders data={selectedPublications} />
+            <Sidebar
+              data={featuredEvents}
+              title="Sawtee in Media"
+              sim={true}
+              twittertimeline={false}
+              subscription={false}
+            />
           </SimpleGrid>
         </Box>
       </Section>
@@ -198,51 +170,3 @@ const Publication = ({ state, actions, libraries }) => {
 };
 
 export default connect(Publication);
-
-export const Sidebar = ({ data, title }) => {
-  return (
-    <GlassBox
-      py="4"
-      px="8"
-      rounded="2xl"
-      pos="sticky"
-      top="7.5rem"
-      height="max-content"
-    >
-      <Title text={title} textAlign="center" />
-      <Stack spacing={8} mt="6">
-        {data.map((event, index) => {
-          const format = "MMMM Do YYYY";
-          const formatedDate = moment(event.date).format(format);
-          return (
-            <Stack key={index}>
-              <Text className="title" lineHeight={"normal"}>
-                <Link
-                  link={"#"}
-                  color={useColorModeValue("primary.700", "primary.50")}
-                >
-                  {event.title}
-                </Link>
-              </Text>
-              <Box
-                display={"flex"}
-                justifyContent="space-between"
-                fontSize={"sm"}
-                fontWeight="semibold"
-              >
-                <Text>{event.publisher}</Text>
-                <Box
-                  as="time"
-                  dateTime={new Date(event.date).toLocaleDateString()}
-                >
-                  {formatedDate}
-                </Box>
-              </Box>
-              <Divider display={index === data.length - 1 ? "none" : "block"} />
-            </Stack>
-          );
-        })}
-      </Stack>
-    </GlassBox>
-  );
-};
