@@ -31,11 +31,5 @@
     "react-swipeable": "^7.0.0",
     "recharts": "^2.1.10",
     "sawtee-theme": "file:packages/sawtee-theme"
-  },
-  "_moduleAliases": {
-    "@root": ".",
-    "@component": "./packages/custom-theme/src/components",
-    "@pages": "./packages/custom-theme/src/pages",
-    "@assets": "./packages/custom-theme/src/assets"
   }
 }

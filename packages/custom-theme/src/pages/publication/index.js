@@ -14,39 +14,42 @@ import PublicationFilter from "./publicationFilter";
 import Sidebar from "./sidebar";
 import PublicationSliders from "./publicationSliders";
 import { featuredEvents } from "../../data";
+import Loading from "../../components/atoms/loading";
+
+const defaultCheckedItems = [
+  true,
+  true,
+  true,
+  true,
+  true,
+  false,
+  false,
+  false,
+  false,
+  false,
+];
+
+const defaultFilteredItems = (function () {
+  let array = [];
+  Publications.map((publication, i) => {
+    if (i <= 5) {
+      array.push(publication);
+    }
+  });
+  return array;
+})();
 
 const Publication = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-  const [checkedItems, setCheckedItems] = useState([]);
-
-  const defaultCheckedItems = () => {
-    let array = [];
-    Publications.map((_, i) => {
-      if (i <= 4) {
-        array.push(true);
-      } else {
-        array.push(false);
-      }
-    });
-    return array;
-  };
-
-  const allChecked = checkedItems.every(Boolean);
-
-  const [filteredData, setFilteredData] = useState(() => {
-    let array = [];
-    Publications.map((publication, i) => {
-      if (i <= 4) {
-        array.push({ title: publication.title });
-      }
-    });
-    return array;
-  });
+  const [checkedItems, setCheckedItems] = useState(defaultCheckedItems);
+  const [categories, setCategories] = useState(Publications);
+  const [filteredData, setFilteredData] = useState([]);
 
   const filterCategory = (event, title) => {
-    const newCategories = [...filteredData];
+    const newCategories = Array.from(new Set([...filteredData]));
     if (event.target.checked) {
+      // event.target.isChecked = !isChecked;
       newCategories.push({ title: title });
       setFilteredData([...newCategories]);
     } else {
@@ -60,7 +63,7 @@ const Publication = ({ state, actions, libraries }) => {
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
   useEffect(() => {
-    setCheckedItems([...defaultCheckedItems()]);
+    setFilteredData(defaultFilteredItems);
     actions.source.fetch("/");
     List.preload();
   }, []);
@@ -114,9 +117,8 @@ const Publication = ({ state, actions, libraries }) => {
       <PostProgressBar value={scroll} />
 
       <PublicationFilter
-        data={Publications}
+        data={categories}
         filterCategory={filterCategory}
-        allChecked={allChecked}
         checkedItems={checkedItems}
         setCheckedItems={setCheckedItems}
       />
@@ -139,13 +141,17 @@ const Publication = ({ state, actions, libraries }) => {
             spacing="8"
             pos={"relative"}
           >
-            <PublicationSliders data={filteredData} />
+            {!filteredData.length ? (
+              <Loading />
+            ) : (
+              <PublicationSliders data={filteredData} />
+            )}
             <Sidebar
               data={featuredEvents}
               title="Sawtee in Media"
-              sim={true}
-              twittertimeline={false}
-              subscription={false}
+              showSawteeInMedia={true}
+              showTwitterTimeline={false}
+              showSubscriptionCard={false}
             />
           </SimpleGrid>
         </Box>

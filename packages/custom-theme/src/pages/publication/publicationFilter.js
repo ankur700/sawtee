@@ -1,26 +1,9 @@
 import React from "react";
-import {
-  useColorModeValue,
-  Stack,
-  CheckboxGroup,
-  Checkbox,
-  Button,
-} from "@chakra-ui/react";
+import { useColorModeValue, Stack, Checkbox, Button } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 
 const PublicationFilter = (props) => {
-  const { data, filterCategory, allChecked, checkedItems, setCheckedItems } =
-    props;
-
-  const defaultValues = () => {
-    let array = [];
-    data.map((item, i) => {
-      if (i <= 4) {
-        array.push(item.title);
-      }
-    });
-    return array;
-  };
+  const { data, filterCategory, checkedItems } = props;
 
   return (
     <Section
@@ -44,32 +27,18 @@ const PublicationFilter = (props) => {
         alignItems={"center"}
         justifyContent="center"
       >
-        <Button colorScheme={"primary"} variant="outline">
-          <Checkbox
-            value="all"
-            isChecked={allChecked}
-            onChange={() => setCheckedItems(...checkedItems)}
-          >
-            All
-          </Checkbox>
-        </Button>
         {data.map(({ title }, i) => {
           return (
             <Button key={i} colorScheme={"primary"} variant="outline">
               <Checkbox
+                colorScheme={"blue"}
                 value={title}
-                isChecked={checkedItems[i]}
+                checked={checkedItems[i]}
                 defaultChecked={checkedItems[i]}
-                onChange={(e) => {
-                  let newArray = [...checkedItems];
-                  newArray[i] = true ? false : true;
-                  setCheckedItems([...newArray]);
-                  filterCategory(e, title);
-                }}
+                onChange={(e) => filterCategory(e, title)}
               >
                 {title}
               </Checkbox>
-              {console.log(checkedItems[i])}
             </Button>
           );
         })}

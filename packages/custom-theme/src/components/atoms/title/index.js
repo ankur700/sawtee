@@ -6,7 +6,7 @@ const Title = ({ text, color, ...rest }) => {
       {...rest}
       as="h3"
       m="0"
-      fontSize={{ base: "lg", sm: "3xl", md: "3xl", lg: "4xl" }}
+      fontSize={{ base: "xl", sm: "2xl", md: "3xl" }}
       fontFamily="heading"
       color={color ? color : useColorModeValue("gray.800", "whiteAlpha.800")}
     >

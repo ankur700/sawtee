@@ -10,13 +10,13 @@ import Title from "../../components/atoms/title";
 export const Sidebar = ({
   data,
   title,
-  sim,
-  twittertimeline,
-  subscription,
+  showSawteeInMedia,
+  showTwitterTimeline,
+  showSubscriptionCard,
 }) => {
   return (
     <Stack spacing={8}>
-      {sim && (
+      {showSawteeInMedia && (
         <GlassBox
           py="4"
           px="8"
@@ -63,8 +63,8 @@ export const Sidebar = ({
           </Stack>
         </GlassBox>
       )}
-      {twittertimeline && <TwitterTimeline />}
-      {subscription && <SubscriptionCard />}
+      {showTwitterTimeline && <TwitterTimeline />}
+      {showSubscriptionCard && <SubscriptionCard />}
     </Stack>
   );
 };
