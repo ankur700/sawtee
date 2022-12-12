@@ -184,14 +184,10 @@ export const NoImageCard = (props) => {
           as="a"
           px={3}
           py={1}
-          bg="gray.600"
-          color="gray.100"
+          bg={useColorModeValue("rgb(230 247 255/1)", "rgb(88,175,223,.1)")}
           fontSize="sm"
           fontWeight="700"
           rounded="md"
-          _hover={{
-            bg: "gray.500",
-          }}
           href={categoryLink ? categoryLink : defaultValues.categoryLink}
         >
           {category ? category : defaultValues.category}

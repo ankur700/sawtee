@@ -95,28 +95,22 @@ const AboutSection = ({ postdata }) => {
         </CustomGridItem>
         <GridItem
           colSpan={1}
-          bg={useColorModeValue("whiteAlpha.600", "#463737")}
+          bg={useColorModeValue("rgb(254, 245, 232)", "rgb(65, 49, 42)")}
           px={"4"}
           overflow="hidden"
         >
           <Title py={["4", "6", "8"]} text="Publication" />
-          <MultiItemCarousel
-            my="6"
-            slides={postdata}
-          />
+          <MultiItemCarousel my="6" slides={postdata} />
         </GridItem>
         <GridItem
           colSpan={1}
-          bg={useColorModeValue("whiteAlpha.600", "#463737")}
+          bg={useColorModeValue("rgb(254, 245, 232)", "rgb(65, 49, 42)")}
           px={"4"}
           overflow="hidden"
         >
           <Title py={["4", "6", "8"]} text="Sawtee in Media" />
 
-          <MultiItemCarousel
-            my="6"
-            slides={postdata}
-          />
+          <MultiItemCarousel my="6" slides={postdata} />
         </GridItem>
       </Grid>
     </Section>

@@ -35,7 +35,6 @@ export const Sidebar = ({
                   <Text className="title" lineHeight={"normal"}>
                     <Link
                       link={"#"}
-                      color={useColorModeValue("primary.700", "primary.50")}
                     >
                       {event.title}
                     </Link>

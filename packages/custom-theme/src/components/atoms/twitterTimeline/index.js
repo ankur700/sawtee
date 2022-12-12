@@ -1,6 +1,5 @@
-import { styled } from "frontity";
 import { Link } from "@chakra-ui/react";
-// import GlassBox from "../glassBox";
+import Title from "../../atoms/title";
 
 const TwitterTimeline = ({ height, width, handle }) => {
   let link = `https://twitter.com/${handle}?ref_src=twsrc%5Etfw`;
@@ -14,7 +13,7 @@ const TwitterTimeline = ({ height, width, handle }) => {
       data-dnt="true"
       href={link}
     >
-      Track SAWTEE on twitter
+      <Title text={"Track SAWTEE on TWITTER"} />
     </Link>
   );
 };

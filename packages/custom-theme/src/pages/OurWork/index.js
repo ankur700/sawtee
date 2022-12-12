@@ -5,7 +5,6 @@ import {
   Text,
   LinkBox,
   Heading,
-  position,
   LinkOverlay,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
@@ -37,7 +36,7 @@ const OurWork = ({ state, actions, libraries }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.900")}
+      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
       showPattern={state.theme.showBackgroundPattern}
       ref={ref}
       pt="0"
@@ -79,7 +78,7 @@ const OurWork = ({ state, actions, libraries }) => {
       </Box>
 
       <Section
-        bg={useColorModeValue("whiteAlpha.800", "gray.800")}
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         size="lg"
         mb="8"
       >
@@ -100,9 +99,14 @@ const OurWork = ({ state, actions, libraries }) => {
                 px="10"
                 key={index}
                 variant="outline"
-                colorScheme="primary"
+                colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
               >
-                <Link link={theme.href}>{theme.name}</Link>
+                <Link
+                  link={theme.href}
+                  _hover={{ textDecoration: "none" }}
+                >
+                  <Text color={state.theme.colors.linkColor}>{theme.name}</Text>
+                </Link>
               </Button>
             );
           })}
@@ -111,7 +115,7 @@ const OurWork = ({ state, actions, libraries }) => {
 
       {/* Look at the settings to see if we should include the featured image */}
       <Section
-        bg={useColorModeValue("whiteAlpha.800", "gray.800")}
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
         size="lg"
       >

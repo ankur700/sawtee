@@ -2,7 +2,6 @@ import { Stack, Show } from "@chakra-ui/react";
 import Section from "../../components/atoms/section";
 import GridBlog from "../../components/organisms/GridBlog";
 import ViewAllBtn from "../../components/atoms/ViewAllBtn";
-import Link from "../../components/atoms/link";
 import Title from "../../components/atoms/title";
 
 const BlogSection = ({ data }) => {
@@ -26,16 +25,12 @@ const BlogSection = ({ data }) => {
           text="Policy Outreach"
         />
         <Show above="lg">
-          <Link href="#">
             <ViewAllBtn w="12em" text={"View All"} />
-          </Link>
         </Show>
       </Stack>
       <GridBlog data={data} />
       <Show below="lg">
-        <Link href="#">
           <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
-        </Link>
       </Show>
     </Section>
   );

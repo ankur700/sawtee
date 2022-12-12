@@ -1,9 +1,9 @@
 import React from "react";
-import { useColorModeValue, Stack, Checkbox, Button } from "@chakra-ui/react";
+import { useColorModeValue, Stack, Checkbox, Button, Text } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 
 const PublicationFilter = (props) => {
-  const { data, filterCategory, checkedItems } = props;
+  const { data, filterCategory, checkedItems, linkColor } = props;
 
   return (
     <Section
@@ -29,7 +29,11 @@ const PublicationFilter = (props) => {
       >
         {data.map(({ title }, i) => {
           return (
-            <Button key={i} colorScheme={"primary"} variant="outline">
+            <Button
+              key={i}
+              colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+              variant="outline"
+            >
               <Checkbox
                 colorScheme={"blue"}
                 value={title}
@@ -37,7 +41,8 @@ const PublicationFilter = (props) => {
                 defaultChecked={checkedItems[i]}
                 onChange={(e) => filterCategory(e, title)}
               >
-                {title}
+                <Text color={linkColor}>{title}</Text>
+
               </Checkbox>
             </Button>
           );

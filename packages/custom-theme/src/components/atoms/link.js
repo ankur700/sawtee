@@ -54,6 +54,7 @@ const Link = ({
       href={isDisabled ? undefined : link}
       onClick={onClick}
       className={className}
+      color={props.color ? props.color : state.theme.colors.linkColor}
       aria-current={ariaCurrent}
       rel={isExternal ? "noopener noreferrer" : rel}
       target={isExternal ? "_blank" : undefined}

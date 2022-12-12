@@ -13,26 +13,25 @@ const InfoSection = () => {
     >
       <Box
         id="chart-wrapper"
-        bg={useColorModeValue("rgba(0,0, 0, 0.1)", "rgba(0,0, 0, 0.3)")}
         w={{ base: "100%", lg: "60%" }}
         p={{ base: "6", lg: "8" }}
         display="flex"
         justifyContent="center"
         alignItems="center"
+        minH={"500px"}
       >
-        {/* <Chart /> */}
-        <Box h="auto" w="100%" bg="white"></Box>
+        <Chart />
       </Box>
       <Box
-        bg={useColorModeValue("rgba(0,0, 0, 0.1)", "rgba(0,0, 0, 0.3)")}
+        bg={useColorModeValue("whiteAlpha", "blackAlpha")}
         w={{ base: "100%", lg: "40%" }}
         p={{ base: "6", lg: "8" }}
         display="flex"
         justifyContent="center"
         alignItems="center"
+        flexDir='column'
         id="twitter-wrapper"
       >
-        {/* <Title>{"Track SAWTEE on TWITTER"}</Title> */}
         <TwitterTimeline height="700px" width="100%" handle="sawteenp" />
       </Box>
     </Section>

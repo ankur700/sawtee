@@ -1,29 +1,27 @@
 import React, { useState } from "react";
-import { styled } from "frontity";
 import { HiArrowRight, HiChevronRight } from "react-icons/hi";
 import { Button, useColorModeValue } from "@chakra-ui/react";
+import Link from "../link";
 
-const ViewAllBtn = ({ text, uppercase, ...rest }) => {
+const ViewAllBtn = ({ text, link, ...rest }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <ViewButton
-      px={["8", "12", "16"]}
-      py={["4", "6", "6"]}
+    <Button
       variant="outline"
-      colorScheme={"gray"}
+      colorScheme={"base"}
       aria-label="view all button"
       onMouseEnter={() => setHovered(!hovered)}
       onMouseLeave={() => setHovered(!hovered)}
-      fontSize={{ base: "md", md: "lg", lg: "xl" }}
+      fontSize={{ base: "sm", md: "md" }}
       rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
       {...rest}
     >
-      {uppercase ? text.toUpperCase() : text}
-    </ViewButton>
+      <Link link={link ? link : "#"} _hover={{ textDecoration: "none" }}>
+        {text}
+      </Link>
+    </Button>
   );
 };
 
 export default ViewAllBtn;
-
-const ViewButton = styled(Button)``;

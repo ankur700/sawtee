@@ -46,7 +46,7 @@ const SiteMenuItem = ({ link, ...props }) => (
   <Box
     as="li"
     m="0"
-    color={useColorModeValue("primary.700", "whiteAlpha.900")}
+    color={useColorModeValue("rgb(8 126 164/1)", "whiteAlpha.900")}
     fontSize={{ base: "sm", lg: "md" }}
     fontWeight="medium"
     textTransform="uppercase"

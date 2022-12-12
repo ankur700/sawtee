@@ -5,7 +5,7 @@ import { TopImageCard, NoImageCard } from "../../molecules/cards";
 const GridBlog = ({ data }) => {
   return (
     <>
-      <Band
+      <CustomGrid
         className="band"
         templateColumns={{ base: "1fr", lg: "repeat(3, 1fr)" }}
         templateRows={{ base: "auto", lg: "repeat(3, 1fr)" }}
@@ -37,7 +37,7 @@ const GridBlog = ({ data }) => {
             </GridItem>
           );
         })}
-      </Band>
+      </CustomGrid>
     </>
   );
 };
@@ -52,7 +52,7 @@ export default GridBlog;
 //   "2xl": "96em",
 // };
 
-const Band = styled(Grid)`
+const CustomGrid = styled(Grid)`
   margin: 0 auto;
   display: grid;
   grid-gap: 20px;

@@ -31,7 +31,7 @@ const KnowUs = ({ state, actions, libraries }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.900")}
+      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
       showPattern={state.theme.showBackgroundPattern}
       ref={ref}
       pt="0"
@@ -74,7 +74,7 @@ const KnowUs = ({ state, actions, libraries }) => {
 
       {/* Look at the settings to see if we should include the featured image */}
       <Section
-        bg={useColorModeValue("whiteAlpha.800", "gray.800")}
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
         size="lg"
       >
@@ -95,7 +95,7 @@ const KnowUs = ({ state, actions, libraries }) => {
               section={section}
             />
           ))}
-          <Members memberInstitutions={post.memberInstitutions} />
+          <Members memberInstitutions={post.memberInstitutions} linkColor={state.theme.colors.linkColor} />
         </Content>
       </Section>
     </LightPatternBox>
@@ -116,20 +116,6 @@ const Content = styled(Box)`
   & ul,
   li {
     font-size: inherit;
-  }
-
-  a {
-    color: #006181;
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-      text-decoration-style: dotted;
-
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
-    }
   }
 
   ul {

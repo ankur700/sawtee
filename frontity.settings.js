@@ -271,7 +271,11 @@ const settings = {
             },
             headerBg: "white",
             footerBg: "#006181",
-            bodyBg: { light: "gainsboro", dark: "#1e2530" },
+            bodyBg: {
+              light: "rgba(0, 0, 0, 0.06)",
+              dark: "rgba(35, 39, 47, 0.8)",
+            },
+            linkColor: 'rgb(8 126 164/1)'
           },
           showSearchInHeader: true,
           // State for the menu on mobile

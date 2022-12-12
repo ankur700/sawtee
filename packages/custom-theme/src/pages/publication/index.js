@@ -46,10 +46,11 @@ const Publication = ({ state, actions, libraries }) => {
   const [categories, setCategories] = useState(Publications);
   const [filteredData, setFilteredData] = useState([]);
 
+  const linkColor = state.theme.colors.linkColor;
+
   const filterCategory = (event, title) => {
     const newCategories = Array.from(new Set([...filteredData]));
     if (event.target.checked) {
-      // event.target.isChecked = !isChecked;
       newCategories.push({ title: title });
       setFilteredData([...newCategories]);
     } else {
@@ -121,6 +122,7 @@ const Publication = ({ state, actions, libraries }) => {
         filterCategory={filterCategory}
         checkedItems={checkedItems}
         setCheckedItems={setCheckedItems}
+        linkColor={linkColor}
       />
 
       <Section
