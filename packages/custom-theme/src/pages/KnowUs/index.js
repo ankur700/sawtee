@@ -85,7 +85,7 @@ const KnowUs = ({ state, actions, libraries }) => {
           px={{ base: "32px", md: "0" }}
           size="md"
           pt="50px"
-          fontSize={["md", "lg", "xl"]}
+          fontSize={["sm", "md"]}
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           {post.sections.map((section) => (
@@ -95,7 +95,10 @@ const KnowUs = ({ state, actions, libraries }) => {
               section={section}
             />
           ))}
-          <Members memberInstitutions={post.memberInstitutions} linkColor={state.theme.colors.linkColor} />
+          <Members
+            memberInstitutions={post.memberInstitutions}
+            linkColor={state.theme.colors.linkColor}
+          />
         </Content>
       </Section>
     </LightPatternBox>
@@ -120,6 +123,9 @@ const Content = styled(Box)`
 
   ul {
     padding: 1rem;
+  }
+  p {
+    font-size: inherit;
   }
 
   img {

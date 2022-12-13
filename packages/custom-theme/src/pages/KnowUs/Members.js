@@ -16,15 +16,18 @@ const Members = ({ memberInstitutions, linkColor }) => {
             </Text>
             {institutes.map(({ member_name, member_website_link }) => {
               return (
-                <Box
-                  key={member_name}
-                  display="flex"
-                  justifyContent={"space-between"}
-                  alignItems={"center"}
-                >
-                  <Link link={member_website_link}><Text color={linkColor}>{member_name}</Text></Link>
-                  <HiOutlineExternalLink />
-                </Box>
+                <Link key={member_name} link={member_website_link}>
+                  <Text
+                    display="flex"
+                    justifyContent={"space-between"}
+                    alignItems={"center"}
+                    color={linkColor}
+                    fontSize={{ base: "sm", md: "md" }}
+                  >
+                    {member_name}
+                    <HiOutlineExternalLink />
+                  </Text>
+                </Link>
               );
             })}
           </Box>

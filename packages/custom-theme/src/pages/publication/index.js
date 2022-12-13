@@ -16,55 +16,31 @@ import PublicationSliders from "./publicationSliders";
 import { featuredEvents } from "../../data";
 import Loading from "../../components/atoms/loading";
 
-const defaultCheckedItems = [
-  true,
-  true,
-  true,
-  true,
-  true,
-  false,
-  false,
-  false,
-  false,
-  false,
-];
-
-const defaultFilteredItems = (function () {
-  let array = [];
-  Publications.map((publication, i) => {
-    if (i <= 5) {
-      array.push(publication);
-    }
-  });
-  return array;
-})();
-
 const Publication = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-  const [checkedItems, setCheckedItems] = useState(defaultCheckedItems);
-  const [categories, setCategories] = useState(Publications);
-  const [filteredData, setFilteredData] = useState([]);
-
+  const [filteredCategory, setFilteredData] = useState([]);
   const linkColor = state.theme.colors.linkColor;
 
-  const filterCategory = (event, title) => {
-    const newCategories = Array.from(new Set([...filteredData]));
-    if (event.target.checked) {
-      newCategories.push({ title: title });
-      setFilteredData([...newCategories]);
-    } else {
-      setFilteredData(
-        Array.from(newCategories.filter((item) => item.title !== title))
-      );
-    }
-  };
+  console.log(post);
+
+  // const filterCategory = (event, title) => {
+  //   const newCategories = Array.from(new Set([...filteredData]));
+  //   if (event.target.checked) {
+  //     newCategories.push({ title: title });
+  //     setFilteredData([...newCategories]);
+  //   } else {
+  //     setFilteredData(
+  //       Array.from(newCategories.filter((item) => item.title !== title))
+  //     );
+  //   }
+  // };
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
   useEffect(() => {
-    setFilteredData(defaultFilteredItems);
+    setFilteredData(Publications);
     actions.source.fetch("/");
     List.preload();
   }, []);
@@ -76,7 +52,7 @@ const Publication = ({ state, actions, libraries }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.900")}
+      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
       showPattern={state.theme.showBackgroundPattern}
       ref={ref}
       pt="0"
@@ -117,16 +93,10 @@ const Publication = ({ state, actions, libraries }) => {
 
       <PostProgressBar value={scroll} />
 
-      <PublicationFilter
-        data={categories}
-        filterCategory={filterCategory}
-        checkedItems={checkedItems}
-        setCheckedItems={setCheckedItems}
-        linkColor={linkColor}
-      />
+      <PublicationFilter data={filteredCategory} linkColor={linkColor} />
 
       <Section
-        bg={useColorModeValue("whiteAlpha.800", "gray.800")}
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
         size="xl"
       >
@@ -143,17 +113,17 @@ const Publication = ({ state, actions, libraries }) => {
             spacing="8"
             pos={"relative"}
           >
-            {!filteredData.length ? (
+            {!filteredCategory.length ? (
               <Loading />
             ) : (
-              <PublicationSliders data={filteredData} />
+              <PublicationSliders data={filteredCategory} />
             )}
             <Sidebar
               data={featuredEvents}
               title="Sawtee in Media"
               showSawteeInMedia={true}
-              showTwitterTimeline={false}
-              showSubscriptionCard={false}
+              showTwitterTimeline={true}
+              showSubscriptionCard={true}
             />
           </SimpleGrid>
         </Box>

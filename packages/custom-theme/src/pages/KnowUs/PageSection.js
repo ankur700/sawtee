@@ -23,7 +23,7 @@ const PageSection = ({ section, libraries }) => {
   const Html2React = libraries.html2react.Component;
 
   return (
-    <Box my="4">
+    <Box>
       <Text
         as="h3"
         fontSize={["lg", "xl", "2xl"]}
@@ -73,7 +73,7 @@ const PageSection = ({ section, libraries }) => {
               return (
                 <AccordionItem key={tabTitle} border="none">
                   <AccordionButton
-                    size="lg"
+                    size="md"
                     py="4"
                     _expanded={{
                       bg: useColorModeValue(
@@ -87,13 +87,12 @@ const PageSection = ({ section, libraries }) => {
                       fontSize={["md", "lg", "xl"]}
                       flex="1"
                       textAlign="left"
-                      fontFamily={"roboto"}
                     >
                       {tabTitle}
                     </Text>
                     <AccordionIcon />
                   </AccordionButton>
-                  <AccordionPanel px={["5", "10"]}>
+                  <AccordionPanel fontSize="inherit" px={["5", "10"]}>
                     <Html2React html={tabContent} />
                   </AccordionPanel>
                 </AccordionItem>

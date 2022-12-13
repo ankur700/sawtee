@@ -52,28 +52,19 @@ const documentSetup = (colors) => css`
     overflow: hidden;
   }
 
-  // a {
-  //   color: rgb(8 126 164/1);
-  //   text-decoration: none;
-  // }
-
-  // a:hover,
-  // a:focus {
-  //   text-decoration: underline;
-  //   text-underline-offset: 3px;
-  // }
-
-  // .chakra-ui-dark a {
-  //   color: rgb(20 158 202/1);
-  // }
-
-  nav a {
-    color: inherit !important;
+  .primary-link {
+    color: rgb(8 126 164/1);
     text-decoration: none;
   }
 
-  nav a:hover, nav a:focus{
-    text-decoration: none;
+  .primary-link:hover,
+  .primary-link:focus {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .chakra-ui-dark .primary-link {
+    color: rgb(20 158 202/1);
   }
 
 

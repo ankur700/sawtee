@@ -46,7 +46,7 @@ export const TopImageCard = (props) => {
     <LinkBox
       as="article"
       rounded="lg"
-      bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "rgba(0,0,0,0.3)")}
+      bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       shadow="lg"
       paddingTop={"4"}
       maxW="5xl"
@@ -66,15 +66,19 @@ export const TopImageCard = (props) => {
 
       <Box p={6}>
         <Box>
-          <Text
+          <Box
             as="a"
-            fontSize="xs"
-            textTransform="uppercase"
-            color={useColorModeValue("primary.600", "primary.400")}
+            px={3}
+            py={1}
+            className="primary-link"
+            bg={useColorModeValue("rgb(230 247 255/1)", "rgb(88,175,223,.1)")}
+            fontSize="sm"
+            fontWeight="700"
+            rounded="md"
             href={categoryLink ? categoryLink : defaultValues.categoryLink}
           >
             {category ? category : defaultValues.category}
-          </Text>
+          </Box>
           <Text
             display="block"
             color={useColorModeValue("gray.700", "whiteAlpha.700")}
@@ -86,7 +90,7 @@ export const TopImageCard = (props) => {
               textDecor: "underline",
             }}
           >
-            <LinkOverlay href={href ? href : "#"}>
+            <LinkOverlay href={href ? href : "#"} className="primary-link">
               {title ? title : defaultValues.title}
             </LinkOverlay>
           </Text>
@@ -165,7 +169,7 @@ export const NoImageCard = (props) => {
       py={4}
       rounded="lg"
       shadow="lg"
-      bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "rgba(0,0,0,0.3)")}
+      bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       maxW="2xl"
       minH={"80"}
       display="flex"
@@ -184,6 +188,7 @@ export const NoImageCard = (props) => {
           as="a"
           px={3}
           py={1}
+          className="primary-link"
           bg={useColorModeValue("rgb(230 247 255/1)", "rgb(88,175,223,.1)")}
           fontSize="sm"
           fontWeight="700"
@@ -207,7 +212,10 @@ export const NoImageCard = (props) => {
             textDecor: "underline",
           }}
         >
-          <LinkOverlay href={href ? href : defaultValues.href}>
+          <LinkOverlay
+            href={href ? href : defaultValues.href}
+            className="primary-link"
+          >
             {title ? title : defaultValues.title}
           </LinkOverlay>
         </Text>

@@ -15,16 +15,9 @@ export const Sidebar = ({
   showSubscriptionCard,
 }) => {
   return (
-    <Stack spacing={8}>
+    <Stack spacing={16}>
       {showSawteeInMedia && (
-        <GlassBox
-          py="4"
-          px="8"
-          rounded="2xl"
-          pos="sticky"
-          top="7.5rem"
-          height="max-content"
-        >
+        <GlassBox py="4" px="8" rounded="2xl" height="max-content">
           <Title text={title} textAlign="center" />
           <Stack spacing={8} mt="6">
             {data.map((event, index) => {
@@ -32,10 +25,40 @@ export const Sidebar = ({
               const formatedDate = moment(event.date).format(format);
               return (
                 <Stack key={index}>
-                  <Text className="title" lineHeight={"normal"}>
-                    <Link
-                      link={"#"}
+                  <Text className="title" fontSize={["sm", "md"]}>
+                    <Link className="primary-link" link={"#"}>
+                      {event.title}
+                    </Link>
+                  </Text>
+                  <Box
+                    display={"flex"}
+                    justifyContent="space-between"
+                    fontSize={"sm"}
+                    fontWeight="semibold"
+                  >
+                    <Text>{event.publisher}</Text>
+                    <Box
+                      as="time"
+                      dateTime={new Date(event.date).toLocaleDateString()}
                     >
+                      {formatedDate}
+                    </Box>
+                  </Box>
+                  <Divider
+                    display={index === data.length - 1 ? "none" : "block"}
+                  />
+                </Stack>
+              );
+            })}
+          </Stack>
+          <Stack spacing={8} mt="6">
+            {data.map((event, index) => {
+              const format = "MMMM Do YYYY";
+              const formatedDate = moment(event.date).format(format);
+              return (
+                <Stack key={index}>
+                  <Text className="title" fontSize={["sm", "md"]}>
+                    <Link className="primary-link" link={"#"}>
                       {event.title}
                     </Link>
                   </Text>
@@ -62,8 +85,18 @@ export const Sidebar = ({
           </Stack>
         </GlassBox>
       )}
-      {showTwitterTimeline && <TwitterTimeline />}
-      {showSubscriptionCard && <SubscriptionCard />}
+
+      {showSubscriptionCard && (
+        <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+          <SubscriptionCard />
+        </GlassBox>
+      )}
+
+      {showTwitterTimeline && (
+        <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+          <TwitterTimeline handle="sawteenp" width={"100%"} height="auto" />
+        </GlassBox>
+      )}
     </Stack>
   );
 };

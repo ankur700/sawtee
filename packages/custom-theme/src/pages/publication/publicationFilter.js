@@ -1,9 +1,17 @@
 import React from "react";
-import { useColorModeValue, Stack, Checkbox, Button, Text } from "@chakra-ui/react";
+import {
+  useColorModeValue,
+  Stack,
+  Checkbox,
+  Button,
+  Text,
+} from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 
 const PublicationFilter = (props) => {
-  const { data, filterCategory, checkedItems, linkColor } = props;
+  const { data, linkColor } = props;
+
+  console.log(data);
 
   return (
     <Section
@@ -34,15 +42,8 @@ const PublicationFilter = (props) => {
               colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
               variant="outline"
             >
-              <Checkbox
-                colorScheme={"blue"}
-                value={title}
-                checked={checkedItems[i]}
-                defaultChecked={checkedItems[i]}
-                onChange={(e) => filterCategory(e, title)}
-              >
+              <Checkbox colorScheme={"blue"} value={title}>
                 <Text color={linkColor}>{title}</Text>
-
               </Checkbox>
             </Button>
           );

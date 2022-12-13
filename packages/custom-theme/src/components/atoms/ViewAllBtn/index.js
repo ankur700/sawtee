@@ -9,7 +9,7 @@ const ViewAllBtn = ({ text, link, ...rest }) => {
   return (
     <Button
       variant="outline"
-      colorScheme={"base"}
+      colorScheme={useColorModeValue("black", "white")}
       aria-label="view all button"
       onMouseEnter={() => setHovered(!hovered)}
       onMouseLeave={() => setHovered(!hovered)}
