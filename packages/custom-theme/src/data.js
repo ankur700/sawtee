@@ -281,3 +281,57 @@ export const Publications = [
     title: "Publications in Nepali",
   },
 ];
+
+export const articles = [
+  {
+    id: 1,
+    tags: ["News", "Product"],
+    title: "Build a Modern User Interface with Chakra UI",
+    content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. simply dummy text...`,
+
+    username: "Danilo Leal",
+    created_at: "Wed Apr 06 2022",
+  },
+  {
+    id: 2,
+    tags: ["Web Development", "Video"],
+    title: "The Complete Guide to Ruby on Rails Encrypted Credentials",
+    content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+    username: "Timo Delangle",
+    created_at: "Sun Apr 03 2022",
+  },
+  {
+    id: 3,
+    tags: ["News", "Product"],
+    title: "Build a Modern User Interface with Chakra UI",
+    content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. simply dummy text...`,
+
+    username: "Danilo Leal",
+    created_at: "Wed Apr 06 2022",
+  },
+  {
+    id: 4,
+    tags: ["Web Development", "Video"],
+    title: "The Complete Guide to Ruby on Rails Encrypted Credentials",
+    content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+    username: "Timo Delangle",
+    created_at: "Sun Apr 03 2022",
+  },
+  {
+    id: 5,
+    tags: ["News", "Product"],
+    title: "Build a Modern User Interface with Chakra UI",
+    content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. simply dummy text...`,
+
+    username: "Danilo Leal",
+    created_at: "Wed Apr 06 2022",
+  },
+  {
+    id: 6,
+    tags: ["Web Development", "Video"],
+    title: "The Complete Guide to Ruby on Rails Encrypted Credentials",
+    content: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`,
+    username: "Timo Delangle",
+    created_at: "Sun Apr 03 2022",
+  },
+];
