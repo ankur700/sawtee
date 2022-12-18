@@ -1,0 +1,19 @@
+{
+  "name": "custom-theme",
+  "version": "1.0.0",
+  "description": "Frontity package created using the Frontity CLI.",
+  "keywords": [
+    "frontity",
+    "frontity-sawtee"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "frontity": "^1.17.2",
+    "@chakra-ui/react": "^1.3.3",
+    "react-icons": "^4.2.0",
+    "framer-motion": "^3.9.2",
+    "@frontity/components": "^1.7.1",
+    "@frontity/hooks": "^2.2.0",
+    "@frontity/html2react": "^1.6.1"
+  }
+}

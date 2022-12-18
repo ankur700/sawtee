@@ -1,3 +1,8 @@
 {
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "files.restoreUndoStack": false,
+  "workbench.editor.restoreViewState": false,
+  "workbench.startupEditor": "none",
+  "editor.minimap.enabled": false,
+  "editor.codeLens": false
 }

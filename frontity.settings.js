@@ -1,20 +1,51 @@
+import image from "@frontity/html2react/processors/image";
+import link from "@frontity/html2react/processors/link";
+// import Theme from "./packages/custom-theme/src/components";
+
 const settings = {
   name: "sawtee-frontend",
+  // roots: {
+  //   theme: Theme,
+  // },
   state: {
     frontity: {
       url: "https://sawtee.ankursingh.com.np/",
       title: "SAWTEE",
       description: "South Asia Watch on Trade, Economics and Environment",
       year: "1997",
-      logo: "/assets/logo_sawtee.jpg",
+      logo: "/assets/logo-sawtee.webp",
     },
   },
   packages: [
     {
-      name: "sawtee-theme",
+      name: "frontity-menu",
+      state: {
+        frontityMenu: {
+          menuSlugs: ["primary_menu", "footer_menu"],
+        },
+      },
+    },
+    {
+      name: "custom-theme",
       state: {
         theme: {
+          logo: "https://www.sawtee.org/images/logo-sawtee.webp",
+          // show background pattern
+          showBackgroundPattern: false,
+          // show social links
+          showSocialLinks: true,
+          socialLinks: [
+            ["facebook", "https://www.instagram.com/sawteenp/"],
+            ["twitter", "https://www.twitter.com/SAWTEENP/"],
+            ["linkedin", "https://www.linkedin.com/sawteenp/"],
+            ["youtube", "https://www.youtube.com/@sawteenp/"],
+          ],
           menu: [
+            {
+              name: "Home",
+              href: "/",
+              submenu: null,
+            },
             {
               name: "Know Us",
               href: "/about/",
@@ -139,43 +170,43 @@ const settings = {
               submenu: [
                 {
                   name: "Trade Insight",
-                  href: "#",
+                  href: "/publications/trade-insight",
                 },
                 {
                   name: "Discussion Papers",
-                  href: "#",
+                  href: "/publications/discussion-paper",
                 },
                 {
                   name: "Policy Brief",
-                  href: "#",
+                  href: "/publications/policy-brief",
                 },
                 {
                   name: "Briefing Paper",
-                  href: "#",
+                  href: "/publications/briefing-paper",
                 },
                 {
                   name: "Issue Paper",
-                  href: "#",
+                  href: "/publications/issue-paper",
                 },
                 {
                   name: "Working Paper",
-                  href: "#",
+                  href: "/publications/working-paper",
                 },
                 {
                   name: "Books",
-                  href: "#",
+                  href: "/publications/books",
                 },
                 {
                   name: "Others",
-                  href: "#",
+                  href: "/publications/others",
                 },
                 {
                   name: "Research Briefs",
-                  href: "#",
+                  href: "/publications/research-brief",
                 },
                 {
                   name: "Book Chapters",
-                  href: "#",
+                  href: "/publications/book-chapters",
                 },
               ],
             },
@@ -186,14 +217,65 @@ const settings = {
           ],
           colors: {
             gray: {
+              50: "#e8f3ff",
+              100: "#cfd8e3",
+              200: "#b5bdcc",
+              300: "#97a3b4",
+              400: "#7b899d",
+              500: "#626f84",
+              600: "#4b5768",
+              700: "#343e4b",
+              800: "#1e2530",
+              900: "#070c18",
+            },
+            darkgray: {
               base: "#6D6D6D",
               light: "#DCD7CA",
               lighter: "#F5EFE0",
             },
-            primary: "#006181",
+            primary: {
+              50: "#e1f8ff",
+              100: "#bee4f1",
+              200: "#9ad1e5",
+              300: "#74bed9",
+              400: "#50acce",
+              500: "#3892b4",
+              600: "#29728d",
+              700: "#1a5165",
+              800: "#09313f",
+              900: "#001219",
+            },
+            accent: {
+              50: "#e3f7fb",
+              100: "#cbdfe3",
+              200: "#afc8ce",
+              300: "#92b2ba",
+              400: "#759ca5",
+              500: "#5b838b",
+              600: "#45666d",
+              700: "#30494f",
+              800: "#192d31",
+              900: "#001115",
+            },
+            light: {
+              50: "#f0f4f3",
+              100: "#d9dcdb",
+              200: "#bec6c3",
+              300: "#a3b0ac",
+              400: "#879a94",
+              500: "#6d807a",
+              600: "#55645f",
+              700: "#3e4744",
+              800: "#252b29",
+              900: "#0b0f0d",
+            },
             headerBg: "white",
             footerBg: "#006181",
-            bodyBg: "gainsboro",
+            bodyBg: {
+              light: "rgba(0, 0, 0, 0.06)",
+              dark: "rgba(35, 39, 47, 0.8)",
+            },
+            linkColor: 'rgb(8 126 164/1)'
           },
           showSearchInHeader: true,
           // State for the menu on mobile
@@ -223,9 +305,20 @@ const settings = {
         },
       },
     },
+
     "@frontity/tiny-router",
     "@frontity/html2react",
   ],
+  libraries: {
+    html2react: {
+      /**
+       * Add a processor to `html2react` so it processes the `<img>` tags
+       * and internal link inside the content HTML.
+       * You can add your own processors too.
+       */
+      processors: [image, link],
+    },
+  },
 };
 
 export default settings;
