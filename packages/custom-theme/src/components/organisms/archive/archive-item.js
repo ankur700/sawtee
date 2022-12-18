@@ -5,6 +5,7 @@ import PostPreview from "./post-preview";
 
 const ArchiveItem = ({ state, item }) => {
   const data = formatPostData(state, item);
+
   return <PostPreview data={data} />;
 };
 

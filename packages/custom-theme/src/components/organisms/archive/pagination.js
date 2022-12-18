@@ -2,9 +2,16 @@ import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
 import Link from "../../atoms/link";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
-import { Box, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  LinkBox,
+  LinkOverlay,
+  Button,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
-export const PaginationButton = styled(Link)`
+export const PaginationButton = styled(Button)`
   width: 100%;
   display: flex;
   align-items: center;
@@ -13,21 +20,21 @@ export const PaginationButton = styled(Link)`
   padding: 0.8rem 1rem;
   min-height: 60px;
 
-  cursor: pointer;
-  border: none;
-  background: #333a35;
-  color: #eca419;
+  // cursor: pointer;
+  // border: none;
+  // background: var(--chakra-colors-primary-700);
+  // color: var(--chakra-colors-whiteAlpha-900);
 
-  &:hover {
-    background-color: #48584d;
-    color: #eca419;
-  }
+  // &:hover {
+  //   background-color: var(--chakra-colors-primary-600);
+  //   color: var(--chakra-colors-whiteAlpha-800);
+  // }
 
-  &[aria-disabled="true"] {
-    background-color: #dfd7c7;
-    cursor: auto;
-    color: #a0a0a0;
-  }
+  // &[aria-disabled="true"] {
+  //   background-color: var(--chakra-colors-whiteAlpha-300);
+  //   cursor: auto;
+  //   color: #a0a0a0;
+  // }
 `;
 
 export const PrevLink = ({
@@ -37,10 +44,18 @@ export const PrevLink = ({
   ...props
 }) => (
   <Box width="100%" {...props}>
-    <PaginationButton link={link} aria-label={label} aria-disabled={isDisabled}>
-      <Box width="40px" height="auto" as={IoIosArrowRoundBack} />
-      <span>Older posts</span>
-    </PaginationButton>
+    <Link link={link} aria-disabled={isDisabled}>
+      <PaginationButton
+        colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+        aria-label={label}
+        isDisabled={isDisabled}
+        color={useColorModeValue("gray.700", "whiteAlpha.800")}
+        variant="outline"
+      >
+        <Box width="40px" height="auto" as={IoIosArrowRoundBack} />
+        <span>Older posts</span>
+      </PaginationButton>
+    </Link>
   </Box>
 );
 
@@ -51,10 +66,18 @@ export const NextLink = ({
   ...props
 }) => (
   <Box width="100%" {...props}>
-    <PaginationButton link={link} aria-label={label} aria-disabled={isDisabled}>
-      <span>Newer posts</span>
-      <Box width="40px" height="auto" as={IoIosArrowRoundForward} />
-    </PaginationButton>
+    <Link link={link} aria-disabled={isDisabled}>
+      <PaginationButton
+        colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+        aria-label={label}
+        color={useColorModeValue("gray.700", "whiteAlpha.800")}
+        isDisabled={isDisabled}
+        variant="outline"
+      >
+        <span>Newer posts</span>
+        <Box width="40px" height="auto" as={IoIosArrowRoundForward} />
+      </PaginationButton>
+    </Link>
   </Box>
 );
 

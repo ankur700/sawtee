@@ -85,7 +85,7 @@ const Theme = ({ state }) => {
           <KnowUs when={data.route === "/about/"} />
           <Events when={data.route === "/events/"} />
           <Page when={data.isPage} />
-          <Post when={data.isPostType} />
+          <Post when={data.isPostType || data.route === "/blog/"} />
         </Switch>
       </Box>
       <Footer />

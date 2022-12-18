@@ -275,7 +275,7 @@ const settings = {
               light: "rgba(0, 0, 0, 0.06)",
               dark: "rgba(35, 39, 47, 0.8)",
             },
-            linkColor: 'rgb(8 126 164/1)'
+            linkColor: "rgb(8 126 164/1)",
           },
           showSearchInHeader: true,
           // State for the menu on mobile

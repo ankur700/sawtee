@@ -1,4 +1,4 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
 import ArchiveHeader from "./archive-header";
@@ -14,7 +14,7 @@ const Archive = ({ state }) => {
   if (data.isHome) return <HomepageArchive />;
 
   return (
-    <Box bg="accent.50" as="section">
+    <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">
       {/* If the list is a taxonomy, we render a title. */}
       {data.isTaxonomy && (
         <ArchiveHeader
@@ -35,7 +35,7 @@ const Archive = ({ state }) => {
 
       <Box
         padding={{ base: "24px", lg: "40px" }}
-        bg="white"
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         width={{ lg: "80%" }}
         maxWidth="1200px"
         mx="auto"

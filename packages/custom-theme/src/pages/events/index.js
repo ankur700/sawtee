@@ -17,6 +17,8 @@ const Events = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
 
+  console.log(postData);
+
   useEffect(() => {
     actions.source.fetch("/");
     List.preload();

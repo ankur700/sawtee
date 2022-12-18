@@ -1,4 +1,4 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { PostImageWithOverlay } from "../../molecules/featured-post/components";
 import Link from "../../atoms/link";
@@ -11,7 +11,7 @@ const PostPreview = ({ data, ...rest }) => {
     <Flex
       direction="column"
       position="relative"
-      bg="white"
+      bg={useColorModeValue("whiteAlpha", "blackAlpha")}
       as="article"
       shadow="md"
       {...rest}
@@ -24,13 +24,18 @@ const PostPreview = ({ data, ...rest }) => {
       )}
 
       <Flex p="40px" flexGrow="1" direction="column">
-        <Heading fontSize="2xl" as="h4" textTransform="uppercase">
+        <Heading
+          fontSize="2xl"
+          as="h4"
+          color={useColorModeValue("gray.800", "whiteAlpha.800")}
+          textTransform="uppercase"
+        >
           <Link link={link}>{title}</Link>
         </Heading>
         <Box
           my="20px"
           flex="1"
-          color="gray.700"
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
         <PostCategories
