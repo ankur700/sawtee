@@ -1,6 +1,6 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
+import { Box, useColorModeValue, useSafeLayoutEffect } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import List from "../../components/organisms/archive";
 import useScrollProgress from "../../components/hooks/useScrollProgress";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -10,14 +10,35 @@ import PostHeader from "../../components/organisms/post/post-header";
 import PostProgressBar from "../../components/organisms/post/post-progressbar";
 import { getPostData, formatPostData } from "../../components/helpers";
 import EventsList from "./eventsList";
-import { articles } from "../../data";
 import Pagination from "../../components/molecules/pagination";
+import Loading from "../../components/atoms/loading";
 
 const Events = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
+  const data = state.source.get(state.router.link);
+  console.log(data);
+  const [events, setEvents] = useState([]);
 
-  console.log(postData);
+  useLayoutEffect(() => {
+    const url = "https://sawtee.ankursingh.com.np/wp-json/wp/v2/posts/";
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        const result = await response.json();
+
+        let finalResult = result.filter((json) =>
+          json.categories.includes(216)
+        );
+        setEvents([...finalResult]);
+      } catch (error) {
+        console.log("error", error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     actions.source.fetch("/");
@@ -87,7 +108,16 @@ const Events = ({ state, actions, libraries }) => {
           pt="50px"
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
-          <EventsList data={articles} showAvatar={false} />
+          {events.length > 0 ? (
+            <EventsList
+              data={events}
+              showAvatar={false}
+              libraries={libraries}
+              author={post.author}
+            />
+          ) : (
+            <Loading />
+          )}
           <Pagination />
         </Content>
       </Section>

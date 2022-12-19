@@ -11,6 +11,7 @@ const Archive = ({ state }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
 
+
   if (data.isHome) return <HomepageArchive />;
 
   return (

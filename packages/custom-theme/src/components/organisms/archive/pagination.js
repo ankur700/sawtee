@@ -5,8 +5,6 @@ import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import {
   Box,
   Stack,
-  LinkBox,
-  LinkOverlay,
   Button,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -19,22 +17,6 @@ export const PaginationButton = styled(Button)`
   font-size: 1.2rem;
   padding: 0.8rem 1rem;
   min-height: 60px;
-
-  // cursor: pointer;
-  // border: none;
-  // background: var(--chakra-colors-primary-700);
-  // color: var(--chakra-colors-whiteAlpha-900);
-
-  // &:hover {
-  //   background-color: var(--chakra-colors-primary-600);
-  //   color: var(--chakra-colors-whiteAlpha-800);
-  // }
-
-  // &[aria-disabled="true"] {
-  //   background-color: var(--chakra-colors-whiteAlpha-300);
-  //   cursor: auto;
-  //   color: #a0a0a0;
-  // }
 `;
 
 export const PrevLink = ({
