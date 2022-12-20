@@ -15,27 +15,32 @@ import Loading from "../../components/atoms/loading";
 
 const Events = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
-  const post = formatPostData(state, postData);
-  const data = state.source.get(state.router.link);
-  const [events, setEvents] = useState([]);
+  // const post = formatPostData(state, postData);
 
+  const data = state.source.get(state.router.link);
+  const post = state.source[data.type][data.id];
+  const [events, setEvents] = useState([]);
+  const [author, setAuthor] = useState([]);
 
   useEffect(() => {
-    const url = "https://sawtee.ankursingh.com.np/wp-json/wp/v2/events/";
-    const fetchData = async () => {
-    try {
-      const response = await fetch(url);
-      const result = await response.json();
+    const eventsurl = "https://sawtee.ankursingh.com.np/wp-json/wp/v2/events/";
+    const authorurl = "https://sawtee.ankursingh.com.np/wp-json/wp/v2/users/2/";
 
-      let finalResult = result.filter((json) =>
-        json.categories.includes(216)
-      );
-      setEvents([...finalResult]);
-    } catch (error) {
-      console.log("error", error.message);
-    }
-  };
-    fetchData(url);
+    const fetchData = async (url) => {
+      try {
+        const response = await fetch(url);
+        const result = await response.json();
+
+        let finalResult = result.filter((json) =>
+          json.categories.includes(216)
+        );
+        url === eventsurl ? setEvents([...finalResult]) : setAuthor(result);
+      } catch (error) {
+        console.log("error", error.message);
+      }
+    };
+    fetchData(eventsurl);
+    fetchData(authorurl);
     actions.source.fetch("/");
     List.preload();
   }, []);
@@ -44,6 +49,7 @@ const Events = ({ state, actions, libraries }) => {
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
+  console.log(data, post, events, author);
 
   return (
     <LightPatternBox
@@ -108,7 +114,7 @@ const Events = ({ state, actions, libraries }) => {
               data={events}
               showAvatar={false}
               libraries={libraries}
-              author={post.author}
+              author={author}
             />
           ) : (
             <Loading />

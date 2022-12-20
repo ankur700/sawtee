@@ -80,7 +80,7 @@ const Theme = ({ state }) => {
           <Publication when={data.route === "/publications/"} />
           <OurWork when={data.route === "/our-work/"} />
           <KnowUs when={data.route === "/about/"} />
-          <Events when={data.route === "/policy-outreach/"} />
+          {/* <Events when={data.route === "/events/"} /> */}
           <Page when={data.isPage} />
           <Post when={data.isPostType || data.route === "/blog/"} />
           <SearchResults when={data.isSearch} />

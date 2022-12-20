@@ -11,8 +11,7 @@ const Archive = ({ state }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
 
-
-  if (data.isHome) return <HomepageArchive />;
+  if (data.isEventsArchive) return <HomepageArchive />;
 
   return (
     <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">

@@ -212,7 +212,7 @@ const settings = {
             },
             {
               name: "Events",
-              href: "/policy-outreach/",
+              href: "/events/",
             },
           ],
           colors: {

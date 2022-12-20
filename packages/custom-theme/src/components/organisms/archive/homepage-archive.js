@@ -1,16 +1,16 @@
-import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, Button } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
 import { FeaturedPostSection } from "../../molecules/featured-post/featured-post";
 import { formatPostData, splitPosts } from "../../helpers";
 import { Newsletter } from "../../atoms/newsletter";
 import ArchiveItem from "./archive-item";
-import { PaginationButton } from "./pagination";
+import Pagination from "./pagination";
+import Link from "@frontity/components/link";
 
 const HomepageArchive = ({ state, libraries }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
-
   const [firstThreePosts, othersPosts] = splitPosts(state, data.items);
 
   return (
@@ -39,15 +39,13 @@ const HomepageArchive = ({ state, libraries }) => {
           columns={{ base: 1, md: 2 }}
           spacing="40px"
         >
-          {othersPosts.map(({ type, id }) => {
+          {data.items.map(({ type, id }, idx) => {
             const item = state.source[type][id];
             return <ArchiveItem key={item.id} item={item} />;
           })}
         </SimpleGrid>
 
-        <PaginationButton mt="40px" link="/page/2">
-          More posts
-        </PaginationButton>
+        <Pagination mt="56px" />
       </Box>
       {libraries.newsletter && (
         <Newsletter showPattern={state.theme.showBackgroundPattern} />

@@ -3,6 +3,8 @@ import React from "react";
 import { PostImageWithOverlay } from "../../molecules/featured-post/components";
 import Link from "../../atoms/link";
 import PostCategories from "../post/post-categories";
+import { PostOverlay } from "../../molecules/featured-post/components";
+import generateGradient from "../../molecules/featured-post/genarate-gradient";
 
 const PostPreview = ({ data, ...rest }) => {
   const { title, excerpt, featured_media, link, categories } = data;
@@ -23,6 +25,21 @@ const PostPreview = ({ data, ...rest }) => {
         </Link>
       )}
 
+      {Object.keys(featured_media).length === 0 && (
+        <Link link={link}>
+          <Box
+            role="group"
+            cursor="pointer"
+            height="260px"
+            width="100%"
+            bgImage={generateGradient()}
+            pos="relative"
+          >
+            <PostOverlay />
+          </Box>
+        </Link>
+      )}
+
       <Flex p="40px" flexGrow="1" direction="column">
         <Heading
           fontSize="2xl"
@@ -35,6 +52,7 @@ const PostPreview = ({ data, ...rest }) => {
         <Box
           my="20px"
           flex="1"
+          noOfLines={4}
           color={useColorModeValue("gray.700", "whiteAlpha.700")}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />

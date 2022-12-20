@@ -48,18 +48,22 @@ export const SecondaryPostPreview = ({ data, ...props }) => {
   );
 };
 
-export const FeaturedPostSection = ({ data, ...props }) => (
-  <Flex as="section" direction={{ base: "column", lg: "row" }} {...props}>
-    <Box width={{ base: "100%", lg: "65%" }} flexGrow="1">
-      <PrimaryPostPreview data={data[0]} />
-    </Box>
-    <Flex
-      direction={{ base: "column", md: "row", lg: "column" }}
-      width={{ base: "100%", lg: "35%" }}
-      flexGrow="1"
-    >
-      <SecondaryPostPreview data={data[1]} />
-      <SecondaryPostPreview data={data[2]} />
+export const FeaturedPostSection = ({ data, ...props }) =>
+  data.length > 2 && (
+    <Flex as="section" direction={{ base: "column", lg: "row" }} {...props}>
+      <Box width={{ base: "100%", lg: "65%" }} flexGrow="1">
+        <PrimaryPostPreview data={data[0]} />
+      </Box>
+      <Flex
+        direction={{ base: "column", md: "row", lg: "column" }}
+        width={{ base: "100%", lg: "35%" }}
+        flexGrow="1"
+      >
+        {data.map((item, idx) => {
+          if (idx > 0 && idx < data.length) {
+            return <SecondaryPostPreview key={idx} data={item} />;
+          }
+        })}
+      </Flex>
     </Flex>
-  </Flex>
-);
+  );
