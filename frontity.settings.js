@@ -212,7 +212,7 @@ const settings = {
             },
             {
               name: "Events",
-              href: "/events/",
+              href: "/policy-outreach/",
             },
           ],
           colors: {
@@ -302,6 +302,13 @@ const settings = {
           url: "https://sawtee.ankursingh.com.np/",
           homepage: "home",
           postsPage: "blog",
+          postTypes: [
+            {
+              type: "events",
+              endpoint: "events",
+              archive: "/events",
+            },
+          ],
         },
       },
     },

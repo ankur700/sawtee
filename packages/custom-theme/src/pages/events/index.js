@@ -17,30 +17,25 @@ const Events = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
   const data = state.source.get(state.router.link);
-  console.log(data);
   const [events, setEvents] = useState([]);
 
-  useLayoutEffect(() => {
-    const url = "https://sawtee.ankursingh.com.np/wp-json/wp/v2/posts/";
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        const result = await response.json();
-
-        let finalResult = result.filter((json) =>
-          json.categories.includes(216)
-        );
-        setEvents([...finalResult]);
-      } catch (error) {
-        console.log("error", error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
+    const url = "https://sawtee.ankursingh.com.np/wp-json/wp/v2/events/";
+    const fetchData = async () => {
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+
+      let finalResult = result.filter((json) =>
+        json.categories.includes(216)
+      );
+      setEvents([...finalResult]);
+    } catch (error) {
+      console.log("error", error.message);
+    }
+  };
+    fetchData(url);
     actions.source.fetch("/");
     List.preload();
   }, []);

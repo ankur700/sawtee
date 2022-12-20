@@ -75,17 +75,17 @@ const Theme = ({ state }) => {
       >
         <Switch>
           <Loading when={data.isFetching} />
-          <SearchResults when={data.isSearch} />
-          <Archive when={data.isArchive} />
-          <Page404 when={data.is404} />
 
           <Home when={data.isHome} />
           <Publication when={data.route === "/publications/"} />
           <OurWork when={data.route === "/our-work/"} />
           <KnowUs when={data.route === "/about/"} />
-          <Events when={data.route === "/events/"} />
+          <Events when={data.route === "/policy-outreach/"} />
           <Page when={data.isPage} />
           <Post when={data.isPostType || data.route === "/blog/"} />
+          <SearchResults when={data.isSearch} />
+          <Archive when={data.isArchive} />
+          <Page404 when={data.is404} />
         </Switch>
       </Box>
       <Footer />
