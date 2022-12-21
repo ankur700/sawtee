@@ -1,3 +1,5 @@
+import moment from "moment/moment";
+
 function getSrcSet(media) {
   const srcset =
     Object.values(media.media_details.sizes)
@@ -26,6 +28,12 @@ export function getMediaAttributes(state, id) {
     src: media.source_url,
     srcSet,
   };
+}
+
+export function formatDateWithMoment(date) {
+  const format = "MMMM Do YYYY";
+  const formatedDate = moment(date).format(format);
+  return formatedDate;
 }
 
 export function getPostCategories(state, post) {

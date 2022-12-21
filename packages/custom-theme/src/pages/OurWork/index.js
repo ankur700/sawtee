@@ -10,12 +10,10 @@ import {
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
 import List from "../../components/organisms/archive";
-import useScrollProgress from "../../components/hooks/useScrollProgress";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import FeaturedMedia from "../../components/organisms/post/featured-media";
 import PostHeader from "../../components/organisms/post/post-header";
-import PostProgressBar from "../../components/organisms/post/post-progressbar";
 import { getPostData, formatPostData } from "../../components/helpers";
 import { OurThemes } from "../../data";
 import Link from "@frontity/components/link";
@@ -29,8 +27,6 @@ const OurWork = ({ state, actions, libraries }) => {
     List.preload();
   }, []);
 
-  const [ref, scroll] = useScrollProgress();
-
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
@@ -38,11 +34,8 @@ const OurWork = ({ state, actions, libraries }) => {
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
       showPattern={state.theme.showBackgroundPattern}
-      ref={ref}
       pt="0"
     >
-      <PostProgressBar value={scroll} />
-
       <Box pos="relative">
         {post.featured_media != null && (
           <FeaturedMedia
@@ -101,10 +94,7 @@ const OurWork = ({ state, actions, libraries }) => {
                 variant="outline"
                 colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
               >
-                <Link
-                  link={theme.href}
-                  _hover={{ textDecoration: "none" }}
-                >
+                <Link link={theme.href} _hover={{ textDecoration: "none" }}>
                   <Text color={state.theme.colors.linkColor}>{theme.name}</Text>
                 </Link>
               </Button>

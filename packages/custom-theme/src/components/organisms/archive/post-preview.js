@@ -5,17 +5,19 @@ import Link from "../../atoms/link";
 import PostCategories from "../post/post-categories";
 import { PostOverlay } from "../../molecules/featured-post/components";
 import generateGradient from "../../molecules/featured-post/genarate-gradient";
+import { formatDateWithMoment } from "../../helpers";
 
 const PostPreview = ({ data, ...rest }) => {
-  const { title, excerpt, featured_media, link, categories } = data;
-
+  const { title, excerpt, featured_media, link, categories, publishDate } =
+    data;
   return (
     <Flex
       direction="column"
       position="relative"
-      bg={useColorModeValue("whiteAlpha", "blackAlpha")}
+      bg={useColorModeValue("whiteAlpha", "rgba(0,0,0,0.3)")}
       as="article"
       shadow="md"
+      rounded="xl"
       {...rest}
     >
       {/* Use the frontity settings for featuredPost here */}
@@ -44,23 +46,36 @@ const PostPreview = ({ data, ...rest }) => {
         <Heading
           fontSize="2xl"
           as="h4"
-          color={useColorModeValue("gray.800", "whiteAlpha.800")}
+          noOfLines={"3"}
+          minH="5.625rem"
           textTransform="uppercase"
         >
-          <Link link={link}>{title}</Link>
+          <Link className="primary-link" link={link}>
+            {title}
+          </Link>
         </Heading>
         <Box
           my="20px"
           flex="1"
-          noOfLines={4}
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          overflow="hidden"
+          textOverflow="ellipsis"
+          display="-webkit-box"
+          lineHeight="1.5"
+          maxHeight="4.6875rem"
+          color={useColorModeValue("gray.700", "whiteAlpha.800")}
+          sx={{ webkitLineClamp: "3", webkitBoxOrient: "vertical" }}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
-        <PostCategories
-          color="black"
-          justify="flex-start"
-          categories={categories}
-        />
+        <Box
+          display={"flex"}
+          justifyContent="space-between"
+          alignItems={"center"}
+        >
+          <PostCategories justify="flex-start" categories={categories} />
+          <Box as="time" fontWeight={"semibold"}>
+            {formatDateWithMoment(publishDate)}
+          </Box>
+        </Box>
       </Flex>
     </Flex>
   );

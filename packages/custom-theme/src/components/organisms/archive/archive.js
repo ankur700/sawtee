@@ -3,15 +3,18 @@ import { connect } from "frontity";
 import React from "react";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
-import HomepageArchive from "./homepage-archive";
+import EventsArchive from "./events-archive";
 import Pagination from "./pagination";
 import { decode } from "frontity";
+import PublicationsArchive from "./publications-archive";
 
 const Archive = ({ state }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
 
-  if (data.isEventsArchive) return <HomepageArchive />;
+  if (data.isEventsArchive) return <EventsArchive />;
+
+  if (data.isPublicationsArchive) return <PublicationsArchive />;
 
   return (
     <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">

@@ -12,10 +12,8 @@ import SearchResults from "./molecules/search";
 import PageTitle from "./atoms/pageTitle";
 import FontFace from "./styles/font-face";
 import Home from "../pages/home";
-import Publication from "../pages/publication";
 import OurWork from "../pages/OurWork";
 import KnowUs from "../pages/KnowUs";
-import Events from "../pages/events";
 import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
 import { Post } from "./organisms/page/post-item";
@@ -75,12 +73,9 @@ const Theme = ({ state }) => {
       >
         <Switch>
           <Loading when={data.isFetching} />
-
           <Home when={data.isHome} />
-          <Publication when={data.route === "/publications/"} />
           <OurWork when={data.route === "/our-work/"} />
           <KnowUs when={data.route === "/about/"} />
-          {/* <Events when={data.route === "/events/"} /> */}
           <Page when={data.isPage} />
           <Post when={data.isPostType || data.route === "/blog/"} />
           <SearchResults when={data.isSearch} />

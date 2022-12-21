@@ -1,4 +1,4 @@
-import { Box, Heading, SimpleGrid, Button } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
 import { FeaturedPostSection } from "../../molecules/featured-post/featured-post";
@@ -6,19 +6,19 @@ import { formatPostData, splitPosts } from "../../helpers";
 import { Newsletter } from "../../atoms/newsletter";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
-import Link from "@frontity/components/link";
 
-const HomepageArchive = ({ state, libraries }) => {
+const EventsArchive = ({ state, libraries }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
   const [firstThreePosts, othersPosts] = splitPosts(state, data.items);
-
   return (
-    <Box bg="accent.50" as="section">
+    <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">
       <FeaturedPostSection
         data={firstThreePosts.map((post) => formatPostData(state, post))}
       />
+
       <Box
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         py={{ base: "64px", md: "80px" }}
         px={{ base: "24px", md: "40px" }}
         width={{ base: "auto", lg: "80%" }}
@@ -26,12 +26,13 @@ const HomepageArchive = ({ state, libraries }) => {
         mx="auto"
       >
         <Heading
+          as="h3"
           textTransform="uppercase"
           textAlign="center"
           fontSize={{ base: "4xl", md: "6xl" }}
-          color="accent.400"
+          color={useColorModeValue("accent.700", "accent.300")}
         >
-          Latest Posts
+          Latest {data.type}
         </Heading>
 
         <SimpleGrid
@@ -41,7 +42,14 @@ const HomepageArchive = ({ state, libraries }) => {
         >
           {data.items.map(({ type, id }, idx) => {
             const item = state.source[type][id];
-            return <ArchiveItem key={item.id} item={item} />;
+            return (
+              <ArchiveItem
+                key={item.id}
+                item={item}
+                color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                rounded="xl"
+              />
+            );
           })}
         </SimpleGrid>
 
@@ -54,4 +62,4 @@ const HomepageArchive = ({ state, libraries }) => {
   );
 };
 
-export default connect(HomepageArchive);
+export default connect(EventsArchive);

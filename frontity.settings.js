@@ -308,6 +308,21 @@ const settings = {
               endpoint: "events",
               archive: "/events",
             },
+            {
+              type: "publications",
+              endpoint: "publications",
+              archive: "/publications",
+            },
+            {
+              type: "sawtee-in-media",
+              endpoint: "sawtee-in-media",
+              archive: "/sawtee-in-media",
+            },
+            {
+              type: "programmes",
+              endpoint: "programmes",
+              archive: "/programmes",
+            },
           ],
         },
       },

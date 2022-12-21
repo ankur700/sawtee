@@ -1,32 +1,21 @@
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Text, Button, Flex, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import Link from "../../atoms/link";
 import { decode } from "frontity";
 
 export const PostCategory = (props) => (
-  <Box
+  <Button
     transition="background-color ease 0.25s"
-    px="5px"
-    border="2px solid"
-    borderColor="accent.400"
+    px="10px"
     fontFamily="heading"
+    variant="outline"
+    colorScheme={useColorModeValue("accent.700", "accent.50")}
     textTransform="uppercase"
-    fontWeight="medium"
-    display="inline-block"
-    _hover={{
-      bg: "accent.400",
-      color: props.color,
-    }}
     {...props}
   />
 );
 
-export const PostCategories = ({
-  categories,
-  limit = 3,
-  color = "white",
-  ...props
-}) => {
+export const PostCategories = ({ categories, limit = 3, color, ...props }) => {
   const limitCategories =
     categories.length > limit
       ? categories.filter((_, idx) => idx < limit)
@@ -35,16 +24,8 @@ export const PostCategories = ({
   return (
     <Flex flexWrap="wrap" mt="12px" {...props}>
       {limitCategories.map((category) => (
-        <PostCategory
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
-          key={category.id}
-          mr="6px"
-          mb="6px"
-        >
-          <Link
-            link={category.link}
-            dangerouslySetInnerHTML={{ __html: decode(category.name) }}
-          />
+        <PostCategory key={category.id} mr="6px" mb="6px">
+          <Text dangerouslySetInnerHTML={{ __html: decode(category.name) }} />
         </PostCategory>
       ))}
     </Flex>

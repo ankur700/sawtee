@@ -5,8 +5,8 @@ import FrontityLink from "../../atoms/link";
 
 const Link = styled(FrontityLink)`
   position: relative;
-  // color: #fff;
   text-decoration: none;
+  font-weight: bold;
 
   &:after {
     transition: bottom ease 0.25s, background-color ease 0.25s;

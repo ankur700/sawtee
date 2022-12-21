@@ -77,9 +77,9 @@ export const PrimaryPostArticle = (props) => (
     display="flex"
     direction="column"
     alignItems="flex-end"
-    minHeight={{ base: "unset", md: "400px" }}
+    minHeight={{ base: "unset", md: "530px" }}
     height={{ base: "auto", md: "100%" }}
-    paddingTop={{ base: "80px", md: "0" }}
+    paddingTop={{ base: "80px", md: "250px" }}
     cursor="pointer"
     {...props}
   />
