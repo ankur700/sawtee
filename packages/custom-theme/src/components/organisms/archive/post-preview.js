@@ -71,7 +71,11 @@ const PostPreview = ({ data, ...rest }) => {
           justifyContent="space-between"
           alignItems={"center"}
         >
-          <PostCategories justify="flex-start" categories={categories} />
+          <PostCategories
+            justify="flex-start"
+            categories={categories}
+            color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          />
           <Box as="time" fontWeight={"semibold"}>
             {formatDateWithMoment(publishDate)}
           </Box>

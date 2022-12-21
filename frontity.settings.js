@@ -212,7 +212,7 @@ const settings = {
             },
             {
               name: "Events",
-              href: "/events/",
+              href: "/featured-events/",
             },
           ],
           colors: {
@@ -304,9 +304,9 @@ const settings = {
           postsPage: "blog",
           postTypes: [
             {
-              type: "events",
-              endpoint: "events",
-              archive: "/events",
+              type: "featured-events",
+              endpoint: "featured-events",
+              archive: "/featured-events",
             },
             {
               type: "publications",

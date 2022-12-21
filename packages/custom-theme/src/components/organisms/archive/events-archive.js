@@ -30,9 +30,9 @@ const EventsArchive = ({ state, libraries }) => {
           textTransform="uppercase"
           textAlign="center"
           fontSize={{ base: "4xl", md: "6xl" }}
-          color={useColorModeValue("accent.700", "accent.300")}
+          color={useColorModeValue("accent.400", "accent.50")}
         >
-          Latest {data.type}
+          Latest Events
         </Heading>
 
         <SimpleGrid

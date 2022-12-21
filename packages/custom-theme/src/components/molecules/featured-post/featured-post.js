@@ -22,11 +22,13 @@ export const PrimaryPostPreview = ({ data, ...props }) => {
         <PostImage {...featured_media} />
         <PostContent>
           <LinkOverlay href={link}>
-            <PostTitle>
-              <Link link={link}>{title}</Link>
-            </PostTitle>
+            <PostTitle>{title}</PostTitle>
           </LinkOverlay>
-          <PostCategories categories={categories} justifyContent="center" />
+          <PostCategories
+            categories={categories}
+            justifyContent="center"
+            w="full"
+          />
         </PostContent>
       </PrimaryPostArticle>
     </LinkBox>
@@ -37,15 +39,19 @@ export const SecondaryPostPreview = ({ data, ...props }) => {
   const { title, categories, link, featured_media } = data;
 
   return (
-    <LinkBox display="block" flex="1" {...props}>
+    <LinkBox flex="1" {...props}>
       <SecondaryPostArticle bgImage={generateGradient()} role="group">
         <PostOverlay />
         <PostImage {...featured_media} />
         <PostContent padding="40px" textAlign="left" mt="0">
-          <PostCategories justifyContent="flex-start" categories={categories} />
+          <PostCategories
+            zIndex={50}
+            justifyContent="flex-start"
+            categories={categories}
+          />
           <LinkOverlay href={link}>
             <PostTitle as="h2" mt="auto" pt="40px" fontSize="1.65rem">
-              <Link link={link}>{title}</Link>
+              {title}
             </PostTitle>
           </LinkOverlay>
         </PostContent>

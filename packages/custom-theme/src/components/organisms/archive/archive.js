@@ -11,8 +11,7 @@ import PublicationsArchive from "./publications-archive";
 const Archive = ({ state }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
-
-  if (data.isEventsArchive) return <EventsArchive />;
+  if (data.isFeaturedEventsArchive) return <EventsArchive />;
 
   if (data.isPublicationsArchive) return <PublicationsArchive />;
 
