@@ -3,6 +3,7 @@ import Section from "../../components/atoms/section";
 import GridBlog from "../../components/organisms/GridBlog";
 import ViewAllBtn from "../../components/atoms/ViewAllBtn";
 import Title from "../../components/atoms/title";
+import { splitPosts } from "../../components/helpers";
 
 const BlogSection = ({ data }) => {
   return (
@@ -25,12 +26,12 @@ const BlogSection = ({ data }) => {
           text="Policy Outreach"
         />
         <Show above="lg">
-            <ViewAllBtn w="12em" text={"View All"} />
+          <ViewAllBtn w="12em" text={"View All"} />
         </Show>
       </Stack>
       <GridBlog data={data} />
       <Show below="lg">
-          <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
+        <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
       </Show>
     </Section>
   );
