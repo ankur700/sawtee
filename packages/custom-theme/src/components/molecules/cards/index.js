@@ -13,10 +13,12 @@ import {
 import React, { useState, useEffect } from "react";
 
 const today = new Date();
-import { PostImage, PostOverlay } from "../featured-post/components";
-import generateGradient from "../featured-post/genarate-gradient";
-import FLink from "../../atoms/link";
+import { PostImage } from "../featured-post/components";
+// import FLink from "../../atoms/link";
 import { formatDateWithMoment } from "../../helpers";
+import PostCategories from "../../organisms/post/post-categories";
+import generateGradient from "../../molecules/featured-post/genarate-gradient";
+import { featuredEvents } from "../../../data";
 
 const defaultValues = {
   categories: ["Default", "Events", "Sawtee in Media", "Publications"],
@@ -31,27 +33,7 @@ const defaultValues = {
   date: today.getDate(),
   categoryLink: "#",
   authorLink: "#",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
-};
-
-export const PostCategories = (category) => {
-  const { id, name, link } = category;
-  return (
-    <Box
-      as="a"
-      px={3}
-      py={1}
-      className="primary-link category"
-      bg={useColorModeValue("rgb(230 247 255/1)", "rgb(88,175,223,.1)")}
-      fontSize="sm"
-      fontWeight="700"
-      rounded="md"
-      href={link ? link : defaultValues.categoryLink}
-    >
-      {name ? name : defaultValues.category}
-    </Box>
-  );
+  imageUrl: generateGradient(),
 };
 
 export const TopImageCard = (props) => {
@@ -60,53 +42,13 @@ export const TopImageCard = (props) => {
     title,
     target,
     excerpt,
-    authorId,
+    author,
     date,
     featured_media,
     showAvatar,
   } = props;
 
-  const [category, setCategory] = useState([]);
-  const [author, setAuthor] = useState(async () => {
-    const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/users/${authorId}`;
-
-    try {
-      const response = await fetch(url);
-      const result = await response.json();
-      setAuthor(result);
-    } catch (error) {
-      console.log("error", error.message);
-    }
-  });
-  const [media, setMedia] = useState(async () => {
-    const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/${featured_media}`;
-
-    try {
-      const response = await fetch(url);
-      const result = await response.json();
-      setMedia(result);
-    } catch (error) {
-      console.log("error", error.message);
-    }
-  });
-
-  useEffect(() => {
-    const fetchData = async (url) => {
-      try {
-        const response = await fetch(url);
-        const result = await response.json();
-        setCategory([...category, result]);
-      } catch (error) {
-        console.log("error", error.message);
-      }
-    };
-
-    categories.forEach((category) => {
-      fetchData(
-        `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories/${category}`
-      );
-    });
-  }, []);
+  console.log(featured_media);
 
   return (
     <LinkBox
@@ -118,81 +60,56 @@ export const TopImageCard = (props) => {
       maxW="5xl"
       px="4"
     >
-      {media.guid && (
+      {featured_media && (
         <PostImage
-          src={media.source_url}
+          src={featured_media.source_url}
           pos="relative"
-          alt={media?.alt_text || media.title.rendered}
+          alt={featured_media.alt_text}
         />
       )}
-
-      {/* {Object.keys(media).length === 0 && (
+      {Object.keys(featured_media).length === 0 && (
         <Box
           role="group"
           cursor="pointer"
-          height="400px"
+          height="450px"
           width="100%"
-          bgImage={generateGradient()}
+          bgImage={defaultValues.imageUrl}
           pos="relative"
-        >
-          <PostOverlay />
-        </Box>
-      )} */}
+        />
+      )}
 
       <Box p={6}>
-        <Box>
-          <Box display="flex" className="categories">
-            {category.map((item) => {
-              return (
-                <LinkOverlay
-                  href={item.link ? item.link : defaultValues.categoryLink}
-                >
-                  <Box
-                    as="a"
-                    key={item.id}
-                    px={3}
-                    py={1}
-                    className="primary-link category"
-                    bg={useColorModeValue(
-                      "rgb(230 247 255/1)",
-                      "rgb(88,175,223,.1)"
-                    )}
-                    fontSize="sm"
-                    fontWeight="700"
-                    rounded="md"
-                    href={item.link ? item.link : defaultValues.categoryLink}
-                  >
-                    {item.name ? item.name : defaultValues.category}
-                  </Box>
-                </LinkOverlay>
-              );
-            })}
-          </Box>
-          <Text
-            display="block"
+        <Box display="flex" className="categories">
+          <PostCategories
+            justify="flex-start"
+            categories={categories}
             color={useColorModeValue("gray.700", "whiteAlpha.700")}
-            fontWeight="bold"
-            fontSize={{ base: "lg", md: "xl" }}
-            mt={2}
-            _hover={{
-              color: `${useColorModeValue("gray.800", "whiteAlpha.800")}`,
-              textDecor: "underline",
-            }}
-          >
-            <LinkOverlay href={target ? target : "#"} className="primary-link">
-              {title ? title : defaultValues.title}
-            </LinkOverlay>
-          </Text>
-          <Text
-            mt={2}
-            fontSize={{ base: "sm", md: "md" }}
-            noOfLines={3}
-            color={useColorModeValue("gray.600", "whiteAlpha.600")}
-            dangerouslySetInnerHTML={{
-              __html: excerpt ? excerpt : defaultValues.excerpt,
-            }}
           />
         </Box>
+        <Text
+          display="block"
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          fontWeight="bold"
+          fontSize={{ base: "lg", md: "xl" }}
+          mt={2}
+          _hover={{
+            color: `${useColorModeValue("gray.800", "whiteAlpha.800")}`,
+            textDecor: "underline",
+          }}
+        >
+          <LinkOverlay href={target ? target : "#"} className="primary-link">
+            {title ? title : defaultValues.title}
+          </LinkOverlay>
+        </Text>
+        <Text
+          mt={2}
+          fontSize={{ base: "sm", md: "md" }}
+          noOfLines={3}
+          color={useColorModeValue("gray.600", "whiteAlpha.600")}
+          dangerouslySetInnerHTML={{
+            __html: excerpt ? excerpt : defaultValues.excerpt,
+          }}
+        />
 
         <Box mt={4}>
           <Flex
@@ -201,25 +118,24 @@ export const TopImageCard = (props) => {
             gap={"10"}
             justifyContent={"space-between"}
           >
-            {/* <Show above="md">
+            <Show above="md">
               {author && (
                 <Flex alignItems="center">
-                  {showAvatar
-                    ? showAvatar
-                    : defaultValues.showAvatar && (
-                        <Image
-                          h={10}
-                          w={10}
-                          fit="cover"
-                          rounded="full"
-                          src={
-                            author
-                              ? author.avatar_urls[48]
-                              : defaultValues.avatar
-                          }
-                          alt={author.name}
-                        />
-                      )}
+                  {showAvatar && (
+                    <Image
+                      h={10}
+                      w={10}
+                      fit="cover"
+                      rounded="full"
+                      src={
+                        author.avatar_urls
+                          ? author.avatar_urls[48]
+                          : defaultValues.avatar
+                      }
+                      alt={author.name}
+                    />
+                  )}
+
                   <Link
                     mx={2}
                     fontWeight="bold"
@@ -230,14 +146,16 @@ export const TopImageCard = (props) => {
                   </Link>
                 </Flex>
               )}
-            </Show> */}
+            </Show>
             <Box
               as="time"
               mx={1}
               fontSize="sm"
               color={useColorModeValue("gray.600", "whiteAlpha.600")}
             >
-              {date ? formatDateWithMoment(date) : defaultValues.date}
+              {date
+                ? formatDateWithMoment(date)
+                : formatDateWithMoment(defaultValues.date)}
             </Box>
           </Flex>
         </Box>
@@ -247,40 +165,8 @@ export const TopImageCard = (props) => {
 };
 
 export const NoImageCard = (props) => {
-  const { categories, title, target, excerpt, authorId, date, showAvatar } =
+  const { categories, title, target, excerpt, author, date, showAvatar } =
     props;
-
-  const [category, setCategory] = useState([]);
-  const [author, setAuthor] = useState(async () => {
-    const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/users/${authorId}`;
-
-    try {
-      const response = await fetch(url);
-      const result = await response.json();
-      return result;
-    } catch (error) {
-      console.log("error", error.message);
-    }
-  });
-
-  useEffect(() => {
-    const fetchData = async (url) => {
-      try {
-        const response = await fetch(url);
-        const result = await response.json();
-        setCategory([...category, result]);
-      } catch (error) {
-        console.log("error", error.message);
-      }
-    };
-
-    categories.forEach((category) => {
-      fetchData(
-        `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories/${category}`,
-        "category"
-      );
-    });
-  }, []);
 
   return (
     <LinkBox
@@ -304,31 +190,12 @@ export const NoImageCard = (props) => {
         >
           {date ? formatDateWithMoment(date) : defaultValues.date}
         </Box>
-        {category.map((item) => {
-          return (
-            <LinkOverlay
-              href={item.link ? item.link : defaultValues.categoryLink}
-            >
-              <Box
-                as="a"
-                key={item.id}
-                px={3}
-                py={1}
-                className="primary-link category"
-                bg={useColorModeValue(
-                  "rgb(230 247 255/1)",
-                  "rgb(88,175,223,.1)"
-                )}
-                fontSize="sm"
-                fontWeight="700"
-                rounded="md"
-                href={item.link ? item.link : defaultValues.categoryLink}
-              >
-                {item.name ? item.name : defaultValues.category}
-              </Box>
-            </LinkOverlay>
-          );
-        })}
+
+        <PostCategories
+          justify="flex-start"
+          categories={categories}
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+        />
       </Flex>
 
       <Box mt={2}>
@@ -378,126 +245,132 @@ export const NoImageCard = (props) => {
         >
           <LinkOverlay href={target}>Read more</LinkOverlay>
         </Text>
-        {/* <Show above="md">
-          <Flex alignItems="center">
-            {showAvatar && author && (
-              <Image
-                mx={4}
-                w={10}
-                h={10}
-                rounded="full"
-                fit="cover"
-                src={author ? author.avatar_urls[48] : defaultValues.avatar}
-                alt="avatar"
-              />
-            )}
-            <Link
-              color="gray.700"
-              _dark={{
-                color: "whiteAlpha.700",
-              }}
-              fontWeight="700"
-              cursor="pointer"
-              href={author.link ? author.link : defaultValues.authorLink}
-            >
-              {author.name ? author.name : defaultValues.author}
-            </Link>
-          </Flex>
-        </Show> */}
+        <Show above="md">
+          {author && (
+            <Flex alignItems="center">
+              {showAvatar && (
+                <Image
+                  mx={4}
+                  w={10}
+                  h={10}
+                  rounded="full"
+                  fit="cover"
+                  src={
+                    author.avatar_urls
+                      ? author.avatar_urls[48]
+                      : defaultValues.avatar
+                  }
+                  alt={author.name}
+                />
+              )}
+              <Link
+                color="gray.700"
+                _dark={{
+                  color: "whiteAlpha.700",
+                }}
+                fontWeight="700"
+                cursor="pointer"
+                href={author.link ? author.link : defaultValues.authorLink}
+              >
+                {author.name ? author.name : defaultValues.author}
+              </Link>
+            </Flex>
+          )}
+        </Show>
       </Flex>
     </LinkBox>
   );
 };
 
-// export const LeftImageCard = (props) => {
-//   const { imageUrl, title, href, content } = props;
-//   return (
-//     <Box
-//       bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "gray.800")}
-//       mx={{
-//         lg: 8,
-//       }}
-//       display={{
-//         lg: "flex",
-//       }}
-//       maxW={{
-//         lg: "5xl",
-//       }}
-//       shadow={{
-//         lg: "lg",
-//       }}
-//       rounded={{
-//         lg: "lg",
-//       }}
-//     >
-//       <Box
-//         w={{
-//           lg: "50%",
-//         }}
-//       >
-//         <Box
-//           h={{
-//             base: 64,
-//             lg: "full",
-//           }}
-//           rounded={{
-//             lg: "lg",
-//           }}
-//           bgSize="cover"
-//           style={{
-//             backgroundImage: `url(${
-//               imageUrl ? imageUrl : defaultValues.imageUrl
-//             })`,
-//           }}
-//         ></Box>
-//       </Box>
+export const LeftImageCard = (props) => {
+  const { imageUrl, title, href, content } = props;
+  return (
+    <Box
+      bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "gray.800")}
+      mx={{
+        lg: 8,
+      }}
+      display={{
+        lg: "flex",
+      }}
+      maxW={{
+        lg: "5xl",
+      }}
+      shadow={{
+        lg: "lg",
+      }}
+      rounded={{
+        lg: "lg",
+      }}
+    >
+      <Box
+        w={{
+          lg: "50%",
+        }}
+      >
+        <Box
+          h={{
+            base: 64,
+            lg: "full",
+          }}
+          rounded={{
+            lg: "lg",
+          }}
+          bgSize="cover"
+          style={{
+            backgroundImage: `url(${
+              imageUrl ? imageUrl : defaultValues.imageUrl
+            })`,
+          }}
+        ></Box>
+      </Box>
 
-//       <Box
-//         py={12}
-//         px={6}
-//         maxW={{
-//           base: "xl",
-//           lg: "5xl",
-//         }}
-//         w={{
-//           lg: "50%",
-//         }}
-//       >
-//         <Box
-//           as="a"
-//           fontSize={{
-//             base: "2xl",
-//             md: "3xl",
-//           }}
-//           color={useColorModeValue("gray.800", "white")}
-//           fontWeight="bold"
-//         >
-//           <LinkOverlay href={href ? href : defaultValues.href}>
-//             {title ? title : defaultValues.title}
-//           </LinkOverlay>
-//         </Box>
-//         <Text mt={4} color={useColorModeValue("gray.600", "gray.400")}>
-//           {content ? content : defaultValues.content}
-//         </Text>
+      <Box
+        py={12}
+        px={6}
+        maxW={{
+          base: "xl",
+          lg: "5xl",
+        }}
+        w={{
+          lg: "50%",
+        }}
+      >
+        <Box
+          as="a"
+          fontSize={{
+            base: "2xl",
+            md: "3xl",
+          }}
+          color={useColorModeValue("gray.800", "white")}
+          fontWeight="bold"
+        >
+          <LinkOverlay href={href ? href : defaultValues.href}>
+            {title ? title : defaultValues.title}
+          </LinkOverlay>
+        </Box>
+        <Text mt={4} color={useColorModeValue("gray.600", "gray.400")}>
+          {content ? content : defaultValues.content}
+        </Text>
 
-//         <Box mt={8}>
-//           <Button
-//             bg="gray.900"
-//             color="gray.100"
-//             px={5}
-//             py={3}
-//             fontWeight="semibold"
-//             rounded="lg"
-//             _hover={{
-//               bg: "gray.800",
-//             }}
-//           >
-//             <Text as="a" href="#">
-//               Start Now
-//             </Text>
-//           </Button>
-//         </Box>
-//       </Box>
-//     </Box>
-//   );
-// };
+        <Box mt={8}>
+          <Button
+            bg="gray.900"
+            color="gray.100"
+            px={5}
+            py={3}
+            fontWeight="semibold"
+            rounded="lg"
+            _hover={{
+              bg: "gray.800",
+            }}
+          >
+            <Text as="a" href="#">
+              Start Now
+            </Text>
+          </Button>
+        </Box>
+      </Box>
+    </Box>
+  );
+};

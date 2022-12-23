@@ -5,23 +5,15 @@ import { decode } from "frontity";
 
 export const PostCategory = (props) => (
   <Box
-    transition="background-color ease 0.25s"
-    px="5px"
-    border="2px solid"
-    borderColor={useColorModeValue("accent.400", "accent.50")}
-    fontFamily="heading"
-    textTransform="uppercase"
-    fontWeight="medium"
-    display="inline-block"
-    _hover={{
-      bg: "accent.400",
-      color: "whiteAlpha.700",
-
-      _dark: {
-        bg: "accent.50",
-        color: "gray.700",
-      },
-    }}
+    px={3}
+    py={1}
+    className="primary-link category"
+    bg={useColorModeValue("rgb(230 247 255/1)", "rgb(88,175,223,.1)")}
+    fontSize="sm"
+    fontWeight="700"
+    rounded="md"
+    zIndex={50}
+    cursor="pointer"
     {...props}
   />
 );

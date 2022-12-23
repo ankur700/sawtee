@@ -64,7 +64,7 @@ const FullWidthCarousel = ({ slides, loop }) => {
       onMouseLeave={() => setPaused(false)}
     >
       <Flex
-        h="680px"
+        h={{ base: "auto", md: "calc(100vh - 6.5rem)" }}
         w="full"
         {...carouselStyle}
         _after={{
@@ -93,6 +93,7 @@ const FullWidthCarousel = ({ slides, loop }) => {
             <Image
               src={slide.slide_image}
               alt="carousel image"
+              sx={{ aspectRatio: "16:9" }}
               boxSize="full"
               backgroundSize="cover"
             />

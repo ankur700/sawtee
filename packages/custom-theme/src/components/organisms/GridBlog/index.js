@@ -15,23 +15,24 @@ const GridBlog = ({ data }) => {
             <GridItem key={article.id} id={"item-" + (i + 1)}>
               {i === 0 ? (
                 <TopImageCard
-                  title={article.title.rendered}
+                  title={article.title}
                   categories={article.categories}
                   featured_media={article.featured_media}
-                  excerpt={article.excerpt.rendered}
+                  excerpt={article.excerpt}
                   target={article.link}
-                  date={article.date}
+                  date={article.publishDate}
                   showAvatar={true}
-                  authorId={article.author}
+                  author={article.author}
                 />
               ) : (
                 <NoImageCard
-                  title={article.title.rendered}
+                  title={article.title}
                   categories={article.categories}
-                  excerpt={article.excerpt.rendered}
+                  excerpt={article.excerpt}
                   target={article.link}
-                  date={article.date}
-                  authorId={article.author}
+                  date={article.publishDate}
+                  showAvatar={false}
+                  author={article.author}
                   categoryLink={"#"}
                 />
               )}
