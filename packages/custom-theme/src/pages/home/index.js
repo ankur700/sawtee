@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "frontity";
 import CarouselSection from "./carouselSection";
-import { postdata } from "../../data";
 import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
@@ -31,7 +30,7 @@ const Home = ({ state }) => {
   }, []);
 
   useEffect(() => {
-    const controller = new AbortController();
+    // const controller = new AbortController();
     const eventsApi =
       "https://sawtee.ankursingh.com.np/wp-json/wp/v2/featured-events?per_page=6";
     const publicationsApi =
@@ -41,17 +40,17 @@ const Home = ({ state }) => {
       fetchData(publicationsApi, setPublications, state, categories);
       fetchData(eventsApi, setEvents, state, categories);
     }
-    return () => controller.abort();
+    // return () => controller.abort();
   }, [categories]);
 
   useEffect(() => {
-    const controller = new AbortController();
+    // const controller = new AbortController();
 
     if (events.length > 0) {
       const id = events[0].featured_media;
       fetchMedia(id, setMedia);
     }
-    return () => controller.abort();
+    // return () => controller.abort();
   }, [events]);
   return (
     <>

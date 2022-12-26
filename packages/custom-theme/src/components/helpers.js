@@ -52,11 +52,27 @@ export const fetchData = async (url, setState, state, categories) => {
     const results = await response.json();
     let array = [];
     results.forEach((result) => {
-      array.push(formatEventData(state, result, categories));
+      array.push(formatCPTData(state, result, categories));
     });
     setState([...array]);
   } catch (error) {
     console.log("error", error.message);
+  }
+};
+
+export const getSlides = (posts, setState) => {
+  let array = [];
+  posts.forEach((post) => {
+    console.log(post.featured_media);
+    array.push({
+      id: post.id,
+      link: post.link,
+      media: fetchMedia(post.featured_media),
+    });
+  });
+  if (array.length > 0) {
+    console.log(array);
+    setState([...array]);
   }
 };
 
@@ -68,12 +84,22 @@ export const fetchMedia = async (id, setState) => {
     const response = await fetch(url);
     const responseData = await response.json();
     const srcSet = getSrcSet(responseData);
-    setState({
-      id,
-      alt: responseData.alt_text,
-      src: responseData.source_url,
-      srcSet,
-    });
+
+    if (setState) {
+      setState({
+        id,
+        alt: responseData.alt_text,
+        src: responseData.source_url,
+        srcSet,
+      });
+    } else {
+      return {
+        id,
+        alt: responseData.alt_text,
+        src: responseData.source_url,
+        srcSet,
+      };
+    }
   } catch (error) {
     console.error("Error fetching media", error.message);
   }
@@ -115,7 +141,7 @@ export function getPostData(state) {
   return { ...post, isReady: data.isReady, isPage: data.isPage };
 }
 
-export function formatEventData(state, post, categories) {
+export function formatCPTData(state, post, categories) {
   return {
     id: post.id,
     author: getPostAuthor(state, post),

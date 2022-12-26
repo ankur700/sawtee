@@ -4,6 +4,8 @@ import Section from "../../components/atoms/section";
 import { Grid, GridItem, useColorModeValue, Text, Box } from "@chakra-ui/react";
 import { styled } from "frontity";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
+import { getSlides } from "../../components/helpers";
+import React, { useEffect, useState } from "react";
 
 const CustomGridItem = styled(GridItem)`
   position: relative;
@@ -71,12 +73,17 @@ const AboutSection = ({ data }) => {
     item.categories.map((cat) => cat === 1)
   );
 
-  console.log(books, tradeInsight);
+  const [tradeInsightSlides, setTradeInsightSlides] = useState([]);
+  const [bookSlides, setBookSlides] = useState([]);
 
+  useEffect(() => {
+    getSlides(tradeInsight, setTradeInsightSlides);
+    getSlides(books, setBookSlides);
+  }, []);
   return (
     <Section width="full" overflow="hidden" id="about-section" display="flex">
       <Grid
-        templateColumns={{ base: "100vw", lg: "repeat(2, 1fr)" }}
+        templateColumns={{ base: "auto", lg: "repeat(2, 1fr)" }}
         templateRows="auto"
       >
         <CustomGridItem
@@ -107,8 +114,8 @@ const AboutSection = ({ data }) => {
           px={"4"}
           overflow="hidden"
         >
-          <Title py={["4", "6", "8"]} text="Publication" />
-          <MultiItemCarousel my="6" slides={data} />
+          <Title py={["4", "6", "8"]} text="Trade Insight" />
+          <MultiItemCarousel my="6" slides={tradeInsightSlides} />
         </GridItem>
         <GridItem
           colSpan={1}
@@ -116,9 +123,9 @@ const AboutSection = ({ data }) => {
           px={"4"}
           overflow="hidden"
         >
-          <Title py={["4", "6", "8"]} text="Sawtee in Media" />
+          <Title py={["4", "6", "8"]} text="Books" />
 
-          <MultiItemCarousel my="6" slides={data} />
+          <MultiItemCarousel my="6" slides={bookSlides} />
         </GridItem>
       </Grid>
     </Section>
