@@ -10,15 +10,12 @@ import {
   Flex,
   Show,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
 
 const today = new Date();
 import { PostImage } from "../featured-post/components";
-// import FLink from "../../atoms/link";
 import { formatDateWithMoment } from "../../helpers";
 import PostCategories from "../../organisms/post/post-categories";
 import generateGradient from "../../molecules/featured-post/genarate-gradient";
-import { featuredEvents } from "../../../data";
 
 const defaultValues = {
   categories: ["Default", "Events", "Sawtee in Media", "Publications"],
@@ -48,8 +45,6 @@ export const TopImageCard = (props) => {
     showAvatar,
   } = props;
 
-  console.log(featured_media);
-
   return (
     <LinkBox
       as="article"
@@ -60,23 +55,20 @@ export const TopImageCard = (props) => {
       maxW="5xl"
       px="4"
     >
-      {featured_media && (
-        <PostImage
-          src={featured_media.source_url}
-          pos="relative"
-          alt={featured_media.alt_text}
-        />
+      {featured_media && featured_media.src && (
+        <PostImage pos="relative" {...featured_media} />
       )}
-      {Object.keys(featured_media).length === 0 && (
-        <Box
-          role="group"
-          cursor="pointer"
-          height="450px"
-          width="100%"
-          bgImage={defaultValues.imageUrl}
-          pos="relative"
-        />
-      )}
+      {!featured_media ||
+        (Object.keys(featured_media).length === 0 && (
+          <Box
+            role="group"
+            cursor="pointer"
+            height="450px"
+            width="100%"
+            bgImage={defaultValues.imageUrl}
+            pos="relative"
+          />
+        ))}
 
       <Box p={6}>
         <Box display="flex" className="categories">
@@ -94,7 +86,6 @@ export const TopImageCard = (props) => {
           mt={2}
           _hover={{
             color: `${useColorModeValue("gray.800", "whiteAlpha.800")}`,
-            textDecor: "underline",
           }}
         >
           <LinkOverlay href={target ? target : "#"} className="primary-link">

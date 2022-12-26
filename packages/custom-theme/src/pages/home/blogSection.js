@@ -5,7 +5,7 @@ import ViewAllBtn from "../../components/atoms/ViewAllBtn";
 import Title from "../../components/atoms/title";
 import { splitPosts } from "../../components/helpers";
 
-const BlogSection = ({ data }) => {
+const BlogSection = ({ data, media }) => {
   return (
     <Section
       width="full"
@@ -29,7 +29,7 @@ const BlogSection = ({ data }) => {
           <ViewAllBtn w="12em" text={"View All"} />
         </Show>
       </Stack>
-      <GridBlog data={data} />
+      <GridBlog data={data} media={media} />
       <Show below="lg">
         <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
       </Show>

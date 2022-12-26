@@ -30,30 +30,69 @@ export function getMediaAttributes(state, id) {
   };
 }
 
-export function getMediaFromRest(id) {
-  const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/${id}`;
-  const media = fetch(url)
-    .then((res) => res.json())
-    .then((result) => {
-      return {
-        id,
-        alt: media.alt_text,
-        src: media.source_url,
-        srcSet: getSrcSet(result),
-      };
+// Fetch all categories
+export const fetchCategories = async (url, setState) => {
+  try {
+    const response = await fetch(url);
+    const results = await response.json();
+    let array = [];
+    results.forEach((result) => {
+      array.push(result);
     });
-  console.log(media);
-  if (!media) return {};
-  return media;
-}
+    setState([...array]);
+  } catch (error) {
+    console.log("error", error.message);
+  }
+};
 
-export function formatDateWithMoment(date) {
-  const format = "MMMM Do YYYY";
-  const formatedDate = moment(date).format(format);
+// Fetch all post from a specific post type
+export const fetchData = async (url, setState, state, categories) => {
+  try {
+    const response = await fetch(url);
+    const results = await response.json();
+    let array = [];
+    results.forEach((result) => {
+      array.push(formatEventData(state, result, categories));
+    });
+    setState([...array]);
+  } catch (error) {
+    console.log("error", error.message);
+  }
+};
+
+// Fetch media for a single post with postid
+export const fetchMedia = async (id, setState) => {
+  const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/${id}`;
+
+  try {
+    const response = await fetch(url);
+    const responseData = await response.json();
+    const srcSet = getSrcSet(responseData);
+    setState({
+      id,
+      alt: responseData.alt_text,
+      src: responseData.source_url,
+      srcSet,
+    });
+  } catch (error) {
+    console.error("Error fetching media", error.message);
+  }
+};
+
+export function formatDateWithMoment(date, format) {
+  const f = format ? format : "MMMM Do YYYY";
+  const formatedDate = moment(date).format(f);
   return formatedDate;
 }
 
-export function getPostCategories(state, post) {
+export function getPostCategories(state, post, categoriesPool) {
+  if (categoriesPool) {
+    const categories =
+      post.categories &&
+      categoriesPool.filter((item) => post.categories.includes(item.id));
+    return categories ? categories.filter(Boolean) : [];
+  }
+
   const allCategories = state.source.category;
   const categories =
     post.categories && post.categories.map((catId) => allCategories[catId]);
@@ -76,22 +115,18 @@ export function getPostData(state) {
   return { ...post, isReady: data.isReady, isPage: data.isPage };
 }
 
-export function formatEventData(state, post) {
+export function formatEventData(state, post, categories) {
   return {
     id: post.id,
     author: getPostAuthor(state, post),
     publishDate: post.date,
     title: post.title.rendered,
-    categories: getPostCategories(state, post),
+    categories: getPostCategories(state, post, categories),
     tags: getPostTags(state, post),
     link: post.link,
-    featured_media: getMediaFromRest(post.featured_media),
+    featured_media: post.featured_media,
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
-    sections: post.acf.sections,
-    memberInstitutions: post.acf.memberInstitutions,
-    sectors: post.acf.sectors,
-    intro: post.acf.intro,
   };
 }
 

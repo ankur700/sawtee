@@ -2,7 +2,7 @@ import { styled } from "frontity";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { TopImageCard, NoImageCard } from "../../molecules/cards";
 
-const GridBlog = ({ data }) => {
+const GridBlog = ({ data, media }) => {
   return (
     <>
       <CustomGrid
@@ -17,7 +17,7 @@ const GridBlog = ({ data }) => {
                 <TopImageCard
                   title={article.title}
                   categories={article.categories}
-                  featured_media={article.featured_media}
+                  featured_media={media}
                   excerpt={article.excerpt}
                   target={article.link}
                   date={article.publishDate}
