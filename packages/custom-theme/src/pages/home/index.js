@@ -14,9 +14,12 @@ const Home = ({ state }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
+  const publicationSliders = post.acf.publication_sliders;
+
+  const introText = post.acf.about_section_intro;
   const [events, setEvents] = useState([]);
   const [media, setMedia] = useState();
-  const [publications, setPublications] = useState([]);
+  // const [publications, setPublications] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -33,11 +36,8 @@ const Home = ({ state }) => {
     // const controller = new AbortController();
     const eventsApi =
       "https://sawtee.ankursingh.com.np/wp-json/wp/v2/featured-events?per_page=6";
-    const publicationsApi =
-      "https://sawtee.ankursingh.com.np/wp-json/wp/v2/publications?per_page=9";
 
     if (categories.length > 0) {
-      fetchData(publicationsApi, setPublications, state, categories);
       fetchData(eventsApi, setEvents, state, categories);
     }
     // return () => controller.abort();
@@ -55,7 +55,7 @@ const Home = ({ state }) => {
   return (
     <>
       <CarouselSection data={slides} />
-      <AboutSection data={publications} />
+      <AboutSection data={publicationSliders} intro={introText} />
       <InfoSection />
       <BlogSection data={events} media={media} />
       {/* <Section w="full">

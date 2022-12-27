@@ -60,22 +60,6 @@ export const fetchData = async (url, setState, state, categories) => {
   }
 };
 
-export const getSlides = (posts, setState) => {
-  let array = [];
-  posts.forEach((post) => {
-    console.log(post.featured_media);
-    array.push({
-      id: post.id,
-      link: post.link,
-      media: fetchMedia(post.featured_media),
-    });
-  });
-  if (array.length > 0) {
-    console.log(array);
-    setState([...array]);
-  }
-};
-
 // Fetch media for a single post with postid
 export const fetchMedia = async (id, setState) => {
   const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/${id}`;

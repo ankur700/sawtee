@@ -35,6 +35,7 @@ export const PostCategories = ({
         <PostCategory key={category.id} mr="6px" mb="6px">
           <Link
             link={category.link}
+            _hover={{ textDecor: "none !important" }}
             dangerouslySetInnerHTML={{ __html: decode(category.name) }}
           />
         </PostCategory>

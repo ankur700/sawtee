@@ -35,15 +35,15 @@ const PublicationFilter = (props) => {
         alignItems={"center"}
         justifyContent="center"
       >
-        {data.map(({ title }, i) => {
+        {data.map(({ name, id }) => {
           return (
             <Button
-              key={i}
+              key={id}
               colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
               variant="outline"
             >
-              <Checkbox colorScheme={"blue"} value={title}>
-                <Text color={linkColor}>{title}</Text>
+              <Checkbox colorScheme={"blue"} value={name}>
+                <Text color={linkColor}>{name}</Text>
               </Checkbox>
             </Button>
           );

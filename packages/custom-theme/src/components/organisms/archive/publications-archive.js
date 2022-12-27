@@ -7,42 +7,29 @@ import {
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React, { useState, useEffect } from "react";
-import useScrollProgress from "../../hooks/useScrollProgress";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
-import PostProgressBar from "../../organisms/post/post-progressbar";
-import { Publications } from "../../../data";
 import PublicationFilter from "./publicationFilter";
 import Sidebar from "./sidebar";
 import PublicationSliders from "./publicationSliders";
 import { featuredEvents } from "../../../data";
 import Loading from "../../atoms/loading";
 import Publication1 from "../../../assets/publications-1.jpg";
+import { formatPostData } from "../../helpers";
 
 const PublicationsArchive = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
-
-  const [filteredCategory, setFilteredData] = useState([]);
+  const posts = state.source.publications;
+  const categories = state.source.category;
   const linkColor = state.theme.colors.linkColor;
 
-  // const filterCategory = (event, title) => {
-  //   const newCategories = Array.from(new Set([...filteredData]));
-  //   if (event.target.checked) {
-  //     newCategories.push({ title: title });
-  //     setFilteredData([...newCategories]);
-  //   } else {
-  //     setFilteredData(
-  //       Array.from(newCategories.filter((item) => item.title !== title))
-  //     );
-  //   }
-  // };
+  const [publications, setPublications] = useState([]);
 
-  // Once the post has loaded in the DOM, prefetch both the
-  // home posts and the list component so if the user visits
-  // the home page, everything is ready and it loads instantly.
   useEffect(() => {
-    setFilteredData(Publications);
-  }, []);
+    Object.values(posts).forEach((post) => {
+      setPublications([...publications, formatPostData(state, post)]);
+    });
+  }, [posts]);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
@@ -95,7 +82,7 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
         </Box>
       </Box>
 
-      <PublicationFilter data={filteredCategory} linkColor={linkColor} />
+      <PublicationFilter data={categories} linkColor={linkColor} />
 
       <Section
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
@@ -115,10 +102,10 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
             spacing="8"
             pos={"relative"}
           >
-            {!filteredCategory.length ? (
+            {!publications.length ? (
               <Loading />
             ) : (
-              <PublicationSliders data={filteredCategory} />
+              <PublicationSliders data={publications} categories={categories} />
             )}
             <Sidebar
               data={featuredEvents}

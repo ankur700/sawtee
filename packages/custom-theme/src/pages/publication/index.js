@@ -15,14 +15,47 @@ import Sidebar from "./sidebar";
 import PublicationSliders from "./publicationSliders";
 import { featuredEvents } from "../../data";
 import Loading from "../../components/atoms/loading";
+import {
+  fetchCategories,
+  fetchMedia,
+  formatPostData,
+} from "../../components/helpers";
 
 const Publication = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
-  const post = formatPostData(state, postData);
-  const [filteredCategory, setFilteredData] = useState([]);
+  const posts = state.source.publications;
+  // const [filteredCategory, setFilteredData] = useState([]);
   const linkColor = state.theme.colors.linkColor;
 
-  console.log(post);
+  const [categories, setCategories] = useState([]);
+  const [pubCategories, setPubCategories] = useState([]);
+  const [publications, setPublications] = useState([]);
+  const [featuredImage, setFeaturedImage] = useState(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    posts.forEach((post) => {
+      setPublications([...publications, formatPostData(state, post)]);
+    });
+
+    const categoriesApi =
+      "https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20";
+
+    fetchCategories(categoriesApi, setCategories);
+
+    if (categories.lenght > 0) {
+      setPubCategories(
+        categories.filter((category) => (category.parent = 217))
+      );
+    }
+
+    fetchMedia(89, setFeaturedImage);
+
+    return () => controller.abort();
+  }, []);
+
+  console.log(posts, featuredImage, publications);
 
   // const filterCategory = (event, title) => {
   //   const newCategories = Array.from(new Set([...filteredData]));
@@ -40,12 +73,10 @@ const Publication = ({ state, actions, libraries }) => {
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
   useEffect(() => {
-    setFilteredData(Publications);
+    // setFilteredData(Publications);
     actions.source.fetch("/");
     List.preload();
   }, []);
-
-  const [ref, scroll] = useScrollProgress();
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -54,14 +85,13 @@ const Publication = ({ state, actions, libraries }) => {
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
       showPattern={state.theme.showBackgroundPattern}
-      ref={ref}
       pt="0"
     >
       <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
-        {post.featured_media != null && (
+        {featuredImage != null && (
           <FeaturedMedia
             mt="0"
-            id={post.featured_media.id}
+            id={featuredImage.id}
             _after={{
               display: "block",
               content: '""',
@@ -80,10 +110,8 @@ const Publication = ({ state, actions, libraries }) => {
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "0" }}
           color={"whiteAlpha.900"}
-          categories={post.categories}
-          heading={post.title}
-          author={post.author}
-          date={post.publishDate}
+          categories={categories}
+          heading={"Publications"}
           isPage={postData.isPage}
           position="absolute"
           bottom="15%"
@@ -91,9 +119,7 @@ const Publication = ({ state, actions, libraries }) => {
         />
       </Box>
 
-      <PostProgressBar value={scroll} />
-
-      <PublicationFilter data={filteredCategory} linkColor={linkColor} />
+      <PublicationFilter data={pubCategories} linkColor={linkColor} />
 
       <Section
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
@@ -113,11 +139,11 @@ const Publication = ({ state, actions, libraries }) => {
             spacing="8"
             pos={"relative"}
           >
-            {!filteredCategory.length ? (
+            {/* {!posts.length ? (
               <Loading />
             ) : (
-              <PublicationSliders data={filteredCategory} />
-            )}
+              <PublicationSliders data={publications} />
+            )} */}
             <Sidebar
               data={featuredEvents}
               title="Sawtee in Media"

@@ -4,7 +4,6 @@ import Section from "../../components/atoms/section";
 import { Grid, GridItem, useColorModeValue, Text, Box } from "@chakra-ui/react";
 import { styled } from "frontity";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
-import { getSlides } from "../../components/helpers";
 import React, { useEffect, useState } from "react";
 
 const CustomGridItem = styled(GridItem)`
@@ -67,19 +66,7 @@ const CustomGridItem = styled(GridItem)`
   }
 `;
 
-const AboutSection = ({ data }) => {
-  const books = data.filter((item) => item.categories.map((cat) => cat === 14));
-  const tradeInsight = data.filter((item) =>
-    item.categories.map((cat) => cat === 1)
-  );
-
-  const [tradeInsightSlides, setTradeInsightSlides] = useState([]);
-  const [bookSlides, setBookSlides] = useState([]);
-
-  useEffect(() => {
-    getSlides(tradeInsight, setTradeInsightSlides);
-    getSlides(books, setBookSlides);
-  }, []);
+const AboutSection = ({ data, intro }) => {
   return (
     <Section width="full" overflow="hidden" id="about-section" display="flex">
       <Grid
@@ -101,23 +88,31 @@ const AboutSection = ({ data }) => {
               margin={{ base: "1rem 20px", lg: "1rem auto" }}
               fontFamily="Open Sans"
             >
-              Dedicated to fair, equitable, inclusive, and sustainable growth
-              and development in South Asia, SAWTEE is working towards poverty
-              reduction, food and livelihood security, gender equity, and
-              biodiversity conservation and environmental sustainability.
+              {intro}
             </Text>
           </blockquote>
         </CustomGridItem>
-        <GridItem
-          colSpan={1}
-          bg={useColorModeValue("rgb(254, 245, 232)", "rgb(65, 49, 42)")}
-          px={"4"}
-          overflow="hidden"
-        >
-          <Title py={["4", "6", "8"]} text="Trade Insight" />
-          <MultiItemCarousel my="6" slides={tradeInsightSlides} />
-        </GridItem>
-        <GridItem
+        {data
+          ? data.map((item) => {
+              return (
+                <GridItem
+                  key={item.slider_title}
+                  colSpan={1}
+                  bg={useColorModeValue(
+                    "rgb(254, 245, 232)",
+                    "rgb(65, 49, 42)"
+                  )}
+                  px={"4"}
+                  overflow="hidden"
+                >
+                  <Title py={["4", "6", "8"]} text={item.slider_title} />
+                  <MultiItemCarousel my="6" slides={item.slider} />
+                </GridItem>
+              );
+            })
+          : null}
+
+        {/* <GridItem
           colSpan={1}
           bg={useColorModeValue("rgb(254, 245, 232)", "rgb(65, 49, 42)")}
           px={"4"}
@@ -126,7 +121,7 @@ const AboutSection = ({ data }) => {
           <Title py={["4", "6", "8"]} text="Books" />
 
           <MultiItemCarousel my="6" slides={bookSlides} />
-        </GridItem>
+        </GridItem> */}
       </Grid>
     </Section>
   );

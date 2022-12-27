@@ -11,7 +11,7 @@ import Section from "../../styles/section";
 const PublicationFilter = (props) => {
   const { data, linkColor } = props;
 
-  console.log(data);
+  const categories = Object.values(data);
 
   return (
     <Section
@@ -35,19 +35,21 @@ const PublicationFilter = (props) => {
         alignItems={"center"}
         justifyContent="center"
       >
-        {data.map(({ title }, i) => {
-          return (
-            <Button
-              key={i}
-              colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
-              variant="outline"
-            >
-              <Checkbox colorScheme={"blue"} value={title}>
-                <Text color={linkColor}>{title}</Text>
-              </Checkbox>
-            </Button>
-          );
-        })}
+        {categories
+          .filter((category) => category.slug !== "publications")
+          .map(({ name, id }) => {
+            return (
+              <Button
+                key={id}
+                colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+                variant="outline"
+              >
+                <Checkbox colorScheme={"blue"} value={name}>
+                  <Text color={linkColor}>{name}</Text>
+                </Checkbox>
+              </Button>
+            );
+          })}
       </Stack>
     </Section>
   );

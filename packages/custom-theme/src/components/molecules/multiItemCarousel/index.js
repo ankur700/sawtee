@@ -29,6 +29,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
       bg: "black",
     },
   };
+
   console.log(slides);
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -52,7 +53,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
   return (
     <Flex w="full" overflow="hidden" pos="relative" mb="6" mx="auto">
       <Flex
-        maxH={"350px"}
+        // maxH={"350px"}
         rounded="xl"
         w={[
           "calc(100% - 10px)",
@@ -66,12 +67,14 @@ const MultiItemCarousel = ({ slides, gap }) => {
         {slides &&
           slides.map((slide, sid) => (
             <LinkBox
-              key={slide.id}
+              key={slide.slide_image.id}
               boxSize="full"
               shadow="md"
               w="full"
+              minHeight="310px"
               flex="none"
               pos={"relative"}
+              title={slide.slide_image.alt || slide.slide_image.title}
               rounded="xl"
               ml={sid === 0 ? { base: "10px", md: "15px" } : "0"}
               _after={{
@@ -82,8 +85,9 @@ const MultiItemCarousel = ({ slides, gap }) => {
                 position: "absolute",
                 top: 0,
                 left: 0,
-                bg: "rgba(0,0,0,0.4)",
+                bg: "rgba(0,0,0,0.3)",
               }}
+              _hover={{ _after: { bg: "rgba(0,0,0,0.1)" } }}
             >
               <Text
                 color="white"
@@ -95,14 +99,13 @@ const MultiItemCarousel = ({ slides, gap }) => {
               >
                 {sid + 1} / {slidesCount}
               </Text>
-              <LinkOverlay href="#">
+              <LinkOverlay href={slide.link}>
                 <Image
-                  src={slide.src}
-                  srcSet={slide.srcSet}
-                  alt={slide.alt}
+                  src={slide.slide_image.url}
+                  alt={slide.slide_image.alt || slide.slide_image.title}
                   boxSize="full"
                   rounded="xl"
-                  backgroundSize="cover"
+                  // objectFit="cover"
                 />
               </LinkOverlay>
             </LinkBox>
