@@ -15,21 +15,25 @@ import PublicationSliders from "./publicationSliders";
 import { featuredEvents } from "../../../data";
 import Loading from "../../atoms/loading";
 import Publication1 from "../../../assets/publications-1.jpg";
-import { formatPostData } from "../../helpers";
+import { fetchCategories } from "../../helpers";
 
 const PublicationsArchive = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
-  const posts = state.source.publications;
-  const categories = state.source.category;
+  const publications = Object.values(state.source.publications);
+  const pubCategories = Object.values(state.source.category);
   const linkColor = state.theme.colors.linkColor;
 
-  const [publications, setPublications] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    Object.values(posts).forEach((post) => {
-      setPublications([...publications, formatPostData(state, post)]);
-    });
-  }, [posts]);
+    const controller = new AbortController();
+    const categoriesApi =
+      "https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?parent=217";
+
+    fetchCategories(categoriesApi, setCategories);
+
+    return () => controller.abort();
+  }, []);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;

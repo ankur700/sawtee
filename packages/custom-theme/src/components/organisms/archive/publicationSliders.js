@@ -1,29 +1,38 @@
 import React from "react";
 import { Stack } from "@chakra-ui/react";
 import Title from "../../atoms/title";
-import { postdata } from "../../../data";
 import MultiItemCarousel from "../../molecules/multiItemCarousel";
 
 const PublicationSliders = ({ data, categories }) => {
-  const slides = [];
+  let slider = [];
+  (() => {
+    let slides = [];
+    categories.map((cat) => {
+      return slider.push({ id: cat.id, name: cat.name, slides: slides });
+    });
+    console.log(slider);
+  })();
+
+  function getSlides(cat) {
+    data.filter((pub) =>
+      pub.categories.forEach((catId) => {
+        if (catId === cat.id) {
+          let index = slider.indexOf(slider[cat]);
+          console.log(slider[index].slides.push(pub.featured_media));
+          slider[index].slides.push(pub.featured_media);
+        }
+      })
+    );
+  }
 
   return (
     <Stack spacing={8}>
-      {data.map(({ name, id }, i) => {
-        data.filter((item) =>
-          Object.values(categories).forEach((category) => {
-            if (category.id === item.id) {
-              slides.push(item);
-            }
-          })
-        );
+      {slider.map((cat, i) => {
+        const slides = getSlides(cat);
         console.log(slides);
-
         return (
-          <Stack key={id} spacing="4">
-            <Title text={name} mb="3" />
-
-            {}
+          <Stack key={cat.name} spacing="4">
+            <Title text={cat.name} mb="3" />
             <MultiItemCarousel slides={slides} />
           </Stack>
         );

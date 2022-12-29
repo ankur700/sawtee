@@ -30,8 +30,6 @@ const MultiItemCarousel = ({ slides, gap }) => {
     },
   };
 
-  console.log(slides);
-
   const [currentSlide, setCurrentSlide] = useState(0);
   const slidesCount = slides.length;
 

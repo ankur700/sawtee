@@ -55,20 +55,18 @@ export const TopImageCard = (props) => {
       maxW="5xl"
       px="4"
     >
-      {featured_media && featured_media.src && (
-        <PostImage pos="relative" {...featured_media} />
-      )}
-      {!featured_media ||
-        (Object.keys(featured_media).length === 0 && (
-          <Box
-            role="group"
-            cursor="pointer"
-            height="450px"
-            width="100%"
-            bgImage={defaultValues.imageUrl}
-            pos="relative"
-          />
-        ))}
+      <Box
+        role="group"
+        cursor="pointer"
+        height="450px"
+        width="100%"
+        bgImage={defaultValues.imageUrl}
+        pos="relative"
+      >
+        {featured_media && featured_media.src && (
+          <PostImage pos="relative" {...featured_media} />
+        )}
+      </Box>
 
       <Box p={6}>
         <Box display="flex" className="categories">

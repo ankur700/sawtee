@@ -18,8 +18,7 @@ const Home = ({ state }) => {
 
   const introText = post.acf.about_section_intro;
   const [events, setEvents] = useState([]);
-  const [media, setMedia] = useState();
-  // const [publications, setPublications] = useState([]);
+  const [media, setMedia] = useState({});
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -33,24 +32,19 @@ const Home = ({ state }) => {
   }, []);
 
   useEffect(() => {
-    // const controller = new AbortController();
     const eventsApi =
       "https://sawtee.ankursingh.com.np/wp-json/wp/v2/featured-events?per_page=6";
 
     if (categories.length > 0) {
       fetchData(eventsApi, setEvents, state, categories);
     }
-    // return () => controller.abort();
   }, [categories]);
 
   useEffect(() => {
-    // const controller = new AbortController();
-
     if (events.length > 0) {
       const id = events[0].featured_media;
       fetchMedia(id, setMedia);
     }
-    // return () => controller.abort();
   }, [events]);
   return (
     <>
