@@ -11,8 +11,6 @@ import Section from "../../styles/section";
 const PublicationFilter = (props) => {
   const { data, linkColor } = props;
 
-  const categories = Object.values(data);
-
   return (
     <Section
       bg={useColorModeValue("transparent")}
@@ -35,7 +33,7 @@ const PublicationFilter = (props) => {
         alignItems={"center"}
         justifyContent="center"
       >
-        {categories
+        {data
           .filter((category) => category.slug !== "publications")
           .map(({ name, id }) => {
             return (

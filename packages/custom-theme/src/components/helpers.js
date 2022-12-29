@@ -60,6 +60,17 @@ export const fetchData = async (url, setState, state, categories) => {
   }
 };
 
+export function getPublication(posts, state) {
+  let array = [];
+  posts.forEach((post) => {
+    array.push(formatPostData(state, post));
+  });
+  if (array.length > 0) {
+    return [...array];
+  }
+  return {};
+}
+
 // Fetch media for a single post with postid
 export const fetchMedia = async (id, setState) => {
   const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/${id}`;

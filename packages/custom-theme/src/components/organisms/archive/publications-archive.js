@@ -15,13 +15,14 @@ import PublicationSliders from "./publicationSliders";
 import { featuredEvents } from "../../../data";
 import Loading from "../../atoms/loading";
 import Publication1 from "../../../assets/publications-1.jpg";
-import { fetchCategories } from "../../helpers";
+import { getPublication, fetchCategories } from "../../helpers";
 
 const PublicationsArchive = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
-  const publications = Object.values(state.source.publications);
-  const pubCategories = Object.values(state.source.category);
+  const posts = Object.values(state.source.publications);
+  const PublicationCategories = Object.values(state.source.category);
   const linkColor = state.theme.colors.linkColor;
+  const publications = getPublication(posts, state);
 
   const [categories, setCategories] = useState([]);
 
