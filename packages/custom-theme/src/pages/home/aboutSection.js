@@ -4,7 +4,6 @@ import Section from "../../components/atoms/section";
 import { Grid, GridItem, useColorModeValue, Text, Box } from "@chakra-ui/react";
 import { styled } from "frontity";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
-import React, { useEffect, useState } from "react";
 
 const CustomGridItem = styled(GridItem)`
   position: relative;
@@ -111,17 +110,6 @@ const AboutSection = ({ data, intro }) => {
               );
             })
           : null}
-
-        {/* <GridItem
-          colSpan={1}
-          bg={useColorModeValue("rgb(254, 245, 232)", "rgb(65, 49, 42)")}
-          px={"4"}
-          overflow="hidden"
-        >
-          <Title py={["4", "6", "8"]} text="Books" />
-
-          <MultiItemCarousel my="6" slides={bookSlides} />
-        </GridItem> */}
       </Grid>
     </Section>
   );

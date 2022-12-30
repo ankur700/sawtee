@@ -20,7 +20,7 @@ import { getPublication, fetchCategories } from "../../helpers";
 const PublicationsArchive = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
   const posts = Object.values(state.source.publications);
-  const PublicationCategories = Object.values(state.source.category);
+  const PublicationCategories = Object.keys(state.source.category);
   const linkColor = state.theme.colors.linkColor;
   const publications = getPublication(posts, state);
 
@@ -110,7 +110,11 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
             {!publications.length ? (
               <Loading />
             ) : (
-              <PublicationSliders data={publications} categories={categories} />
+              <PublicationSliders
+                data={publications}
+                categories={categories}
+                PublicationCategories={PublicationCategories}
+              />
             )}
             <Sidebar
               data={featuredEvents}
