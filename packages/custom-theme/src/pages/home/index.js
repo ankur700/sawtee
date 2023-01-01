@@ -9,6 +9,7 @@ import {
   fetchData,
   fetchCategories,
 } from "../../components/helpers";
+import useSWR from "swr";
 
 const Home = ({ state }) => {
   const data = state.source.get(state.router.link);
@@ -19,17 +20,18 @@ const Home = ({ state }) => {
   const introText = post.acf.about_section_intro;
   const [events, setEvents] = useState([]);
   const [media, setMedia] = useState({});
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
+  const { categories } = useSWR("/categories?per_page=20");
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const categoriesApi =
-      "https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20";
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   const categoriesApi =
+  //     "https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20";
 
-    fetchCategories(categoriesApi, setCategories);
+  //   fetchCategories(categoriesApi, setCategories);
 
-    return () => controller.abort();
-  }, []);
+  //   return () => controller.abort();
+  // }, []);
 
   useEffect(() => {
     const eventsApi =

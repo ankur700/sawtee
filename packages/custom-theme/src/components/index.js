@@ -18,6 +18,7 @@ import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
 import { Post } from "./organisms/page/post-item";
 import "focus-visible/dist/focus-visible";
+import { SWRConfig } from "swr";
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
@@ -37,6 +38,8 @@ const Theme = ({ state }) => {
     useSystemColorMode: true,
   };
 
+  const baseUrl = "https://sawtee.ankursingh.com.np/wp-json/wp/v2";
+  const fetcher = (endpoint) => fetch(endpoint).then((r) => r.json());
   return (
     <ChakraProvider resetCSS theme={{ config, ...overrides }}>
       <Global styles={globalStyles(state.theme.colors)} />
@@ -66,24 +69,31 @@ const Theme = ({ state }) => {
       <Header />
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
-      <Box
-        as="main"
-        mt={{ base: "5.5rem", md: "6.5rem" }}
-        minH="calc(100vh - 6.5rem)"
+      <SWRConfig
+        value={{
+          fetcher: (url) => fetcher(`${baseUrl}${url}`),
+        }}
       >
-        <Switch>
-          <Loading when={data.isFetching} />
-          <Home when={data.isHome} />
-          <OurWork when={data.route === "/our-work/"} />
-          <KnowUs when={data.route === "/about/"} />
-          <Page when={data.isPage} />
-          <Post when={data.isPostType || data.route === "/blog/"} />
-          <SearchResults when={data.isSearch} />
-          <Archive when={data.isArchive} />
-          <Page404 when={data.is404} />
-        </Switch>
-      </Box>
-      <Footer />
+        <Box
+          as="main"
+          mt={{ base: "5.5rem", md: "6.5rem" }}
+          minH="calc(100vh - 6.5rem)"
+        >
+          <Switch>
+            <Loading when={data.isFetching} />
+            <Home when={data.isHome} />
+            <OurWork when={data.route === "/our-work/"} />
+            <KnowUs when={data.route === "/about/"} />
+            <Page when={data.isPage} />
+            <Post when={data.isPostType || data.route === "/blog/"} />
+            <SearchResults when={data.isSearch} />
+            <Archive when={data.isArchive} />
+            <Page404 when={data.is404} />
+          </Switch>
+        </Box>
+
+        <Footer />
+      </SWRConfig>
     </ChakraProvider>
   );
 };
