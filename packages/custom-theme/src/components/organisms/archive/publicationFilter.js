@@ -34,7 +34,7 @@ const PublicationFilter = (props) => {
         justifyContent="center"
       >
         {data
-          .filter((category) => category.slug !== "publications")
+          .filter((category) => category.parent === 217)
           .map(({ name, id }) => {
             return (
               <Button

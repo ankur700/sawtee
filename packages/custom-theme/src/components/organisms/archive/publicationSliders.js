@@ -7,16 +7,20 @@ const PublicationSliders = ({ data, categories, PublicationCategories }) => {
   let sliderData = [];
   (() => {
     categories.map((cat) => {
-      return sliderData.push({ id: cat.id, name: cat.name, slides: [] });
+      if (cat.id !== 217)
+        return sliderData.push({ id: cat.id, name: cat.name, slides: [] });
     });
   })();
 
   function getSlides(cat) {
     data.forEach((pub) =>
       pub.categories.map((category) => {
-        if (category.id === cat.id) {
+        if (category.id === cat.id && cat.id !== 217) {
           let index = sliderData.indexOf(cat);
-          sliderData[index].slides.push(pub.featured_media);
+          sliderData[index].slides.push({
+            ...pub.featured_media,
+            link: pub.link,
+          });
         }
       })
     );

@@ -6,7 +6,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import React, { useState, useEffect } from "react";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
 import PublicationFilter from "./publicationFilter";
@@ -15,7 +14,8 @@ import PublicationSliders from "./publicationSliders";
 import { featuredEvents } from "../../../data";
 import Loading from "../../atoms/loading";
 import Publication1 from "../../../assets/publications-1.jpg";
-import { getPublication, fetchCategories } from "../../helpers";
+import { getPublication, fetcher } from "../../helpers";
+import useSWR from "swr";
 
 const PublicationsArchive = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
@@ -23,19 +23,15 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
   const PublicationCategories = Object.keys(state.source.category);
   const linkColor = state.theme.colors.linkColor;
   const publications = getPublication(posts, state);
+  const { data: categories } = useSWR(
+    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
 
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const categoriesApi =
-      "https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?parent=217";
-
-    fetchCategories(categoriesApi, setCategories);
-
-    return () => controller.abort();
-  }, []);
-
+  console.log(categories);
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
 

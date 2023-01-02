@@ -5,8 +5,6 @@ import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
 import {
-  fetchMedia,
-  fetchData,
   fetcher,
   formatCPTData,
   getSrcSet,
