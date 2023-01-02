@@ -7,7 +7,9 @@ import BlogSection from "./blogSection";
 import {
   fetchMedia,
   fetchData,
-  fetchCategories,
+  fetcher,
+  formatCPTData,
+  getSrcSet,
 } from "../../components/helpers";
 import useSWR from "swr";
 
@@ -16,44 +18,59 @@ const Home = ({ state }) => {
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
   const publicationSliders = post.acf.publication_sliders;
-
+  const eventsApi =
+    "https://sawtee.ankursingh.com.np/wp-json/wp/v2/featured-events?per_page=6";
   const introText = post.acf.about_section_intro;
-  const [events, setEvents] = useState([]);
-  const [media, setMedia] = useState({});
-  // const [categories, setCategories] = useState([]);
-  const { categories } = useSWR("/categories?per_page=20");
+  const { data: categories } = useSWR(
+    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
 
-  // useEffect(() => {
-  //   const controller = new AbortController();
-  //   const categoriesApi =
-  //     "https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20";
+  const { data: events } = useSWR(eventsApi, fetcher, {
+    revalidateOnFocus: false,
+  });
 
-  //   fetchCategories(categoriesApi, setCategories);
+  const { data: media } = useSWR(
+    () =>
+      `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/` +
+      events[0].featured_media,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
 
-  //   return () => controller.abort();
-  // }, []);
+  const [eventsList, setEventsList] = useState([]);
+  const [mediaImage, setMediaImage] = useState({});
 
   useEffect(() => {
-    const eventsApi =
-      "https://sawtee.ankursingh.com.np/wp-json/wp/v2/featured-events?per_page=6";
-
-    if (categories.length > 0) {
-      fetchData(eventsApi, setEvents, state, categories);
+    if (categories && events) {
+      let array = [];
+      events.forEach((event) =>
+        array.push(formatCPTData(state, event, categories))
+      );
+      setEventsList([...array]);
     }
-  }, [categories]);
-
-  useEffect(() => {
-    if (events.length > 0) {
-      const id = events[0].featured_media;
-      fetchMedia(id, setMedia);
+    if (media) {
+      const srcSet = getSrcSet(media);
+      setMediaImage({
+        id: media.id,
+        alt: media.alt_text,
+        src: media.source_url,
+        srcSet,
+      });
     }
-  }, [events]);
+  }, [events, media, categories]);
+
   return (
     <>
       <CarouselSection data={slides} />
       <AboutSection data={publicationSliders} intro={introText} />
       <InfoSection />
-      <BlogSection data={events} media={media} />
+      <BlogSection data={eventsList} media={mediaImage} />
       {/* <Section w="full">
         <Box h="500px" bg="orange">
           Multimedia Section(sawtee youtube videos

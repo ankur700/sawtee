@@ -18,7 +18,7 @@ import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
 import { Post } from "./organisms/page/post-item";
 import "focus-visible/dist/focus-visible";
-import { SWRConfig } from "swr";
+
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
@@ -38,10 +38,10 @@ const Theme = ({ state }) => {
     useSystemColorMode: true,
   };
 
-  const baseUrl = "https://sawtee.ankursingh.com.np/wp-json/wp/v2";
-  const fetcher = (endpoint) => fetch(endpoint).then((r) => r.json());
+
   return (
     <ChakraProvider resetCSS theme={{ config, ...overrides }}>
+
       <Global styles={globalStyles(state.theme.colors)} />
       <FontFace />
       {/* Add some metatags to the <head> of the HTML. */}
@@ -69,11 +69,7 @@ const Theme = ({ state }) => {
       <Header />
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
-      <SWRConfig
-        value={{
-          fetcher: (url) => fetcher(`${baseUrl}${url}`),
-        }}
-      >
+
         <Box
           as="main"
           mt={{ base: "5.5rem", md: "6.5rem" }}
@@ -93,7 +89,6 @@ const Theme = ({ state }) => {
         </Box>
 
         <Footer />
-      </SWRConfig>
     </ChakraProvider>
   );
 };
