@@ -20,68 +20,48 @@ export const Sidebar = ({
         <GlassBox py="4" px="8" rounded="2xl" height="max-content">
           <Title text={title} textAlign="center" />
           <Stack spacing={8} mt="6">
-            {data.map((event, index) => {
-              const format = "MMMM Do YYYY";
-              const formatedDate = moment(event.date).format(format);
-              return (
-                <Stack key={index}>
-                  <Text className="title" fontSize={["sm", "md"]}>
+            {data &&
+              data.map((event, index) => {
+                const format = "MMMM Do YYYY";
+                const formatedDate = moment(event.date).format(format);
+                return (
+                  <Stack key={index}>
                     <Link className="primary-link" link={"#"}>
-                      {event.title}
+                      <Text
+                        className="title"
+                        fontSize={["sm", "md"]}
+                        mb="2"
+                        dangerouslySetInnerHTML={{
+                          __html: event.title.rendered,
+                        }}
+                      />
                     </Link>
-                  </Text>
-                  <Box
-                    display={"flex"}
-                    justifyContent="space-between"
-                    fontSize={"sm"}
-                    fontWeight="semibold"
-                  >
-                    <Text>{event.publisher}</Text>
                     <Box
-                      as="time"
-                      dateTime={new Date(event.date).toLocaleDateString()}
+                      display={"flex"}
+                      justifyContent="space-between"
+                      fontSize={"sm"}
+                      fontWeight="semibold"
                     >
-                      {formatedDate}
+                      {event.acf.publishers.map((publisher) => {
+                        return (
+                          <Text as="a" href={publisher.publisher_website}>
+                            {publisher.publisher_name}
+                          </Text>
+                        );
+                      })}
+                      <Box
+                        as="time"
+                        dateTime={new Date(event.date).toLocaleDateString()}
+                      >
+                        {formatedDate}
+                      </Box>
                     </Box>
-                  </Box>
-                  <Divider
-                    display={index === data.length - 1 ? "none" : "block"}
-                  />
-                </Stack>
-              );
-            })}
-          </Stack>
-          <Stack spacing={8} mt="6">
-            {data.map((event, index) => {
-              const format = "MMMM Do YYYY";
-              const formatedDate = moment(event.date).format(format);
-              return (
-                <Stack key={index}>
-                  <Text className="title" fontSize={["sm", "md"]}>
-                    <Link className="primary-link" link={"#"}>
-                      {event.title}
-                    </Link>
-                  </Text>
-                  <Box
-                    display={"flex"}
-                    justifyContent="space-between"
-                    fontSize={"sm"}
-                    fontWeight="semibold"
-                  >
-                    <Text>{event.publisher}</Text>
-                    <Box
-                      as="time"
-                      dateTime={new Date(event.date).toLocaleDateString()}
-                    >
-                      {formatedDate}
-                    </Box>
-                  </Box>
-                  <Divider
-                    display={index === data.length - 1 ? "none" : "block"}
-                  />
-                </Stack>
-              );
-            })}
+                    <Divider
+                      display={index === data.length - 1 ? "none" : "block"}
+                    />
+                  </Stack>
+                );
+              })}
           </Stack>
         </GlassBox>
       )}

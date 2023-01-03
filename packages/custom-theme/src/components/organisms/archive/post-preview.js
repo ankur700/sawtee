@@ -43,17 +43,16 @@ const PostPreview = ({ data, ...rest }) => {
       )}
 
       <Flex p="40px" flexGrow="1" direction="column">
-        <Heading
-          fontSize="2xl"
-          as="h4"
-          noOfLines={"3"}
-          minH="5.625rem"
-          textTransform="uppercase"
-        >
-          <Link className="primary-link" link={link}>
-            {title}
-          </Link>
-        </Heading>
+        <Link className="primary-link" link={link}>
+          <Heading
+            fontSize="2xl"
+            as="h4"
+            noOfLines={"3"}
+            minH="5.625rem"
+            textTransform="uppercase"
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
+        </Link>
         <Box
           my="20px"
           flex="1"
@@ -62,7 +61,7 @@ const PostPreview = ({ data, ...rest }) => {
           display="-webkit-box"
           lineHeight="1.5"
           maxHeight="4.6875rem"
-          color={useColorModeValue("gray.700", "whiteAlpha.800")}
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
           sx={{ webkitLineClamp: "3", webkitBoxOrient: "vertical" }}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
@@ -76,7 +75,11 @@ const PostPreview = ({ data, ...rest }) => {
             categories={categories}
             color={useColorModeValue("gray.700", "whiteAlpha.700")}
           />
-          <Box as="time" fontWeight={"semibold"}>
+          <Box
+            as="time"
+            fontWeight={"semibold"}
+            color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          >
             {formatDateWithMoment(publishDate)}
           </Box>
         </Box>

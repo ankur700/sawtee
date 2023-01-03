@@ -64,7 +64,7 @@ export const fetchData = async (url, setState, state, categories) => {
   }
 };
 
-export function getPublication(posts, state) {
+export function getCPTData(posts, state) {
   let array = [];
   posts.forEach((post) => {
     array.push(formatPostData(state, post));
@@ -167,6 +167,7 @@ export function formatPostData(state, post) {
     featured_media: getMediaAttributes(state, post.featured_media),
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
+    acf: post.acf,
     sections: post.acf.sections,
     memberInstitutions: post.acf.memberInstitutions,
     sectors: post.acf.sectors,

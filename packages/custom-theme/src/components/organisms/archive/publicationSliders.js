@@ -6,10 +6,12 @@ import MultiItemCarousel from "../../molecules/multiItemCarousel";
 const PublicationSliders = ({ data, categories, PublicationCategories }) => {
   let sliderData = [];
   (() => {
-    categories.map((cat) => {
-      if (cat.id !== 217)
-        return sliderData.push({ id: cat.id, name: cat.name, slides: [] });
-    });
+    categories
+      ? categories.map((cat) => {
+          if (cat.id !== 217)
+            return sliderData.push({ id: cat.id, name: cat.name, slides: [] });
+        })
+      : null;
   })();
 
   function getSlides(cat) {

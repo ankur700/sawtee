@@ -25,6 +25,7 @@ import "focus-visible/dist/focus-visible";
 const Theme = ({ state }) => {
   // Get information about the current URL.
   const data = state.source.get(state.router.link);
+
   const overrides = extendTheme({
     fonts: {
       heading: "Inter, system-ui, Helvetica, sans-serif",
@@ -38,10 +39,8 @@ const Theme = ({ state }) => {
     useSystemColorMode: true,
   };
 
-
   return (
     <ChakraProvider resetCSS theme={{ config, ...overrides }}>
-
       <Global styles={globalStyles(state.theme.colors)} />
       <FontFace />
       {/* Add some metatags to the <head> of the HTML. */}
@@ -70,25 +69,29 @@ const Theme = ({ state }) => {
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
 
-        <Box
-          as="main"
-          mt={{ base: "5.5rem", md: "6.5rem" }}
-          minH="calc(100vh - 6.5rem)"
-        >
-          <Switch>
-            <Loading when={data.isFetching} />
-            <Home when={data.isHome} />
-            <OurWork when={data.route === "/our-work/"} />
-            <KnowUs when={data.route === "/about/"} />
-            <Page when={data.isPage} />
-            <Post when={data.isPostType || data.route === "/blog/"} />
-            <SearchResults when={data.isSearch} />
-            <Archive when={data.isArchive} />
-            <Page404 when={data.is404} />
-          </Switch>
-        </Box>
+      <Box
+        as="main"
+        mt={{ base: "5.5rem", md: "6.5rem" }}
+        minH="calc(100vh - 6.5rem)"
+      >
+        <Switch>
+          <Loading when={data.isFetching} />
+          <Home when={data.isHome} />
+          <OurWork when={data.route === "/our-work/"} />
+          <KnowUs when={data.route === "/about/"} />
+          <Page when={data.isPage} />
+          <Post
+            when={
+              data.isPostType || data.isPublications || data.isFeaturedEvents
+            }
+          />
+          <SearchResults when={data.isSearch} />
+          <Archive when={data.isArchive || data.route === "/blog/"} />
+          <Page404 when={data.is404} />
+        </Switch>
+      </Box>
 
-        <Footer />
+      <Footer />
     </ChakraProvider>
   );
 };

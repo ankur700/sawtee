@@ -33,21 +33,22 @@ const PublicationFilter = (props) => {
         alignItems={"center"}
         justifyContent="center"
       >
-        {data
-          .filter((category) => category.parent === 217)
-          .map(({ name, id }) => {
-            return (
-              <Button
-                key={id}
-                colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
-                variant="outline"
-              >
-                <Checkbox colorScheme={"blue"} value={name}>
-                  <Text color={linkColor}>{name}</Text>
-                </Checkbox>
-              </Button>
-            );
-          })}
+        {data &&
+          data
+            .filter((category) => category.parent === 217)
+            .map(({ name, id }) => {
+              return (
+                <Button
+                  key={id}
+                  colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+                  variant="outline"
+                >
+                  <Checkbox colorScheme={"blue"} value={name}>
+                    <Text color={linkColor}>{name}</Text>
+                  </Checkbox>
+                </Button>
+              );
+            })}
       </Stack>
     </Section>
   );

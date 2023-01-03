@@ -7,6 +7,7 @@ import EventsArchive from "./events-archive";
 import Pagination from "./pagination";
 import { decode } from "frontity";
 import PublicationsArchive from "./publications-archive";
+import SawteeInMediaArchive from "./sawtee-in-media-archive";
 
 const Archive = ({ state }) => {
   // Get the data of the current list.
@@ -14,6 +15,7 @@ const Archive = ({ state }) => {
   if (data.isFeaturedEventsArchive) return <EventsArchive />;
 
   if (data.isPublicationsArchive) return <PublicationsArchive />;
+  if (data.isSawteeInMediaArchive) return <SawteeInMediaArchive />;
 
   return (
     <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">

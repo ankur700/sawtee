@@ -4,42 +4,31 @@ import {
   Image,
   Heading,
   useColorModeValue,
+  chakra,
+  HStack,
+  VStack,
+  Link,
+  Text,
+  Avatar,
+  LinkBox,
+  LinkOverlay,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
-import PublicationFilter from "./publicationFilter";
 import Sidebar from "./sidebar";
-import PublicationSliders from "./publicationSliders";
-import { featuredEvents } from "../../../data";
 import Loading from "../../atoms/loading";
 import Publication1 from "../../../assets/publications-1.jpg";
 import { getCPTData, fetcher } from "../../helpers";
 import useSWR from "swr";
 
-const PublicationsArchive = ({ state, actions, libraries }) => {
+const SawteeInMediaArchive = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
-  const posts = Object.values(state.source.publications);
-  const PublicationCategories = Object.keys(state.source.category);
+  const posts = Object.values(state.source["sawtee-in-media"]);
+  const Categories = Object.keys(state.source.category);
   const linkColor = state.theme.colors.linkColor;
-  const publications = getCPTData(posts, state);
-  const { data: categories } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
+  const news = getCPTData(posts, state);
 
-  const { data: news } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
-
-  console.log(categories, news);
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
 
@@ -91,8 +80,6 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
         </Box>
       </Box>
 
-      <PublicationFilter data={categories} linkColor={linkColor} />
-
       <Section
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
@@ -107,26 +94,25 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           <SimpleGrid
-            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
+            templateColumns={{ base: "1fr", lg: "1fr 1fr" }}
             spacing="8"
             pos={"relative"}
           >
-            {!publications.length ? (
+            {!news.length ? (
               <Loading />
             ) : (
-              <PublicationSliders
-                data={publications}
-                categories={categories}
-                PublicationCategories={PublicationCategories}
-              />
+              news.map((item) => (
+                <MediaArticleCard
+                  key={item.id}
+                  title={item.title}
+                  content={item.excerpt}
+                  username={item.author.name}
+                  userAvatar={item.author.avatar_urls[96]}
+                  created_at={item.publishDate}
+                  link={item.link}
+                />
+              ))
             )}
-            <Sidebar
-              data={news}
-              title="Sawtee in Media"
-              showSawteeInMedia={true}
-              showTwitterTimeline={true}
-              showSubscriptionCard={true}
-            />
           </SimpleGrid>
         </Box>
       </Section>
@@ -134,4 +120,44 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
   );
 };
 
-export default connect(PublicationsArchive);
+export default connect(SawteeInMediaArchive);
+
+const MediaArticleCard = ({
+  title,
+  content,
+  username,
+  userAvatar,
+  created_at,
+  link,
+}) => {
+  return (
+    <LinkBox
+      p={4}
+      _hover={{ bg: useColorModeValue("gray.100", "gray.800") }}
+      rounded="md"
+    >
+      <VStack spacing={2} mb={5} textAlign="left">
+        <LinkOverlay href={link}>
+          <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold" w="100%">
+            {title}
+          </chakra.h1>
+        </LinkOverlay>
+        <Text
+          fontSize="md"
+          noOfLines={2}
+          color="gray.500"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
+      </VStack>
+      <HStack spacing={2} alignItems="center">
+        <Avatar size="md" title="Author" src={userAvatar} />
+        <Box>
+          <Text fontWeight="bold">{username}</Text>
+          <Text fontSize="sm" color="gray.500">
+            {created_at}
+          </Text>
+        </Box>
+      </HStack>
+    </LinkBox>
+  );
+};
