@@ -19,8 +19,9 @@ import Section from "../../styles/section";
 import Sidebar from "./sidebar";
 import Loading from "../../atoms/loading";
 import Publication1 from "../../../assets/publications-1.jpg";
-import { getCPTData, fetcher } from "../../helpers";
 import useSWR from "swr";
+import Pagination from "./pagination";
+import { getCPTData, formatDateWithMoment } from "../../helpers";
 
 const SawteeInMediaArchive = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
@@ -94,26 +95,20 @@ const SawteeInMediaArchive = ({ state, actions, libraries }) => {
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           <SimpleGrid
-            templateColumns={{ base: "1fr", lg: "1fr 1fr" }}
-            spacing="8"
+            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
+            spacing="10"
             pos={"relative"}
           >
-            {!news.length ? (
-              <Loading />
-            ) : (
-              news.map((item) => (
-                <MediaArticleCard
-                  key={item.id}
-                  title={item.title}
-                  content={item.excerpt}
-                  username={item.author.name}
-                  userAvatar={item.author.avatar_urls[96]}
-                  created_at={item.publishDate}
-                  link={item.link}
-                />
-              ))
-            )}
+            {!news.length ? <Loading /> : <MediaArticles news={news} />}
+            <Sidebar
+              // data={news}
+              // title="Sawtee in Media"
+              showSawteeInMedia={false}
+              showTwitterTimeline={true}
+              showSubscriptionCard={true}
+            />
           </SimpleGrid>
+          <Pagination mt="56px" />
         </Box>
       </Section>
     </LightPatternBox>
@@ -121,6 +116,26 @@ const SawteeInMediaArchive = ({ state, actions, libraries }) => {
 };
 
 export default connect(SawteeInMediaArchive);
+
+const MediaArticles = ({ news }) => {
+  return (
+    <VStack spacing={8}>
+      {news.map((item) => {
+        return (
+          <MediaArticleCard
+            key={item.id}
+            title={item.title}
+            content={item.excerpt}
+            username={item.author.name}
+            userAvatar={item.author.avatar_urls[96]}
+            created_at={formatDateWithMoment(item.publishDate)}
+            link={item.link}
+          />
+        );
+      })}
+    </VStack>
+  );
+};
 
 const MediaArticleCard = ({
   title,
@@ -135,17 +150,25 @@ const MediaArticleCard = ({
       p={4}
       _hover={{ bg: useColorModeValue("gray.100", "gray.800") }}
       rounded="md"
+      border={"1px solid"}
+      borderColor={useColorModeValue("gray.800", "whiteAlpha.800")}
     >
-      <VStack spacing={2} mb={5} textAlign="left">
+      <VStack spacing={2} mb={5} alignItems={"start"}>
         <LinkOverlay href={link}>
-          <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold" w="100%">
+          <chakra.h1
+            fontSize="2xl"
+            lineHeight={1.2}
+            textAlign="left"
+            fontWeight="bold"
+            w="100%"
+          >
             {title}
           </chakra.h1>
         </LinkOverlay>
         <Text
           fontSize="md"
-          noOfLines={2}
-          color="gray.500"
+          noOfLines={3}
+          color={useColorModeValue("gray.500", "gray.200")}
           dangerouslySetInnerHTML={{ __html: content }}
         />
       </VStack>
@@ -153,7 +176,7 @@ const MediaArticleCard = ({
         <Avatar size="md" title="Author" src={userAvatar} />
         <Box>
           <Text fontWeight="bold">{username}</Text>
-          <Text fontSize="sm" color="gray.500">
+          <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.200")}>
             {created_at}
           </Text>
         </Box>

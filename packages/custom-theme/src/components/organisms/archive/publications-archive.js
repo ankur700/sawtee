@@ -5,6 +5,7 @@ import {
   Heading,
   useColorModeValue,
 } from "@chakra-ui/react";
+import useSWR from "swr";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
@@ -15,7 +16,6 @@ import { featuredEvents } from "../../../data";
 import Loading from "../../atoms/loading";
 import Publication1 from "../../../assets/publications-1.jpg";
 import { getCPTData, fetcher } from "../../helpers";
-import useSWR from "swr";
 
 const PublicationsArchive = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
