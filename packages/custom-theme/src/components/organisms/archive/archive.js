@@ -1,20 +1,24 @@
-import { Box, SimpleGrid } from "@chakra-ui/react";
+import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
-import HomepageArchive from "./homepage-archive";
+import EventsArchive from "./events-archive";
 import Pagination from "./pagination";
 import { decode } from "frontity";
+import PublicationsArchive from "./publications-archive";
+import SawteeInMediaArchive from "./sawtee-in-media-archive";
 
 const Archive = ({ state }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
+  if (data.isFeaturedEventsArchive) return <EventsArchive />;
 
-  if (data.isHome) return <HomepageArchive />;
+  if (data.isPublicationsArchive) return <PublicationsArchive />;
+  if (data.isSawteeInMediaArchive) return <SawteeInMediaArchive />;
 
   return (
-    <Box bg="accent.50" as="section">
+    <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">
       {/* If the list is a taxonomy, we render a title. */}
       {data.isTaxonomy && (
         <ArchiveHeader
@@ -35,7 +39,7 @@ const Archive = ({ state }) => {
 
       <Box
         padding={{ base: "24px", lg: "40px" }}
-        bg="white"
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         width={{ lg: "80%" }}
         maxWidth="1200px"
         mx="auto"

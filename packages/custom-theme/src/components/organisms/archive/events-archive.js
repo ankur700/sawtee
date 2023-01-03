@@ -1,24 +1,24 @@
-import { Box, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
 import { FeaturedPostSection } from "../../molecules/featured-post/featured-post";
 import { formatPostData, splitPosts } from "../../helpers";
 import { Newsletter } from "../../atoms/newsletter";
 import ArchiveItem from "./archive-item";
-import { PaginationButton } from "./pagination";
+import Pagination from "./pagination";
 
-const HomepageArchive = ({ state, libraries }) => {
+const EventsArchive = ({ state, libraries }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
-
   const [firstThreePosts, othersPosts] = splitPosts(state, data.items);
-
   return (
-    <Box bg="accent.50" as="section">
+    <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">
       <FeaturedPostSection
         data={firstThreePosts.map((post) => formatPostData(state, post))}
       />
+
       <Box
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         py={{ base: "64px", md: "80px" }}
         px={{ base: "24px", md: "40px" }}
         width={{ base: "auto", lg: "80%" }}
@@ -26,12 +26,13 @@ const HomepageArchive = ({ state, libraries }) => {
         mx="auto"
       >
         <Heading
+          as="h3"
           textTransform="uppercase"
           textAlign="center"
           fontSize={{ base: "4xl", md: "6xl" }}
-          color="accent.400"
+          color={useColorModeValue("accent.400", "accent.50")}
         >
-          Latest Posts
+          Latest Events
         </Heading>
 
         <SimpleGrid
@@ -39,15 +40,20 @@ const HomepageArchive = ({ state, libraries }) => {
           columns={{ base: 1, md: 2 }}
           spacing="40px"
         >
-          {othersPosts.map(({ type, id }) => {
+          {data.items.map(({ type, id }, idx) => {
             const item = state.source[type][id];
-            return <ArchiveItem key={item.id} item={item} />;
+            return (
+              <ArchiveItem
+                key={item.id}
+                item={item}
+                color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                rounded="xl"
+              />
+            );
           })}
         </SimpleGrid>
 
-        <PaginationButton mt="40px" link="/page/2">
-          More posts
-        </PaginationButton>
+        <Pagination mt="56px" />
       </Box>
       {libraries.newsletter && (
         <Newsletter showPattern={state.theme.showBackgroundPattern} />
@@ -56,4 +62,4 @@ const HomepageArchive = ({ state, libraries }) => {
   );
 };
 
-export default connect(HomepageArchive);
+export default connect(EventsArchive);

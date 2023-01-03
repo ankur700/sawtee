@@ -212,7 +212,7 @@ const settings = {
             },
             {
               name: "Events",
-              href: "/events/",
+              href: "/featured-events/",
             },
           ],
           colors: {
@@ -275,7 +275,7 @@ const settings = {
               light: "rgba(0, 0, 0, 0.06)",
               dark: "rgba(35, 39, 47, 0.8)",
             },
-            linkColor: 'rgb(8 126 164/1)'
+            linkColor: "rgb(8 126 164/1)",
           },
           showSearchInHeader: true,
           // State for the menu on mobile
@@ -302,6 +302,28 @@ const settings = {
           url: "https://sawtee.ankursingh.com.np/",
           homepage: "home",
           postsPage: "blog",
+          postTypes: [
+            {
+              type: "featured-events",
+              endpoint: "featured-events",
+              archive: "/featured-events",
+            },
+            {
+              type: "publications",
+              endpoint: "publications",
+              archive: "/publications",
+            },
+            {
+              type: "sawtee-in-media",
+              endpoint: "sawtee-in-media",
+              archive: "/sawtee-in-media",
+            },
+            {
+              type: "programmes",
+              endpoint: "programmes",
+              archive: "/programmes",
+            },
+          ],
         },
       },
     },

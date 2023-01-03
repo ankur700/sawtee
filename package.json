@@ -7,7 +7,7 @@
     "frontity"
   ],
   "engines": {
-    "node": "<=16.0.0",
+    "node": "<=14.0.0",
     "npm": "<=8.0.0"
   },
   "scripts": {
@@ -30,6 +30,7 @@
     "react-items-carousel": "^2.8.0",
     "react-swipeable": "^7.0.0",
     "recharts": "^2.1.10",
-    "sawtee-theme": "file:packages/sawtee-theme"
+    "sawtee-theme": "file:packages/sawtee-theme",
+    "swr": "^2.0.0"
   }
 }

@@ -4,5 +4,6 @@
   "workbench.editor.restoreViewState": false,
   "workbench.startupEditor": "none",
   "editor.minimap.enabled": false,
-  "editor.codeLens": false
+  "editor.codeLens": false,
+  "editor.formatOnSave": true
 }

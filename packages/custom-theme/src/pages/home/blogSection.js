@@ -3,8 +3,9 @@ import Section from "../../components/atoms/section";
 import GridBlog from "../../components/organisms/GridBlog";
 import ViewAllBtn from "../../components/atoms/ViewAllBtn";
 import Title from "../../components/atoms/title";
+import { splitPosts } from "../../components/helpers";
 
-const BlogSection = ({ data }) => {
+const BlogSection = ({ data, media }) => {
   return (
     <Section
       width="full"
@@ -25,12 +26,12 @@ const BlogSection = ({ data }) => {
           text="Policy Outreach"
         />
         <Show above="lg">
-            <ViewAllBtn w="12em" text={"View All"} />
+          <ViewAllBtn w="12em" text={"View All"} />
         </Show>
       </Stack>
-      <GridBlog data={data} />
+      <GridBlog data={data} media={media} />
       <Show below="lg">
-          <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
+        <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
       </Show>
     </Section>
   );

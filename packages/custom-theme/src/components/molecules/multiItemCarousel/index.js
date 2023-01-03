@@ -51,7 +51,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
   return (
     <Flex w="full" overflow="hidden" pos="relative" mb="6" mx="auto">
       <Flex
-        maxH={"350px"}
+        // maxH={"350px"}
         rounded="xl"
         w={[
           "calc(100% - 10px)",
@@ -62,48 +62,55 @@ const MultiItemCarousel = ({ slides, gap }) => {
         {...carouselStyle}
         className="wrapper"
       >
-        {slides.map((slide, sid) => (
-          <LinkBox
-            key={`slide-${sid}`}
-            boxSize="full"
-            shadow="md"
-            w="full"
-            flex="none"
-            pos={"relative"}
-            rounded="xl"
-            ml={sid === 0 ? { base: "10px", md: "15px" } : "0"}
-            _after={{
-              content: "''",
-              width: "100%",
-              height: "100%",
-              borderRadius: "0.75rem",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              bg: "rgba(0,0,0,0.4)",
-            }}
-          >
-            <Text
-              color="white"
-              fontSize="xs"
-              p="8px 12px"
-              pos="absolute"
-              top="0"
-              zIndex="1"
-            >
-              {sid + 1} / {slidesCount}
-            </Text>
-            <LinkOverlay href="#">
-              <Image
-                src={slide}
-                alt="carousel image"
+        {slides &&
+          slides.map((slide, sid) => {
+            return (
+              <LinkBox
+                key={sid}
                 boxSize="full"
+                shadow="md"
+                w="full"
+                minHeight="310px"
+                flex="none"
+                pos={"relative"}
+                title={slide.alt || slide.title}
                 rounded="xl"
-                backgroundSize="cover"
-              />
-            </LinkOverlay>
-          </LinkBox>
-        ))}
+                ml={sid === 0 ? { base: "10px", md: "15px" } : "0"}
+                _after={{
+                  content: "''",
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "0.75rem",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  bg: "rgba(0,0,0,0.3)",
+                }}
+                _hover={{ _after: { bg: "rgba(0,0,0,0.1)" } }}
+              >
+                <Text
+                  color="white"
+                  fontSize="xs"
+                  p="8px 12px"
+                  pos="absolute"
+                  top="0"
+                  zIndex="1"
+                >
+                  {sid + 1} / {slidesCount}
+                </Text>
+                <LinkOverlay href={slide.link}>
+                  <Image
+                    src={slide.src || slide.slide_image.url}
+                    srcSet={slide.srcSet}
+                    alt={slide.alt || slide.slide_image.title}
+                    boxSize="full"
+                    rounded="xl"
+                    // objectFit="cover"
+                  />
+                </LinkOverlay>
+              </LinkBox>
+            );
+          })}
       </Flex>
       <Text {...arrowStyles} left="0" onClick={prevSlide} zIndex={1}>
         &#10094;

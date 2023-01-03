@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Container,
   Box,
@@ -11,11 +10,16 @@ import {
   Avatar,
   useColorModeValue,
 } from "@chakra-ui/react";
+import moment from "moment/moment";
+
 // Here we have used react-icons package for the icons
 import { GoChevronRight } from "react-icons/go";
 import Link from "../../components/atoms/link";
 
-const EventsList = ({ data, showAvatar }) => {
+const EventsList = ({ data, showAvatar, libraries, author }) => {
+  const format = "MMMM Do YYYY";
+  const Html2React = libraries.html2react.Component;
+
   return (
     <Container p={{ base: 5, md: 10 }} maxW="full">
       <VStack spacing={8} w={{ base: "auto", md: "5xl" }}>
@@ -39,19 +43,20 @@ const EventsList = ({ data, showAvatar }) => {
             rounded="lg"
           >
             <HStack spacing={2} mb={1}>
-              {article.tags.map((cat, index) => (
-                <Tag
-                  key={index}
-                  colorScheme={useColorModeValue("blackAlpha", "gray")}
-                  borderRadius="full"
-                  bg={useColorModeValue(
-                    "rgb(230 247 255/1)",
-                    "rgb(88,175,223,.1)"
-                  )}
-                >
-                  {cat}
-                </Tag>
-              ))}
+              {article.tags.length &&
+                article.tags.map((cat, index) => (
+                  <Tag
+                    key={index}
+                    colorScheme={useColorModeValue("blackAlpha", "gray")}
+                    borderRadius="full"
+                    bg={useColorModeValue(
+                      "rgb(230 247 255/1)",
+                      "rgb(88,175,223,.1)"
+                    )}
+                  >
+                    {cat}
+                  </Tag>
+                ))}
             </HStack>
             <Box textAlign="left">
               <Link
@@ -63,15 +68,16 @@ const EventsList = ({ data, showAvatar }) => {
                 _hover={{ textDecoration: "underline" }}
                 link={article.link ? article.link : "#"}
               >
-                {article.title}
+                {article.title.rendered}
               </Link>
               <Text
+                as="div"
                 fontSize="md"
                 color="gray.500"
                 noOfLines={2}
                 lineHeight="normal"
               >
-                {article.content}
+                <Html2React html={article.excerpt.rendered} />
               </Text>
             </Box>
             <Box>
@@ -80,7 +86,7 @@ const EventsList = ({ data, showAvatar }) => {
                   size="sm"
                   title="Author"
                   mb={2}
-                  src={article.userAvatar}
+                  src={author.avatar_urls[48]}
                 />
               )}
               <Stack
@@ -89,10 +95,10 @@ const EventsList = ({ data, showAvatar }) => {
               >
                 <Box>
                   <Text fontSize="sm" fontWeight="bold">
-                    {article.username}
+                    {author.name.toUpperCase()}
                   </Text>
                   <Text fontSize="sm" color="gray.500">
-                    {article.created_at}
+                    {moment(article.date).format(format)}
                   </Text>
                 </Box>
                 <HStack
@@ -108,7 +114,10 @@ const EventsList = ({ data, showAvatar }) => {
                   link={article.link ? article.link : "#"}
                   _hover={{ bg: useColorModeValue("gray.200", "gray.700") }}
                 >
-                  <Text fontSize="sm"> Read more</Text>
+                  <Link link={article.link}>
+                    {" "}
+                    <Text fontSize="sm"> Read more</Text>
+                  </Link>
                   <Icon as={GoChevronRight} w={4} h={4} />
                 </HStack>
               </Stack>

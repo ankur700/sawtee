@@ -2,9 +2,14 @@ import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
 import Link from "../../atoms/link";
 import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
-import { Box, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Button,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
-export const PaginationButton = styled(Link)`
+export const PaginationButton = styled(Button)`
   width: 100%;
   display: flex;
   align-items: center;
@@ -12,22 +17,6 @@ export const PaginationButton = styled(Link)`
   font-size: 1.2rem;
   padding: 0.8rem 1rem;
   min-height: 60px;
-
-  cursor: pointer;
-  border: none;
-  background: #333a35;
-  color: #eca419;
-
-  &:hover {
-    background-color: #48584d;
-    color: #eca419;
-  }
-
-  &[aria-disabled="true"] {
-    background-color: #dfd7c7;
-    cursor: auto;
-    color: #a0a0a0;
-  }
 `;
 
 export const PrevLink = ({
@@ -37,10 +26,18 @@ export const PrevLink = ({
   ...props
 }) => (
   <Box width="100%" {...props}>
-    <PaginationButton link={link} aria-label={label} aria-disabled={isDisabled}>
-      <Box width="40px" height="auto" as={IoIosArrowRoundBack} />
-      <span>Older posts</span>
-    </PaginationButton>
+    <Link link={link} aria-disabled={isDisabled}>
+      <PaginationButton
+        colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+        aria-label={label}
+        isDisabled={isDisabled}
+        color={useColorModeValue("gray.700", "whiteAlpha.800")}
+        variant="outline"
+      >
+        <Box width="40px" height="auto" as={IoIosArrowRoundBack} />
+        <span>Older posts</span>
+      </PaginationButton>
+    </Link>
   </Box>
 );
 
@@ -51,10 +48,18 @@ export const NextLink = ({
   ...props
 }) => (
   <Box width="100%" {...props}>
-    <PaginationButton link={link} aria-label={label} aria-disabled={isDisabled}>
-      <span>Newer posts</span>
-      <Box width="40px" height="auto" as={IoIosArrowRoundForward} />
-    </PaginationButton>
+    <Link link={link} aria-disabled={isDisabled}>
+      <PaginationButton
+        colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+        aria-label={label}
+        color={useColorModeValue("gray.700", "whiteAlpha.800")}
+        isDisabled={isDisabled}
+        variant="outline"
+      >
+        <span>Newer posts</span>
+        <Box width="40px" height="auto" as={IoIosArrowRoundForward} />
+      </PaginationButton>
+    </Link>
   </Box>
 );
 

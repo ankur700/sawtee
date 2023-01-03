@@ -1,18 +1,24 @@
-function getSrcSet(media) {
-  const srcset =
-    Object.values(media.media_details.sizes)
-      // Get the url and width of each size.
-      .map((item) => [item.source_url, item.width])
-      // Recude them to a string with the format required by `srcset`.
-      .reduce(
-        (final, current, index, array) =>
-          final.concat(
-            `${current.join(" ")}w${index !== array.length - 1 ? ", " : ""}`
-          ),
-        ""
-      ) || null;
-  return srcset;
-}
+import moment from "moment/moment";
+
+
+ export const fetcher = async (...args) =>
+   fetch(...args).then((res) => res.json());
+
+ export function getSrcSet(media) {
+   const srcset =
+     Object.values(media.media_details.sizes)
+       // Get the url and width of each size.
+       .map((item) => [item.source_url, item.width])
+       // Recude them to a string with the format required by `srcset`.
+       .reduce(
+         (final, current, index, array) =>
+           final.concat(
+             `${current.join(" ")}w${index !== array.length - 1 ? ", " : ""}`
+           ),
+         ""
+       ) || null;
+   return srcset;
+ }
 
 export function getMediaAttributes(state, id) {
   const media = state.source.attachment[id];
@@ -28,7 +34,90 @@ export function getMediaAttributes(state, id) {
   };
 }
 
-export function getPostCategories(state, post) {
+// Fetch all categories
+export const fetchCategories = async (url, setState) => {
+  try {
+    const response = await fetch(url);
+    const results = await response.json();
+    let array = [];
+    results.forEach((result) => {
+      array.push(result);
+    });
+    setState([...array]);
+  } catch (error) {
+    console.log("error", error.message);
+  }
+};
+
+// Fetch all post from a specific post type
+export const fetchData = async (url, setState, state, categories) => {
+  try {
+    const response = await fetch(url);
+    const results = await response.json();
+    let array = [];
+    results.forEach((result) => {
+      array.push(formatCPTData(state, result, categories));
+    });
+    setState([...array]);
+  } catch (error) {
+    console.log("error", error.message);
+  }
+};
+
+export function getCPTData(posts, state) {
+  let array = [];
+  posts.forEach((post) => {
+    array.push(formatPostData(state, post));
+  });
+  if (array.length > 0) {
+    return [...array];
+  }
+  return {};
+}
+
+// Fetch media for a single post with postid
+export const fetchMedia = async (id, setState) => {
+  const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/${id}`;
+
+  try {
+    const response = await fetch(url);
+    const responseData = await response.json();
+    const srcSet = getSrcSet(responseData);
+
+    if (setState) {
+      setState({
+        id,
+        alt: responseData.alt_text,
+        src: responseData.source_url,
+        srcSet,
+      });
+    } else {
+      return {
+        id,
+        alt: responseData.alt_text,
+        src: responseData.source_url,
+        srcSet,
+      };
+    }
+  } catch (error) {
+    console.error("Error fetching media", error.message);
+  }
+};
+
+export function formatDateWithMoment(date, format) {
+  const f = format ? format : "MMMM Do YYYY";
+  const formatedDate = moment(date).format(f);
+  return formatedDate;
+}
+
+export function getPostCategories(state, post, categoriesPool) {
+  if (categoriesPool) {
+    const categories =
+      post.categories &&
+      categoriesPool.filter((item) => post.categories.includes(item.id));
+    return categories ? categories.filter(Boolean) : [];
+  }
+
   const allCategories = state.source.category;
   const categories =
     post.categories && post.categories.map((catId) => allCategories[catId]);
@@ -51,6 +140,21 @@ export function getPostData(state) {
   return { ...post, isReady: data.isReady, isPage: data.isPage };
 }
 
+export function formatCPTData(state, post, categories) {
+  return {
+    id: post.id,
+    author: getPostAuthor(state, post),
+    publishDate: post.date,
+    title: post.title.rendered,
+    categories: getPostCategories(state, post, categories),
+    tags: getPostTags(state, post),
+    link: post.link,
+    featured_media: post.featured_media,
+    content: post.content.rendered,
+    excerpt: post.excerpt.rendered,
+  };
+}
+
 export function formatPostData(state, post) {
   return {
     id: post.id,
@@ -63,6 +167,7 @@ export function formatPostData(state, post) {
     featured_media: getMediaAttributes(state, post.featured_media),
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
+    acf: post.acf,
     sections: post.acf.sections,
     memberInstitutions: post.acf.memberInstitutions,
     sectors: post.acf.sectors,

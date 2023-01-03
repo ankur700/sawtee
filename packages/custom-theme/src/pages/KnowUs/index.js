@@ -2,12 +2,10 @@ import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
 import List from "../../components/organisms/archive";
-import useScrollProgress from "../../components/hooks/useScrollProgress";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import FeaturedMedia from "../../components/organisms/post/featured-media";
 import PostHeader from "../../components/organisms/post/post-header";
-import PostProgressBar from "../../components/organisms/post/post-progressbar";
 import { getPostData, formatPostData } from "../../components/helpers";
 import PageSection from "./PageSection";
 import Members from "./Members";
@@ -24,8 +22,6 @@ const KnowUs = ({ state, actions, libraries }) => {
     List.preload();
   }, []);
 
-  const [ref, scroll] = useScrollProgress();
-
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
@@ -33,7 +29,6 @@ const KnowUs = ({ state, actions, libraries }) => {
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
       showPattern={state.theme.showBackgroundPattern}
-      ref={ref}
       pt="0"
     >
       <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
@@ -69,8 +64,6 @@ const KnowUs = ({ state, actions, libraries }) => {
           left="15%"
         />
       </Box>
-
-      <PostProgressBar value={scroll} />
 
       {/* Look at the settings to see if we should include the featured image */}
       <Section

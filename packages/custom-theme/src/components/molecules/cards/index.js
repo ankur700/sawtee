@@ -10,35 +10,38 @@ import {
   Flex,
   Show,
 } from "@chakra-ui/react";
+
 const today = new Date();
+import { PostImage } from "../featured-post/components";
+import { formatDateWithMoment } from "../../helpers";
+import PostCategories from "../../organisms/post/post-categories";
+import generateGradient from "../../molecules/featured-post/genarate-gradient";
 
 const defaultValues = {
-  category: "Events",
+  categories: ["Default", "Events", "Sawtee in Media", "Publications"],
   avatar:
     "https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80",
-  title: "",
-  href: "#",
-  content:
+  title: "Default Title",
+  target: "#",
+  excerpt:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestie parturient et sem ipsum volutpat vel. Natoque sem et aliquam mauris egestas quam volutpat viverra. In pretium nec senectus erat. Et malesuada lobortis.",
   author: "",
   showAvatar: false,
   date: today.getDate(),
   categoryLink: "#",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550439062-609e1531270e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+  authorLink: "#",
+  imageUrl: generateGradient(),
 };
 
 export const TopImageCard = (props) => {
   const {
-    category,
-    imageUrl,
+    categories,
     title,
-    href,
-    content,
+    target,
+    excerpt,
     author,
     date,
-    categoryLink,
-    avatar,
+    featured_media,
     showAvatar,
   } = props;
 
@@ -52,57 +55,50 @@ export const TopImageCard = (props) => {
       maxW="5xl"
       px="4"
     >
-      <Image
-        rounded="lg"
-        mx="auto"
-        w="full"
-        h="auto"
-        fit="cover"
-        mt={"2"}
-        boxShadow="sm"
-        src={imageUrl ? imageUrl : defaultValues.imageUrl}
-        alt="Article"
-      />
+      <Box
+        role="group"
+        cursor="pointer"
+        height="450px"
+        width="100%"
+        bgImage={defaultValues.imageUrl}
+        pos="relative"
+      >
+        {featured_media && featured_media.src && (
+          <PostImage pos="relative" {...featured_media} />
+        )}
+      </Box>
 
       <Box p={6}>
-        <Box>
-          <Box
-            as="a"
-            px={3}
-            py={1}
-            className="primary-link"
-            bg={useColorModeValue("rgb(230 247 255/1)", "rgb(88,175,223,.1)")}
-            fontSize="sm"
-            fontWeight="700"
-            rounded="md"
-            href={categoryLink ? categoryLink : defaultValues.categoryLink}
-          >
-            {category ? category : defaultValues.category}
-          </Box>
-          <Text
-            display="block"
+        <Box display="flex" className="categories">
+          <PostCategories
+            justify="flex-start"
+            categories={categories}
             color={useColorModeValue("gray.700", "whiteAlpha.700")}
-            fontWeight="bold"
-            fontSize={{ base: "lg", md: "xl" }}
-            mt={2}
-            _hover={{
-              color: `${useColorModeValue("gray.800", "whiteAlpha.800")}`,
-              textDecor: "underline",
-            }}
-          >
-            <LinkOverlay href={href ? href : "#"} className="primary-link">
-              {title ? title : defaultValues.title}
-            </LinkOverlay>
-          </Text>
-          <Text
-            mt={2}
-            fontSize={{ base: "sm", md: "md" }}
-            noOfLines={3}
-            color={useColorModeValue("gray.600", "whiteAlpha.600")}
-          >
-            {content ? content : defaultValues.content}
-          </Text>
+          />
         </Box>
+        <Text
+          display="block"
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          fontWeight="bold"
+          fontSize={{ base: "lg", md: "xl" }}
+          mt={2}
+          _hover={{
+            color: `${useColorModeValue("gray.800", "whiteAlpha.800")}`,
+          }}
+        >
+          <LinkOverlay href={target ? target : "#"} className="primary-link">
+            {title ? title : defaultValues.title}
+          </LinkOverlay>
+        </Text>
+        <Text
+          mt={2}
+          fontSize={{ base: "sm", md: "md" }}
+          noOfLines={3}
+          color={useColorModeValue("gray.600", "whiteAlpha.600")}
+          dangerouslySetInnerHTML={{
+            __html: excerpt ? excerpt : defaultValues.excerpt,
+          }}
+        />
 
         <Box mt={4}>
           <Flex
@@ -112,27 +108,33 @@ export const TopImageCard = (props) => {
             justifyContent={"space-between"}
           >
             <Show above="md">
-              <Flex alignItems="center">
-                {showAvatar
-                  ? showAvatar
-                  : defaultValues.showAvatar && (
-                      <Image
-                        h={10}
-                        w={10}
-                        fit="cover"
-                        rounded="full"
-                        src={avatar ? avatar : defaultValues.avatar}
-                        alt="Avatar"
-                      />
-                    )}
-                <Link
-                  mx={2}
-                  fontWeight="bold"
-                  color={useColorModeValue("gray.600", "whiteAlpha.600")}
-                >
-                  {author ? author : defaultValues.author}
-                </Link>
-              </Flex>
+              {author && (
+                <Flex alignItems="center">
+                  {showAvatar && (
+                    <Image
+                      h={10}
+                      w={10}
+                      fit="cover"
+                      rounded="full"
+                      src={
+                        author.avatar_urls
+                          ? author.avatar_urls[48]
+                          : defaultValues.avatar
+                      }
+                      alt={author.name}
+                    />
+                  )}
+
+                  <Link
+                    mx={2}
+                    fontWeight="bold"
+                    color={useColorModeValue("gray.600", "whiteAlpha.600")}
+                    href={author.link ? author.link : defaultValues.authorLink}
+                  >
+                    {author.name ? author.name : defaultValues.author}
+                  </Link>
+                </Flex>
+              )}
             </Show>
             <Box
               as="time"
@@ -140,7 +142,9 @@ export const TopImageCard = (props) => {
               fontSize="sm"
               color={useColorModeValue("gray.600", "whiteAlpha.600")}
             >
-              {date ? date : defaultValues.date()}
+              {date
+                ? formatDateWithMoment(date)
+                : formatDateWithMoment(defaultValues.date)}
             </Box>
           </Flex>
         </Box>
@@ -150,17 +154,8 @@ export const TopImageCard = (props) => {
 };
 
 export const NoImageCard = (props) => {
-  const {
-    category,
-    title,
-    href,
-    content,
-    author,
-    categoryLink,
-    avatar,
-    date,
-    showAvatar,
-  } = props;
+  const { categories, title, target, excerpt, author, date, showAvatar } =
+    props;
 
   return (
     <LinkBox
@@ -182,21 +177,14 @@ export const NoImageCard = (props) => {
           fontSize="sm"
           color={useColorModeValue("gray.600", "whiteAlpha.600")}
         >
-          {date ? date : defaultValues.date()}
+          {date ? formatDateWithMoment(date) : defaultValues.date}
         </Box>
-        <Box
-          as="a"
-          px={3}
-          py={1}
-          className="primary-link"
-          bg={useColorModeValue("rgb(230 247 255/1)", "rgb(88,175,223,.1)")}
-          fontSize="sm"
-          fontWeight="700"
-          rounded="md"
-          href={categoryLink ? categoryLink : defaultValues.categoryLink}
-        >
-          {category ? category : defaultValues.category}
-        </Box>
+
+        <PostCategories
+          justify="flex-start"
+          categories={categories}
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+        />
       </Flex>
 
       <Box mt={2}>
@@ -213,7 +201,7 @@ export const NoImageCard = (props) => {
           }}
         >
           <LinkOverlay
-            href={href ? href : defaultValues.href}
+            href={target ? target : defaultValues.target}
             className="primary-link"
           >
             {title ? title : defaultValues.title}
@@ -227,9 +215,10 @@ export const NoImageCard = (props) => {
           }}
           noOfLines={3}
           fontSize={{ base: "sm", md: "md" }}
-        >
-          {content ? content : defaultValues.content}
-        </Text>
+          dangerouslySetInnerHTML={{
+            __html: excerpt ? excerpt : defaultValues.excerpt,
+          }}
+        />
       </Box>
 
       <Flex justifyContent="space-between" alignItems="center" mt={4}>
@@ -243,32 +232,39 @@ export const NoImageCard = (props) => {
             textDecor: "underline",
           }}
         >
-          <LinkOverlay href="#">Read more</LinkOverlay>
+          <LinkOverlay href={target}>Read more</LinkOverlay>
         </Text>
         <Show above="md">
-          <Flex alignItems="center">
-            {showAvatar && (
-              <Image
-                mx={4}
-                w={10}
-                h={10}
-                rounded="full"
-                fit="cover"
-                src={avatar ? avatar : defaultValues.avatar}
-                alt="avatar"
-              />
-            )}
-            <Link
-              color="gray.700"
-              _dark={{
-                color: "whiteAlpha.700",
-              }}
-              fontWeight="700"
-              cursor="pointer"
-            >
-              {author ? author : defaultValues.author}
-            </Link>
-          </Flex>
+          {author && (
+            <Flex alignItems="center">
+              {showAvatar && (
+                <Image
+                  mx={4}
+                  w={10}
+                  h={10}
+                  rounded="full"
+                  fit="cover"
+                  src={
+                    author.avatar_urls
+                      ? author.avatar_urls[48]
+                      : defaultValues.avatar
+                  }
+                  alt={author.name}
+                />
+              )}
+              <Link
+                color="gray.700"
+                _dark={{
+                  color: "whiteAlpha.700",
+                }}
+                fontWeight="700"
+                cursor="pointer"
+                href={author.link ? author.link : defaultValues.authorLink}
+              >
+                {author.name ? author.name : defaultValues.author}
+              </Link>
+            </Flex>
+          )}
         </Show>
       </Flex>
     </LinkBox>
