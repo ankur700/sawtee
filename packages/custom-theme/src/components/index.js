@@ -14,11 +14,11 @@ import FontFace from "./styles/font-face";
 import Home from "../pages/home";
 import OurWork from "../pages/OurWork";
 import KnowUs from "../pages/KnowUs";
+import Programme from "../pages/programme";
 import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
 import { Post } from "./organisms/page/post-item";
 import "focus-visible/dist/focus-visible";
-
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
@@ -79,6 +79,7 @@ const Theme = ({ state }) => {
           <Home when={data.isHome} />
           <OurWork when={data.route === "/our-work/"} />
           <KnowUs when={data.route === "/about/"} />
+          <Programme when={data.route === "/programmes/"} />
           <Page when={data.isPage} />
           <Post
             when={

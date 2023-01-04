@@ -319,9 +319,9 @@ const settings = {
               archive: "/sawtee-in-media",
             },
             {
-              type: "programmes",
-              endpoint: "programmes",
-              archive: "/programmes",
+              type: "newsletters",
+              endpoint: "newsletters",
+              archive: "/newsletters",
             },
           ],
         },
