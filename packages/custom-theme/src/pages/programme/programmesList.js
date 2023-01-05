@@ -6,12 +6,6 @@ const ProgrammesList = ({ programs, programCategories }) => {
     <Container p={{ base: 5, md: 8 }}>
       <VStack spacing={8} w={{ base: "auto", md: "2xl" }}>
         {programs.map(({ title, excerpt, categories, date, link }) => {
-          const categoriesArray = categories.map((catId) =>
-            programCategories.filter(
-              (item) => item.id === catId && item.id !== 219
-            )
-          );
-          console.log(categoriesArray);
           return (
             <Flex w="full" alignItems="center" justifyContent="center">
               <Box
@@ -28,25 +22,16 @@ const ProgrammesList = ({ programs, programCategories }) => {
                 maxW="2xl"
               >
                 <Flex justifyContent="space-between" alignItems="center">
-                  {categoriesArray &&
-                    categoriesArray.map((category) => (
-                      <Link
-                        key={category.id}
-                        px={3}
-                        py={1}
-                        bg="gray.600"
-                        color="gray.100"
-                        fontSize="sm"
-                        fontWeight="700"
-                        rounded="md"
-                        href={category.link}
-                        _hover={{
-                          bg: "gray.500",
-                        }}
-                      >
-                        {category.name}
-                      </Link>
-                    ))}
+                  <Text
+                    as="span"
+                    fontSize="sm"
+                    color="gray.600"
+                    _dark={{
+                      color: "gray.400",
+                    }}
+                  >
+                    {moment(date, "YYYYMMDD").fromNow()}
+                  </Text>
                 </Flex>
 
                 <Box mt={2}>
@@ -93,16 +78,29 @@ const ProgrammesList = ({ programs, programCategories }) => {
                   >
                     Read more
                   </Link>
-                  <Text
-                    as="span"
-                    fontSize="sm"
-                    color="gray.600"
-                    _dark={{
-                      color: "gray.400",
-                    }}
-                  >
-                    {moment(date, "YYYYMMDD").fromNow()}
-                  </Text>
+                  {programCategories &&
+                    programCategories.map((category) => {
+                      if (categories.includes(category.term_id)) {
+                        return (
+                          <Link
+                            key={category.term_id}
+                            px={3}
+                            py={1}
+                            bg="gray.600"
+                            color="gray.100"
+                            fontSize="sm"
+                            fontWeight="700"
+                            rounded="md"
+                            href={`/category/${category.parent}/${category.slug}`}
+                            _hover={{
+                              bg: "gray.500",
+                            }}
+                          >
+                            {category.name}
+                          </Link>
+                        );
+                      }
+                    })}
                 </Flex>
               </Box>
             </Flex>

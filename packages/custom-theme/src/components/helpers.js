@@ -47,7 +47,7 @@ export function getCPTData(posts, state) {
 }
 
 export function formatDateWithMoment(date, format) {
-  const f = format ? format : getCPTData(progs, state, categories);;
+  const f = format ? format : "MMMM DD YYYY";
   const formatedDate = moment(date).format(f);
   return formatedDate;
 }

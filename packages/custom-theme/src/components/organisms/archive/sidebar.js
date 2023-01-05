@@ -22,11 +22,10 @@ export const Sidebar = ({
           <Stack spacing={8} mt="6">
             {data &&
               data.map((event, index) => {
-                const format = "MMMM Do YYYY";
                 const formatedDate = moment(event.date, "YYYYMMDD").fromNow();
                 return (
-                  <Stack key={index}>
-                    <Link className="primary-link" link={"#"}>
+                  <Stack key={event.id}>
+                    <Link className="primary-link" link={event.link}>
                       <Text
                         className="title"
                         fontSize={["sm", "md"]}
