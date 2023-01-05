@@ -34,35 +34,6 @@ export function getMediaAttributes(state, id) {
   };
 }
 
-// Fetch all categories
-export const fetchCategories = async (url, setState) => {
-  try {
-    const response = await fetch(url);
-    const results = await response.json();
-    let array = [];
-    results.forEach((result) => {
-      array.push(result);
-    });
-    setState([...array]);
-  } catch (error) {
-    console.log("error", error.message);
-  }
-};
-
-// Fetch all post from a specific post type
-export const fetchData = async (url, setState, state, categories) => {
-  try {
-    const response = await fetch(url);
-    const results = await response.json();
-    let array = [];
-    results.forEach((result) => {
-      array.push(formatCPTData(state, result, categories));
-    });
-    setState([...array]);
-  } catch (error) {
-    console.log("error", error.message);
-  }
-};
 
 export function getCPTData(posts, state) {
   let array = [];
@@ -75,37 +46,8 @@ export function getCPTData(posts, state) {
   return {};
 }
 
-// Fetch media for a single post with postid
-export const fetchMedia = async (id, setState) => {
-  const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/${id}`;
-
-  try {
-    const response = await fetch(url);
-    const responseData = await response.json();
-    const srcSet = getSrcSet(responseData);
-
-    if (setState) {
-      setState({
-        id,
-        alt: responseData.alt_text,
-        src: responseData.source_url,
-        srcSet,
-      });
-    } else {
-      return {
-        id,
-        alt: responseData.alt_text,
-        src: responseData.source_url,
-        srcSet,
-      };
-    }
-  } catch (error) {
-    console.error("Error fetching media", error.message);
-  }
-};
-
 export function formatDateWithMoment(date, format) {
-  const f = format ? format : "MMMM Do YYYY";
+  const f = format ? format : getCPTData(progs, state, categories);;
   const formatedDate = moment(date).format(f);
   return formatedDate;
 }
@@ -152,6 +94,7 @@ export function formatCPTData(state, post, categories) {
     featured_media: post.featured_media,
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
+    acf: post.acf,
   };
 }
 

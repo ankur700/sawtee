@@ -23,7 +23,7 @@ export const Sidebar = ({
             {data &&
               data.map((event, index) => {
                 const format = "MMMM Do YYYY";
-                const formatedDate = moment(event.date).format(format);
+                const formatedDate = moment(event.date, "YYYYMMDD").fromNow();
                 return (
                   <Stack key={index}>
                     <Link className="primary-link" link={"#"}>

@@ -39,7 +39,6 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
     }
   );
 
-  console.log(categories, news);
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
 
