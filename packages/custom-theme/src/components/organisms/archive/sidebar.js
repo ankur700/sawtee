@@ -6,6 +6,7 @@ import GlassBox from "../../atoms/glassBox";
 import moment from "moment/moment";
 import Link from "../../atoms/link";
 import Title from "../../atoms/title";
+import { decode } from "frontity";
 
 export const Sidebar = ({
   data,
@@ -26,14 +27,9 @@ export const Sidebar = ({
                 return (
                   <Stack key={event.id}>
                     <Link className="primary-link" link={event.link}>
-                      <Text
-                        className="title"
-                        fontSize={["sm", "md"]}
-                        mb="2"
-                        dangerouslySetInnerHTML={{
-                          __html: event.title.rendered,
-                        }}
-                      />
+                      <Text className="title" fontSize={["sm", "md"]} mb="2">
+                        {decode(event.title.rendered)}
+                      </Text>
                     </Link>
                     <Box
                       display={"flex"}
@@ -41,13 +37,14 @@ export const Sidebar = ({
                       fontSize={"sm"}
                       fontWeight="semibold"
                     >
-                      {event.acf.publishers.map((publisher) => {
-                        return (
-                          <Text as="a" href={publisher.publisher_website}>
-                            {publisher.publisher_name}
-                          </Text>
-                        );
-                      })}
+                      {event.acf.publishers &&
+                        event.acf.publishers.map((publisher) => {
+                          return (
+                            <Text as="a" href={publisher.publisher_website}>
+                              {publisher.publisher_name}
+                            </Text>
+                          );
+                        })}
                       <Box
                         as="time"
                         dateTime={new Date(event.date).toLocaleDateString()}

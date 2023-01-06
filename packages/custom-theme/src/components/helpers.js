@@ -111,10 +111,6 @@ export function formatPostData(state, post) {
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
     acf: post.acf,
-    sections: post.acf.sections,
-    memberInstitutions: post.acf.memberInstitutions,
-    sectors: post.acf.sectors,
-    intro: post.acf.intro,
   };
 }
 

@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
 import useSWR from "swr";
-import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  SimpleGrid,
+  useColorModeValue,
+  Image,
+  Heading,
+} from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
-import FeaturedMedia from "../../components/organisms/post/featured-media";
-import PostHeader from "../../components/organisms/post/post-header";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import { fetcher, getPostData } from "../../components/helpers";
+import { fetcher, getCPTData } from "../../components/helpers";
 import ProgrammesList from "./programmesList";
+import Publication1 from "../../assets/publications-1.jpg";
+import Pagination from "../../components/organisms/archive/pagination";
 
 const Programmes = ({ state, actions, libraries }) => {
-  const postData = getPostData(state);
+  const postData = state.source.get(state.router.link);
+  const posts = Object.values(state.source.programme);
   const linkColor = state.theme.colors.linkColor;
-  const categories = postData.acf.categories;
-
-  const {
-    data: programs,
-    isLoading: loading_programs,
-    isValidating,
-  } = useSWR(`https://sawtee.ankursingh.com.np/wp-json/wp/v2/posts`, fetcher, {
-    revalidateOnFocus: false,
-  });
+  const programs = getCPTData(posts, state);
 
   const { data: news } = useSWR(
     `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
@@ -46,37 +45,46 @@ const Programmes = ({ state, actions, libraries }) => {
       pt="0"
     >
       <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
-        {postData.featured_media != null && (
-          <FeaturedMedia
-            mt="0"
-            id={postData.featured_media}
-            _after={{
-              display: "block",
-              content: '""',
-              width: "100%",
-              height: "500px",
-              background: "rgba(0,0,0,0.4)",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-            }}
-          />
-        )}
-        <PostHeader
+        <Box
+          as="figure"
+          mt={4}
+          height="500px"
+          _after={{
+            display: "block",
+            content: '""',
+            width: "100%",
+            height: "500px",
+            background: "rgba(0,0,0,0.4)",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+          }}
+        >
+          <Box as={Image} boxSize="100%" objectFit="cover" src={Publication1} />
+        </Box>
+
+        <Box
+          textAlign="center"
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "0" }}
           color={"whiteAlpha.900"}
-          // categories={categories}
-          heading={postData.title.rendered}
-          isPage={postData.isPage}
           position="absolute"
           bottom="15%"
           left="15%"
-        />
+        >
+          <Heading
+            fontWeight="bold"
+            size={"3xl"}
+            mt="30px"
+            mb={{ base: "20px", lg: "32px" }}
+            textTransform="uppercase"
+          >
+            {postData.type}
+          </Heading>
+        </Box>
       </Box>
-
       <Section
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
@@ -84,7 +92,7 @@ const Programmes = ({ state, actions, libraries }) => {
       >
         <Box
           as={Section}
-          px={{ base: "32px", md: "0" }}
+          px={{ base: "16px", md: "0" }}
           size="xl"
           pt="50px"
           fontSize={["md", "lg", "xl"]}
@@ -95,13 +103,10 @@ const Programmes = ({ state, actions, libraries }) => {
             spacing="10"
             pos={"relative"}
           >
-            {loading_programs || isValidating ? (
+            {!programs.length ? (
               <Loading />
             ) : (
-              <ProgrammesList
-                programs={programs}
-                programCategories={categories}
-              />
+              <ProgrammesList programs={programs} />
             )}
             <Sidebar
               data={news}
@@ -111,6 +116,7 @@ const Programmes = ({ state, actions, libraries }) => {
               showSubscriptionCard={true}
             />
           </SimpleGrid>
+          <Pagination mt="32px" />
         </Box>
       </Section>
     </LightPatternBox>

@@ -6,7 +6,7 @@ import {
   Button,
   Text,
 } from "@chakra-ui/react";
-import Section from "../../styles/section";
+import Section from "../../components/styles/section";
 
 const PublicationFilter = (props) => {
   const { data, linkColor } = props;

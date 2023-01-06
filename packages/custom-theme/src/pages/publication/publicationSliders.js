@@ -1,7 +1,7 @@
 import React from "react";
 import { Stack } from "@chakra-ui/react";
-import Title from "../../atoms/title";
-import MultiItemCarousel from "../../molecules/multiItemCarousel";
+import Title from "../../components/atoms/title";
+import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 
 const PublicationSliders = ({ data, categories, PublicationCategories }) => {
   let sliderData = [];

@@ -79,7 +79,7 @@ const Theme = ({ state }) => {
           <Home when={data.isHome} />
           <OurWork when={data.route === "/our-work/"} />
           <KnowUs when={data.route === "/about/"} />
-          <Programme when={data.route === "/programmes/"} />
+          {/* <Programme when={data.route === "/programme/"} /> */}
           <Page when={data.isPage} />
           <Post
             when={

@@ -13,6 +13,8 @@ import Members from "./Members";
 const KnowUs = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
+  const sections = post.acf.sections;
+  const memberInstitutions = post.acf.memberInstitutions;
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -81,7 +83,7 @@ const KnowUs = ({ state, actions, libraries }) => {
           fontSize={["sm", "md"]}
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
-          {post.sections.map((section) => (
+          {sections.map((section) => (
             <PageSection
               key={section.title}
               libraries={libraries}
@@ -89,7 +91,7 @@ const KnowUs = ({ state, actions, libraries }) => {
             />
           ))}
           <Members
-            memberInstitutions={post.memberInstitutions}
+            memberInstitutions={memberInstitutions}
             linkColor={state.theme.colors.linkColor}
           />
         </Content>

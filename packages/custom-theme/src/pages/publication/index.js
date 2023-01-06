@@ -7,17 +7,16 @@ import {
 } from "@chakra-ui/react";
 import useSWR from "swr";
 import { connect } from "frontity";
-import { LightPatternBox } from "../../styles/pattern-box";
-import Section from "../../styles/section";
+import { LightPatternBox } from "../../components/styles/pattern-box";
+import Section from "../../components/styles/section";
 import PublicationFilter from "./publicationFilter";
-import Sidebar from "./sidebar";
+import Sidebar from "../../components/organisms/archive/sidebar";
 import PublicationSliders from "./publicationSliders";
-import { featuredEvents } from "../../../data";
-import Loading from "../../atoms/loading";
-import Publication1 from "../../../assets/publications-1.jpg";
-import { getCPTData, fetcher } from "../../helpers";
+import Loading from "../../components/atoms/loading";
+import Publication1 from "../../assets/publications-1.jpg";
+import { getCPTData, fetcher } from "../../components/helpers";
 
-const PublicationsArchive = ({ state, actions, libraries }) => {
+const Publications = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
   const posts = Object.values(state.source.publications);
   const PublicationCategories = Object.keys(state.source.category);
@@ -133,4 +132,4 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
   );
 };
 
-export default connect(PublicationsArchive);
+export default connect(Publications);

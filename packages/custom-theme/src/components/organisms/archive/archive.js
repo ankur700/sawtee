@@ -6,16 +6,19 @@ import ArchiveItem from "./archive-item";
 import EventsArchive from "./events-archive";
 import Pagination from "./pagination";
 import { decode } from "frontity";
-import PublicationsArchive from "./publications-archive";
+import PublicationsArchive from "../../../pages/publication";
 import SawteeInMediaArchive from "./sawtee-in-media-archive";
+import Programme from "../../../pages/programme";
+import Publications from "../../../pages/publication";
 
 const Archive = ({ state }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
   if (data.isFeaturedEventsArchive) return <EventsArchive />;
 
-  if (data.isPublicationsArchive) return <PublicationsArchive />;
+  if (data.isPublicationsArchive) return <Publications />;
   if (data.isSawteeInMediaArchive) return <SawteeInMediaArchive />;
+  if (data.isProgrammeArchive) return <Programme />;
 
   return (
     <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">

@@ -7,7 +7,7 @@ import {
   Heading,
   LinkOverlay,
 } from "@chakra-ui/react";
-import { connect, styled } from "frontity";
+import { connect, decode, styled } from "frontity";
 import React, { useEffect } from "react";
 import List from "../../components/organisms/archive";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -21,7 +21,7 @@ import Link from "@frontity/components/link";
 const OurWork = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-
+  const sectors = post.acf.sectors;
   useEffect(() => {
     actions.source.fetch("/");
     List.preload();
@@ -120,7 +120,7 @@ const OurWork = ({ state, actions, libraries }) => {
         >
           <Box className="intro" pos="relative" mb="20" maxW="3xl" mx="auto">
             <Text fontSize={["md", "lg"]} textAlign="justify">
-              {post.intro}
+              {decode(post.acf.intro)}
             </Text>
           </Box>
           <Box
@@ -129,7 +129,7 @@ const OurWork = ({ state, actions, libraries }) => {
             justifyContent="center"
             gap="4"
           >
-            {post.sectors.map(({ title, content, bg_image, link }) => {
+            {sectors.map(({ title, content, bg_image, link }) => {
               return (
                 <LinkBox
                   href={link}
@@ -160,7 +160,7 @@ const OurWork = ({ state, actions, libraries }) => {
                       color={"whiteAlpha.800 !important"}
                       href={link}
                     >
-                      {title}
+                      {decode(title)}
                     </LinkOverlay>
                   </Heading>
                   <Text
@@ -174,7 +174,7 @@ const OurWork = ({ state, actions, libraries }) => {
                     px={10}
                     opacity="0"
                   >
-                    {content}
+                    {decode(content)}
                   </Text>
                 </LinkBox>
               );

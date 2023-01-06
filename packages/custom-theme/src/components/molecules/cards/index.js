@@ -11,6 +11,8 @@ import {
   Show,
 } from "@chakra-ui/react";
 
+import { decode } from "frontity";
+
 const today = new Date();
 import { PostImage } from "../featured-post/components";
 import { formatDateWithMoment } from "../../helpers";
@@ -87,7 +89,7 @@ export const TopImageCard = (props) => {
           }}
         >
           <LinkOverlay href={target ? target : "#"} className="primary-link">
-            {title ? title : defaultValues.title}
+            {title ? decode(title) : defaultValues.title}
           </LinkOverlay>
         </Text>
         <Text
@@ -204,7 +206,7 @@ export const NoImageCard = (props) => {
             href={target ? target : defaultValues.target}
             className="primary-link"
           >
-            {title ? title : defaultValues.title}
+            {title ? decode(title) : defaultValues.title}
           </LinkOverlay>
         </Text>
         <Text
