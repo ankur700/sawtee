@@ -11,10 +11,10 @@ import Page404 from "./atoms/page404";
 import SearchResults from "./molecules/search";
 import PageTitle from "./atoms/pageTitle";
 import FontFace from "./styles/font-face";
+import HomeArchive from "../components/organisms/archive/home-archive";
 import Home from "../pages/home";
 import OurWork from "../pages/OurWork";
 import KnowUs from "../pages/KnowUs";
-import Programme from "../pages/programme";
 import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
 import { Post } from "./organisms/page/post-item";
@@ -87,7 +87,8 @@ const Theme = ({ state }) => {
             }
           />
           <SearchResults when={data.isSearch} />
-          <Archive when={data.isArchive || data.route === "/blog/"} />
+          <HomeArchive when={data.route === "/blog"} />
+          <Archive when={data.isArchive} />
           <Page404 when={data.is404} />
         </Switch>
       </Box>

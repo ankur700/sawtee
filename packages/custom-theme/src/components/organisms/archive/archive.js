@@ -3,18 +3,17 @@ import { connect } from "frontity";
 import React from "react";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
-import EventsArchive from "./events-archive";
 import Pagination from "./pagination";
 import { decode } from "frontity";
-import PublicationsArchive from "../../../pages/publication";
 import SawteeInMediaArchive from "./sawtee-in-media-archive";
 import Programme from "../../../pages/programme";
 import Publications from "../../../pages/publication";
+import Events from "../../../pages/events";
 
 const Archive = ({ state }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
-  if (data.isFeaturedEventsArchive) return <EventsArchive />;
+  if (data.isFeaturedEventsArchive) return <Events />;
 
   if (data.isPublicationsArchive) return <Publications />;
   if (data.isSawteeInMediaArchive) return <SawteeInMediaArchive />;

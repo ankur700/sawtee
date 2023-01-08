@@ -11,19 +11,20 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import moment from "moment/moment";
+import { PostImageWithOverlay } from "../../components/molecules/featured-post/components";
 
 // Here we have used react-icons package for the icons
 import { GoChevronRight } from "react-icons/go";
 import Link from "../../components/atoms/link";
+import { decode } from "frontity";
 
-const EventsList = ({ data, showAvatar, libraries, author }) => {
+const EventsList = ({ data, showAvatar, libraries }) => {
   const format = "MMMM Do YYYY";
   const Html2React = libraries.html2react.Component;
-
   return (
-    <Container p={{ base: 5, md: 10 }} maxW="full">
-      <VStack spacing={8} w={{ base: "auto", md: "5xl" }}>
-        {data.map((article, index) => (
+    <VStack spacing={8} w={{ base: "auto", md: "3xl" }}>
+      {data &&
+        data.map((article, index) => (
           <Stack
             key={index}
             direction="column"
@@ -42,11 +43,16 @@ const EventsList = ({ data, showAvatar, libraries, author }) => {
             }}
             rounded="lg"
           >
+            {article.featured_media && article.featured_media.src && (
+              <Link link={article.link}>
+                <PostImageWithOverlay {...article.featured_media} />
+              </Link>
+            )}
             <HStack spacing={2} mb={1}>
-              {article.tags.length &&
-                article.tags.map((cat, index) => (
+              {article.categories &&
+                article.categories.map((cat, index) => (
                   <Tag
-                    key={index}
+                    key={cat.id}
                     colorScheme={useColorModeValue("blackAlpha", "gray")}
                     borderRadius="full"
                     bg={useColorModeValue(
@@ -54,7 +60,7 @@ const EventsList = ({ data, showAvatar, libraries, author }) => {
                       "rgb(88,175,223,.1)"
                     )}
                   >
-                    {cat}
+                    {cat.name}
                   </Tag>
                 ))}
             </HStack>
@@ -68,7 +74,7 @@ const EventsList = ({ data, showAvatar, libraries, author }) => {
                 _hover={{ textDecoration: "underline" }}
                 link={article.link ? article.link : "#"}
               >
-                {article.title.rendered}
+                {decode(article.title)}
               </Link>
               <Text
                 as="div"
@@ -77,16 +83,16 @@ const EventsList = ({ data, showAvatar, libraries, author }) => {
                 noOfLines={2}
                 lineHeight="normal"
               >
-                <Html2React html={article.excerpt.rendered} />
+                <Html2React html={article.excerpt} />
               </Text>
             </Box>
             <Box>
-              {showAvatar && (
+              {showAvatar && article.author && (
                 <Avatar
                   size="sm"
                   title="Author"
                   mb={2}
-                  src={author.avatar_urls[48]}
+                  src={article.author.avatar_urls[48]}
                 />
               )}
               <Stack
@@ -95,10 +101,10 @@ const EventsList = ({ data, showAvatar, libraries, author }) => {
               >
                 <Box>
                   <Text fontSize="sm" fontWeight="bold">
-                    {author.name.toUpperCase()}
+                    {article.author.name.toUpperCase()}
                   </Text>
                   <Text fontSize="sm" color="gray.500">
-                    {moment(article.date).format(format)}
+                    {moment(article.publishDate).format(format)}
                   </Text>
                 </Box>
                 <HStack
@@ -124,8 +130,7 @@ const EventsList = ({ data, showAvatar, libraries, author }) => {
             </Box>
           </Stack>
         ))}
-      </VStack>
-    </Container>
+    </VStack>
   );
 };
 

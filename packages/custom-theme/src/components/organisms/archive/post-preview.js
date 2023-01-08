@@ -6,8 +6,9 @@ import PostCategories from "../post/post-categories";
 import { PostOverlay } from "../../molecules/featured-post/components";
 import generateGradient from "../../molecules/featured-post/genarate-gradient";
 import { formatDateWithMoment } from "../../helpers";
+import { decode } from "frontity";
 
-const PostPreview = ({ data, ...rest }) => {
+const PostPreview = ({ data, showImage, ...rest }) => {
   const { title, excerpt, featured_media, link, categories, publishDate } =
     data;
   return (
@@ -27,7 +28,7 @@ const PostPreview = ({ data, ...rest }) => {
         </Link>
       )}
 
-      {Object.keys(featured_media).length === 0 && (
+      {showImage && Object.keys(featured_media).length === 0 && (
         <Link link={link}>
           <Box
             role="group"
@@ -50,8 +51,9 @@ const PostPreview = ({ data, ...rest }) => {
             noOfLines={"3"}
             minH="5.625rem"
             textTransform="uppercase"
-            dangerouslySetInnerHTML={{ __html: title }}
-          />
+          >
+            {decode(title)}
+          </Heading>
         </Link>
         <Box
           my="20px"

@@ -7,7 +7,7 @@ import { Newsletter } from "../../atoms/newsletter";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
 
-const EventsArchive = ({ state, libraries }) => {
+const Blog = ({ state, libraries }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
   const [firstThreePosts, othersPosts] = splitPosts(state, data.items);
@@ -40,10 +40,11 @@ const EventsArchive = ({ state, libraries }) => {
           columns={{ base: 1, md: 2 }}
           spacing="40px"
         >
-          {data.items.map(({ type, id }, idx) => {
+          {othersPosts.map(({ type, id }, idx) => {
             const item = state.source[type][id];
             return (
               <ArchiveItem
+                showImage={true}
                 key={item.id}
                 item={item}
                 color={useColorModeValue("gray.700", "whiteAlpha.700")}
@@ -62,4 +63,4 @@ const EventsArchive = ({ state, libraries }) => {
   );
 };
 
-export default connect(EventsArchive);
+export default connect(Blog);

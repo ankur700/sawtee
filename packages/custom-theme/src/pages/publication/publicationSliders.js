@@ -8,8 +8,8 @@ const PublicationSliders = ({ data, categories, PublicationCategories }) => {
   (() => {
     categories
       ? categories.map((cat) => {
-          if (cat.id !== 217)
-            return sliderData.push({ id: cat.id, name: cat.name, slides: [] });
+        if (cat.parent === 217)
+          return sliderData.push({ id: cat.id, name: cat.name, slides: [] });
         })
       : null;
   })();

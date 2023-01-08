@@ -1,13 +1,15 @@
-import { Container, VStack, Flex, Box, Link, Text } from "@chakra-ui/react";
+import { VStack, Flex, Box, Link, Text } from "@chakra-ui/react";
 import { decode } from "frontity";
 import moment from "moment/moment";
 
-const ProgrammesList = ({ programs }) => {
+const ProgrammesList = ({ programs, libraries }) => {
+  const Html2React = libraries.html2react.Component;
+
   return (
-    <VStack spacing={8} w={{ base: "auto", md: "2xl" }}>
+    <VStack spacing={8} w={{ base: "auto", md: "full" }}>
       {programs.map(({ title, excerpt, categories, publishDate, link, id }) => {
         return (
-          <Flex key={id} w="full" alignItems="center" justifyContent="center">
+          <Flex key={id} alignItems="center" justifyContent="center">
             <Box
               mx="auto"
               px={8}
@@ -19,7 +21,7 @@ const ProgrammesList = ({ programs }) => {
               _dark={{
                 bg: "gray.800",
               }}
-              maxW="2xl"
+              maxW="5xl"
             >
               <Flex justifyContent="space-between" alignItems="center">
                 <Text
@@ -61,8 +63,9 @@ const ProgrammesList = ({ programs }) => {
                     color: "gray.300",
                   }}
                   noOfLines={3}
-                  dangerouslySetInnerHTML={{ __html: excerpt }}
-                />
+                >
+                  <Html2React html={excerpt} />
+                </Text>
               </Box>
 
               <Flex justifyContent="space-between" alignItems="center" mt={4}>
