@@ -30,6 +30,12 @@ const EventsArchive = ({ state, libraries }) => {
       revalidateOnFocus: false,
     }
   );
+  // Once the post has loaded in the DOM, prefetch both the
+  // home posts and the list component so if the user visits
+  // the home page, everything is ready and it loads instantly.
+
+  // Load the post, but only if the data is ready.
+  if (!postData.isReady) return null;
   return (
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}

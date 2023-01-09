@@ -1,28 +1,27 @@
-import useSWR from "swr";
 import {
   Box,
   SimpleGrid,
-  useColorModeValue,
   Image,
   Heading,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import { fetcher, getCPTData } from "../../components/helpers";
-import ProgrammesList from "./programmesList";
 import Publication1 from "../../assets/publications-1.jpg";
+import useSWR from "swr";
 import Pagination from "../../components/organisms/archive/pagination";
+import { getCPTData, fetcher } from "../../components/helpers";
+import MediaArticles from "./MediaArticles";
 
-const Programmes = ({ state, actions, libraries }) => {
-  const postData = state.source.get(state.router.link);
-  const posts = Object.values(state.source.programme);
-  const linkColor = state.theme.colors.linkColor;
-  const programs = getCPTData(posts, state);
+const SawteeInMedia = ({ state, actions, libraries }) => {
+  const data = state.source.get(state.router.link);
+  const posts = Object.values(state.source["sawtee-in-media"]);
+  const news = getCPTData(posts, state);
 
-  const { data: news } = useSWR(
+  const { data: snews } = useSWR(
     `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
     fetcher,
     {
@@ -30,12 +29,8 @@ const Programmes = ({ state, actions, libraries }) => {
     }
   );
 
-  // Once the post has loaded in the DOM, prefetch both the
-  // home posts and the list component so if the user visits
-  // the home page, everything is ready and it loads instantly.
-
   // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
+  if (!data.isReady) return null;
 
   return (
     <LightPatternBox
@@ -80,10 +75,11 @@ const Programmes = ({ state, actions, libraries }) => {
             mb={{ base: "20px", lg: "32px" }}
             textTransform="uppercase"
           >
-            {postData.type}
+            {data.type}
           </Heading>
         </Box>
       </Box>
+
       <Section
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
@@ -91,7 +87,7 @@ const Programmes = ({ state, actions, libraries }) => {
       >
         <Box
           as={Section}
-          px={{ base: "16px", md: "0" }}
+          px={{ base: "32px", md: "0" }}
           size="xl"
           pt="50px"
           fontSize={["md", "lg", "xl"]}
@@ -102,24 +98,20 @@ const Programmes = ({ state, actions, libraries }) => {
             spacing="10"
             pos={"relative"}
           >
-            {!programs.length ? (
-              <Loading />
-            ) : (
-              <ProgrammesList programs={programs} libraries={libraries} />
-            )}
+            {!news.length ? <Loading /> : <MediaArticles news={news} />}
             <Sidebar
-              data={news}
+              data={snews}
               title="Sawtee in Media"
-              showSawteeInMedia={news ? true : false}
+              showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
             />
           </SimpleGrid>
-          <Pagination mt="32px" />
+          <Pagination mt="56px" />
         </Box>
       </Section>
     </LightPatternBox>
   );
 };
 
-export default connect(Programmes);
+export default connect(SawteeInMedia);

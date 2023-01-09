@@ -170,7 +170,7 @@ const MediaArticleCard = ({
           fontSize="md"
           noOfLines={3}
           color={useColorModeValue("gray.500", "gray.200")}
-          dangerouslySetInnerHTML={{ __html: decode(content) }}
+          dangerouslySetInnerHTML={{ __html: content }}
         />
       </VStack>
       <HStack spacing={2} alignItems="center">

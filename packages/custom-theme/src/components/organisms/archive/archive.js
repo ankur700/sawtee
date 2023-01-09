@@ -5,10 +5,12 @@ import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
 import { decode } from "frontity";
-import SawteeInMediaArchive from "./sawtee-in-media-archive";
 import Programme from "../../../pages/programme";
 import Publications from "../../../pages/publication";
 import Events from "../../../pages/events";
+import SawteeInMedia from "../../../pages/sawteeInMedia";
+import Research from "../../../pages/research";
+import Newsletters from "../../../pages/newsletters";
 
 const Archive = ({ state }) => {
   // Get the data of the current list.
@@ -16,8 +18,10 @@ const Archive = ({ state }) => {
   if (data.isFeaturedEventsArchive) return <Events />;
 
   if (data.isPublicationsArchive) return <Publications />;
-  if (data.isSawteeInMediaArchive) return <SawteeInMediaArchive />;
+  if (data.isSawteeInMediaArchive) return <SawteeInMedia />;
   if (data.isProgrammeArchive) return <Programme />;
+  if (data.isNewsletterArchive) return <Newsletters />;
+  if (data.isResearchArchive) return <Research />;
 
   return (
     <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">

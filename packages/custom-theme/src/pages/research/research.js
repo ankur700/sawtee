@@ -12,15 +12,14 @@ import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
 import { fetcher, getCPTData } from "../../components/helpers";
-import ProgrammesList from "./programmesList";
 import Publication1 from "../../assets/publications-1.jpg";
 import Pagination from "../../components/organisms/archive/pagination";
 
-const Programmes = ({ state, actions, libraries }) => {
+const ResearchArchive = ({ state, libraries }) => {
+  // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-  const posts = Object.values(state.source.programme);
-  const linkColor = state.theme.colors.linkColor;
-  const programs = getCPTData(posts, state);
+  const posts = Object.values(state.source.research);
+  const research = getCPTData(posts, state);
 
   const { data: news } = useSWR(
     `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
@@ -36,7 +35,6 @@ const Programmes = ({ state, actions, libraries }) => {
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
-
   return (
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
@@ -102,11 +100,7 @@ const Programmes = ({ state, actions, libraries }) => {
             spacing="10"
             pos={"relative"}
           >
-            {!programs.length ? (
-              <Loading />
-            ) : (
-              <ProgrammesList programs={programs} libraries={libraries} />
-            )}
+            {research && !research.length ? <Loading /> : <pre>{research}</pre>}
             <Sidebar
               data={news}
               title="Sawtee in Media"
@@ -122,4 +116,4 @@ const Programmes = ({ state, actions, libraries }) => {
   );
 };
 
-export default connect(Programmes);
+export default connect(ResearchArchive);

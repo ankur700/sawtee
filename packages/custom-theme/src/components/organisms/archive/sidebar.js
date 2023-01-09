@@ -76,7 +76,7 @@ export const Sidebar = ({
           <TwitterTimeline
             handle="sawteenp"
             width={"100%"}
-            height="auto"
+            height="700px"
             maxH={"700px"}
           />
         </GlassBox>

@@ -323,6 +323,16 @@ const settings = {
               endpoint: "programme",
               archive: "/programme",
             },
+            {
+              type: "newsletters",
+              endpoint: "newsletters",
+              archive: "/newsletters",
+            },
+            {
+              type: "research",
+              endpoint: "research",
+              archive: "/research",
+            },
           ],
         },
       },

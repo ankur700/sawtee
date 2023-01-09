@@ -1,4 +1,4 @@
-import { Link, Box, useColorModeValue } from "@chakra-ui/react";
+import { Link, Text, useColorModeValue } from "@chakra-ui/react";
 import Title from "../../atoms/title";
 
 const TwitterTimeline = ({ height, width, handle, ...rest }) => {
@@ -13,14 +13,15 @@ const TwitterTimeline = ({ height, width, handle, ...rest }) => {
       data-dnt="true"
       data-theme={useColorModeValue("light", "dark")}
       data-tweet-limit="15"
-      // data-chrome="noheader nofooter noborders"
+      data-chrome="noborders"
       href={link}
       {...rest}
       overflow="scroll"
-      m={4}
       p={8}
     >
-      <Title text={"Track SAWTEE on TWITTER"} />
+      <Text as="p" textAlign={"center"}>
+        {"Track SAWTEE on TWITTER"}
+      </Text>
     </Link>
   );
 };

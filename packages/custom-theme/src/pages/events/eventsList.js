@@ -24,13 +24,13 @@ const EventsList = ({ data, showAvatar, libraries }) => {
   return (
     <VStack spacing={8} w={{ base: "auto", md: "3xl" }}>
       {data &&
-        data.map((article, index) => (
+        data.map((article) => (
           <Stack
-            key={index}
+            key={article.id}
             direction="column"
             spacing={4}
             w="full"
-            p={4}
+            rounded="xl"
             bg={useColorModeValue("whiteAlpha", "blackAlpha")}
             border="1px solid"
             borderColor="blue.100"
@@ -41,92 +41,99 @@ const EventsList = ({ data, showAvatar, libraries }) => {
                 "0 4px 6px rgba(9, 17, 28, 0.9)"
               ),
             }}
-            rounded="lg"
           >
-            {article.featured_media && article.featured_media.src && (
-              <Link link={article.link}>
-                <PostImageWithOverlay {...article.featured_media} />
-              </Link>
-            )}
-            <HStack spacing={2} mb={1}>
-              {article.categories &&
-                article.categories.map((cat, index) => (
-                  <Tag
-                    key={cat.id}
-                    colorScheme={useColorModeValue("blackAlpha", "gray")}
-                    borderRadius="full"
-                    bg={useColorModeValue(
-                      "rgb(230 247 255/1)",
-                      "rgb(88,175,223,.1)"
-                    )}
-                  >
-                    {cat.name}
-                  </Tag>
-                ))}
-            </HStack>
-            <Box textAlign="left">
-              <Link
-                fontSize="xl"
-                lineHeight={1.2}
-                fontWeight="bold"
-                w="100%"
-                className="primary-link"
-                _hover={{ textDecoration: "underline" }}
-                link={article.link ? article.link : "#"}
-              >
-                {decode(article.title)}
-              </Link>
-              <Text
-                as="div"
-                fontSize="md"
-                color="gray.500"
-                noOfLines={2}
-                lineHeight="normal"
-              >
-                <Html2React html={article.excerpt} />
-              </Text>
-            </Box>
             <Box>
-              {showAvatar && article.author && (
-                <Avatar
-                  size="sm"
-                  title="Author"
-                  mb={2}
-                  src={article.author.avatar_urls[48]}
-                />
+              {article.featured_media && article.featured_media.src && (
+                <Link link={article.link}>
+                  <PostImageWithOverlay
+                    {...article.featured_media}
+                    borderRadius="0.75rem 0.75rem 0 0"
+                    overflow="hidden"
+                  />
+                </Link>
               )}
-              <Stack
-                justify="space-between"
-                direction={{ base: "column", sm: "row" }}
-              >
-                <Box>
-                  <Text fontSize="sm" fontWeight="bold">
-                    {article.author.name.toUpperCase()}
-                  </Text>
-                  <Text fontSize="sm" color="gray.500">
-                    {moment(article.publishDate).format(format)}
-                  </Text>
-                </Box>
-                <HStack
-                  as={Link}
-                  spacing={1}
-                  p={1}
-                  alignItems="center"
-                  height="2rem"
-                  w="max-content"
-                  margin="auto 0"
-                  rounded="md"
-                  color={useColorModeValue("primary.700", "primary.50")}
+            </Box>
+            <Box p={4}>
+              <HStack spacing={2} mb={1}>
+                {article.categories &&
+                  article.categories.map((cat) => (
+                    <Tag
+                      key={cat.id}
+                      colorScheme={useColorModeValue("blackAlpha", "gray")}
+                      borderRadius="full"
+                      bg={useColorModeValue(
+                        "rgb(230 247 255/1)",
+                        "rgb(88,175,223,.1)"
+                      )}
+                    >
+                      {cat.name}
+                    </Tag>
+                  ))}
+              </HStack>
+              <Box textAlign="left">
+                <Link
+                  fontSize="xl"
+                  lineHeight={1.2}
+                  fontWeight="bold"
+                  w="100%"
+                  className="primary-link"
+                  _hover={{ textDecoration: "underline" }}
                   link={article.link ? article.link : "#"}
-                  _hover={{ bg: useColorModeValue("gray.200", "gray.700") }}
                 >
-                  <Link link={article.link}>
-                    {" "}
-                    <Text fontSize="sm"> Read more</Text>
-                  </Link>
-                  <Icon as={GoChevronRight} w={4} h={4} />
-                </HStack>
-              </Stack>
+                  {decode(article.title)}
+                </Link>
+                <Text
+                  as="div"
+                  fontSize="md"
+                  color="gray.500"
+                  noOfLines={2}
+                  lineHeight="normal"
+                >
+                  <Html2React html={article.excerpt} />
+                </Text>
+              </Box>
+              <Box>
+                {showAvatar && article.author && (
+                  <Avatar
+                    size="sm"
+                    title="Author"
+                    mb={2}
+                    src={article.author.avatar_urls[48]}
+                  />
+                )}
+                <Stack
+                  justify="space-between"
+                  direction={{ base: "column", sm: "row" }}
+                >
+                  <Box>
+                    <Text fontSize="sm" fontWeight="bold">
+                      {article.author.name.toUpperCase()}
+                    </Text>
+                    <Text fontSize="sm" color="gray.500">
+                      {moment(article.publishDate).format(format)}
+                    </Text>
+                  </Box>
+                  <HStack
+                    as={Link}
+                    spacing={1}
+                    p={1}
+                    alignItems="center"
+                    height="2rem"
+                    w="max-content"
+                    margin="auto 0"
+                    rounded="md"
+                    color={useColorModeValue("primary.700", "primary.50")}
+                    link={article.link ? article.link : "#"}
+                    _hover={{ bg: useColorModeValue("gray.200", "gray.700") }}
+                  >
+                    <Link link={article.link}>
+                      {" "}
+                      <Text fontSize="sm"> Read more</Text>
+                    </Link>
+                    <Icon as={GoChevronRight} w={4} h={4} />
+                  </HStack>
+                </Stack>
+              </Box>
             </Box>
           </Stack>
         ))}
