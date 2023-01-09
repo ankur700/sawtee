@@ -106,7 +106,7 @@ const EventsArchive = ({ state, libraries }) => {
             ) : (
               <EventsList
                 data={events}
-                showAvatar={true}
+                showAvatar={false}
                 libraries={libraries}
               />
             )}

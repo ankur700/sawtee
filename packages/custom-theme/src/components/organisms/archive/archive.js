@@ -20,7 +20,7 @@ const Archive = ({ state }) => {
   if (data.isPublicationsArchive) return <Publications />;
   if (data.isSawteeInMediaArchive) return <SawteeInMedia />;
   if (data.isProgrammeArchive) return <Programme />;
-  if (data.isNewsletterArchive) return <Newsletters />;
+  if (data.isNewslettersArchive) return <Newsletters />;
   if (data.isResearchArchive) return <Research />;
 
   return (

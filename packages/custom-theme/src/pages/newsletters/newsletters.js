@@ -14,12 +14,14 @@ import Loading from "../../components/atoms/loading";
 import { fetcher, getCPTData } from "../../components/helpers";
 import Publication1 from "../../assets/publications-1.jpg";
 import Pagination from "../../components/organisms/archive/pagination";
+import NewsletterList from "./newslettersList";
 
 const NewsletterArchive = ({ state, libraries }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const posts = Object.values(state.source.newsletters);
   const newsletters = getCPTData(posts, state);
+  const linkColor = state.theme.colors.linkColor;
 
   const { data: news } = useSWR(
     `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
@@ -28,6 +30,9 @@ const NewsletterArchive = ({ state, libraries }) => {
       revalidateOnFocus: false,
     }
   );
+
+  // console.log(newsletters);
+
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
@@ -99,7 +104,11 @@ const NewsletterArchive = ({ state, libraries }) => {
             spacing="10"
             pos={"relative"}
           >
-            {!newsletters.length ? <Loading /> : <pre>{newsletters}</pre>}
+            {!newsletters.length ? (
+              <Loading />
+            ) : (
+              <NewsletterList newsletters={newsletters} linkColor={linkColor} />
+            )}
             <Sidebar
               data={news}
               title="Sawtee in Media"

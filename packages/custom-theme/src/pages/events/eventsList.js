@@ -92,12 +92,12 @@ const EventsList = ({ data, showAvatar, libraries }) => {
                   <Html2React html={article.excerpt} />
                 </Text>
               </Box>
-              <Box>
+              <Box mt="2">
                 {showAvatar && article.author && (
                   <Avatar
                     size="sm"
                     title="Author"
-                    mb={2}
+                    mb={4}
                     src={article.author.avatar_urls[48]}
                   />
                 )}
