@@ -1,41 +1,30 @@
-import {
-  Box,
-  SimpleGrid,
-  Image,
-  Heading,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { connect } from "frontity";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
-import Sidebar from "../../components/organisms/archive/sidebar";
+import { useArchiveInfiniteScroll } from "@frontity/hooks";
+import { connect, styled } from "frontity";
+import React from "react";
 import Loading from "../../components/atoms/loading";
+import MediaList from "./mediaList";
+import { LightPatternBox } from "../../components/styles/pattern-box";
 import Publication1 from "../../assets/publications-1.jpg";
-import useSWR from "swr";
-import Pagination from "../../components/organisms/archive/pagination";
-import { getCPTData, fetcher } from "../../components/helpers";
-import MediaArticles from "./MediaArticles";
-import useArchiveInfiniteScroll from "@frontity/hooks/use-archive-infinite-scroll";
+import { Box, Image, Heading, useColorModeValue } from "@chakra-ui/react";
 
-const SawteeInMedia = ({ state, actions, libraries }) => {
-  const data = state.source.get(state.router.link);
-  const posts = Object.values(state.source["sawtee-in-media"]);
-  const news = getCPTData(posts, state);
-  const linkColor = state.theme.colors.linkColor;
+const ButtonContainer = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+`;
 
-  const { pages, isFetching, isLimit, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 5 });
+const Button = styled.button`
+  position: relative;
+  background: #1f38c5;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+  border: none;
+`;
 
-  const { data: snews } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
-
-  // Load the post, but only if the data is ready.
-  if (!data.isReady) return null;
+const SawteeInMedia = ({state}) => {
+  const { pages, isLimit, isFetching, isError, fetchNext } =
+    useArchiveInfiniteScroll({ limit: 3 });
 
   return (
     <LightPatternBox
@@ -84,53 +73,19 @@ const SawteeInMedia = ({ state, actions, libraries }) => {
           </Heading>
         </Box>
       </Box>
-
-      <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
-        pb="80px"
-        size="xl"
-      >
-        <Box
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="xl"
-          pt="50px"
-          fontSize={["md", "lg", "xl"]}
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
-        >
-          <SimpleGrid
-            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
-            spacing="10"
-            pos={"relative"}
-          >
-            {!news.length ? (
-              <Loading />
-            ) : (
-              <MediaArticles news={news} linkColor={linkColor} />
-            )}
-            {/* {pages.map(({ Wrapper, key, link, isLast }) => (
-              <Wrapper key={key}></Wrapper>
-            ))} */}
-
-            {isFetching && <div>Loading more...</div>}
-
-            {(isLimit || isError) && (
-              <button onClick={fetchNext}>
-                {isError ? "Something failed - Retry" : "Load More"}
-              </button>
-            )}
-            <Sidebar
-              data={snews}
-              title="Sawtee in Media"
-              showSawteeInMedia={true}
-              showTwitterTimeline={true}
-              showSubscriptionCard={true}
-              linkColor={linkColor}
-            />
-          </SimpleGrid>
-          <Pagination mt="56px" />
-        </Box>
-      </Section>
+      {pages.map(({ key, link, isLast, Wrapper }) => (
+        <Wrapper key={key}>
+          <MediaList link={link} />
+          {!isLast && <hr />}
+        </Wrapper>
+      ))}
+      <ButtonContainer>
+        {isFetching && <Loading />}
+        {isLimit && <Button onClick={fetchNext}>Load Next Page</Button>}
+        {isError && (
+          <Button onClick={fetchNext}>Something failed - Retry</Button>
+        )}
+      </ButtonContainer>
     </LightPatternBox>
   );
 };

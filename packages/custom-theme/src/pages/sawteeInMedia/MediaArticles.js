@@ -74,6 +74,7 @@ const MediaArticles = ({ news, linkColor }) => {
             </Box>
           );
         })}
+
     </VStack>
   );
 };
