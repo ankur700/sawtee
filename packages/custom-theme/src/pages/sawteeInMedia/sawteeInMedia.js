@@ -5,7 +5,16 @@ import Loading from "../../components/atoms/loading";
 import MediaList from "./mediaList";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Publication1 from "../../assets/publications-1.jpg";
-import { Box, Image, Heading, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Image,
+  Heading,
+  SimpleGrid,
+  useColorModeValue,
+  Divider,
+} from "@chakra-ui/react";
+import Section from "../../components/styles/section";
+import Sidebar from "../../components/organisms/archive/sidebar";
 
 const ButtonContainer = styled.div`
   width: 100%;
@@ -22,9 +31,10 @@ const Button = styled.button`
   border: none;
 `;
 
-const SawteeInMedia = ({state}) => {
+const SawteeInMedia = ({ state }) => {
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
+  const linkColor = state.theme.colors.linkColor;
 
   return (
     <LightPatternBox
@@ -69,23 +79,59 @@ const SawteeInMedia = ({state}) => {
             mb={{ base: "20px", lg: "32px" }}
             textTransform="uppercase"
           >
-            {data.type}
+            {pages[0].type}
           </Heading>
         </Box>
       </Box>
-      {pages.map(({ key, link, isLast, Wrapper }) => (
-        <Wrapper key={key}>
-          <MediaList link={link} />
-          {!isLast && <hr />}
-        </Wrapper>
-      ))}
-      <ButtonContainer>
-        {isFetching && <Loading />}
-        {isLimit && <Button onClick={fetchNext}>Load Next Page</Button>}
-        {isError && (
-          <Button onClick={fetchNext}>Something failed - Retry</Button>
-        )}
-      </ButtonContainer>
+      <Section
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+        pb="80px"
+        size="xl"
+      >
+        <Box
+          as={Section}
+          px={{ base: "32px", md: "0" }}
+          size="xl"
+          pt="50px"
+          fontSize={["md", "lg", "xl"]}
+          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        >
+          <SimpleGrid
+            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
+            spacing="10"
+            pos={"relative"}
+          >
+            <Box>
+              {pages.map(({ key, link, isLast, Wrapper }) => (
+                <Wrapper key={key}>
+                  <MediaList link={link} />
+                  {isLast && <Divider h="10px" mt='10' />}
+                  <ButtonContainer>
+                    {isFetching && <Loading />}
+                    {isLimit && (
+                      <Button onClick={fetchNext}>Load Next Page</Button>
+                    )}
+                    {isError && (
+                      <Button onClick={fetchNext}>
+                        Something failed - Retry
+                      </Button>
+                    )}
+                  </ButtonContainer>
+                </Wrapper>
+              ))}
+            </Box>
+            <Sidebar
+              data={null}
+              title="Sawtee in Media"
+              showSawteeInMedia={false}
+              showTwitterTimeline={true}
+              showSubscriptionCard={true}
+              linkColor={linkColor}
+            />
+          </SimpleGrid>
+          {/* <Pagination mt="56px" /> */}
+        </Box>
+      </Section>
     </LightPatternBox>
   );
 };
