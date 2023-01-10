@@ -2,79 +2,81 @@ import {
   Box,
   Text,
   useColorModeValue,
-  chakra,
   HStack,
   VStack,
-  Avatar,
-  LinkBox,
-  LinkOverlay,
+  Heading,
 } from "@chakra-ui/react";
 import { decode } from "frontity";
 import { formatDateWithMoment } from "../../components/helpers";
+import Link from "../../components/atoms/link";
 
-const MediaArticles = ({ news }) => {
+const MediaArticles = ({ news, linkColor }) => {
+  const Color = linkColor;
   return (
     <VStack spacing={8}>
       {news &&
-        news.map((item) => {
+        news.map(({ id, title, excerpt, publishDate, link, acf }) => {
           return (
-            <MediaArticleCard
-              key={item.id}
-              title={item.title}
-              excerpt={item.excerpt}
-              username={item.author.name}
-              created_at={formatDateWithMoment(item.publishDate)}
-              link={item.link}
-            />
+            <Box
+              key={id}
+              p={4}
+              _hover={{ bg: useColorModeValue("gray.100", "gray.800") }}
+              rounded="md"
+              border={"1px solid"}
+              w="full"
+              borderColor={useColorModeValue("gray.800", "whiteAlpha.800")}
+            >
+              <VStack spacing={2} mb={5} alignItems={"start"}>
+                <Heading
+                  color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                  fontSize="xl"
+                  lineHeight={1.2}
+                  fontWeight="bold"
+                  _hover={{ color: Color, textDecoration: "underline" }}
+                  textAlign="left"
+                  w="100%"
+                >
+                  <Link link={link}> {decode(title)}</Link>
+                </Heading>
+
+                <Text
+                  fontSize="md"
+                  noOfLines={3}
+                  color={useColorModeValue("gray.500", "gray.200")}
+                  dangerouslySetInnerHTML={{ __html: excerpt }}
+                />
+              </VStack>
+              <HStack
+                fontSize="sm"
+                fontWeight="bold"
+                spacing={2}
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                {acf.publishers &&
+                  acf.publishers.map((publisher, idx) => {
+                    return (
+                      <Text
+                        key={idx}
+                        as="a"
+                        href={publisher.publisher_website}
+                        _hover={{ textDecor: "underline" }}
+                        maxW="180px"
+                      >
+                        {publisher.publisher_name}
+                      </Text>
+                    );
+                  })}
+                <Text color={useColorModeValue("gray.500", "gray.200")}>
+                  {formatDateWithMoment(publishDate)}
+                </Text>
+              </HStack>
+            </Box>
           );
         })}
     </VStack>
   );
 };
 
-const MediaArticleCard = ({ title, excerpt, username, created_at, link }) => {
-  return (
-    <LinkBox
-      p={4}
-      _hover={{ bg: useColorModeValue("gray.100", "gray.800") }}
-      rounded="md"
-      border={"1px solid"}
-      w="full"
-      borderColor={useColorModeValue("gray.800", "whiteAlpha.800")}
-    >
-      <VStack spacing={2} mb={5} alignItems={"start"}>
-        <LinkOverlay href={link}>
-          <chakra.h1
-            fontSize="2xl"
-            lineHeight={1.2}
-            textAlign="left"
-            fontWeight="bold"
-            w="100%"
-          >
-            {decode(title)}
-          </chakra.h1>
-        </LinkOverlay>
-        <Text
-          fontSize="md"
-          noOfLines={3}
-          color={useColorModeValue("gray.500", "gray.200")}
-          dangerouslySetInnerHTML={{ __html: excerpt }}
-        />
-      </VStack>
-      <HStack
-        fontSize="sm"
-        fontWeight="bold"
-        spacing={2}
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Text>{username}</Text>
-        <Text color={useColorModeValue("gray.500", "gray.200")}>
-          {created_at}
-        </Text>
-      </HStack>
-    </LinkBox>
-  );
-};
 
 export default MediaArticles;

@@ -1,5 +1,12 @@
 import React from "react";
-import { Box, useColorModeValue, Text, Stack, Divider } from "@chakra-ui/react";
+import {
+  Box,
+  useColorModeValue,
+  Text,
+  Stack,
+  Divider,
+  Heading,
+} from "@chakra-ui/react";
 import SubscriptionCard from "../../atoms/subscriptionCard";
 import TwitterTimeline from "../../atoms/twitterTimeline";
 import GlassBox from "../../atoms/glassBox";
@@ -14,6 +21,7 @@ export const Sidebar = ({
   showSawteeInMedia,
   showTwitterTimeline,
   showSubscriptionCard,
+  linkColor,
 }) => {
   return (
     <Stack spacing={16}>
@@ -25,11 +33,22 @@ export const Sidebar = ({
               const formatedDate = moment(event.date, "YYYYMMDD").fromNow();
               return (
                 <Stack spacing={2} mt="6" key={event.id}>
-                  <Link className="primary-link" link={event.link}>
-                    <Text className="title" fontSize={["sm", "md"]} mb="2">
+                  <Heading
+                    className="title"
+                    fontSize={["sm", "md"]}
+                    mb="2"
+                    color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                    lineHeight={1.2}
+                    fontWeight="bold"
+                    _hover={{
+                      color: linkColor ? linkColor : "primary.700",
+                      textDecoration: "underline",
+                    }}
+                  >
+                    <Link link={event.link}>
                       {decode(event.title.rendered)}
-                    </Text>
-                  </Link>
+                    </Link>
+                  </Heading>
                   <Box
                     display={"flex"}
                     justifyContent="space-between"
@@ -39,7 +58,12 @@ export const Sidebar = ({
                     {event.acf.publishers &&
                       event.acf.publishers.map((publisher) => {
                         return (
-                          <Text as="a" href={publisher.publisher_website}>
+                          <Text
+                            as="a"
+                            href={publisher.publisher_website}
+                            _hover={{ textDecor: "underline" }}
+                            maxW="180px"
+                          >
                             {publisher.publisher_name}
                           </Text>
                         );

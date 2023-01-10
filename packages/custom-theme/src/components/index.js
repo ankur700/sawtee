@@ -1,7 +1,7 @@
+import React, { useEffect } from "react";
 import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { connect, Global, Head } from "frontity";
 import Switch from "@frontity/components/switch";
-import React from "react";
 import SkipLink from "./styles/skip-link";
 import Archive from "./organisms/archive";
 import Footer from "./organisms/footer";
@@ -54,6 +54,7 @@ const Theme = ({ state }) => {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
+        {/* <script src="https://unpkg.com/aos@next/dist/aos.js"></script> */}
         <script
           async
           src="https://platform.twitter.com/widgets.js"

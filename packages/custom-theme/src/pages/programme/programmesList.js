@@ -1,8 +1,16 @@
-import { VStack, Flex, Box, Link, Text } from "@chakra-ui/react";
+import {
+  VStack,
+  Flex,
+  Box,
+  Link,
+  Text,
+  Heading,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { decode } from "frontity";
 import moment from "moment/moment";
 
-const ProgrammesList = ({ programs, libraries }) => {
+const ProgrammesList = ({ programs, libraries, linkColor }) => {
   const Html2React = libraries.html2react.Component;
 
   return (
@@ -37,30 +45,23 @@ const ProgrammesList = ({ programs, libraries }) => {
               </Flex>
 
               <Box mt={2}>
-                <Link
+                <Heading
+                  color={useColorModeValue("gray.700", "whiteAlpha.700")}
                   fontSize="xl"
-                  color="gray.700"
-                  _dark={{
-                    color: "white",
-                  }}
-                  href={link}
-                  fontWeight="700"
-                  _hover={{
-                    color: "gray.600",
-                    _dark: {
-                      color: "gray.200",
-                    },
-                    textDecor: "underline",
-                  }}
+                  lineHeight={1.2}
+                  fontWeight="bold"
+                  _hover={{ color: linkColor, textDecoration: "underline" }}
                 >
-                  {decode(title)}
-                </Link>
+                  <Link href={link} fontWeight="700">
+                    {decode(title)}
+                  </Link>
+                </Heading>
                 <Text
                   mt={2}
                   fontSize="md"
                   color="gray.600"
                   _dark={{
-                    color: "gray.300",
+                    color: "gray.200",
                   }}
                   noOfLines={3}
                 >
@@ -70,9 +71,9 @@ const ProgrammesList = ({ programs, libraries }) => {
 
               <Flex justifyContent="space-between" alignItems="center" mt={4}>
                 <Link
-                  color="brand.600"
+                  color="primary.600"
                   _dark={{
-                    color: "brand.400",
+                    color: "primary.400",
                   }}
                   href={link}
                   _hover={{

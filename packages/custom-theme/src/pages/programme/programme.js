@@ -105,7 +105,11 @@ const Programmes = ({ state, actions, libraries }) => {
             {!programs.length ? (
               <Loading />
             ) : (
-              <ProgrammesList programs={programs} libraries={libraries} />
+              <ProgrammesList
+                programs={programs}
+                libraries={libraries}
+                linkColor={linkColor}
+              />
             )}
             <Sidebar
               data={news}
@@ -113,6 +117,7 @@ const Programmes = ({ state, actions, libraries }) => {
               showSawteeInMedia={news ? true : false}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
+              linkColor={linkColor}
             />
           </SimpleGrid>
           <Pagination mt="32px" />

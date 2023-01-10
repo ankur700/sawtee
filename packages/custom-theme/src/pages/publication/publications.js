@@ -124,6 +124,7 @@ const Publications = ({ state, actions, libraries }) => {
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
+              linkColor={linkColor}
             />
           </SimpleGrid>
         </Box>

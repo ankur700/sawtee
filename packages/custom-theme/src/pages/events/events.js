@@ -22,6 +22,7 @@ const EventsArchive = ({ state, libraries }) => {
   const postData = state.source.get(state.router.link);
   const posts = Object.values(state.source["featured-events"]);
   const events = getCPTData(posts, state);
+  const linkColor = state.theme.colors.linkColor;
 
   const { data: news } = useSWR(
     `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
@@ -106,12 +107,14 @@ const EventsArchive = ({ state, libraries }) => {
             ) : (
               <EventsList
                 data={events}
+                linkColor={linkColor}
                 showAvatar={false}
                 libraries={libraries}
               />
             )}
             <Sidebar
               data={news}
+              linkColor={linkColor}
               title="Sawtee in Media"
               showSawteeInMedia={news ? true : false}
               showTwitterTimeline={true}

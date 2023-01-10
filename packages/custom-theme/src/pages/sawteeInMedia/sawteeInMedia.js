@@ -15,11 +15,16 @@ import useSWR from "swr";
 import Pagination from "../../components/organisms/archive/pagination";
 import { getCPTData, fetcher } from "../../components/helpers";
 import MediaArticles from "./MediaArticles";
+import useArchiveInfiniteScroll from "@frontity/hooks/use-archive-infinite-scroll";
 
 const SawteeInMedia = ({ state, actions, libraries }) => {
   const data = state.source.get(state.router.link);
   const posts = Object.values(state.source["sawtee-in-media"]);
   const news = getCPTData(posts, state);
+  const linkColor = state.theme.colors.linkColor;
+
+  const { pages, isFetching, isLimit, isError, fetchNext } =
+    useArchiveInfiniteScroll({ limit: 5 });
 
   const { data: snews } = useSWR(
     `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
@@ -98,13 +103,29 @@ const SawteeInMedia = ({ state, actions, libraries }) => {
             spacing="10"
             pos={"relative"}
           >
-            {!news.length ? <Loading /> : <MediaArticles news={news} />}
+            {!news.length ? (
+              <Loading />
+            ) : (
+              <MediaArticles news={news} linkColor={linkColor} />
+            )}
+            {/* {pages.map(({ Wrapper, key, link, isLast }) => (
+              <Wrapper key={key}></Wrapper>
+            ))} */}
+
+            {isFetching && <div>Loading more...</div>}
+
+            {(isLimit || isError) && (
+              <button onClick={fetchNext}>
+                {isError ? "Something failed - Retry" : "Load More"}
+              </button>
+            )}
             <Sidebar
               data={snews}
               title="Sawtee in Media"
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
+              linkColor={linkColor}
             />
           </SimpleGrid>
           <Pagination mt="56px" />
