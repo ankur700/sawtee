@@ -12,24 +12,12 @@ import {
   SimpleGrid,
   useColorModeValue,
   Divider,
+  Button,
 } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 
-const ButtonContainer = styled.div`
-  width: 100%;
-  text-align: center;
-  margin-bottom: 40px;
-`;
 
-const Button = styled.button`
-  position: relative;
-  background: #1f38c5;
-  color: white;
-  padding: 12px;
-  font-weight: bold;
-  border: none;
-`;
 
 const SawteeInMedia = ({ state }) => {
   const { pages, isLimit, isFetching, isError, fetchNext } =
@@ -105,8 +93,8 @@ const SawteeInMedia = ({ state }) => {
               {pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
                   <MediaList link={link} />
-                  {isLast && <Divider h="10px" mt='10' />}
-                  <ButtonContainer>
+                  {isLast && <Divider h="10px" mt="10" />}
+                  <Box w="full" mb="40px" textAlign={"center"}>
                     {isFetching && <Loading />}
                     {isLimit && (
                       <Button onClick={fetchNext}>Load Next Page</Button>
@@ -116,7 +104,7 @@ const SawteeInMedia = ({ state }) => {
                         Something failed - Retry
                       </Button>
                     )}
-                  </ButtonContainer>
+                  </Box>
                 </Wrapper>
               ))}
             </Box>

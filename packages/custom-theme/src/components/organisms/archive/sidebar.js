@@ -63,6 +63,7 @@ export const Sidebar = ({
                             href={publisher.publisher_website}
                             _hover={{ textDecor: "underline" }}
                             maxW="180px"
+                            noOfLines={1}
                           >
                             {publisher.publisher_name}
                           </Text>
@@ -96,6 +97,7 @@ export const Sidebar = ({
           height="max-content"
           position={"sticky"}
           top={"8.5rem"}
+          p={2}
         >
           <TwitterTimeline
             handle="sawteenp"

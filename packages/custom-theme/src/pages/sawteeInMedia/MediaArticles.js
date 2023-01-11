@@ -5,6 +5,7 @@ import {
   HStack,
   VStack,
   Heading,
+  Tag,
 } from "@chakra-ui/react";
 import { decode } from "frontity";
 import { formatDateWithMoment } from "../../components/helpers";
@@ -20,7 +21,7 @@ const MediaArticles = ({ news, linkColor }) => {
             <Box
               key={id}
               p={4}
-              _hover={{ bg: useColorModeValue("gray.100", "gray.800") }}
+              _hover={{ bg: useColorModeValue("gray.50", "gray.800") }}
               rounded="md"
               border={"1px solid"}
               w="full"
@@ -56,15 +57,21 @@ const MediaArticles = ({ news, linkColor }) => {
                 {acf.publishers &&
                   acf.publishers.map((publisher, idx) => {
                     return (
-                      <Text
+                      <Tag
                         key={idx}
+                        borderRadius="full"
+                        bg={useColorModeValue(
+                          "rgb(230 247 255/1)",
+                          "rgb(88,175,223,.1)"
+                        )}
+                        px="4"
                         as="a"
+                        color={useColorModeValue("gray.700", "gray.100")}
                         href={publisher.publisher_website}
                         _hover={{ textDecor: "underline" }}
-                        maxW="180px"
                       >
                         {publisher.publisher_name}
-                      </Text>
+                      </Tag>
                     );
                   })}
                 <Text color={useColorModeValue("gray.500", "gray.200")}>
@@ -74,7 +81,6 @@ const MediaArticles = ({ news, linkColor }) => {
             </Box>
           );
         })}
-
     </VStack>
   );
 };

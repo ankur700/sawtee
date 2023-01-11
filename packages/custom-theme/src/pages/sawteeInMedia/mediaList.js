@@ -1,7 +1,6 @@
 import { connect } from "frontity";
 import Loading from "../../components/atoms/loading";
-import useSWR from "swr";
-import { getCPTData, fetcher } from "../../components/helpers";
+import { getCPTData } from "../../components/helpers";
 import MediaArticles from "./MediaArticles";
 
 const SawteeInMedia = ({ state, link }) => {

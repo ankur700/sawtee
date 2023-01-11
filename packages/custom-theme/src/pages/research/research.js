@@ -5,21 +5,26 @@ import {
   useColorModeValue,
   Image,
   Heading,
+  Divider,
+  Button,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import { fetcher, getCPTData } from "../../components/helpers";
+import { fetcher } from "../../components/helpers";
 import Publication1 from "../../assets/publications-1.jpg";
-import Pagination from "../../components/organisms/archive/pagination";
+import ResearchList from "./researchList";
+import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
-const ResearchArchive = ({ state, libraries }) => {
+const ResearchArchive = ({ state }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-  const posts = Object.values(state.source.research);
-  const research = getCPTData(posts, state);
+  const linkColor = state.theme.colors.linkColor;
+
+  const { pages, isFetching, isLimit, isError, fetchNext } =
+    useArchiveInfiniteScroll({ limit: 3 });
 
   const { data: news } = useSWR(
     `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
@@ -89,7 +94,7 @@ const ResearchArchive = ({ state, libraries }) => {
       >
         <Box
           as={Section}
-          px={{ base: "16px", md: "0" }}
+          px={{ base: "32px", md: "0" }}
           size="xl"
           pt="50px"
           fontSize={["md", "lg", "xl"]}
@@ -100,16 +105,35 @@ const ResearchArchive = ({ state, libraries }) => {
             spacing="10"
             pos={"relative"}
           >
-            {research && !research.length ? <Loading /> : <pre>{research}</pre>}
+            <Box>
+              {pages.map(({ key, link, isLast, Wrapper }) => (
+                <Wrapper key={key}>
+                  <ResearchList link={link} linkColor={linkColor} />
+                  {isLast && <Divider h="10px" mt="10" />}
+                  <Box w="full" mb="40px" textAlign={"center"}>
+                    {isFetching && <Loading />}
+                    {isLimit && (
+                      <Button onClick={fetchNext}>Load Next Page</Button>
+                    )}
+                    {isError && (
+                      <Button onClick={fetchNext}>
+                        Something failed - Retry
+                      </Button>
+                    )}
+                  </Box>
+                </Wrapper>
+              ))}
+            </Box>
             <Sidebar
               data={news}
               title="Sawtee in Media"
-              showSawteeInMedia={news ? true : false}
+              showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
+              linkColor={linkColor}
             />
           </SimpleGrid>
-          <Pagination mt="32px" />
+          {/* <Pagination mt="56px" /> */}
         </Box>
       </Section>
     </LightPatternBox>
