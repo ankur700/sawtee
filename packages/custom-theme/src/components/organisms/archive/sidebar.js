@@ -104,6 +104,7 @@ export const Sidebar = ({
             width={"100%"}
             height="700px"
             maxH={"700px"}
+            rounded="xl"
           />
         </GlassBox>
       )}

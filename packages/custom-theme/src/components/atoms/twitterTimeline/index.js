@@ -1,11 +1,12 @@
-import { Link, Text, useColorModeValue } from "@chakra-ui/react";
+import { Box, Link, Text, useColorModeValue } from "@chakra-ui/react";
 import Title from "../../atoms/title";
 
 const TwitterTimeline = ({ height, width, handle, ...rest }) => {
   let link = `https://twitter.com/${handle}?ref_src=twsrc%5Etfw`;
 
   return (
-    <Link
+    <Box
+      as={Link}
       className="twitter-timeline"
       data-lang="en"
       data-width={width}
@@ -17,12 +18,13 @@ const TwitterTimeline = ({ height, width, handle, ...rest }) => {
       href={link}
       {...rest}
       overflow="scroll"
-      p={8}
+      rounded="2xl"
+      p={6}
     >
       <Text as="p" textAlign={"center"}>
         {"Track SAWTEE on TWITTER"}
       </Text>
-    </Link>
+    </Box>
   );
 };
 
