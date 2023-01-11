@@ -17,7 +17,8 @@ import OurWork from "../pages/OurWork";
 import KnowUs from "../pages/KnowUs";
 import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
-import { Post } from "./organisms/page/post-item";
+// import { Post } from "./organisms/page/post-item";
+import Post from '../components/organisms/post/post'
 import "focus-visible/dist/focus-visible";
 
 // Theme is the root React component of our theme. The one we will export

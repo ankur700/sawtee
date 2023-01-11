@@ -14,7 +14,6 @@ import {
 import { decode } from "frontity";
 
 const today = new Date();
-import { PostImage } from "../featured-post/components";
 import { formatDateWithMoment } from "../../helpers";
 import PostCategories from "../../organisms/post/post-categories";
 import generateGradient from "../../molecules/featured-post/genarate-gradient";
@@ -64,9 +63,17 @@ export const TopImageCard = (props) => {
         width="100%"
         bgImage={defaultValues.imageUrl}
         pos="relative"
+        rounded="lg"
       >
         {featured_media && featured_media.src && (
-          <PostImage pos="relative" {...featured_media} />
+          <Image
+            {...featured_media}
+            h="100%"
+            w="100%"
+            objectFit="cover"
+            rounded="lg"
+            fallbackSrc="https://via.placeholder.com/600x400"
+          />
         )}
       </Box>
 
@@ -225,7 +232,6 @@ export const NoImageCard = (props) => {
 
       <Flex justifyContent="space-between" alignItems="center" mt={4}>
         <Text
-          as="a"
           color="gray.800"
           _dark={{
             color: "whiteAlpha.800",
@@ -254,7 +260,7 @@ export const NoImageCard = (props) => {
                   alt={author.name}
                 />
               )}
-              <Link
+              <LinkOverlay
                 color="gray.700"
                 _dark={{
                   color: "whiteAlpha.700",
@@ -264,7 +270,7 @@ export const NoImageCard = (props) => {
                 href={author.link ? author.link : defaultValues.authorLink}
               >
                 {author.name ? author.name : defaultValues.author}
-              </Link>
+              </LinkOverlay>
             </Flex>
           )}
         </Show>

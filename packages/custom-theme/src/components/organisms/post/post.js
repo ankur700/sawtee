@@ -15,8 +15,6 @@ const Post = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
 
-  console.log(postData, post);
-
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
@@ -35,10 +33,10 @@ const Post = ({ state, actions, libraries }) => {
 
   return (
     <LightPatternBox showPattern={state.theme.showBackgroundPattern} ref={ref}>
-      <Box pb={{ base: "2rem", lg: "50px" }}>
+      <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
         <PostHeader
           mt={{ base: "20px", lg: "4rem" }}
-          px={{ base: "32px", md: "0" }}
+          px={{ base: "32px", md: "3rem" }}
           categories={post.categories}
           heading={post.title}
           author={post.author}

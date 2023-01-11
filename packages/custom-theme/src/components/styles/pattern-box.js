@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import Section from "./section";
 import tileGreen from "../../assets/pattern-tile-green.svg";
@@ -16,7 +16,7 @@ export const PatternBox = ({ showPattern = true, ...props }) => (
     {...(showPattern && {
       bgImage: `url(${tileGreen})`,
       bgSize: "1018px",
-      bgPos: "top center"
+      bgPos: "top center",
     })}
     {...props}
   />
@@ -25,7 +25,7 @@ export const PatternBox = ({ showPattern = true, ...props }) => (
 /**
  * @param {React.ComponentProps<typeof Box>} props
  */
-export const PatternBoxInner = props => (
+export const PatternBoxInner = (props) => (
   <Section
     py="80px"
     position="relative"
@@ -42,7 +42,7 @@ export const LightPatternBox = React.forwardRef(
   ({ showPattern = true, ...props }, ref) => (
     <Box
       ref={ref}
-      bg="accent.50"
+      bg={useColorModeValue("gray.100", "gray.800")}
       pt="40px"
       pos="relative"
       zIndex={0}
@@ -59,8 +59,8 @@ export const LightPatternBox = React.forwardRef(
         ...(showPattern && {
           bgSize: "1018px",
           bgPos: "top center",
-          bgImage: `url(${tileLight})`
-        })
+          bgImage: useColorModeValue(`url(${tileLight})`, `url(${tileGreen})`),
+        }),
       }}
       {...props}
     />
