@@ -29,6 +29,8 @@ const PublicationSliders = ({ state, link, categories }) => {
       : null;
   })();
 
+  // const results = React.useMemo()
+
   function getSlides(cat) {
     publications.forEach((pub) =>
       pub.categories.map((category) => {

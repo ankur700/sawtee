@@ -27,6 +27,12 @@ const ResearchList = ({ state, link, linkColor }) => {
   };
   const color = linkColor;
   const researchlist = getCPTData(posts(), state);
+
+  const researchData = new Set();
+
+  
+
+
   return (
     <>
       <VStack spacing={4}>
@@ -34,7 +40,7 @@ const ResearchList = ({ state, link, linkColor }) => {
           ({ id, title, featured_media, link, tags, categories }) => (
             <Box onClick={toggleOpen} w="full" key={id}>
               <HStack
-                p={4}
+                // p={4}
                 bg={useColorModeValue("white", "gray.800")}
                 rounded="xl"
                 borderWidth="1px"
@@ -56,10 +62,10 @@ const ResearchList = ({ state, link, linkColor }) => {
                     layout="fixed"
                     border={"1px solid"}
                     borderColor={useColorModeValue(
-                      "gray.700",
+                      "gray.100",
                       "whiteAlpha.700"
                     )}
-                    rounded="md"
+                    // rounded="md"
                     objectFit="cover"
                     fallbackSrc="https://via.placeholder.com/150"
                   />

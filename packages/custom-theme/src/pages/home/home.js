@@ -46,16 +46,6 @@ const Home = ({ state, events, media, categories }) => {
       <BlogSection data={eventsList} media={mediaImage} linkColor={linkColor} />
       <Box as="section" w="full">
         <Box h="500px" bg="orange">
-          Multimedia Section(sawtee youtube videos
-        </Box>
-      </Box>
-      <Box as="section" w="full">
-        <Box h="500px" bg="orange">
-          Latest Nesw section (In focus Section )
-        </Box>
-      </Box>
-      <Box as="section" w="full">
-        <Box h="500px" bg="orange">
           Upcoming Events section(Zoom meetings and physical programs info)
         </Box>
       </Box>
