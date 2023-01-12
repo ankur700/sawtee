@@ -3,6 +3,7 @@ import {
   SimpleGrid,
   Image,
   Heading,
+  Divider,
   useColorModeValue,
 } from "@chakra-ui/react";
 import useSWR from "swr";
@@ -14,16 +15,18 @@ import Sidebar from "../../components/organisms/archive/sidebar";
 import PublicationSliders from "./publicationSliders";
 import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1.jpg";
-import { getCPTData, fetcher } from "../../components/helpers";
+import { fetcher } from "../../components/helpers";
+import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
-const Publications = ({ state, actions, libraries }) => {
+const Publications = ({ state }) => {
   const data = state.source.get(state.router.link);
-  const posts = Object.values(state.source.publications);
-  const PublicationCategories = Object.keys(state.source.category);
   const linkColor = state.theme.colors.linkColor;
-  const publications = getCPTData(posts, state);
+
+  const { pages, isFetching, isLimit, isError, fetchNext } =
+    useArchiveInfiniteScroll({ limit: 3 });
+
   const { data: categories } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20`,
+    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=100`,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -31,7 +34,7 @@ const Publications = ({ state, actions, libraries }) => {
   );
 
   const { data: news } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
+    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media?per_page=15`,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -47,7 +50,7 @@ const Publications = ({ state, actions, libraries }) => {
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
-      <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
+      <Box pos="relative">
         <Box
           as="figure"
           mt={4}
@@ -88,8 +91,9 @@ const Publications = ({ state, actions, libraries }) => {
           </Heading>
         </Box>
       </Box>
-
-      <PublicationFilter data={categories} linkColor={linkColor} />
+      <Section bg={useColorModeValue("whiteAlpha.700", "gray.700")} size="xl">
+        <PublicationFilter data={categories} linkColor={linkColor} />
+      </Section>
 
       <Section
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
@@ -109,15 +113,29 @@ const Publications = ({ state, actions, libraries }) => {
             spacing="8"
             pos={"relative"}
           >
-            {!publications.length ? (
-              <Loading />
-            ) : (
-              <PublicationSliders
-                data={publications}
-                categories={categories}
-                PublicationCategories={PublicationCategories}
-              />
-            )}
+            <Box>
+              {pages.map(({ key, link, isLast, Wrapper }) => (
+                <Wrapper key={key}>
+                  <PublicationSliders
+                    link={link}
+                    linkColor={linkColor}
+                    categories={categories}
+                  />
+                  {isLast && <Divider h="10px" mt="10" />}
+                  <Box w="full" mb="40px" textAlign={"center"}>
+                    {isFetching && <Loading />}
+                    {isLimit && (
+                      <Button onClick={fetchNext}>Load Next Page</Button>
+                    )}
+                    {isError && (
+                      <Button onClick={fetchNext}>
+                        Something failed - Retry
+                      </Button>
+                    )}
+                  </Box>
+                </Wrapper>
+              ))}
+            </Box>
             <Sidebar
               data={news}
               title="Sawtee in Media"

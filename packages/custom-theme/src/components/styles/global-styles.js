@@ -288,6 +288,9 @@ const globalStyle = (colors) =>
   css([
     documentSetup(colors),
     accessibilitySettings,
+    // elementBase(colors),
+    // elementBase700,
+    // elementBase1220,
     gutenbergTheme,
     gutenbergStyles,
     // shortcodesUltimateStyles,

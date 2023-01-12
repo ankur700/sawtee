@@ -1,11 +1,32 @@
 import { Stack, Show } from "@chakra-ui/react";
 import Section from "../../components/atoms/section";
-import GridBlog from "../../components/organisms/GridBlog";
 import ViewAllBtn from "../../components/atoms/ViewAllBtn";
 import Title from "../../components/atoms/title";
-import { splitPosts } from "../../components/helpers";
+import { styled } from "frontity";
+import { Grid, GridItem } from "@chakra-ui/react";
+import { TopImageCard, NoImageCard } from "../../components/molecules/cards";
 
-const BlogSection = ({ data, media }) => {
+const CustomGrid = styled(Grid)`
+  margin: 0 auto;
+  display: grid;
+  grid-gap: 20px;
+  align-items: center;
+
+  @media (min-width: 80em) {
+    & #item-1 {
+      grid-column: 1 / span 2;
+      grid-row: 1 / span 2;
+    }
+    & #item-2 {
+      grid-row: 1 / span 1;
+    }
+    & #item-3 {
+      grid-row: 2 / span 1;
+    }
+  }
+`;
+
+const BlogSection = ({ data, media, linkColor }) => {
   return (
     <Section
       width="full"
@@ -26,10 +47,50 @@ const BlogSection = ({ data, media }) => {
           text="Policy Outreach"
         />
         <Show above="lg">
-          <ViewAllBtn w="12em" text={"View All"} />
+          {data.length > 0 && (
+            <ViewAllBtn
+              w="12em"
+              link={data[0] ? data[0].categories[0].link : "#"}
+              text={"View All"}
+            />
+          )}
         </Show>
       </Stack>
-      <GridBlog data={data} media={media} />
+      <CustomGrid
+        className="band"
+        templateColumns={{ base: "1fr", lg: "repeat(3, 1fr)" }}
+        templateRows={{ base: "auto", lg: "repeat(3, 1fr)" }}
+      >
+        {data &&
+          data.map((article, i) => {
+            return (
+              <GridItem key={article.id} id={"item-" + (i + 1)}>
+                {i === 0 ? (
+                  <TopImageCard
+                    title={article.title}
+                    categories={article.categories}
+                    featured_media={media}
+                    excerpt={article.excerpt}
+                    target={article.link}
+                    date={article.publishDate}
+                    author={article.author}
+                    linkColor={linkColor}
+                  />
+                ) : (
+                  <NoImageCard
+                    title={article.title}
+                    categories={article.categories}
+                    excerpt={article.excerpt}
+                    target={article.link}
+                    date={article.publishDate}
+                    author={article.author}
+                    linkColor={linkColor}
+                  />
+                )}
+              </GridItem>
+            );
+          })}
+      </CustomGrid>
       <Show below="lg">
         <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
       </Show>

@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import Link from "../../atoms/link";
 import PostCategories from "./post-categories";
@@ -14,7 +14,10 @@ const PostHeader = ({
   isPage,
   ...props
 }) => (
-  <Box textAlign="center" {...props}>
+  <Box
+    textAlign="center"
+    {...props}
+  >
     {!isPage && categories && (
       <PostCategories
         color="black"
@@ -24,7 +27,8 @@ const PostHeader = ({
     )}
     <Heading
       fontWeight="bold"
-      size={"3xl"}
+      color={useColorModeValue("gray.700", "whiteAlpha.700")}
+      size={"2xl"}
       mt="30px"
       mb={{ base: "20px", lg: "32px" }}
       textTransform="uppercase"
@@ -35,7 +39,11 @@ const PostHeader = ({
     {!isPage && author && (
       <Text fontSize="lg">
         by{" "}
-        <Link fontWeight="bold" color="accent.400" link={author.link}>
+        <Link
+          fontWeight="bold"
+          color={useColorModeValue("primary.600", "accent.200")}
+          link={author.link}
+        >
           {decode(author.name)}
         </Link>
       </Text>

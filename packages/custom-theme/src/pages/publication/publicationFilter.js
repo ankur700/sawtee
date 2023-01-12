@@ -7,6 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
+import Link from "../../components/atoms/link";
 
 const PublicationFilter = (props) => {
   const { data, linkColor } = props;
@@ -14,16 +15,12 @@ const PublicationFilter = (props) => {
   return (
     <Section
       bg={useColorModeValue("transparent")}
-      size="lg"
+      size="xl"
       mb="8"
       h="auto"
       px={{ base: "32px", md: "0" }}
       py="6"
       display="flex"
-      gap="4"
-      flexWrap="wrap"
-      justifyContent="center"
-      alignItems="center"
     >
       <Stack
         spacing={[1, 5]}
@@ -36,16 +33,19 @@ const PublicationFilter = (props) => {
         {data &&
           data
             .filter((category) => category.parent === 217)
-            .map(({ name, id }) => {
+            .map(({ name, id, link }) => {
               return (
                 <Button
                   key={id}
                   colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
                   variant="outline"
                 >
-                  <Checkbox colorScheme={"blue"} value={name}>
-                    <Text color={linkColor}>{name}</Text>
-                  </Checkbox>
+                  <Text
+                    color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                    __hover={{ color: linkColor }}
+                  >
+                    <Link link={link}>{name}</Link>
+                  </Text>
                 </Button>
               );
             })}

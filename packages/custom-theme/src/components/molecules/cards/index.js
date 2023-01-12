@@ -43,7 +43,7 @@ export const TopImageCard = (props) => {
     author,
     date,
     featured_media,
-    showAvatar,
+    linkColor,
   } = props;
 
   return (
@@ -92,10 +92,11 @@ export const TopImageCard = (props) => {
           fontSize={{ base: "lg", md: "xl" }}
           mt={2}
           _hover={{
-            color: `${useColorModeValue("gray.800", "whiteAlpha.800")}`,
+            color: linkColor,
+            textDecor: "underline",
           }}
         >
-          <LinkOverlay href={target ? target : "#"} className="primary-link">
+          <LinkOverlay href={target ? target : "#"}>
             {title ? decode(title) : defaultValues.title}
           </LinkOverlay>
         </Text>
@@ -105,7 +106,7 @@ export const TopImageCard = (props) => {
           noOfLines={3}
           color={useColorModeValue("gray.600", "whiteAlpha.600")}
           dangerouslySetInnerHTML={{
-            __html: excerpt ? excerpt : defaultValues.excerpt,
+            __html: excerpt,
           }}
         />
 
@@ -119,29 +120,18 @@ export const TopImageCard = (props) => {
             <Show above="md">
               {author && (
                 <Flex alignItems="center">
-                  {showAvatar && (
-                    <Image
-                      h={10}
-                      w={10}
-                      fit="cover"
-                      rounded="full"
-                      src={
-                        author.avatar_urls
-                          ? author.avatar_urls[48]
-                          : defaultValues.avatar
-                      }
-                      alt={author.name}
-                    />
-                  )}
-
-                  <Link
+                  <Text
                     mx={2}
                     fontWeight="bold"
                     color={useColorModeValue("gray.600", "whiteAlpha.600")}
-                    href={author.link ? author.link : defaultValues.authorLink}
+                    __hover={{
+                      textDecor: "none",
+                    }}
                   >
-                    {author.name ? author.name : defaultValues.author}
-                  </Link>
+                    <LinkOverlay href={author.link}>
+                      {author.name ? author.name : defaultValues.author}
+                    </LinkOverlay>
+                  </Text>
                 </Flex>
               )}
             </Show>
@@ -163,8 +153,7 @@ export const TopImageCard = (props) => {
 };
 
 export const NoImageCard = (props) => {
-  const { categories, title, target, excerpt, author, date, showAvatar } =
-    props;
+  const { categories, title, target, excerpt, author, date, linkColor } = props;
 
   return (
     <LinkBox
@@ -178,17 +167,9 @@ export const NoImageCard = (props) => {
       minH={"80"}
       display="flex"
       flexDir={"column"}
-      justifyContent="center"
+      justifyContent="space-between"
     >
       <Flex justifyContent="space-between" alignItems="center">
-        <Box
-          as="time"
-          fontSize="sm"
-          color={useColorModeValue("gray.600", "whiteAlpha.600")}
-        >
-          {date ? formatDateWithMoment(date) : defaultValues.date}
-        </Box>
-
         <PostCategories
           justify="flex-start"
           categories={categories}
@@ -196,28 +177,24 @@ export const NoImageCard = (props) => {
         />
       </Flex>
 
-      <Box mt={2}>
+      <Box>
         <Text
           fontSize={{ base: "md", md: "xl" }}
           color={useColorModeValue("gray.700", "whiteAlpha.700")}
-          fontWeight="700"
+          fontWeight="bold"
+          lineHeight={"normal"}
+          noOfLines={2}
           _hover={{
-            color: "gray.600",
-            _dark: {
-              color: "whiteAlpha.600",
-            },
+            color: linkColor,
             textDecor: "underline",
           }}
         >
-          <LinkOverlay
-            href={target ? target : defaultValues.target}
-            className="primary-link"
-          >
+          <LinkOverlay href={target ? target : defaultValues.target}>
             {title ? decode(title) : defaultValues.title}
           </LinkOverlay>
         </Text>
         <Text
-          mt={2}
+          mt={3}
           color="gray.600"
           _dark={{
             color: "whiteAlpha.600",
@@ -231,35 +208,9 @@ export const NoImageCard = (props) => {
       </Box>
 
       <Flex justifyContent="space-between" alignItems="center" mt={4}>
-        <Text
-          color="gray.800"
-          _dark={{
-            color: "whiteAlpha.800",
-          }}
-          _hover={{
-            textDecor: "underline",
-          }}
-        >
-          <LinkOverlay href={target}>Read more</LinkOverlay>
-        </Text>
         <Show above="md">
           {author && (
             <Flex alignItems="center">
-              {showAvatar && (
-                <Image
-                  mx={4}
-                  w={10}
-                  h={10}
-                  rounded="full"
-                  fit="cover"
-                  src={
-                    author.avatar_urls
-                      ? author.avatar_urls[48]
-                      : defaultValues.avatar
-                  }
-                  alt={author.name}
-                />
-              )}
               <LinkOverlay
                 color="gray.700"
                 _dark={{
@@ -274,6 +225,13 @@ export const NoImageCard = (props) => {
             </Flex>
           )}
         </Show>
+        <Box
+          as="time"
+          fontSize="sm"
+          color={useColorModeValue("gray.600", "whiteAlpha.600")}
+        >
+          {date ? formatDateWithMoment(date) : defaultValues.date}
+        </Box>
       </Flex>
     </LinkBox>
   );

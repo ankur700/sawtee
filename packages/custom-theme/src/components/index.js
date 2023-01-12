@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import useSWR from "swr";
 import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { connect, Global, Head } from "frontity";
 import Switch from "@frontity/components/switch";
@@ -18,8 +19,9 @@ import KnowUs from "../pages/KnowUs";
 import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
 // import { Post } from "./organisms/page/post-item";
-import Post from '../components/organisms/post/post'
+import Post from "../components/organisms/post/post";
 import "focus-visible/dist/focus-visible";
+import { fetcher } from "./helpers";
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
@@ -39,6 +41,30 @@ const Theme = ({ state }) => {
     initialColorMode: "light",
     useSystemColorMode: true,
   };
+  const eventsApi =
+    "https://sawtee.ankursingh.com.np/wp-json/wp/v2/featured-events?per_page=6";
+
+  const { data: categories } = useSWR(
+    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  const { data: events } = useSWR(eventsApi, fetcher, {
+    revalidateOnFocus: false,
+  });
+
+  const { data: media } = useSWR(
+    () =>
+      `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/` +
+      events[0].featured_media,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
+  );
 
   return (
     <ChakraProvider resetCSS theme={{ config, ...overrides }}>
@@ -78,10 +104,14 @@ const Theme = ({ state }) => {
       >
         <Switch>
           <Loading when={data.isFetching} />
-          <Home when={data.isHome} />
+          <Home
+            when={data.isHome}
+            events={events}
+            media={media}
+            categories={categories}
+          />
           <OurWork when={data.route === "/our-work/"} />
           <KnowUs when={data.route === "/about/"} />
-          {/* <Programme when={data.route === "/programme/"} /> */}
           <Page when={data.isPage} />
           <Post
             when={

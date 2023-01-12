@@ -102,6 +102,7 @@ const EventsList = ({ state, link, libraries, linkColor }) => {
               </HStack>
               <Box textAlign="left">
                 <Heading
+                  as="h3"
                   color={useColorModeValue("gray.700", "whiteAlpha.700")}
                   fontSize="xl"
                   lineHeight={1.2}
@@ -126,13 +127,11 @@ const EventsList = ({ state, link, libraries, linkColor }) => {
                 <Stack
                   justify="space-between"
                   direction={{ base: "column", sm: "row" }}
-                  alignItems={'center'}
+                  alignItems={"center"}
                 >
-
-
-                    <Text fontSize="sm" color="gray.500">
-                      {moment(event.publishDate).format(format)}
-                    </Text>
+                  <Text fontSize="sm" color="gray.500">
+                    {moment(event.publishDate).format(format)}
+                  </Text>
                   <HStack
                     as={Link}
                     spacing={1}

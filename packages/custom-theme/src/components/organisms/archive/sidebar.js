@@ -85,20 +85,8 @@ export const Sidebar = ({
         </GlassBox>
       )}
 
-      {showSubscriptionCard && (
-        <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-          <SubscriptionCard />
-        </GlassBox>
-      )}
-
       {showTwitterTimeline && (
-        <GlassBox
-          rounded="2xl"
-          height="max-content"
-          position={"sticky"}
-          top={"8.5rem"}
-          p={2}
-        >
+        <GlassBox rounded="2xl" height="max-content" p={2}>
           <TwitterTimeline
             handle="sawteenp"
             width={"100%"}
@@ -106,6 +94,19 @@ export const Sidebar = ({
             maxH={"700px"}
             rounded="xl"
           />
+        </GlassBox>
+      )}
+
+      {showSubscriptionCard && (
+        <GlassBox
+          py="4"
+          px="8"
+          rounded="2xl"
+          height="max-content"
+          position={"sticky"}
+          top={"8.5rem"}
+        >
+          <SubscriptionCard />
         </GlassBox>
       )}
     </Stack>
