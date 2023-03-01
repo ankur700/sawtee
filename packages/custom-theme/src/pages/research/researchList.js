@@ -10,9 +10,8 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { connect, decode } from "frontity";
+import { connect } from "frontity";
 import { getCPTData } from "../../components/helpers";
-import link from "../../components/atoms/link";
 import { HiOutlineNewspaper } from "react-icons/hi";
 
 const ResearchList = ({ state, link, linkColor }) => {

@@ -22,6 +22,7 @@ lib-cov
 node_modules/
 node_modules_old/
 jspm_packages/
+packages/sawtee-theme
 
 # TypeScript cache
 *.tsbuildinfo

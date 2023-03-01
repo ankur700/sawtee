@@ -1,5 +1,5 @@
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
-import { connect, styled } from "frontity";
+import { connect } from "frontity";
 import React from "react";
 import Loading from "../../components/atoms/loading";
 import MediaList from "./mediaList";

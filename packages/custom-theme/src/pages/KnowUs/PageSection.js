@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 
 const PageSection = ({ section, libraries }) => {
-  const { contentRepeater, title, content, hasTabOrHasAccordian } = section;
+  const { content_repeater, title, content, tab_or_accordian } = section;
   const tabBorderColor = useColorModeValue("gray.200", "whiteAlpha.300");
 
   // Get the html2react component.
@@ -33,24 +33,24 @@ const PageSection = ({ section, libraries }) => {
       >
         {title}
       </Text>
-      {hasTabOrHasAccordian ? (
+      {tab_or_accordian ? (
         title !== "Strategies" ? (
           <Tabs variant="enclosed" size="md" isFitted colorScheme="ghost">
             <TabList borderBottom={"none"}>
-              {contentRepeater.map(({ tabTitle }) => (
-                <Tab key={tabTitle}>
+              {content_repeater.map(({ tab_title }) => (
+                <Tab key={tab_title}>
                   <Text
                     fontSize={["md", "lg", "xl"]}
                     fontWeight="semibold"
                     fontFamily={"heading"}
                   >
-                    {tabTitle}
+                    {tab_title}
                   </Text>
                 </Tab>
               ))}
             </TabList>
             <TabPanels>
-              {contentRepeater.map(({ tabContent }, index) => (
+              {content_repeater.map(({ tab_content }, index) => (
                 <TabPanel
                   px={["5", "10"]}
                   key={index}
@@ -62,16 +62,16 @@ const PageSection = ({ section, libraries }) => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Html2React html={tabContent} />
+                  <Html2React html={tab_content} />
                 </TabPanel>
               ))}
             </TabPanels>
           </Tabs>
         ) : (
           <Accordion allowToggle>
-            {contentRepeater.map(({ tabTitle, tabContent }) => {
+            {content_repeater.map(({ tab_title, tab_content }) => {
               return (
-                <AccordionItem key={tabTitle} border="none">
+                <AccordionItem key={tab_title} border="none">
                   <AccordionButton
                     size="md"
                     py="4"
@@ -88,12 +88,12 @@ const PageSection = ({ section, libraries }) => {
                       flex="1"
                       textAlign="left"
                     >
-                      {tabTitle}
+                      {tab_title}
                     </Text>
                     <AccordionIcon />
                   </AccordionButton>
                   <AccordionPanel fontSize="inherit" px={["5", "10"]}>
-                    <Html2React html={tabContent} />
+                    <Html2React html={tab_content} />
                   </AccordionPanel>
                 </AccordionItem>
               );
