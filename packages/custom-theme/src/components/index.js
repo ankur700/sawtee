@@ -42,10 +42,10 @@ const Theme = ({ state }) => {
     useSystemColorMode: true,
   };
   const eventsApi =
-    "https://sawtee.ankursingh.com.np/wp-json/wp/v2/featured-events?per_page=6";
+    "https://sawtee.org/backend/wp-json/wp/v2/featured-events?per_page=6";
 
   const { data: categories } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20`,
+    `https://sawtee.org/backend/wp-json/wp/v2/categories?per_page=20`,
     fetcher,
     {
       revalidateOnFocus: false,
@@ -58,7 +58,7 @@ const Theme = ({ state }) => {
 
   const { data: media } = useSWR(
     () =>
-      `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/` +
+      `https://sawtee.org/backend/wp-json/wp/v2/media/` +
       events[0].featured_media,
     fetcher,
     {
