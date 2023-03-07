@@ -105,7 +105,7 @@ const Theme = ({ state }) => {
         <Switch>
           <Loading when={data.isFetching} />
           <Home
-            when={data.isHome}
+            when={data.isHome || data.route === "/"}
             events={events}
             media={media}
             categories={categories}
@@ -125,7 +125,7 @@ const Theme = ({ state }) => {
         </Switch>
       </Box>
 
-      <Footer />
+      {/* <Footer /> */}
     </ChakraProvider>
   );
 };

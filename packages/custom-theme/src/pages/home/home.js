@@ -14,6 +14,9 @@ const Home = ({ state, events, media, categories }) => {
   const publicationSliders = post.acf.publication_sliders;
   const linkColor = state.theme.colors.linkColor;
 
+
+  console.log(data, post, slides, publicationSliders);
+
   const introText = post.acf.about_section_intro;
 
   const [eventsList, setEventsList] = useState([]);
@@ -40,7 +43,7 @@ const Home = ({ state, events, media, categories }) => {
 
   return (
     <>
-      <CarouselSection data={slides} />
+      {slides && <CarouselSection data={slides} />}
       <AboutSection data={publicationSliders} intro={introText} />
       <InfoSection />
       <BlogSection data={eventsList} media={mediaImage} linkColor={linkColor} />

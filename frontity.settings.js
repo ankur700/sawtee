@@ -4,9 +4,9 @@ import link from "@frontity/html2react/processors/link";
 
 const settings = {
   name: "sawtee-frontend",
-  // roots: {
-  //   theme: Theme,
-  // },
+  roots: {
+    // theme: Theme,
+  },
   state: {
     frontity: {
       url: "https://sawtee.org/backend",
@@ -29,7 +29,7 @@ const settings = {
       name: "custom-theme",
       state: {
         theme: {
-          logo: "https://www.sawtee.org/images/logo-sawtee.webp",
+          logo: "https://sawtee.org/images/logo-sawtee.webp",
           // show background pattern
           showBackgroundPattern: false,
           // show social links
@@ -300,6 +300,7 @@ const settings = {
       state: {
         source: {
           url: "https://sawtee.org/backend",
+          subdirectory: "/backend",
           homepage: "home",
           postsPage: "blog",
           postTypes: [
