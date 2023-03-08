@@ -1,12 +1,8 @@
 import image from "@frontity/html2react/processors/image";
 import link from "@frontity/html2react/processors/link";
-// import Theme from "./packages/custom-theme/src/components";
 
 const settings = {
   name: "sawtee-frontend",
-  roots: {
-    // theme: Theme,
-  },
   state: {
     frontity: {
       url: "https://sawtee.org/backend",
@@ -300,8 +296,8 @@ const settings = {
       state: {
         source: {
           url: "https://sawtee.org/backend",
-          subdirectory: "/backend",
-          homepage: "home",
+          // subdirectory: "/backend",
+          homepage: "/",
           postsPage: "blog",
           postTypes: [
             {
