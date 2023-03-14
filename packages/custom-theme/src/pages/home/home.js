@@ -5,22 +5,17 @@ import CarouselSection from "./carouselSection";
 import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
-import {
-  formatCPTData,
-  getSrcSet,
-  getPostData,
-} from "../../components/helpers";
+import { formatCPTData, getSrcSet } from "../../components/helpers";
 
 const Home = ({ state, events, media, categories }) => {
-  const data = getPostData(state);
-  // const post = state.source[data.type][data.page];
-  // const slides = post.acf?.slides;
-  // const publicationSliders = post.acf?.publication_sliders;
+  const data = state.source.get(state.router.link);
+  const post = state.source[data.type][data.id];
+  const slides = post.acf?.slides;
+  const publicationSliders = post.acf?.publication_sliders;
+  const introText = post.acf.about_section_intro;
+
   const linkColor = state.theme.colors.linkColor;
-
-  console.log(data);
-
-  // const introText = post.acf.about_section_intro;
+  console.log(data, post);
 
   const [eventsList, setEventsList] = useState([]);
   const [mediaImage, setMediaImage] = useState({});
@@ -50,8 +45,8 @@ const Home = ({ state, events, media, categories }) => {
 
   return (
     <>
-      {/* {slides && <CarouselSection data={slides} />}
-      <AboutSection data={publicationSliders} intro={introText} /> */}
+      {slides && slides !== undefined && <CarouselSection data={slides} />}
+      <AboutSection data={publicationSliders} intro={introText} />
       <InfoSection />
       <BlogSection data={eventsList} media={mediaImage} linkColor={linkColor} />
       <Box as="section" w="full">

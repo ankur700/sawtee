@@ -3,8 +3,8 @@ import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
 // import { theme } from "@chakra-ui/react";
 
-const chakraTheme = {
-  name: "chakra-theme",
+const customTheme = {
+  name: "custom-theme",
   roots: {
     // In Frontity, any package can add React components to the site.
     // We use roots for that, scoped to the "theme" namespace.
@@ -94,4 +94,4 @@ const chakraTheme = {
   },
 };
 
-export default chakraTheme;
+export default customTheme;

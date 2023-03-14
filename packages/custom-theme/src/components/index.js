@@ -107,15 +107,15 @@ const Theme = ({ state }) => {
             />
             <OurWork when={data.route === "/our-work/"} />
             <KnowUs when={data.route === "/about/"} />
-            <Page when={data.isPage} />
-            <Post
+            {/* <Page when={data.isPage} /> */}
+            {/* <Post
               when={
                 data.isPostType || data.isPublications || data.isFeaturedEvents
               }
-            />
+            /> */}
             <SearchResults when={data.isSearch} />
             <HomeArchive when={data.route === "/blog"} />
-            <Archive when={data.isArchive} />
+            {/* <Archive when={data.isArchive} /> */}
             <Page404 when={data.is404} />
           </Switch>
         </Box>
