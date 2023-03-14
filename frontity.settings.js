@@ -295,9 +295,11 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
+
           url: "https://sawtee.org/backend/",
-          homepage: "/home/",
-          postsPage: "/blog/",
+          // subdirectory: "/backend",
+          homepage: "home",
+          postsPage: "blog",
           postTypes: [
             {
               type: "featured-events",

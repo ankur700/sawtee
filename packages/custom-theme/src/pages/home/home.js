@@ -11,11 +11,11 @@ const Home = ({ state, events, media, categories }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
-  const publicationSliders = post.acf?.publication_sliders;
-  const introText = post.acf.about_section_intro;
-
+  // const slides = post.acf?.slides;
+  // const publicationSliders = post.acf?.publication_sliders;
   const linkColor = state.theme.colors.linkColor;
   console.log(data, post);
+  const introText = post.acf.about_section_intro;
 
   const [eventsList, setEventsList] = useState([]);
   const [mediaImage, setMediaImage] = useState({});

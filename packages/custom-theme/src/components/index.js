@@ -92,34 +92,34 @@ const Theme = ({ state }) => {
         {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
 
-        <Box
-          as="main"
-          mt={{ base: "5.5rem", md: "6.5rem" }}
-          minH="calc(100vh - 6.5rem)"
-        >
-          <Switch>
-            <Loading when={data.isFetching} />
-            <Home
-              when={data.isHome}
-              events={events}
-              media={media}
-              categories={categories}
-            />
-            <OurWork when={data.route === "/our-work/"} />
-            <KnowUs when={data.route === "/about/"} />
-            {/* <Page when={data.isPage} /> */}
-            {/* <Post
-              when={
-                data.isPostType || data.isPublications || data.isFeaturedEvents
-              }
-            /> */}
-            <SearchResults when={data.isSearch} />
-            <HomeArchive when={data.route === "/blog"} />
-            {/* <Archive when={data.isArchive} /> */}
-            <Page404 when={data.is404} />
-          </Switch>
-        </Box>
 
+      <Box
+        as="main"
+        mt={{ base: "5.5rem", md: "6.5rem" }}
+        minH="calc(100vh - 6.5rem)"
+      >
+        <Switch>
+          <Loading when={data.isFetching} />
+          <Home
+            when={data.isHome || data.route === "/"}
+            events={events}
+            media={media}
+            categories={categories}
+          />
+          <OurWork when={data.route === "/our-work/"} />
+          <KnowUs when={data.route === "/about/"} />
+          <Page when={data.isPage} />
+          <Post
+            when={
+              data.isPostType || data.isPublications || data.isFeaturedEvents
+            }
+          />
+          <SearchResults when={data.isSearch} />
+          <HomeArchive when={data.route === "/blog"} />
+          <Archive when={data.isArchive} />
+          <Page404 when={data.is404} />
+        </Switch>
+      </Box>
         <Footer />
       </ChakraProvider>
     </SWRConfig>
