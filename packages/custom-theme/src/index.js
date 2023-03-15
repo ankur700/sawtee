@@ -64,7 +64,8 @@ const customTheme = {
       },
       isSearchModalOpen: false,
       isMobileMenuOpen: false,
-      autoPreFetch: "all",
+      autoPreFetch: "in-view",
+      fontSet: "all",
     },
   },
   // Actions are functions that modify the state or deal with other parts of

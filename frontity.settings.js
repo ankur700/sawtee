@@ -5,7 +5,6 @@ const settings = {
   name: "sawtee-frontend",
   state: {
     frontity: {
-      url: "https://sawtee.org/backend/",
       title: "SAWTEE",
       description: "South Asia Watch on Trade, Economics and Environment",
       year: "1997",
@@ -295,9 +294,7 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-
           url: "https://sawtee.org/backend/",
-          // subdirectory: "/backend",
           homepage: "home",
           postsPage: "blog",
           postTypes: [

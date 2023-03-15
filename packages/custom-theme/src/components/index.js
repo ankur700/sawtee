@@ -25,7 +25,7 @@ import { fetcher } from "./helpers";
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
-const Theme = ({ state }) => {
+const Theme = ({ state,actions }) => {
   // Get information about the current URL.
   const data = state.source.get(state.router.link);
 
@@ -53,6 +53,10 @@ const Theme = ({ state }) => {
       `https://sawtee.org/backend/wp-json/wp/v2/media/` +
       events[0].featured_media
   );
+
+    useEffect(() => {
+      actions.source.fetch("/");
+    }, [actions.source]);
 
   return (
     <SWRConfig
