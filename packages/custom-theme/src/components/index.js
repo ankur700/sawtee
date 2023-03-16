@@ -42,7 +42,7 @@ const Theme = ({ state,actions }) => {
     useSystemColorMode: true,
   };
   const eventsApi =
-    "https://sawtee.org/backend/wp-json/wp/v2/featured-events?per_page=6";
+    "https://sawtee.org/backend/wp-json/wp/v2/featured-events?per_page=6&order=asc";
 
   const { data: categories } = useSWR(
     `https://sawtee.org/backend/wp-json/wp/v2/categories?per_page=20`,
@@ -63,7 +63,6 @@ const Theme = ({ state,actions }) => {
       revalidateOnFocus: false,
     }
   );
-
   useEffect(() => {
     actions.source.fetch("/");
   }, [actions.source]);

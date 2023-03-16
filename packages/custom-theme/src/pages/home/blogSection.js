@@ -27,6 +27,7 @@ const CustomGrid = styled(Grid)`
 `;
 
 const BlogSection = ({ data, media, linkColor }) => {
+  console.log(data);
   return (
     <Section
       width="full"

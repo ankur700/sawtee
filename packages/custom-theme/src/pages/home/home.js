@@ -10,7 +10,7 @@ const Home = ({ state, events, media, categories }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
-  const publicationSliders = post.acf?.publication_sliders;
+  const publicationSliders = post.acf?.parent_pub_category;
   const linkColor = state.theme.colors.linkColor;
   const introText = post.acf.about_section_intro;
 
@@ -18,36 +18,40 @@ const Home = ({ state, events, media, categories }) => {
   const [mediaImage, setMediaImage] = useState({});
 
   useEffect(() => {
-    if (events) {
-      let array = [];
-      events.forEach((post) =>
-        array.push(formatCPTData(state, post, categories))
-      );
+    setTimeout(() => {
+      const array = [...eventsList];
+      events?.forEach((post) => {
+        array.push(formatCPTData(state, post, categories));
+      });
+
       if (array.length > 0) {
         setEventsList([...array]);
       }
-    }
-    if (media) {
-      const srcSet = getSrcSet(media);
-      setMediaImage({
-        id: media.id,
-        alt: media.alt_text,
-        src: media.source_url,
-        srcSet,
-      });
-    }
+
+      media
+        ? setMediaImage({
+            id: media.id,
+            alt: media.alt_text,
+            src: media.source_url,
+            srcSet: getSrcSet(media),
+          })
+        : setMediaImage({});
+    }, 1000);
+
+    return () => {
+      clearTimeout();
+    };
   }, [events, categories]);
 
   function truthy(value) {
     return value !== undefined && value !== null && value.length > 0;
   }
-
   return (
     <>
       {truthy(slides) && <CarouselSection data={slides} />}
-      {truthy(publicationSliders) && truthy(introText) && (
+      {/* {truthy(publicationSliders) && truthy(introText) && (
         <AboutSection data={publicationSliders} intro={introText} />
-      )}
+      )} */}
       <InfoSection />
       {truthy(eventsList) && (
         <BlogSection

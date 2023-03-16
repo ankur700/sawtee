@@ -22,6 +22,9 @@ const OurWork = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
   const sectors = post.acf.sectors;
+  const intro = post.acf.intro;
+  const Html2React = libraries.html2react.Component;
+
   useEffect(() => {
     actions.source.fetch("/");
     List.preload();
@@ -120,7 +123,7 @@ const OurWork = ({ state, actions, libraries }) => {
         >
           <Box className="intro" pos="relative" mb="20" maxW="3xl" mx="auto">
             <Text fontSize={["md", "lg"]} textAlign="justify">
-              {decode(post.acf.intro)}
+              <Html2React html={intro} />
             </Text>
           </Box>
           <Box
