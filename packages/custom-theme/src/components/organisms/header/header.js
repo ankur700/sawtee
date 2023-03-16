@@ -36,7 +36,7 @@ const SiteHeaderInner = (props) => (
 
 const Logo = ({ isImage = true, src }) =>
   isImage ? (
-    <Box as="img" src={src} width="120px" />
+    <Box as="img" src={src} alt="Logo Image" width="120px" />
   ) : (
     <Box
       fontSize="2xl"

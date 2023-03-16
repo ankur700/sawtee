@@ -117,8 +117,8 @@ export const TopImageCard = (props) => {
             gap={"10"}
             justifyContent={"space-between"}
           >
-            <Show above="md">
-              {author && (
+            {author && (
+              <Show above="md">
                 <Flex alignItems="center">
                   <Text
                     mx={2}
@@ -133,8 +133,8 @@ export const TopImageCard = (props) => {
                     </LinkOverlay>
                   </Text>
                 </Flex>
-              )}
-            </Show>
+              </Show>
+            )}
             <Box
               as="time"
               mx={1}
@@ -208,8 +208,8 @@ export const NoImageCard = (props) => {
       </Box>
 
       <Flex justifyContent="space-between" alignItems="center" mt={4}>
-        <Show above="md">
-          {author && (
+        {author && (
+          <Show above="md">
             <Flex alignItems="center">
               <LinkOverlay
                 color="gray.700"
@@ -223,8 +223,8 @@ export const NoImageCard = (props) => {
                 {author.name ? author.name : defaultValues.author}
               </LinkOverlay>
             </Flex>
-          )}
-        </Show>
+          </Show>
+        )}
         <Box
           as="time"
           fontSize="sm"

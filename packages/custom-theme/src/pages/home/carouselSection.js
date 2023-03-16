@@ -9,6 +9,7 @@ const CarouselSection = ({ data }) => {
       mt={{ base: "5.5rem", md: "6.5rem" }}
     >
       <FullWidthCarousel slides={data} loop={true} />
+      
     </Section>
   );
 };

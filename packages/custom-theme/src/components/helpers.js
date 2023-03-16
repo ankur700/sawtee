@@ -19,10 +19,7 @@ export const getPostsGroupedByCategory = (source) => {
   }, []);
 };
 
-export const fetcher = (url) =>
-  fetch(url, { "Access-Control-Allow-Origin": "*", mode: "no-cors" }).then(
-    (r) => r.json()
-  );
+export const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export function getSrcSet(media) {
   const srcset =

@@ -45,57 +45,59 @@ const Theme = ({ state,actions }) => {
     "https://sawtee.org/backend/wp-json/wp/v2/featured-events?per_page=6";
 
   const { data: categories } = useSWR(
-    `https://sawtee.org/backend/wp-json/wp/v2/categories?per_page=20`
+    `https://sawtee.org/backend/wp-json/wp/v2/categories?per_page=20`,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
-  const { data: events } = useSWR(eventsApi);
+  const { data: events } = useSWR(eventsApi, fetcher, {
+    revalidateOnFocus: false,
+  });
   const { data: media } = useSWR(
     () =>
       `https://sawtee.org/backend/wp-json/wp/v2/media/` +
-      events[0].featured_media
+      events[0].featured_media,
+    fetcher,
+    {
+      revalidateOnFocus: false,
+    }
   );
 
-    useEffect(() => {
-      actions.source.fetch("/");
-    }, [actions.source]);
+  useEffect(() => {
+    actions.source.fetch("/");
+  }, [actions.source]);
 
   return (
-    <SWRConfig
-      value={{
-        refreshInterval: 3000,
-        revalidateOnFocus: true,
-        fetcher,
-      }}
-    >
-      <ChakraProvider resetCSS theme={{ config, ...overrides }}>
-        <Global styles={globalStyles(state.theme.colors)} />
-        <FontFace />
-        {/* Add some metatags to the <head> of the HTML. */}
-        <PageTitle />
-        <Head>
-          <meta name="description" content={state.frontity.description} />
-          <html lang="en" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
-            rel="stylesheet"
-          />
-          {/* <script src="https://unpkg.com/aos@next/dist/aos.js"></script> */}
-          <script
-            async
-            src="https://platform.twitter.com/widgets.js"
-            charset="utf-8"
-          ></script>
-        </Head>
-        {/* Accessibility: Provides ability to skip to main content */}
-        <SkipLink as="a" href="#main">
-          Skip to main content
-        </SkipLink>
-        {/* Add the header of the site. */}
-        <Header />
-        {/* Add the main section. It renders a different component depending
+    <ChakraProvider resetCSS theme={{ config, ...overrides }}>
+      <Global styles={globalStyles(state.theme.colors)} />
+      <FontFace />
+      {/* Add some metatags to the <head> of the HTML. */}
+      <PageTitle />
+      <Head>
+        <meta name="description" content={state.frontity.description} />
+        <html lang="en" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+        {/* <script src="https://unpkg.com/aos@next/dist/aos.js"></script> */}
+        <script
+          async
+          src="https://platform.twitter.com/widgets.js"
+          charset="utf-8"
+        ></script>
+      </Head>
+      {/* Accessibility: Provides ability to skip to main content */}
+      <SkipLink as="a" href="#main">
+        Skip to main content
+      </SkipLink>
+      {/* Add the header of the site. */}
+      <Header />
+      {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
-
 
       <Box
         as="main"
@@ -105,13 +107,13 @@ const Theme = ({ state,actions }) => {
         <Switch>
           <Loading when={data.isFetching} />
           <Home
-            when={data.isHome || data.route === "/"}
+            when={data.isHome}
             events={events}
             media={media}
             categories={categories}
           />
-          <OurWork when={data.route === "/our-work/"} />
           <KnowUs when={data.route === "/about/"} />
+          <OurWork when={data.route === "/our-work/"} />
           <Page when={data.isPage} />
           <Post
             when={
@@ -124,9 +126,8 @@ const Theme = ({ state,actions }) => {
           <Page404 when={data.is404} />
         </Switch>
       </Box>
-        <Footer />
-      </ChakraProvider>
-    </SWRConfig>
+      <Footer />
+    </ChakraProvider>
   );
 };
 

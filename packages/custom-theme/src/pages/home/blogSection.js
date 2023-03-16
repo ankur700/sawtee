@@ -46,15 +46,15 @@ const BlogSection = ({ data, media, linkColor }) => {
           py={["4", "6", "8"]}
           text="Policy Outreach"
         />
-        <Show above="lg">
-          {data.length > 0 && (
+        {data[0].categories[0] && (
+          <Show above="md">
             <ViewAllBtn
               w="12em"
               link={data[0] ? data[0].categories[0].link : "#"}
               text={"View All"}
             />
-          )}
-        </Show>
+          </Show>
+        )}
       </Stack>
       <CustomGrid
         className="band"
@@ -62,6 +62,7 @@ const BlogSection = ({ data, media, linkColor }) => {
         templateRows={{ base: "auto", lg: "repeat(3, 1fr)" }}
       >
         {data &&
+          data.length > 0 &&
           data.map((article, i) => {
             return (
               <GridItem key={article.id} id={"item-" + (i + 1)}>

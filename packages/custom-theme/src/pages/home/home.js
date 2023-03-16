@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Box } from "@chakra-ui/react";
 import { connect } from "frontity";
 import CarouselSection from "./carouselSection";
 import AboutSection from "./aboutSection";
@@ -13,46 +12,50 @@ const Home = ({ state, events, media, categories }) => {
   const slides = post.acf?.slides;
   const publicationSliders = post.acf?.publication_sliders;
   const linkColor = state.theme.colors.linkColor;
-  console.log(data, post);
   const introText = post.acf.about_section_intro;
 
   const [eventsList, setEventsList] = useState([]);
   const [mediaImage, setMediaImage] = useState({});
 
   useEffect(() => {
-    try {
-      if (events) {
-        let array = [];
-        events.forEach((event) =>
-          array.push(formatCPTData(state, event, categories))
-        );
+    if (events) {
+      let array = [];
+      events.forEach((post) =>
+        array.push(formatCPTData(state, post, categories))
+      );
+      if (array.length > 0) {
         setEventsList([...array]);
       }
-      if (media) {
-        const srcSet = getSrcSet(media);
-        setMediaImage({
-          id: media.id,
-          alt: media.alt_text,
-          src: media.source_url,
-          srcSet,
-        });
-      }
-    } catch (error) {
-      console.log(error);
+    }
+    if (media) {
+      const srcSet = getSrcSet(media);
+      setMediaImage({
+        id: media.id,
+        alt: media.alt_text,
+        src: media.source_url,
+        srcSet,
+      });
     }
   }, [events, categories]);
 
+  function truthy(value) {
+    return value !== undefined && value !== null && value.length > 0;
+  }
+
   return (
     <>
-      {slides && slides !== undefined && <CarouselSection data={slides} />}
-      <AboutSection data={publicationSliders} intro={introText} />
+      {truthy(slides) && <CarouselSection data={slides} />}
+      {truthy(publicationSliders) && truthy(introText) && (
+        <AboutSection data={publicationSliders} intro={introText} />
+      )}
       <InfoSection />
-      <BlogSection data={eventsList} media={mediaImage} linkColor={linkColor} />
-      <Box as="section" w="full">
-        <Box h="500px" bg="orange">
-          Upcoming Events section(Zoom meetings and physical programs info)
-        </Box>
-      </Box>
+      {truthy(eventsList) && (
+        <BlogSection
+          data={eventsList}
+          media={mediaImage}
+          linkColor={linkColor}
+        />
+      )}
     </>
   );
 };

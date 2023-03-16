@@ -75,7 +75,7 @@ const FullWidthCarousel = ({ slides, loop }) => {
           position: "absolute",
           top: "0",
           left: "0",
-          backgroundColor: "rgba(0,0,0,0.6)",
+          backgroundColor: "rgba(0,0,0,0.3)",
         }}
       >
         {slides.map((slide, sid) => (
@@ -93,7 +93,7 @@ const FullWidthCarousel = ({ slides, loop }) => {
             <Image
               src={slide.slide_image}
               alt="carousel image"
-              sx={{ aspectRatio: "16:9" }}
+              sx={{ aspectRatio: "16/9" }}
               boxSize="full"
               backgroundSize="cover"
             />
