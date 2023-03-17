@@ -4,13 +4,14 @@ import CarouselSection from "./carouselSection";
 import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
-import { formatCPTData, getSrcSet } from "../../components/helpers";
+import { fetcher, formatCPTData, getSrcSet } from "../../components/helpers";
+import useSWR from "swr";
 
 const Home = ({ state, events, media, categories }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
-  const publicationSliders = post.acf?.parent_pub_category;
+  const publicationSliders = post.acf?.publication_sliders;
   const linkColor = state.theme.colors.linkColor;
   const introText = post.acf.about_section_intro;
 
@@ -20,13 +21,10 @@ const Home = ({ state, events, media, categories }) => {
   useEffect(() => {
     setTimeout(() => {
       const array = [...eventsList];
+
       events?.forEach((post) => {
         array.push(formatCPTData(state, post, categories));
       });
-
-      if (array.length > 0) {
-        setEventsList([...array]);
-      }
 
       media
         ? setMediaImage({
@@ -36,6 +34,10 @@ const Home = ({ state, events, media, categories }) => {
             srcSet: getSrcSet(media),
           })
         : setMediaImage({});
+
+      if (array.length.length > 0) {
+        setEventsList([...array]);
+      }
     }, 1000);
 
     return () => {
@@ -43,15 +45,17 @@ const Home = ({ state, events, media, categories }) => {
     };
   }, [events, categories]);
 
+  console.log(publicationSliders);
+
   function truthy(value) {
     return value !== undefined && value !== null && value.length > 0;
   }
   return (
     <>
       {truthy(slides) && <CarouselSection data={slides} />}
-      {/* {truthy(publicationSliders) && truthy(introText) && (
+      {truthy(publicationSliders) && truthy(introText) && (
         <AboutSection data={publicationSliders} intro={introText} />
-      )} */}
+      )}
       <InfoSection />
       {truthy(eventsList) && (
         <BlogSection
