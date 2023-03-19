@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import useSWR, { SWRConfig } from "swr";
+import useSWR from "swr";
 import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { connect, Global, Head } from "frontity";
 import Switch from "@frontity/components/switch";
@@ -21,12 +21,18 @@ import globalStyles from "./styles/global-styles";
 // import { Post } from "./organisms/page/post-item";
 import Post from "../components/organisms/post/post";
 import "focus-visible/dist/focus-visible";
-import { fetcher } from "./helpers";
+// import { fetcher } from "./helpers";
+
+const config = {
+  initialColorMode: "light",
+  useSystemColorMode: true,
+};
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
-const Theme = ({ state,actions }) => {
+const Theme = ({ state, actions }) => {
   // Get information about the current URL.
+
   const data = state.source.get(state.router.link);
 
   const overrides = extendTheme({
@@ -37,32 +43,6 @@ const Theme = ({ state,actions }) => {
     colors: { ...state.theme.colors },
   });
 
-  const config = {
-    initialColorMode: "light",
-    useSystemColorMode: true,
-  };
-  const eventsApi =
-    "https://sawtee.org/backend/wp-json/wp/v2/featured-events?per_page=6&order=asc";
-
-  const { data: categories } = useSWR(
-    `https://sawtee.org/backend/wp-json/wp/v2/categories?per_page=25`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
-  const { data: events } = useSWR(eventsApi, fetcher, {
-    revalidateOnFocus: false,
-  });
-  const { data: media } = useSWR(
-    () =>
-      `https://sawtee.org/backend/wp-json/wp/v2/media/` +
-      events[0].featured_media,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
   useEffect(() => {
     actions.source.fetch("/");
   }, [actions.source]);
@@ -105,12 +85,7 @@ const Theme = ({ state,actions }) => {
       >
         <Switch>
           <Loading when={data.isFetching} />
-          <Home
-            when={data.isHome}
-            events={events}
-            media={media}
-            categories={categories}
-          />
+          <Home when={data.isHome} />
           <KnowUs when={data.route === "/about/"} />
           <OurWork when={data.route === "/our-work/"} />
           <Page when={data.isPage} />

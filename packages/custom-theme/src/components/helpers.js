@@ -1,5 +1,4 @@
 import moment from "moment/moment";
-
 import { categoriesWidgetsHome } from "./config";
 const MAXIMUM_POSTS = 5;
 
@@ -19,7 +18,21 @@ export const getPostsGroupedByCategory = (source) => {
   }, []);
 };
 
-export const fetcher = (url) => fetch(url).then((r) => r.json());
+export const fetcher = async (url) => {
+  const res = await fetch(url);
+
+  // If the status code is not in the range 200-299,
+  // we still try to parse and throw it.
+  if (!res.ok) {
+    const error = new Error("An error occurred while fetching the data.");
+    // Attach extra info to the error object.
+    error.info = await res.json();
+    error.status = res.status;
+    throw error;
+  }
+
+  return res.json();
+};
 
 export function getSrcSet(media) {
   const srcset =
@@ -60,6 +73,16 @@ export function getCPTData(posts, state) {
     return [...array];
   }
   return {};
+}
+
+export function getPublicationSliders(state, post, categories) {
+  return {
+    id: post.id,
+    title: post.title.rendered,
+    categories: getPostCategories(state, post, categories),
+    featured_media: getMediaAttributes(state, post.featured_media),
+    acf: post.acf,
+  };
 }
 
 export function formatDateWithMoment(date, format) {
