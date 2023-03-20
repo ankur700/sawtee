@@ -18,7 +18,7 @@ import Publication1 from "../../assets/publications-1.jpg";
 import EventsList from "./eventsList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
-const EventsArchive = ({ state }) => {
+const EventsArchive = ({ state, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
 
@@ -26,13 +26,6 @@ const EventsArchive = ({ state }) => {
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
 
-  const { data: news } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
@@ -124,7 +117,7 @@ const EventsArchive = ({ state }) => {
               ))}
             </Box>
             <Sidebar
-              data={news}
+              categories={categories}
               title="Sawtee in Media"
               showSawteeInMedia={true}
               showTwitterTimeline={true}

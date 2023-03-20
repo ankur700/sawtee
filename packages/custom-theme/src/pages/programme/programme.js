@@ -25,14 +25,6 @@ const Programmes = ({ state }) => {
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 2 });
 
-  const { data: news } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
-
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
@@ -125,7 +117,6 @@ const Programmes = ({ state }) => {
               ))}
             </Box>
             <Sidebar
-              data={news}
               title="Sawtee in Media"
               showSawteeInMedia={true}
               showTwitterTimeline={true}

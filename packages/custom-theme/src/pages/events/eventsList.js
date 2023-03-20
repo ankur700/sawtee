@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   HStack,
@@ -8,7 +9,7 @@ import {
   Tag,
   useColorModeValue,
   Heading,
-  Button
+  Button,
 } from "@chakra-ui/react";
 import moment from "moment/moment";
 import { PostImageWithOverlay } from "../../components/molecules/featured-post/components";
@@ -18,24 +19,24 @@ import { GoChevronRight } from "react-icons/go";
 import Link from "../../components/atoms/link";
 import { decode, connect } from "frontity";
 import useInView from "@frontity/hooks/use-in-view";
-import { getCPTData } from "../../components/helpers";
+import { formatCPTData } from "../../components/helpers";
 
-const EventsList = ({ state, link, libraries, linkColor }) => {
+const EventsList = ({ state, link, libraries, linkColor, categories }) => {
   const format = "MMMM Do YYYY";
   const Html2React = libraries.html2react.Component;
   const MotionStack = motion(Stack);
 
   const data = state.source.get(link);
-  const posts = () => {
+  const events = React.useMemo(() => {
     let array = [];
-    data.items.map(({ type, id }) => {
-      array.push(state.source[type][id]);
+    data.items.map((item) => {
+      const post = state.source[item.type][item.id];
+      array.push(formatCPTData(state, post, categories));
     });
     if (array.length > 0) {
-      return array;
+      return [...array];
     }
-  };
-  const events = getCPTData(posts(), state);
+  });
   const { ref, inView } = useInView({ triggerOnce: false });
   return (
     <VStack spacing={8} w={{ base: "auto", md: "3xl" }} ref={ref}>

@@ -9,22 +9,23 @@ import {
 } from "@chakra-ui/react";
 import { decode, connect } from "frontity";
 import moment from "moment/moment";
-import { getCPTData } from "../../components/helpers";
+import { formatCPTData } from "../../components/helpers";
+import React from "react";
 
 const ProgrammesList = ({ state, link, libraries, linkColor }) => {
   const Html2React = libraries.html2react.Component;
 
   const data = state.source.get(link);
-  const posts = () => {
+  const programs = React.useMemo(() => {
     let array = [];
-    data.items.map(({ type, id }) => {
-      array.push(state.source[type][id]);
+    data.items.map((item) => {
+      const post = state.source[item.type][item.id];
+      array.push(formatCPTData(post, state));
     });
     if (array.length > 0) {
-      return array;
+      return [...array];
     }
-  };
-  const programs = getCPTData(posts(), state);
+  });
 
   return (
     <VStack spacing={8} w={{ base: "auto", md: "full" }}>
@@ -101,28 +102,30 @@ const ProgrammesList = ({ state, link, libraries, linkColor }) => {
                     >
                       Read more
                     </Link>
-                    {categories.map((category) => {
-                      if (category.id !== 219) {
-                        return (
-                          <Link
-                            key={category.id}
-                            px={3}
-                            py={1}
-                            bg="gray.600"
-                            color="gray.100"
-                            fontSize="sm"
-                            fontWeight="700"
-                            rounded="md"
-                            href={category.link}
-                            _hover={{
-                              bg: "gray.500",
-                            }}
-                          >
-                            {category.name}
-                          </Link>
-                        );
-                      }
-                    })}
+                    <Box display="flex">
+                      {categories.map((category) => {
+                        if (category.id !== 219) {
+                          return (
+                            <Link
+                              key={category.id}
+                              px={3}
+                              py={1}
+                              bg="gray.600"
+                              color="gray.100"
+                              fontSize="sm"
+                              fontWeight="700"
+                              rounded="md"
+                              href={category.link}
+                              _hover={{
+                                bg: "gray.500",
+                              }}
+                            >
+                              {category.name}
+                            </Link>
+                          );
+                        }
+                      })}
+                    </Box>
                   </Flex>
                 </Box>
               </Flex>

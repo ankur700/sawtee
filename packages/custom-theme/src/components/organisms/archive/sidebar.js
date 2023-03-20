@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "frontity";
 import {
   Box,
   useColorModeValue,
@@ -14,25 +15,49 @@ import moment from "moment/moment";
 import Link from "../../atoms/link";
 import Title from "../../atoms/title";
 import { decode } from "frontity";
+import { formatCPTData } from "../../helpers";
 
 export const Sidebar = ({
-  data,
   title,
   showSawteeInMedia,
   showTwitterTimeline,
   showSubscriptionCard,
   linkColor,
+  state,
+  actions,
+  categories,
 }) => {
+  const newsData = state.source.get("/sawtee-in-media");
+
+  const news = React.useMemo(() => {
+    if (newsData.isReady) {
+      let newsArray = [];
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
+      return [...newsArray];
+    }
+  }, [newsData.isReady]);
+
+  React.useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
+
   return (
     <Stack spacing={16}>
       {showSawteeInMedia && (
         <GlassBox py="4" px="8" rounded="2xl" height="max-content">
           <Title text={title} textAlign="center" mb={8} />
-          {data &&
-            data.map((event, index) => {
-              const formatedDate = moment(event.date, "YYYYMMDD").fromNow();
+          {news &&
+            news.map((item, index) => {
+              console.log(item.acf.publishers);
+              const formatedDate = moment(
+                item.publishDate,
+                "YYYYMMDD"
+              ).fromNow();
               return (
-                <Stack spacing={2} mt="6" key={event.id}>
+                <Stack spacing={2} mt="6" key={item.id}>
                   <Heading
                     className="title"
                     fontSize={["sm", "md"]}
@@ -45,9 +70,7 @@ export const Sidebar = ({
                       textDecoration: "underline",
                     }}
                   >
-                    <Link link={event.link}>
-                      {decode(event.title.rendered)}
-                    </Link>
+                    <Link link={item.link}>{decode(item.title)}</Link>
                   </Heading>
                   <Box
                     display={"flex"}
@@ -55,8 +78,8 @@ export const Sidebar = ({
                     fontSize={"sm"}
                     fontWeight="semibold"
                   >
-                    {event.acf.publishers &&
-                      event.acf.publishers.map((publisher) => {
+                    {item.acf.publishers &&
+                      item.acf.publishers.map((publisher) => {
                         return (
                           <Text
                             as="a"
@@ -65,19 +88,19 @@ export const Sidebar = ({
                             maxW="180px"
                             noOfLines={1}
                           >
-                            {publisher.publisher_name}
+                            {publisher.publisher}
                           </Text>
                         );
                       })}
                     <Box
                       as="time"
-                      dateTime={new Date(event.date).toLocaleDateString()}
+                      dateTime={new Date(item.publishDate).toLocaleDateString()}
                     >
                       {formatedDate}
                     </Box>
                   </Box>
                   <Divider
-                    display={index === data.length - 1 ? "none" : "block"}
+                    display={index === news.length - 1 ? "none" : "block"}
                   />
                 </Stack>
               );
@@ -113,4 +136,4 @@ export const Sidebar = ({
   );
 };
 
-export default Sidebar;
+export default connect(Sidebar);
