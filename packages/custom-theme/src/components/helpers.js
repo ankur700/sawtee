@@ -120,6 +120,10 @@ export function getPostData(state) {
   return { ...post, isReady: data.isReady, isPage: data.isPage };
 }
 
+export function truthy(value) {
+  return value !== undefined && value !== null && value.length > 0;
+}
+
 export function formatCPTData(state, post, categories) {
   return {
     id: post.id,
@@ -129,7 +133,7 @@ export function formatCPTData(state, post, categories) {
     categories: getPostCategories(state, post, categories),
     tags: getPostTags(state, post),
     link: post.link,
-    featured_media: post.featured_media,
+    featured_media: getMediaAttributes(state, post.featured_media),
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
     acf: post.acf,

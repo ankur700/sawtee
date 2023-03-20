@@ -297,6 +297,11 @@ const settings = {
           url: "https://sawtee.org/backend/",
           homepage: "home",
           postsPage: "blog",
+          params: {
+            type: ["publications, featured-events"],
+            orderBy: "menu-order",
+            order: "asc",
+          },
           postTypes: [
             {
               type: "featured-events",

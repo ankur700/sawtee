@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Stack, Show } from "@chakra-ui/react";
 import Section from "../../components/atoms/section";
 import ViewAllBtn from "../../components/atoms/ViewAllBtn";
@@ -7,6 +7,7 @@ import { styled } from "frontity";
 import { Grid, GridItem } from "@chakra-ui/react";
 import { TopImageCard, NoImageCard } from "../../components/molecules/cards";
 import { connect } from "frontity";
+import { formatCPTData } from "../../components/helpers";
 
 const CustomGrid = styled(Grid)`
   margin: 0 auto;
@@ -28,12 +29,37 @@ const CustomGrid = styled(Grid)`
   }
 `;
 
-const BlogSection = ({ state, actions, linkColor }) => {
-  const eventsData = state.source.get("/featurd-events");
+const BlogSection = ({ state, actions, linkColor, categories }) => {
+  const eventsData = state.source.get("/featured-events");
+  const [eventsList, setEvetnsList] = useState([]);
 
   useEffect(() => {
-    actions.source.fetch("/featurd-events");
+    actions.source.fetch("/featured-events");
   }, []);
+
+  useEffect(() => {
+    if (eventsData.isReady) {
+      let eventsArray = [];
+      eventsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        eventsArray.push(formatCPTData(state, post, categories));
+      });
+
+      if (eventsArray.length > 0) {
+        setEvetnsList([...eventsArray]);
+      }
+    }
+  }, [eventsData.isReady]);
+
+  const media = React.useMemo(() => {
+    if (eventsList.length > 0) {
+      return {
+        alt: eventsList[0].featured_media.alt,
+        src: eventsList[0].featured_media.src,
+        srcSet: eventsList[0].featured_media.srcSet,
+      };
+    }
+  }, [eventsList]);
 
   return (
     <Section
@@ -54,52 +80,50 @@ const BlogSection = ({ state, actions, linkColor }) => {
           py={["4", "6", "8"]}
           text="Policy Outreach"
         />
-        {/* {data[0].categories[0] && (
+        {eventsList.length > 0 && (
           <Show above="md">
             <ViewAllBtn
               w="12em"
-              link={data[0] ? data[0].categories[0].link : "#"}
+              link={eventsList[0] ? eventsList[0].categories[0].link : "#"}
               text={"View All"}
             />
           </Show>
-        )} */}
+        )}
       </Stack>
       <CustomGrid
         className="band"
         templateColumns={{ base: "1fr", lg: "repeat(3, 1fr)" }}
         templateRows={{ base: "auto", lg: "repeat(3, 1fr)" }}
       >
-        {eventsData.isReady
-          ? // data.map((article, i) => {
-            //   return (
-            //     <GridItem key={article.id} id={"item-" + (i + 1)}>
-            //       {i === 0 ? (
-            //         <TopImageCard
-            //           title={article.title}
-            //           categories={article.categories}
-            //           featured_media={media}
-            //           excerpt={article.excerpt}
-            //           target={article.link}
-            //           date={article.publishDate}
-            //           author={article.author}
-            //           linkColor={linkColor}
-            //         />
-            //       ) : (
-            //         <NoImageCard
-            //           title={article.title}
-            //           categories={article.categories}
-            //           excerpt={article.excerpt}
-            //           target={article.link}
-            //           date={article.publishDate}
-            //           author={article.author}
-            //           linkColor={linkColor}
-            //         />
-            //       )}
-            //     </GridItem>
-            //   );
-            // })
-            console.log(eventsData)
-          : console.log("not ready")}
+        {eventsList &&
+          eventsList.map((article, i) => {
+            return (
+              <GridItem key={article.id} id={"item-" + (i + 1)}>
+                {i === 0 ? (
+                  <TopImageCard
+                    title={article.title}
+                    categories={article.categories}
+                    featured_media={media}
+                    excerpt={article.excerpt}
+                    target={article.link}
+                    date={article.publishDate}
+                    author={article.author}
+                    linkColor={linkColor}
+                  />
+                ) : (
+                  <NoImageCard
+                    title={article.title}
+                    categories={article.categories}
+                    excerpt={article.excerpt}
+                    target={article.link}
+                    date={article.publishDate}
+                    author={article.author}
+                    linkColor={linkColor}
+                  />
+                )}
+              </GridItem>
+            );
+          })}
       </CustomGrid>
       <Show below="lg">
         <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />

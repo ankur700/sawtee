@@ -46,6 +46,7 @@ export const TopImageCard = (props) => {
     linkColor,
   } = props;
 
+
   return (
     <LinkBox
       as="article"
@@ -65,14 +66,13 @@ export const TopImageCard = (props) => {
         pos="relative"
         rounded="lg"
       >
-        {featured_media && featured_media.src && (
+        {featured_media && (
           <Image
             {...featured_media}
             h="100%"
             w="100%"
             objectFit="cover"
             rounded="lg"
-            fallbackSrc="https://via.placeholder.com/600x400"
           />
         )}
       </Box>

@@ -18,10 +18,8 @@ import OurWork from "../pages/OurWork";
 import KnowUs from "../pages/KnowUs";
 import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
-// import { Post } from "./organisms/page/post-item";
 import Post from "../components/organisms/post/post";
 import "focus-visible/dist/focus-visible";
-// import { fetcher } from "./helpers";
 
 const config = {
   initialColorMode: "light",
@@ -31,8 +29,6 @@ const config = {
 // Theme is the root React component of our theme. The one we will export
 // in roots.
 const Theme = ({ state, actions }) => {
-  // Get information about the current URL.
-
   const data = state.source.get(state.router.link);
 
   const overrides = extendTheme({
@@ -78,11 +74,7 @@ const Theme = ({ state, actions }) => {
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
 
-      <Box
-        as="main"
-        mt={{ base: "5.5rem", md: "6.5rem" }}
-        minH="calc(100vh - 6.5rem)"
-      >
+      <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
         <Switch>
           <Loading when={data.isFetching} />
           <Home when={data.isHome} />

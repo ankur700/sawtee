@@ -64,7 +64,7 @@ const FullWidthCarousel = ({ slides, loop }) => {
       onMouseLeave={() => setPaused(false)}
     >
       <Flex
-        h={{ base: "auto", md: "calc(100vh - 6.5rem)" }}
+        h={{ base: "auto", md: "calc(100vh - 5rem)" }}
         w="full"
         {...carouselStyle}
         _after={{
