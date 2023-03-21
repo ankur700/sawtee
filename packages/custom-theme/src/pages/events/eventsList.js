@@ -1,4 +1,4 @@
-import React from "react";
+import {useMemo} from "react";
 import {
   Box,
   HStack,
@@ -9,7 +9,6 @@ import {
   Tag,
   useColorModeValue,
   Heading,
-  Button,
 } from "@chakra-ui/react";
 import moment from "moment/moment";
 import { PostImageWithOverlay } from "../../components/molecules/featured-post/components";
@@ -27,7 +26,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
   const MotionStack = motion(Stack);
 
   const data = state.source.get(link);
-  const events = React.useMemo(() => {
+  const events = useMemo(() => {
     let array = [];
     data.items.map((item) => {
       const post = state.source[item.type][item.id];
@@ -36,7 +35,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
     if (array.length > 0) {
       return [...array];
     }
-  });
+  }, [data, categories]);
   const { ref, inView } = useInView({ triggerOnce: false });
   return (
     <VStack spacing={8} w={{ base: "auto", md: "3xl" }} ref={ref}>

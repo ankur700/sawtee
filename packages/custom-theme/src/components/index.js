@@ -83,7 +83,7 @@ const Theme = ({ state, actions }) => {
       <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
         <Switch>
           <Loading when={data.isFetching} />
-          <Home when={data.isHome} categories />
+          <Home when={data.isHome} categories={categories} />
           <KnowUs when={data.route === "/about/"} />
           <OurWork when={data.route === "/our-work/"} />
           <Page when={data.isPage} />
@@ -91,7 +91,7 @@ const Theme = ({ state, actions }) => {
             when={
               data.isPostType || data.isPublications || data.isFeaturedEvents
             }
-            categories
+            categories={categories}
           />
           <SearchResults when={data.isSearch} />
           <HomeArchive when={data.route === "/blog"} />

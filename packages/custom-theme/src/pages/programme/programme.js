@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import {
   Box,
   SimpleGrid,
@@ -13,21 +12,14 @@ import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import { fetcher } from "../../components/helpers";
 import ProgrammesList from "./programmesList";
 import Publication1 from "../../assets/publications-1.jpg";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
-const Programmes = ({ state }) => {
+const Programmes = ({ state, categories }) => {
   const postData = state.source.get(state.router.link);
-
-  const linkColor = state.theme.colors.linkColor;
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 2 });
-
-  // Once the post has loaded in the DOM, prefetch both the
-  // home posts and the list component so if the user visits
-  // the home page, everything is ready and it loads instantly.
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -100,7 +92,7 @@ const Programmes = ({ state }) => {
             <Box>
               {pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
-                  <ProgrammesList link={link} linkColor={linkColor} />
+                  <ProgrammesList link={link} categories={categories} />
                   {isLast && <Divider h="10px" mt="10" />}
                   <Box w="full" mb="40px" textAlign={"center"}>
                     {isFetching && <Loading />}
@@ -117,11 +109,10 @@ const Programmes = ({ state }) => {
               ))}
             </Box>
             <Sidebar
-              title="Sawtee in Media"
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
-              linkColor={linkColor}
+              categories={categories}
             />
           </SimpleGrid>
           {/* <Pagination mt="56px" /> */}

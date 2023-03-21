@@ -105,7 +105,10 @@ export function getPostCategories(state, post, categoriesPool) {
 }
 
 export function getPostAuthor(state, post) {
-  return state.source.author[post.author];
+  if (state.source.author[post.author] !== undefined) {
+    return state.source.author[post.author];
+  }
+  return {};
 }
 
 export function getPostTags(state, post) {

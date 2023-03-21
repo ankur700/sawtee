@@ -1,11 +1,10 @@
-import { Box, Divider, useColorModeValue } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
 import List from "../archive";
 import useScrollProgress from "../../hooks/useScrollProgress";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
-import AuthorBio from "./author-bio";
 import FeaturedMedia from "./featured-media";
 import PostHeader from "./post-header";
 import PostProgressBar from "./post-progressbar";

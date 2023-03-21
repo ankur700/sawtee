@@ -1,40 +1,49 @@
-import React from "react";
+import { useMemo, useEffect, useState } from "react";
 import { connect } from "frontity";
 import { Stack } from "@chakra-ui/react";
 import Title from "../../components/atoms/title";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
-import { getCPTData } from "../../components/helpers";
+import { formatCPTData } from "../../components/helpers";
 
 const PublicationSliders = ({ state, link, categories }) => {
   const data = state.source.get(link);
-  const posts = () => {
+  const publications = useMemo(() => {
     let array = [];
-    data.items.map(({ type, id }) => {
-      array.push(state.source[type][id]);
+    data?.items.map((item) => {
+      const post = state.source[item.type][item.id];
+      array.push(formatCPTData(state, post, categories));
     });
     if (array.length > 0) {
-      return array;
+      return [...array];
     }
-  };
+  }, [data.isReady, categories]);
+
+  const [sliderData, setSliderData] = useState([]);
+
   const PublicationCategories = Object.keys(state.source.category);
-  const publications = getCPTData(posts(), state);
 
-  let sliderData = [];
-  (() => {
-    categories
-      ? categories.map((cat) => {
-          if (cat.parent === 217)
-            return sliderData.push({ id: cat.id, name: cat.name, slides: [] });
-        })
-      : null;
-  })();
+  useEffect(() => {
+    let array = [];
+    if (categories) {
+      categories.map((cat) => {
+        if (cat.parent === 5) {
+          array.push({
+            id: cat.id,
+            name: cat.name,
+            slides: [],
+          });
+        }
+      });
+    }
+    if (array.length > 0) {
+      setSliderData([...array]);
+    }
+  }, [categories]);
 
-  // const results = React.useMemo()
-
-  function getSlides(cat) {
+  const getSlides = (cat) => {
     publications.forEach((pub) =>
       pub.categories.map((category) => {
-        if (category.id === cat.id && cat.id !== 217) {
+        if (category.id === cat.id && cat.name !== "Publications") {
           let index = sliderData.indexOf(cat);
           sliderData[index].slides.push({
             ...pub.featured_media,
@@ -43,21 +52,24 @@ const PublicationSliders = ({ state, link, categories }) => {
         }
       })
     );
-  }
+  };
+
+  console.log(sliderData);
 
   return (
     <Stack spacing={8}>
-      {sliderData.map((cat) => {
-        if (PublicationCategories.includes(`${cat.id}`)) {
-          getSlides(cat);
-          return (
-            <Stack key={cat.name} spacing="4">
-              <Title text={cat.name} mb="3" />
-              <MultiItemCarousel slides={cat.slides} />
-            </Stack>
-          );
-        }
-      })}
+      {sliderData &&
+        sliderData.map((cat) => {
+          if (PublicationCategories.includes(`${cat.id}`)) {
+            getSlides(cat);
+            return (
+              <Stack key={cat.name} spacing="4">
+                <Title text={cat.name} mb="3" />
+                <MultiItemCarousel slides={cat.slides} />
+              </Stack>
+            );
+          }
+        })}
     </Stack>
   );
 };

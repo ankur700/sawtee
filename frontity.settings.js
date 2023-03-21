@@ -298,7 +298,7 @@ const settings = {
           homepage: "home",
           postsPage: "blog",
           params: {
-            type: ["publications, featured-events"],
+            type: ["publications, featured-events", "research"],
             orderBy: "menu-order",
             order: "asc",
           },

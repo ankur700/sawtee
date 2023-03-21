@@ -6,7 +6,6 @@ import {
   Divider,
   useColorModeValue,
 } from "@chakra-ui/react";
-import useSWR from "swr";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
@@ -15,31 +14,13 @@ import Sidebar from "../../components/organisms/archive/sidebar";
 import PublicationSliders from "./publicationSliders";
 import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1.jpg";
-import { fetcher } from "../../components/helpers";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
-const Publications = ({ state }) => {
-  const data = state.source.get(state.router.link);
-  const linkColor = state.theme.colors.linkColor;
+const Publications = ({ state, categories }) => {
 
+  const data = state.source.get(state.router.link);
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
-
-  const { data: categories } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=100`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
-
-  const { data: news } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media?per_page=15`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
@@ -92,7 +73,10 @@ const Publications = ({ state }) => {
         </Box>
       </Box>
       <Section bg={useColorModeValue("whiteAlpha.700", "gray.700")} size="xl">
-        <PublicationFilter data={categories} linkColor={linkColor} />
+        <PublicationFilter
+          data={categories}
+          linkColor={state.theme.colors.linkColor}
+        />
       </Section>
 
       <Section
@@ -118,7 +102,7 @@ const Publications = ({ state }) => {
                 <Wrapper key={key}>
                   <PublicationSliders
                     link={link}
-                    linkColor={linkColor}
+                    linkColor={state.theme.colors.linkColor}
                     categories={categories}
                   />
                   {isLast && <Divider h="10px" mt="10" />}
@@ -137,12 +121,10 @@ const Publications = ({ state }) => {
               ))}
             </Box>
             <Sidebar
-              data={news}
-              title="Sawtee in Media"
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
-              linkColor={linkColor}
+              categories={categories}
             />
           </SimpleGrid>
         </Box>

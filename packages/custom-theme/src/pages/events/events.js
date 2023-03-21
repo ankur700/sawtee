@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import {
   Box,
   SimpleGrid,
@@ -13,7 +12,6 @@ import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import { fetcher } from "../../components/helpers";
 import Publication1 from "../../assets/publications-1.jpg";
 import EventsList from "./eventsList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
@@ -100,7 +98,11 @@ const EventsArchive = ({ state, categories }) => {
             <Box>
               {pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
-                  <EventsList link={link} linkColor={linkColor} />
+                  <EventsList
+                    link={link}
+                    linkColor={linkColor}
+                    categories={categories}
+                  />
                   {isLast && <Divider h="10px" mt="10" />}
                   <Box w="full" mb="40px" textAlign={"center"}>
                     {isFetching && <Loading />}
@@ -118,11 +120,9 @@ const EventsArchive = ({ state, categories }) => {
             </Box>
             <Sidebar
               categories={categories}
-              title="Sawtee in Media"
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
-              linkColor={linkColor}
             />
           </SimpleGrid>
           {/* <Pagination mt="56px" /> */}

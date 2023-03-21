@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import {
   Box,
   SimpleGrid,
@@ -13,26 +12,16 @@ import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import { fetcher } from "../../components/helpers";
 import Publication1 from "../../assets/publications-1.jpg";
 import ResearchList from "./researchList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
-const ResearchArchive = ({ state }) => {
+const ResearchArchive = ({ state, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-  const linkColor = state.theme.colors.linkColor;
 
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
-
-  const { data: news } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -108,7 +97,7 @@ const ResearchArchive = ({ state }) => {
             <Box>
               {pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
-                  <ResearchList link={link} linkColor={linkColor} />
+                  <ResearchList link={link} />
                   {isLast && <Divider h="10px" mt="10" />}
                   <Box w="full" mb="40px" textAlign={"center"}>
                     {isFetching && <Loading />}
@@ -125,12 +114,10 @@ const ResearchArchive = ({ state }) => {
               ))}
             </Box>
             <Sidebar
-              data={news}
-              title="Sawtee in Media"
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
-              linkColor={linkColor}
+              categories={categories}
             />
           </SimpleGrid>
           {/* <Pagination mt="56px" /> */}

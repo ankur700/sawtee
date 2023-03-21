@@ -18,16 +18,17 @@ import { decode } from "frontity";
 import { formatCPTData } from "../../helpers";
 
 export const Sidebar = ({
-  title,
   showSawteeInMedia,
   showTwitterTimeline,
   showSubscriptionCard,
-  linkColor,
   state,
   actions,
   categories,
 }) => {
   const newsData = state.source.get("/sawtee-in-media");
+  const linkColor = state.theme.colors.linkColor;
+
+  const formatedDate = (date) => moment(date, "YYYYMMDD").fromNow();
 
   const news = React.useMemo(() => {
     if (newsData.isReady) {
@@ -48,14 +49,9 @@ export const Sidebar = ({
     <Stack spacing={16}>
       {showSawteeInMedia && (
         <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-          <Title text={title} textAlign="center" mb={8} />
+          <Title text={"Sawtee in Media"} textAlign="center" mb={8} />
           {news &&
             news.map((item, index) => {
-              console.log(item.acf.publishers);
-              const formatedDate = moment(
-                item.publishDate,
-                "YYYYMMDD"
-              ).fromNow();
               return (
                 <Stack spacing={2} mt="6" key={item.id}>
                   <Heading
@@ -79,10 +75,11 @@ export const Sidebar = ({
                     fontWeight="semibold"
                   >
                     {item.acf.publishers &&
-                      item.acf.publishers.map((publisher) => {
+                      item.acf.publishers.map((publisher, idx) => {
                         return (
                           <Text
                             as="a"
+                            key={idx}
                             href={publisher.publisher_website}
                             _hover={{ textDecor: "underline" }}
                             maxW="180px"
@@ -96,7 +93,7 @@ export const Sidebar = ({
                       as="time"
                       dateTime={new Date(item.publishDate).toLocaleDateString()}
                     >
-                      {formatedDate}
+                      {formatedDate(item.publishDate)}
                     </Box>
                   </Box>
                   <Divider
