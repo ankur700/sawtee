@@ -46,7 +46,6 @@ export const TopImageCard = (props) => {
     linkColor,
   } = props;
 
-
   return (
     <LinkBox
       as="article"
@@ -54,7 +53,7 @@ export const TopImageCard = (props) => {
       bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       shadow="lg"
       paddingTop={"4"}
-      maxW="5xl"
+      maxW="6xl"
       px="4"
     >
       <Box
@@ -163,7 +162,7 @@ export const NoImageCard = (props) => {
       rounded="lg"
       shadow="lg"
       bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
-      maxW="2xl"
+      maxW="3xl"
       minH={"80"}
       display="flex"
       flexDir={"column"}

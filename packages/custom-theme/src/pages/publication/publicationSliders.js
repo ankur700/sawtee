@@ -4,6 +4,7 @@ import { Stack } from "@chakra-ui/react";
 import Title from "../../components/atoms/title";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { formatCPTData } from "../../components/helpers";
+import Link from "@frontity/components/link";
 
 const PublicationSliders = ({ state, link, categories }) => {
   const data = state.source.get(link);
@@ -26,10 +27,11 @@ const PublicationSliders = ({ state, link, categories }) => {
     let array = [];
     if (categories) {
       categories.map((cat) => {
-        if (cat.parent === 5) {
+        if (cat.parent !== 0) {
           array.push({
             id: cat.id,
             name: cat.name,
+            link: cat.link,
             slides: [],
           });
         }
@@ -54,7 +56,6 @@ const PublicationSliders = ({ state, link, categories }) => {
     );
   };
 
-
   return (
     <Stack spacing={8}>
       {sliderData &&
@@ -63,7 +64,9 @@ const PublicationSliders = ({ state, link, categories }) => {
             getSlides(cat);
             return (
               <Stack key={cat.name} spacing="4">
-                <Title text={cat.name} mb="3" />
+                <Link link={cat.link}>
+                  <Title text={cat.name} mb="3" />
+                </Link>
                 <MultiItemCarousel slides={cat.slides} />
               </Stack>
             );

@@ -41,6 +41,7 @@ export const Sidebar = ({
     }
   }, [newsData]);
 
+
   React.useEffect(() => {
     actions.source.fetch("/sawtee-in-media");
   }, []);
