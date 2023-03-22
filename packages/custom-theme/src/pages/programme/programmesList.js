@@ -102,7 +102,6 @@ const ProgrammesList = ({ state, link, libraries, categories }) => {
                     {program.categories
                       .filter((cat) => cat.name !== "Programme")
                       .map((category) => {
-                        console.log(category);
                         return (
                           <Link
                             key={category.id}

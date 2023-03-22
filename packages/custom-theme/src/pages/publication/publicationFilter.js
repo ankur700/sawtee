@@ -9,9 +9,7 @@ import {
 import Section from "../../components/styles/section";
 import Link from "../../components/atoms/link";
 
-const PublicationFilter = (props) => {
-  const { data, linkColor } = props;
-
+const PublicationFilter = ({ categories, linkColor }) => {
   return (
     <Section
       bg={useColorModeValue("transparent")}
@@ -30,9 +28,9 @@ const PublicationFilter = (props) => {
         alignItems={"center"}
         justifyContent="center"
       >
-        {data &&
-          data
-            .filter((category) => category.parent === 217)
+        {categories &&
+          categories
+            .filter((category) => category.parent === 5)
             .map(({ name, id, link }) => {
               return (
                 <Button

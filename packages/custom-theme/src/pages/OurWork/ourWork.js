@@ -25,6 +25,7 @@ const OurWork = ({ state, actions, libraries }) => {
   const intro = post.acf.intro;
   const Html2React = libraries.html2react.Component;
 
+
   useEffect(() => {
     actions.source.fetch("/");
     List.preload();
@@ -130,19 +131,17 @@ const OurWork = ({ state, actions, libraries }) => {
             display="flex"
             flexDir={{ base: "column", md: "row" }}
             justifyContent="center"
-            gap="4"
+            gap="10"
           >
             {sectors.map(({ title, content, bg_image, link }) => {
               return (
                 <LinkBox
                   href={link}
                   pos="relative"
-                  h="500px"
-                  w="100%"
+                  h="550px"
                   className="cards"
-                  width={{ base: "100%", md: "50%" }}
+                  width={{ base: "100%", md: "48%" }}
                   backgroundImage={`url(${bg_image})`}
-                  backgroundSize="cover"
                   backgroundRepeat="no-repeat"
                   backgroundBlendMode="multiply"
                   border="3px solid #000"
@@ -151,12 +150,13 @@ const OurWork = ({ state, actions, libraries }) => {
                   rounded="xl"
                   display="flex"
                   flexDir={"column"}
+                  style={{ backgroundSize: "cover", aspectRatio: "16/9" }}
                 >
                   <Heading
                     as="h4"
                     className="title"
                     textAlign={"center"}
-                    height="25%"
+                    height="20%"
                     py="10"
                   >
                     <LinkOverlay

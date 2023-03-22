@@ -54,7 +54,6 @@ const PublicationSliders = ({ state, link, categories }) => {
     );
   };
 
-  console.log(sliderData);
 
   return (
     <Stack spacing={8}>

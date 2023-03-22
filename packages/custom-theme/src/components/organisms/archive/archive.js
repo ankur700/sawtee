@@ -12,16 +12,18 @@ import SawteeInMedia from "../../../pages/sawteeInMedia";
 import Research from "../../../pages/research";
 import Newsletters from "../../../pages/newsletters";
 
-const Archive = ({ state }) => {
+const Archive = ({ state, categories }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
-  if (data.isFeaturedEventsArchive) return <Events />;
 
-  if (data.isPublicationsArchive) return <Publications />;
-  if (data.isSawteeInMediaArchive) return <SawteeInMedia />;
-  if (data.isProgrammeArchive) return <Programme />;
+  if (data.isFeaturedEventsArchive) return <Events categories={categories} />;
+  if (data.isPublicationsArchive)
+    return <Publications categories={categories} />;
+  if (data.isSawteeInMediaArchive)
+    return <SawteeInMedia categories={categories} />;
+  if (data.isProgrammeArchive) return <Programme categories={categories} />;
   if (data.isNewslettersArchive) return <Newsletters />;
-  if (data.isResearchArchive) return <Research />;
+  if (data.isResearchArchive) return <Research categories={categories} />;
 
   return (
     <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">

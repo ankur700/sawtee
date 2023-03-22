@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import useSWR from "swr";
 import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { connect, Global, Head } from "frontity";
@@ -16,7 +16,6 @@ import HomeArchive from "../components/organisms/archive/home-archive";
 import Home from "../pages/home";
 import OurWork from "../pages/OurWork";
 import KnowUs from "../pages/KnowUs";
-import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
 import Post from "../components/organisms/post/post";
 import "focus-visible/dist/focus-visible";
@@ -40,10 +39,16 @@ const Theme = ({ state, actions }) => {
     colors: { ...state.theme.colors },
   });
 
-  const { data: categories } = useSWR(
+  const { data: categoriesData } = useSWR(
     "https://sawtee.org/backend/wp-json/wp/v2/categories?per_page=25",
     fetcher
   );
+
+  const categories = useMemo(() => {
+    if (categoriesData) {
+      return [...categoriesData];
+    }
+  }, [categoriesData]);
 
   useEffect(() => {
     actions.source.fetch("/");
@@ -86,16 +91,10 @@ const Theme = ({ state, actions }) => {
           <Home when={data.isHome} categories={categories} />
           <KnowUs when={data.route === "/about/"} />
           <OurWork when={data.route === "/our-work/"} />
-          <Page when={data.isPage} />
-          <Post
-            when={
-              data.isPostType || data.isPublications || data.isFeaturedEvents
-            }
-            categories={categories}
-          />
+          <Post when={data.isPostType} />
           <SearchResults when={data.isSearch} />
           <HomeArchive when={data.route === "/blog"} />
-          <Archive when={data.isArchive} />
+          <Archive when={data.isArchive} categories={categories} />
           <Page404 when={data.is404} />
         </Switch>
       </Box>

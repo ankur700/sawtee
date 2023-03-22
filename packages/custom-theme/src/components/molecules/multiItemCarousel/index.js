@@ -63,7 +63,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
         className="wrapper"
       >
         {slides &&
-          slides.map((slide, sid) => {
+          slides?.map((slide, sid) => {
             return (
               <LinkBox
                 key={sid}
@@ -73,7 +73,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
                 minHeight="310px"
                 flex="none"
                 pos={"relative"}
-                title={slide.title}
+                title={slide.title || slide.alt}
                 rounded="xl"
                 ml={sid === 0 ? { base: "10px", md: "15px" } : "0"}
                 _after={{
@@ -100,9 +100,11 @@ const MultiItemCarousel = ({ slides, gap }) => {
                 </Text>
                 <LinkOverlay href={slide.link}>
                   <Image
-                    src={slide.featured_media.src}
-                    srcSet={slide.featured_media.srcSet}
-                    alt={slide.featured_media.alt}
+                    src={slide.src ? slide.src : slide.featured_media.src}
+                    srcSet={
+                      slide.srcSet ? slide.srcSet : slide.featured_media.srcSet
+                    }
+                    alt={slide.alt ? slide.alt : ""}
                     boxSize="full"
                     rounded="xl"
                     // objectFit="cover"

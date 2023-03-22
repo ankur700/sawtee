@@ -14,11 +14,12 @@ import Sidebar from "../../components/organisms/archive/sidebar";
 import PublicationSliders from "./publicationSliders";
 import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1.jpg";
+// import FeaturedImage from "../../assets/webp/publications-1.webp";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
 const Publications = ({ state, categories }) => {
-
   const data = state.source.get(state.router.link);
+
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
 
@@ -73,10 +74,12 @@ const Publications = ({ state, categories }) => {
         </Box>
       </Box>
       <Section bg={useColorModeValue("whiteAlpha.700", "gray.700")} size="xl">
-        <PublicationFilter
-          data={categories}
-          linkColor={state.theme.colors.linkColor}
-        />
+        {categories && (
+          <PublicationFilter
+            categories={categories}
+            linkColor={state.theme.colors.linkColor}
+          />
+        )}
       </Section>
 
       <Section
