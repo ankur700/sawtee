@@ -1,20 +1,19 @@
-import React from "react";
-import { connect } from "frontity";
 import {
   Box,
-  useColorModeValue,
-  Text,
-  Stack,
   Divider,
   Heading,
+  Stack,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import SubscriptionCard from "../../atoms/subscriptionCard";
-import TwitterTimeline from "../../atoms/twitterTimeline";
-import GlassBox from "../../atoms/glassBox";
+import { connect, decode } from "frontity";
 import moment from "moment/moment";
+import React from "react";
+import GlassBox from "../../atoms/glassBox";
 import Link from "../../atoms/link";
+import SubscriptionCard from "../../atoms/subscriptionCard";
 import Title from "../../atoms/title";
-import { decode } from "frontity";
+import TwitterTimeline from "../../atoms/twitterTimeline";
 import { formatCPTData } from "../../helpers";
 
 export const Sidebar = ({
@@ -40,7 +39,6 @@ export const Sidebar = ({
       return [...newsArray];
     }
   }, [newsData]);
-
 
   React.useEffect(() => {
     actions.source.fetch("/sawtee-in-media");
@@ -107,7 +105,7 @@ export const Sidebar = ({
       )}
 
       {showTwitterTimeline && (
-        <GlassBox rounded="2xl" height="max-content" p={2}>
+        <GlassBox rounded="2xl" height="max-content" className="twitter-embed" p={2}>
           <TwitterTimeline
             handle="sawteenp"
             width={"100%"}

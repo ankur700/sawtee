@@ -1,5 +1,6 @@
 import image from "@frontity/html2react/processors/image";
 import link from "@frontity/html2react/processors/link";
+import iframe from "@frontity/html2react/processors/iframe";
 
 const settings = {
   name: "sawtee-frontend",
@@ -267,7 +268,7 @@ const settings = {
             headerBg: "white",
             footerBg: "#006181",
             bodyBg: {
-              light: "rgba(0, 0, 0, 0.06)",
+              light: "rgba(255 255 255 / 1)",
               dark: "rgba(35, 39, 47, 0.8)",
             },
             linkColor: "rgb(8 126 164/1)",
@@ -348,7 +349,7 @@ const settings = {
        * and internal link inside the content HTML.
        * You can add your own processors too.
        */
-      processors: [image, link],
+      processors: [image, link, iframe],
     },
   },
 };

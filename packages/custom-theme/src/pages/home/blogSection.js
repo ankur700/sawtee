@@ -81,7 +81,7 @@ const BlogSection = ({ state, actions, linkColor, categories }) => {
           text="Policy Outreach"
         />
         {eventsList.length > 0 && (
-          <Show above="md">
+          <Show above="lg">
             <ViewAllBtn
               w="12em"
               link={

@@ -49,8 +49,8 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
             w="full"
             overflow={"hidden"}
             rounded="xl"
-            border="1px solid"
-            borderColor="blue.100"
+            // border="1px solid"
+            // borderColor="blue.100"
             _hover={{
               borderColor: "blue.300",
               boxShadow: useColorModeValue(

@@ -1,19 +1,19 @@
 import {
   Box,
-  SimpleGrid,
-  Image,
-  Heading,
   Divider,
+  Heading,
+  Image,
+  SimpleGrid,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
+import Publication1 from "../../assets/publications-1.jpg";
+import Loading from "../../components/atoms/loading";
+import Sidebar from "../../components/organisms/archive/sidebar";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import PublicationFilter from "./publicationFilter";
-import Sidebar from "../../components/organisms/archive/sidebar";
 import PublicationSliders from "./publicationSliders";
-import Loading from "../../components/atoms/loading";
-import Publication1 from "../../assets/publications-1.jpg";
 // import FeaturedImage from "../../assets/webp/publications-1.webp";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
@@ -57,13 +57,13 @@ const Publications = ({ state, categories }) => {
           textAlign="center"
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "0" }}
-          color={"whiteAlpha.900"}
           position="absolute"
           bottom="15%"
           left="15%"
         >
           <Heading
             fontWeight="bold"
+            color={"whiteAlpha.900"}
             size={"3xl"}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
@@ -83,8 +83,10 @@ const Publications = ({ state, categories }) => {
       </Section>
 
       <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+        // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
+        w="full"
+        m="0"
         size="xl"
       >
         <Box

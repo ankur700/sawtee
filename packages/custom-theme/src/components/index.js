@@ -1,25 +1,25 @@
+import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
+import Switch from "@frontity/components/switch";
+import "focus-visible/dist/focus-visible";
+import { Global, Head, connect } from "frontity";
 import { useEffect, useMemo } from "react";
 import useSWR from "swr";
-import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { connect, Global, Head } from "frontity";
-import Switch from "@frontity/components/switch";
-import SkipLink from "./styles/skip-link";
+import HomeArchive from "../components/organisms/archive/home-archive";
+import Post from "../components/organisms/post/post";
+import KnowUs from "../pages/KnowUs";
+import OurWork from "../pages/OurWork";
+import Home from "../pages/home";
+import Loading from "./atoms/loading";
+import Page404 from "./atoms/page404";
+import PageTitle from "./atoms/pageTitle";
+import { fetcher } from "./helpers";
+import SearchResults from "./molecules/search";
 import Archive from "./organisms/archive";
 import Footer from "./organisms/footer";
 import Header from "./organisms/header";
-import Loading from "./atoms/loading";
-import Page404 from "./atoms/page404";
-import SearchResults from "./molecules/search";
-import PageTitle from "./atoms/pageTitle";
 import FontFace from "./styles/font-face";
-import HomeArchive from "../components/organisms/archive/home-archive";
-import Home from "../pages/home";
-import OurWork from "../pages/OurWork";
-import KnowUs from "../pages/KnowUs";
 import globalStyles from "./styles/global-styles";
-import Post from "../components/organisms/post/post";
-import "focus-visible/dist/focus-visible";
-import { fetcher } from "./helpers";
+import SkipLink from "./styles/skip-link";
 
 const config = {
   initialColorMode: "light",

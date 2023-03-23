@@ -54,7 +54,7 @@ const KnowUs = ({ state, actions, libraries }) => {
         )}
         <PostHeader
           pt={{ base: "20px", lg: "4rem" }}
-          color={"whiteAlpha.900"}
+          color={useColorModeValue("gray.700", "whiteAlpha.900")}
           categories={post.categories}
           heading={post.title}
           author={post.author}

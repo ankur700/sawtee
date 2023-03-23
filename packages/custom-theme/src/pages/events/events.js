@@ -36,7 +36,7 @@ const EventsArchive = ({ state, categories }) => {
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
-      <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
+      <Box pos="relative">
         <Box
           as="figure"
           mt={4}
@@ -80,6 +80,8 @@ const EventsArchive = ({ state, categories }) => {
       <Section
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
+        w="full"
+        m="0"
         size="xl"
       >
         <Box

@@ -1,22 +1,23 @@
 import {
   Box,
   Button,
-  useColorModeValue,
-  Text,
-  LinkBox,
   Heading,
+  LinkBox,
   LinkOverlay,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import Link from "@frontity/components/link";
 import { connect, decode, styled } from "frontity";
 import React, { useEffect } from "react";
+import { formatPostData, getPostData } from "../../components/helpers";
 import List from "../../components/organisms/archive";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
 import FeaturedMedia from "../../components/organisms/post/featured-media";
 import PostHeader from "../../components/organisms/post/post-header";
-import { getPostData, formatPostData } from "../../components/helpers";
+import { LightPatternBox } from "../../components/styles/pattern-box";
+import Section from "../../components/styles/section";
 import { OurThemes } from "../../data";
-import Link from "@frontity/components/link";
+import GlassBox from "../../components/atoms/glassBox";
 
 const OurWork = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
@@ -24,7 +25,6 @@ const OurWork = ({ state, actions, libraries }) => {
   const sectors = post.acf.sectors;
   const intro = post.acf.intro;
   const Html2React = libraries.html2react.Component;
-
 
   useEffect(() => {
     actions.source.fetch("/");
@@ -36,7 +36,7 @@ const OurWork = ({ state, actions, libraries }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      bg={useColorModeValue("white", "gray.800")}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -62,7 +62,7 @@ const OurWork = ({ state, actions, libraries }) => {
         <PostHeader
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "0" }}
-          color={"whiteAlpha.800"}
+          color={"whiteAlpha.900"}
           categories={post.categories}
           heading={post.title}
           author={post.author}
@@ -74,12 +74,8 @@ const OurWork = ({ state, actions, libraries }) => {
         />
       </Box>
 
-      <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
-        size="lg"
-        mb="8"
-      >
-        <Box
+      <Section size="lg" marginBlock={6}>
+        <GlassBox
           h="auto"
           px={{ base: "32px", md: "16px" }}
           size="md"
@@ -99,18 +95,26 @@ const OurWork = ({ state, actions, libraries }) => {
                 colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
               >
                 <Link link={theme.href} _hover={{ textDecoration: "none" }}>
-                  <Text color={state.theme.colors.linkColor}>{theme.name}</Text>
+                  <Text
+                    color={useColorModeValue(
+                      state.theme.colors.linkColor,
+                      "accent.400"
+                    )}
+                  >
+                    {theme.name}
+                  </Text>
                 </Link>
               </Button>
             );
           })}
-        </Box>
+        </GlassBox>
       </Section>
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+      <GlassBox
+        as={Section}
         pb="80px"
+        border='none'
         size="lg"
       >
         {/* Render the content using the Html2React component so the HTML is processed
@@ -184,7 +188,7 @@ const OurWork = ({ state, actions, libraries }) => {
             })}
           </Box>
         </Content>
-      </Section>
+      </GlassBox>
     </LightPatternBox>
   );
 };

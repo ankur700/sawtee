@@ -73,13 +73,15 @@ const ProgrammesList = ({ state, link, libraries, categories }) => {
                     </Link>
                   </Heading>
                   <Text
+                    // isTruncated
                     mt={2}
                     fontSize="md"
                     color="gray.600"
                     _dark={{
                       color: "gray.200",
                     }}
-                    noOfLines={3}
+                    overflow={"ellipsis"}
+                    noOfLines={[2, 3]}
                   >
                     <Html2React html={program.excerpt} />
                   </Text>

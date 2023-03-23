@@ -1,16 +1,15 @@
 import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
-import { connect } from "frontity";
+import { connect, decode } from "frontity";
 import React from "react";
+import Events from "../../../pages/events";
+import Newsletters from "../../../pages/newsletters";
+import Programme from "../../../pages/programme";
+import Publications from "../../../pages/publication";
+import Research from "../../../pages/research";
+import SawteeInMedia from "../../../pages/sawteeInMedia";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
-import { decode } from "frontity";
-import Programme from "../../../pages/programme";
-import Publications from "../../../pages/publication";
-import Events from "../../../pages/events";
-import SawteeInMedia from "../../../pages/sawteeInMedia";
-import Research from "../../../pages/research";
-import Newsletters from "../../../pages/newsletters";
 
 const Archive = ({ state, categories }) => {
   // Get the data of the current list.
