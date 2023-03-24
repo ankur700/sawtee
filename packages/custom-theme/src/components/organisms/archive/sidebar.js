@@ -105,7 +105,14 @@ export const Sidebar = ({
       )}
 
       {showTwitterTimeline && (
-        <GlassBox rounded="2xl" height="max-content" className="twitter-embed" p={2}>
+        <GlassBox
+          rounded="2xl"
+          height="max-content"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          id="twitter-wrapper"
+        >
           <TwitterTimeline
             handle="sawteenp"
             width={"100%"}

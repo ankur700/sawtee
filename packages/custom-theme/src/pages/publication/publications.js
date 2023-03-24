@@ -14,7 +14,6 @@ import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
-// import FeaturedImage from "../../assets/webp/publications-1.webp";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
 const Publications = ({ state, categories }) => {
@@ -82,13 +81,7 @@ const Publications = ({ state, categories }) => {
         )}
       </Section>
 
-      <Section
-        // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
-        pb="80px"
-        w="full"
-        m="0"
-        size="xl"
-      >
+      <Section pb="80px" w="full" m="0" size="xl">
         <Box
           as={Section}
           px={{ base: "32px", md: "0" }}

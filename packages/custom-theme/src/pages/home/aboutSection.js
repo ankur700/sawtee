@@ -80,9 +80,7 @@ const AboutSection = ({
   const publicationsData = state.source.get("/publications");
   const [publicationsSlider, setPublicationsSlider] = React.useState([]);
 
-  useEffect(() => {
-    actions.source.fetch("/publications");
-  }, []);
+
 
   useEffect(() => {
     if (publicationsData.isReady && Publication_categories.length > 0) {
@@ -119,6 +117,10 @@ const AboutSection = ({
       }
     }
   }, [publicationsData.isReady, categories, Publication_categories]);
+
+    useEffect(() => {
+      actions.source.fetch("/publications");
+    }, []);
 
   return (
     <Section width="full" overflow="hidden" id="about-section" display="flex">

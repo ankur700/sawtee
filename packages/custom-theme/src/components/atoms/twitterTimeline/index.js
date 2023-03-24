@@ -1,32 +1,61 @@
-import { Link, Text, useColorModeValue } from "@chakra-ui/react";
-import Script from "@frontity/components/script";
+import { Link, useColorModeValue, useColorMode } from "@chakra-ui/react";
+import React from "react";
 
-const TwitterTimeline = ({ height, width, handle, ...rest }) => {
+const TwitterTimeline = ({ height, width, handle, theme, ...rest }) => {
   let link = `https://twitter.com/${handle}?ref_src=twsrc%5Etfw`;
 
-  <Script src="https://platform.twitter.com/widgets.js" />;
+  const { colorMode } = useColorMode();
 
-  return (
-    <Link
-      className="twitter-timeline"
-      data-lang="en"
-      data-width={width}
-      data-height={height}
-      data-dnt="true"
-      data-theme={useColorModeValue("light", "dark")}
-      data-tweet-limit="10"
-      data-chrome="transparent noborders noscrollbar"
-      href={link}
-      {...rest}
-      overflow="scroll"
-      rounded="2xl"
-      p={3}
-    >
-      <Text as="p" textAlign={"center"}>
+  const currentTheme = React.useMemo(() => {
+    if (colorMode) {
+      return colorMode === "light" ? "light" : "dark";
+    }
+  }, [colorMode]);
+
+
+  if (currentTheme === "light" || currentTheme === undefined) {
+    console.log("displaying light version");
+    return (
+      <Link
+        className={"twitter-timeline"}
+        overflow="scroll"
+        data-height={height}
+        data-width={width}
+        data-chrome="noscrollbars noborders"
+        data-limit={5}
+        data-theme={"light"}
+        rounded="2xl"
+        href={link}
+        p={3}
+        textAlign="center"
+        color={useColorModeValue("gray.700", "whiteAlpha.900")}
+        {...rest}
+      >
         {"Track SAWTEE on TWITTER"}
-      </Text>
-    </Link>
-  );
+      </Link>
+    );
+  } else {
+    console.log("displaying dark version");
+    return (
+      <Link
+        className={"twitter-timeline"}
+        overflow="scroll"
+        data-height={height}
+        data-width={width}
+        data-chrome="noscrollbars noborders"
+        data-limit={5}
+        data-theme={"dark"}
+        rounded="2xl"
+        href={link}
+        p={3}
+        textAlign="center"
+        color={useColorModeValue("gray.700", "whiteAlpha.900")}
+        {...rest}
+      >
+        {"Track SAWTEE on TWITTER"}
+      </Link>
+    );
+  }
 };
 
 export default TwitterTimeline;

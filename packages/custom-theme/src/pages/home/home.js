@@ -4,14 +4,13 @@ import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
 
-
 const Home = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
   const linkColor = state.theme.colors.linkColor;
-  const introText = post.acf.about_section_intro;
-  const Publication_categories = post.acf.publication_sliders;
+  const introText = post.acf?.about_section_intro;
+  const Publication_categories = post.acf?.publication_sliders;
 
   return (
     <>

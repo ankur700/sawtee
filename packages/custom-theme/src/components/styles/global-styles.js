@@ -43,6 +43,11 @@ body::-webkit-scrollbar-thumb {
     background: ${colors.bodyBg.dark};
   }
 
+  #twitter-widget-0 {
+    border-radius: 10px;
+  }
+
+
   body {
     box-sizing: border-box;
     color: #000;
