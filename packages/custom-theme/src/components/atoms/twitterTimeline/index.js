@@ -1,61 +1,36 @@
-import { Link, useColorModeValue, useColorMode } from "@chakra-ui/react";
+import { useColorModeValue, Box } from "@chakra-ui/react";
 import React from "react";
 
-const TwitterTimeline = ({ height, width, handle, theme, ...rest }) => {
-  let link = `https://twitter.com/${handle}?ref_src=twsrc%5Etfw`;
+const TwitterTimeline = ({ height, width, handle }) => {
+  const link = `https://twitter.com/${handle}?ref_src=twsrc%5Etfw`;
 
-  const { colorMode } = useColorMode();
+  const theme = useColorModeValue("light", "dark");
 
-  const currentTheme = React.useMemo(() => {
-    if (colorMode) {
-      return colorMode === "light" ? "light" : "dark";
+  React.useEffect(() => {
+    const wrapper = document.getElementById("twitter-wrapper");
+    const srcipt = document.createElement("script");
+    srcipt.setAttribute("src", "https://platform.twitter.com/widgets.js");
+
+    const prevAnchor = document.getElementsByClassName("twitter-timeline")[0];
+
+    if (prevAnchor) {
+      prevAnchor.parentNode.removeChild(prevAnchor);
     }
-  }, [colorMode]);
+
+    const anchor = document.createElement("a");
+    anchor.setAttribute("href", link);
+    anchor.setAttribute("class", "twitter-timeline");
+    anchor.dataset.width = width;
+    anchor.innerHTML = "Track SAWTEE on TWITTER";
+    anchor.dataset.height = height;
+    anchor.dataset.chrome = "noscrollbars noborders";
+    anchor.dataset.theme = theme;
+    wrapper.appendChild(anchor);
+    anchor.appendChild(srcipt);
+  }, [theme]);
 
 
-  if (currentTheme === "light" || currentTheme === undefined) {
-    console.log("displaying light version");
-    return (
-      <Link
-        className={"twitter-timeline"}
-        overflow="scroll"
-        data-height={height}
-        data-width={width}
-        data-chrome="noscrollbars noborders"
-        data-limit={5}
-        data-theme={"light"}
-        rounded="2xl"
-        href={link}
-        p={3}
-        textAlign="center"
-        color={useColorModeValue("gray.700", "whiteAlpha.900")}
-        {...rest}
-      >
-        {"Track SAWTEE on TWITTER"}
-      </Link>
-    );
-  } else {
-    console.log("displaying dark version");
-    return (
-      <Link
-        className={"twitter-timeline"}
-        overflow="scroll"
-        data-height={height}
-        data-width={width}
-        data-chrome="noscrollbars noborders"
-        data-limit={5}
-        data-theme={"dark"}
-        rounded="2xl"
-        href={link}
-        p={3}
-        textAlign="center"
-        color={useColorModeValue("gray.700", "whiteAlpha.900")}
-        {...rest}
-      >
-        {"Track SAWTEE on TWITTER"}
-      </Link>
-    );
-  }
+  return <Box id="twitter-wrapper" textAlign={'center'} ></Box>;
 };
 
 export default TwitterTimeline;

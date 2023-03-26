@@ -43,9 +43,15 @@ body::-webkit-scrollbar-thumb {
     background: ${colors.bodyBg.dark};
   }
 
-  #twitter-widget-0 {
+  .chakra-ui-dark .twitter-timeline > .r-kemksi {
+    background: rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .twitter-timeline > iframe {
     border-radius: 10px;
   }
+
+
 
 
   body {
