@@ -15,6 +15,7 @@ import Section from "../../components/styles/section";
 import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
+import GlassBox from "../../components/atoms/glassBox";
 
 const Publications = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
@@ -72,14 +73,19 @@ const Publications = ({ state, categories }) => {
           </Heading>
         </Box>
       </Box>
-      <Section bg={useColorModeValue("whiteAlpha.700", "gray.700")} size="xl">
+      <GlassBox
+        as={Section}
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+        mt={"6"}
+        size="lg"
+      >
         {categories && (
           <PublicationFilter
             categories={categories}
             linkColor={state.theme.colors.linkColor}
           />
         )}
-      </Section>
+      </GlassBox>
 
       <Section pb="80px" w="full" m="0" size="xl">
         <Box

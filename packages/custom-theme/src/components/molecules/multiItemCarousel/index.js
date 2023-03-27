@@ -1,6 +1,5 @@
 import {
   Flex,
-  Box,
   Text,
   Image,
   useBreakpointValue,
@@ -8,7 +7,6 @@ import {
   LinkOverlay,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import Link from "@frontity/components/link";
 
 const MultiItemCarousel = ({ slides, gap }) => {
   const arrowStyles = {
@@ -70,7 +68,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
                 boxSize="full"
                 shadow="md"
                 w="full"
-                minHeight="310px"
+                height={{ base: "auto", md: "300px" }}
                 flex="none"
                 pos={"relative"}
                 title={slide.title || slide.alt}
@@ -90,6 +88,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
               >
                 <Text
                   color="white"
+                  _groupHover={{ color: "gray.900" }}
                   fontSize="xs"
                   p="8px 12px"
                   pos="absolute"
@@ -107,7 +106,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
                     alt={slide.alt ? slide.alt : ""}
                     boxSize="full"
                     rounded="xl"
-                    // objectFit="cover"
+                    objectFit="cover"
                   />
                 </LinkOverlay>
               </LinkBox>

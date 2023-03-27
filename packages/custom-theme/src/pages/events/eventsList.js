@@ -7,6 +7,7 @@ import {
   Text,
   Icon,
   Tag,
+  Flex,
   useColorModeValue,
   Heading,
 } from "@chakra-ui/react";
@@ -19,6 +20,7 @@ import Link from "../../components/atoms/link";
 import { decode, connect } from "frontity";
 import useInView from "@frontity/hooks/use-in-view";
 import { formatCPTData } from "../../components/helpers";
+import PostCategories from "../../components/organisms/post/post-categories";
 
 const EventsList = ({ state, link, libraries, linkColor, categories }) => {
   const format = "MMMM Do YYYY";
@@ -49,14 +51,18 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
             w="full"
             overflow={"hidden"}
             rounded="xl"
+            bg={useColorModeValue(
+              "rgba(255, 255, 255, 0.1)",
+              "rgba(0, 0, 0, 0.4)"
+            )}
+            boxShadow={useColorModeValue(
+              "0 4px 6px rgba(160, 174, 192, 0.6)",
+              "0 4px 6px rgba(9, 17, 28, 0.9)"
+            )}
             // border="1px solid"
             // borderColor="blue.100"
             _hover={{
-              borderColor: "blue.300",
-              boxShadow: useColorModeValue(
-                "0 4px 6px rgba(160, 174, 192, 0.6)",
-                "0 4px 6px rgba(9, 17, 28, 0.9)"
-              ),
+              boxShadow: "none",
             }}
             initial={{ y: 200, opacity: 0 }}
             animate={{ y: inView ? 0 : 200, opacity: inView ? 1 : 0 }}
@@ -85,25 +91,20 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
             </Box>
             <Box p={4}>
               <HStack spacing={2} mb={1}>
-                {event.categories &&
-                  event.categories.map((cat) => (
-                    <Tag
-                      key={cat.id}
-                      colorScheme={useColorModeValue("blackAlpha", "gray")}
-                      borderRadius="full"
-                      bg={useColorModeValue(
-                        "rgb(230 247 255/1)",
-                        "rgb(88,175,223,.1)"
-                      )}
-                    >
-                      {cat.name}
-                    </Tag>
-                  ))}
+                {event.categories && (
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <PostCategories
+                      justify="flex-start"
+                      categories={event.categories}
+                      color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                    />
+                  </Flex>
+                )}
               </HStack>
               <Box textAlign="left">
                 <Heading
                   as="h3"
-                  color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                  color={useColorModeValue("gray.700", "whiteAlpha.800")}
                   fontSize="xl"
                   lineHeight={1.2}
                   fontWeight="bold"
@@ -116,7 +117,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
                 <Text
                   as="div"
                   fontSize="md"
-                  color="gray.500"
+                  color={useColorModeValue("gray.500", "gray.300")}
                   noOfLines={2}
                   lineHeight="normal"
                 >
@@ -129,21 +130,30 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
                   direction={{ base: "column", sm: "row" }}
                   alignItems={"center"}
                 >
-                  <Text fontSize="sm" color="gray.500">
+                  <Text
+                    fontSize="sm"
+                    color={useColorModeValue("gray.500", "gray.300")}
+                  >
                     {moment(event.publishDate).format(format)}
                   </Text>
                   <HStack
                     as={Link}
                     spacing={1}
                     p={1}
+                    px={2}
                     alignItems="center"
                     height="2rem"
                     w="max-content"
                     margin="auto 0"
                     rounded="md"
-                    color={useColorModeValue("primary.700", "primary.50")}
+                    // color={useColorModeValue("primary.700", "primary.50")}
                     link={event.link ? event.link : "#"}
-                    _hover={{ bg: useColorModeValue("gray.200", "gray.700") }}
+                    _hover={{
+                      bg: useColorModeValue(
+                        "rgb(230 247 255/1)",
+                        "rgb(88,175,223,.1)"
+                      ),
+                    }}
                   >
                     <Link link={event.link}>
                       {" "}

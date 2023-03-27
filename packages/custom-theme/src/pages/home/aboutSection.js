@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import HeroImage from "../../assets/hero-image.jpg";
 import Title from "../../components/atoms/title";
 import Section from "../../components/atoms/section";
-import { Grid, GridItem, useColorModeValue, Text, Box, Center } from "@chakra-ui/react";
+import { Grid, GridItem, Text, Box, Skeleton, Flex } from "@chakra-ui/react";
 import { styled } from "frontity";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { connect } from "frontity";
@@ -20,16 +20,16 @@ const CustomGridItem = styled(GridItem)`
 
   & #image-wrapper {
     background-image: url(${HeroImage});
+    bgcolor: "gray.800";
     background-blend-mode: saturation;
     background-size: cover;
-    filter: grayscale(100%);
     position: absolute;
     width: 100%;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    transform: scale(1.1);
+    // transform: scale(1.1);
     transition: all 0.3s ease;
     z-index: 1;
 
@@ -76,11 +76,8 @@ const AboutSection = ({
   categories,
   Publication_categories,
 }) => {
-
   const publicationsData = state.source.get("/publications");
   const [publicationsSlider, setPublicationsSlider] = React.useState([]);
-
-
 
   useEffect(() => {
     if (publicationsData.isReady && Publication_categories.length > 0) {
@@ -118,18 +115,19 @@ const AboutSection = ({
     }
   }, [publicationsData.isReady, categories, Publication_categories]);
 
-    useEffect(() => {
-      actions.source.fetch("/publications");
-    }, []);
+  useEffect(() => {
+    actions.source.fetch("/publications");
+  }, []);
 
   return (
     <Section width="full" overflow="hidden" id="about-section" display="flex">
       <Grid
-        templateColumns={{ base: "auto", lg: "repeat(2, 1fr)" }}
+        templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
         templateRows="auto"
       >
         <CustomGridItem
           colSpan={1}
+          w="full"
           rowSpan={{ base: "1", lg: "2" }}
           bg={"transparent"}
         >
@@ -137,7 +135,7 @@ const AboutSection = ({
           <blockquote>
             {intro && (
               <Text
-                fontSize={["1.25rem", "1.5rem", "2rem"]}
+                fontSize={["xl", "2xl", "3xl", "4xl"]}
                 color={"whiteAlpha.800"}
                 m="0"
                 maxW="xl"
@@ -151,16 +149,39 @@ const AboutSection = ({
         </CustomGridItem>
 
         {publicationsData.isFetching && (
-          <GridItem
-            colSpan={1}
-            bg={useColorModeValue("rgb(254, 245, 232)", "rgb(65, 49, 42)")}
-            px={"4"}
-            overflow="hidden"
-          >
-            <Center>
-              <Loading />
-            </Center>
-          </GridItem>
+          <>
+            <GridItem colSpan={1} bg={"#463737"} px={"4"} w="full">
+              <Skeleton width="150px" height="30px" marginBlock={3} />
+              <Flex
+                mt="3"
+                maxH={"350px"}
+                rounded="xl"
+                flexDir="row"
+                gap={{ base: "10px", sm: "20px", md: "30px" }}
+                className="wrapper"
+              >
+                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
+              </Flex>
+            </GridItem>
+
+            <GridItem colSpan={1} bg={"#463737"} px={"4"} w="full">
+              <Skeleton width="150px" height="30px" marginBlock={3} />
+              <Flex
+                mt="3"
+                maxH={"350px"}
+                rounded="xl"
+                flexDir="row"
+                gap={{ base: "10px", sm: "20px", md: "30px" }}
+                className="wrapper"
+              >
+                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
+              </Flex>
+            </GridItem>
+          </>
         )}
         {publicationsData.isReady &&
           publicationsSlider.map((item) => {
@@ -168,12 +189,16 @@ const AboutSection = ({
               <GridItem
                 key={item.slider_title}
                 colSpan={1}
-                bg={useColorModeValue("rgb(254, 245, 232)", "rgb(65, 49, 42)")}
+                bg={"#463737"}
                 px={"4"}
                 overflow="hidden"
               >
-                <Title py={["4", "6", "8"]} text={item.slider_title} />
-                <MultiItemCarousel my="6" slides={item.slider} />
+                <Title
+                  py={["3", "6"]}
+                  text={item.slider_title}
+                  color="whiteAlpha.900"
+                />
+                <MultiItemCarousel my="3" slides={item.slider} />
               </GridItem>
             );
           })}

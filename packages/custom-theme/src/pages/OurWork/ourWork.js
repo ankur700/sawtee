@@ -36,7 +36,7 @@ const OurWork = ({ state, actions, libraries }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("white", "gray.800")}
+      bg={useColorModeValue("white", "gray.700")}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -111,19 +111,14 @@ const OurWork = ({ state, actions, libraries }) => {
       </Section>
 
       {/* Look at the settings to see if we should include the featured image */}
-      <GlassBox
-        as={Section}
-        pb="80px"
-        border='none'
-        size="lg"
-      >
+      <GlassBox as={Section} mb="50px" border="none" size="lg">
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
         <Content
           as={Section}
           px={{ base: "32px", md: "16px" }}
           size="lg"
-          pt="50px"
+          paddingBlock="50px"
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           <Box className="intro" pos="relative" mb="20" maxW="3xl" mx="auto">
@@ -147,14 +142,19 @@ const OurWork = ({ state, actions, libraries }) => {
                   width={{ base: "100%", md: "48%" }}
                   backgroundImage={`url(${bg_image})`}
                   backgroundRepeat="no-repeat"
+                  bgColor={"gray.300"}
                   backgroundBlendMode="multiply"
-                  border="3px solid #000"
+                  border="3px solid"
+                  borderColor={useColorModeValue("gray.900", "whiteAlpha.900")}
                   overflow="hidden"
                   key={title}
                   rounded="xl"
                   display="flex"
                   flexDir={"column"}
                   style={{ backgroundSize: "cover", aspectRatio: "16/9" }}
+                  __hover={{
+                    backgroundFilter: "blur(5px)",
+                  }}
                 >
                   <Heading
                     as="h4"
@@ -319,7 +319,8 @@ const Content = styled(Box)`
           background: hsl(194, 100%, 25%, 0.4);
         }
         & .content {
-          color: #463737;
+          // color: #463737;
+          color: rgb(0, 0, 0);
           background: hsl(0, 17%, 95%, 0.4);
           opacity: 1;
         }

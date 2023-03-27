@@ -9,6 +9,7 @@ import PostHeader from "../../components/organisms/post/post-header";
 import { getPostData, formatPostData } from "../../components/helpers";
 import PageSection from "./PageSection";
 import Members from "./Members";
+import GlassBox from "../../components/atoms/glassBox";
 
 const KnowUs = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
@@ -64,18 +65,14 @@ const KnowUs = ({ state, actions, libraries }) => {
       </Box>
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
-        pb="80px"
-        size="lg"
-      >
+      <GlassBox as={Section} mb="50px" border="none" size="lg">
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
         <Content
           as={Section}
           px={{ base: "32px", md: "0" }}
-          size="md"
-          pt="50px"
+          size="sm"
+          paddingBlock="50px"
           fontSize={["sm", "md"]}
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
@@ -91,7 +88,7 @@ const KnowUs = ({ state, actions, libraries }) => {
             linkColor={state.theme.colors.linkColor}
           />
         </Content>
-      </Section>
+      </GlassBox>
     </LightPatternBox>
   );
 };

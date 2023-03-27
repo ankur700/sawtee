@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useState } from "react";
 import { connect } from "frontity";
-import { Stack } from "@chakra-ui/react";
+import { Stack, Text, useColorModeValue } from "@chakra-ui/react";
 import Title from "../../components/atoms/title";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { formatCPTData } from "../../components/helpers";
@@ -64,9 +64,15 @@ const PublicationSliders = ({ state, link, categories }) => {
             getSlides(cat);
             return (
               <Stack key={cat.name} spacing="4">
-                <Link link={cat.link}>
-                  <Title text={cat.name} mb="3" />
-                </Link>
+                <Text
+                  as="h3"
+                  m="0"
+                  fontSize={{ base: "xl", sm: "2xl", md: "3xl" }}
+                  fontFamily="heading"
+                  color={useColorModeValue("gray.800", "whiteAlpha.800")}
+                >
+                  <Link link={cat.link}>{cat.name}</Link>
+                </Text>
                 <MultiItemCarousel slides={cat.slides} />
               </Stack>
             );

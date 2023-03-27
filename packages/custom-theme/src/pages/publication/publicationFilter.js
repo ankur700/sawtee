@@ -1,11 +1,4 @@
-import React from "react";
-import {
-  useColorModeValue,
-  Stack,
-  Checkbox,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { useColorModeValue, Stack, Button, Text } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 import Link from "../../components/atoms/link";
 
@@ -14,7 +7,6 @@ const PublicationFilter = ({ categories, linkColor }) => {
     <Section
       bg={useColorModeValue("transparent")}
       size="xl"
-      mb="8"
       h="auto"
       px={{ base: "32px", md: "0" }}
       py="6"
