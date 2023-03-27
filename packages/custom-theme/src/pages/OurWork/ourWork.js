@@ -137,13 +137,13 @@ const OurWork = ({ state, actions, libraries }) => {
                 <LinkBox
                   href={link}
                   pos="relative"
-                  h="550px"
+                  h={{ base: "450px", lg: "550px" }}
                   className="cards"
-                  width={{ base: "100%", md: "48%" }}
+                  width={{ base: "100%", lg: "48%" }}
                   backgroundImage={`url(${bg_image})`}
                   backgroundRepeat="no-repeat"
-                  bgColor={"gray.300"}
-                  backgroundBlendMode="multiply"
+                  bgColor={"rgba(0,0,0,0.3)"}
+                  backgroundBlendMode="overlay"
                   border="3px solid"
                   borderColor={useColorModeValue("gray.900", "whiteAlpha.900")}
                   overflow="hidden"
@@ -160,8 +160,8 @@ const OurWork = ({ state, actions, libraries }) => {
                     as="h4"
                     className="title"
                     textAlign={"center"}
-                    height="20%"
-                    py="10"
+                    // height="20%"
+                    py={{ base: 4, lg: 8 }}
                   >
                     <LinkOverlay
                       color={"whiteAlpha.800 !important"}
@@ -173,12 +173,12 @@ const OurWork = ({ state, actions, libraries }) => {
                   <Text
                     className="content"
                     flex={1}
-                    height={"75%"}
+                    height={"auto"}
                     display="flex"
                     alignItems={"center"}
-                    fontSize={{ base: "md", md: "lg", lg: "xl" }}
+                    fontSize={{ base: "lg", md: "lg", lg: "xl" }}
                     fontWeight="bold"
-                    px={10}
+                    px={{ base: 4, lg: 10 }}
                     opacity="0"
                   >
                     {decode(content)}
