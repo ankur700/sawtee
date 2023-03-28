@@ -5,6 +5,7 @@ import {
   useBreakpointValue,
   LinkBox,
   LinkOverlay,
+  useColorModeValue
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
@@ -104,9 +105,16 @@ const MultiItemCarousel = ({ slides, gap }) => {
                       slide.srcSet ? slide.srcSet : slide.featured_media.srcSet
                     }
                     alt={slide.alt ? slide.alt : ""}
-                    boxSize="full"
+                    // boxSize="full"
+                    title={slide.alt}
                     rounded="xl"
+                    border={`1px solid`}
+                    borderColor={useColorModeValue(
+                      "gray.900",
+                      "whiteAlpha.900"
+                    )}
                     objectFit="cover"
+                    style={{ width: "220px", height: "300px" }}
                   />
                 </LinkOverlay>
               </LinkBox>

@@ -62,9 +62,11 @@ const Publications = ({ state, categories }) => {
           left="15%"
         >
           <Heading
+            as="h2"
             fontWeight="bold"
             color={"whiteAlpha.900"}
-            size={{ base: "2xl", lg: "3xl" }}
+            size={"2xl"}
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="uppercase"
@@ -77,7 +79,8 @@ const Publications = ({ state, categories }) => {
         as={Section}
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         mt={"6"}
-        size="lg"
+        size={"huge"}
+        w="8xl"
       >
         {categories && (
           <PublicationFilter

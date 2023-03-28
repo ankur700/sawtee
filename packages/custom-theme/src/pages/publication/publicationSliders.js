@@ -1,12 +1,18 @@
 import { useMemo, useEffect, useState } from "react";
 import { connect } from "frontity";
-import { LinkOverlay, Stack, Text, useColorModeValue } from "@chakra-ui/react";
+import {
+  LinkOverlay,
+  Stack,
+  Text,
+  useColorModeValue,
+  Image,
+} from "@chakra-ui/react";
 // import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { formatCPTData } from "../../components/helpers";
 import Link from "@frontity/components/link";
 import Carousel from "../../components/molecules/Carousel";
 // import Image from "@frontity/components/image";
-import Image from "../../components/atoms/image";
+// import Image from "../../components/atoms/image";
 
 const PublicationSliders = ({ state, link, categories }) => {
   const data = state.source.get(link);
@@ -59,7 +65,12 @@ const PublicationSliders = ({ state, link, categories }) => {
   };
 
   return (
-    <Stack spacing={8}>
+    <Stack
+      spacing={8}
+      style={{
+        rowGap: "60px",
+      }}
+    >
       {sliderData &&
         sliderData.map((cat) => {
           if (PublicationCategories.includes(`${cat.id}`)) {
@@ -69,17 +80,17 @@ const PublicationSliders = ({ state, link, categories }) => {
                 <Text
                   as="h3"
                   m="0"
-                  fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
+                  fontSize={{ base: "xl", lg: "3xl" }}
                   fontFamily="heading"
                   color={useColorModeValue("gray.800", "whiteAlpha.800")}
                 >
                   <Link link={cat.link}>{cat.name}</Link>
                 </Text>
                 <Carousel show={3}>
-                  {cat.slides.map((slide) => {
+                  {cat.slides.map((slide, idx) => {
                     return (
                       <LinkOverlay
-                        key={slide.alt}
+                        key={slide.alt + idx}
                         title={sliderData.alt}
                         href={slide.link}
                       >
@@ -90,9 +101,16 @@ const PublicationSliders = ({ state, link, categories }) => {
                               ? slide.srcSet
                               : slide.featured_media.srcSet
                           }
-                          alt={slide.alt ? slide.alt : ""}
+                          alt={slide.alt}
+                          title={slide.alt}
                           rounded="xl"
+                          border={`1px solid`}
+                          borderColor={useColorModeValue(
+                            "gray.900",
+                            "whiteAlpha.900"
+                          )}
                           objectFit="cover"
+                          style={{ width: "220px", height: "300px" }}
                         />
                       </LinkOverlay>
                     );

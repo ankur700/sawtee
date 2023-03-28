@@ -1,6 +1,6 @@
 import { css } from "frontity";
-import gutenbergStyles from "./style.js";
-import gutenbergTheme from "./theme.js";
+// import gutenbergStyles from "./style.js";
+// import gutenbergTheme from "./theme.js";
 
 /**
  * Styles for Document Setup.
@@ -121,7 +121,6 @@ body::-webkit-scrollbar-thumb {
 .carousel-content {
     display: flex;
     gap: 20px;
-    height: '350px';
     transition: all 250ms linear;
     -ms-overflow-style: none;  /* hide scrollbar in IE and Edge */
     scrollbar-width: none;  /* hide scrollbar in Firefox */
@@ -136,7 +135,8 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     flex-shrink: 0;
     flex-grow: 1;
-
+    display: flex;
+    justify-content: center;
 }
 
 .carousel-content.show-2 > * {
@@ -144,7 +144,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .carousel-content.show-3 > * {
-    width: calc((100% / 3) - 10px);
+    width: calc((100% / 3) - 20px);
 }
 
 .carousel-content.show-4 > * {

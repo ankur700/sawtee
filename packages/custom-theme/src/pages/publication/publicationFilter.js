@@ -6,7 +6,7 @@ const PublicationFilter = ({ categories, linkColor }) => {
   return (
     <Section
       bg={useColorModeValue("transparent")}
-      size="xl"
+      size="2xl"
       h="auto"
       px={{ base: "32px", md: "0" }}
       py="6"

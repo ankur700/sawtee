@@ -2,12 +2,23 @@ import React, { useEffect } from "react";
 import HeroImage from "../../assets/hero-image.jpg";
 import Title from "../../components/atoms/title";
 import Section from "../../components/atoms/section";
-import { Grid, GridItem, Text, Box, Skeleton, Flex } from "@chakra-ui/react";
+import {
+  Grid,
+  GridItem,
+  Text,
+  Box,
+  Skeleton,
+  Flex,
+  Image,
+  LinkOverlay,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { styled } from "frontity";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { connect } from "frontity";
 import { getPublicationSliders } from "../../components/helpers";
-import Loading from "../../components/atoms/loading";
+// import Loading from "../../components/atoms/loading";
+import Carousel from "../../components/molecules/Carousel";
 
 const CustomGridItem = styled(GridItem)`
   position: relative;
@@ -160,9 +171,9 @@ const AboutSection = ({
                 gap={{ base: "10px", sm: "20px", md: "30px" }}
                 className="wrapper"
               >
-                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
-                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
-                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
               </Flex>
             </GridItem>
 
@@ -176,9 +187,9 @@ const AboutSection = ({
                 gap={{ base: "10px", sm: "20px", md: "30px" }}
                 className="wrapper"
               >
-                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
-                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
-                <Skeleton h="350px" w="300px" rounded={'xl'} ></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
+                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
               </Flex>
             </GridItem>
           </>
@@ -199,6 +210,37 @@ const AboutSection = ({
                   color="whiteAlpha.900"
                 />
                 <MultiItemCarousel my="3" slides={item.slider} />
+
+                {/* <Carousel show={3}>
+                  {item.slider.map((slide, idx) => {
+                    return (
+                      <LinkOverlay
+                        key={idx}
+                        title={slide.alt}
+                        href={slide.link}
+                      >
+                        <Image
+                          src={slide.src ? slide.src : slide.featured_media.src}
+                          srcSet={
+                            slide.srcSet
+                              ? slide.srcSet
+                              : slide.featured_media.srcSet
+                          }
+                          alt={slide.alt}
+                          title={slide.alt}
+                          rounded="xl"
+                          border={`1px solid`}
+                          borderColor={useColorModeValue(
+                            "gray.900",
+                            "whiteAlpha.900"
+                          )}
+                          objectFit="cover"
+                          style={{ width: "220px", height: "300px" }}
+                        />
+                      </LinkOverlay>
+                    );
+                  })}
+                </Carousel> */}
               </GridItem>
             );
           })}
