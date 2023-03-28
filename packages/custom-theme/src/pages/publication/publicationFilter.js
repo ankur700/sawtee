@@ -30,10 +30,7 @@ const PublicationFilter = ({ categories, linkColor }) => {
                   colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
                   variant="outline"
                 >
-                  <Text
-                    color={useColorModeValue("gray.700", "whiteAlpha.700")}
-                    __hover={{ color: linkColor }}
-                  >
+                  <Text color={useColorModeValue(linkColor, "accent.100")}>
                     <Link link={link}>{name}</Link>
                   </Text>
                 </Button>

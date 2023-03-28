@@ -1,10 +1,12 @@
 import { useMemo, useEffect, useState } from "react";
 import { connect } from "frontity";
-import { Stack, Text, useColorModeValue } from "@chakra-ui/react";
-import Title from "../../components/atoms/title";
-import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
+import { LinkOverlay, Stack, Text, useColorModeValue } from "@chakra-ui/react";
+// import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { formatCPTData } from "../../components/helpers";
 import Link from "@frontity/components/link";
+import Carousel from "../../components/molecules/Carousel";
+// import Image from "@frontity/components/image";
+import Image from "../../components/atoms/image";
 
 const PublicationSliders = ({ state, link, categories }) => {
   const data = state.source.get(link);
@@ -67,13 +69,35 @@ const PublicationSliders = ({ state, link, categories }) => {
                 <Text
                   as="h3"
                   m="0"
-                  fontSize={{ base: "xl", sm: "2xl", md: "3xl" }}
+                  fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
                   fontFamily="heading"
                   color={useColorModeValue("gray.800", "whiteAlpha.800")}
                 >
                   <Link link={cat.link}>{cat.name}</Link>
                 </Text>
-                <MultiItemCarousel slides={cat.slides} />
+                <Carousel show={3}>
+                  {cat.slides.map((slide) => {
+                    return (
+                      <LinkOverlay
+                        key={slide.alt}
+                        title={sliderData.alt}
+                        href={slide.link}
+                      >
+                        <Image
+                          src={slide.src ? slide.src : slide.featured_media.src}
+                          srcSet={
+                            slide.srcSet
+                              ? slide.srcSet
+                              : slide.featured_media.srcSet
+                          }
+                          alt={slide.alt ? slide.alt : ""}
+                          rounded="xl"
+                          objectFit="cover"
+                        />
+                      </LinkOverlay>
+                    );
+                  })}
+                </Carousel>
               </Stack>
             );
           }

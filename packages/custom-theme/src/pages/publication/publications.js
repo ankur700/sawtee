@@ -36,12 +36,12 @@ const Publications = ({ state, categories }) => {
         <Box
           as="figure"
           mt={4}
-          height="500px"
+          height="350px"
           _after={{
             display: "block",
             content: '""',
             width: "100%",
-            height: "500px",
+            height: "350px",
             background: "rgba(0,0,0,0.4)",
             position: "absolute",
             top: 0,
@@ -64,7 +64,7 @@ const Publications = ({ state, categories }) => {
           <Heading
             fontWeight="bold"
             color={"whiteAlpha.900"}
-            size={"3xl"}
+            size={{ base: "2xl", lg: "3xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="uppercase"

@@ -98,7 +98,7 @@ const OurWork = ({ state, actions, libraries }) => {
                   <Text
                     color={useColorModeValue(
                       state.theme.colors.linkColor,
-                      "accent.400"
+                      "accent.100"
                     )}
                   >
                     {theme.name}
@@ -108,9 +108,11 @@ const OurWork = ({ state, actions, libraries }) => {
             );
           })}
         </GlassBox>
-      </Section>
+      </Section>;
 
-      {/* Look at the settings to see if we should include the featured image */}
+      {
+        /* Look at the settings to see if we should include the featured image */
+      }
       <GlassBox as={Section} mb="50px" border="none" size="lg">
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
@@ -180,6 +182,7 @@ const OurWork = ({ state, actions, libraries }) => {
                     fontWeight="bold"
                     px={{ base: 4, lg: 10 }}
                     opacity="0"
+                    textAlign={"center"}
                   >
                     {decode(content)}
                   </Text>
@@ -188,7 +191,7 @@ const OurWork = ({ state, actions, libraries }) => {
             })}
           </Box>
         </Content>
-      </GlassBox>
+      </GlassBox>;
     </LightPatternBox>
   );
 };
