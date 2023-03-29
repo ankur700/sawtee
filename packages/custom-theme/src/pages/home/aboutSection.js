@@ -135,12 +135,7 @@ const AboutSection = ({
   return (
     <Section width="full" overflow="hidden" id="about-section">
       <SimpleGrid columns={2}>
-        <CustomGridItem
-          colSpan={1}
-          w="full"
-          rowSpan={{ base: "1", lg: "2" }}
-          bg={"transparent"}
-        >
+        <CustomGridItem w="full" bg={"transparent"}>
           <Box id="image-wrapper" />
           <blockquote>
             {intro && (
@@ -209,7 +204,7 @@ const AboutSection = ({
           {publicationsData.isReady &&
             publicationsSlider.map((item) => {
               return (
-                <Box key={item.slider_title} marginBlock="4">
+                <Box key={item.slider_title} marginBlock="8">
                   <Title
                     py={["3", "6"]}
                     text={item.slider_title}

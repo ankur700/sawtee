@@ -14,6 +14,6 @@ const sizes = {
  * @param {React.ComponentProps<typeof Box>} props
  */
 const Section = ({ size = "md", ...props }) => (
-  <Box width="92%" mx="auto" maxW={sizes[size]} {...props} />
+  <Box as="section" width="92%" mx="auto" maxW={sizes[size]} {...props} />
 );
 export default Section;

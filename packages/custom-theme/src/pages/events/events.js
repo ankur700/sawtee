@@ -1,11 +1,13 @@
 import {
   Box,
-  SimpleGrid,
+  Grid,
+  GridItem,
   useColorModeValue,
   Image,
   Heading,
   Divider,
   Button,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -19,6 +21,7 @@ import { useArchiveInfiniteScroll } from "@frontity/hooks";
 const EventsArchive = ({ state, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   const linkColor = state.theme.colors.linkColor;
   const { pages, isLimit, isFetching, isError, fetchNext } =
@@ -81,54 +84,51 @@ const EventsArchive = ({ state, categories }) => {
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
         w="full"
-        m="0"
-        size="xl"
+        m="0 auto"
+        size={size}
+        pt="50px"
+        px={{ base: "32px", md: "0" }}
+        fontSize={["md", "lg", "xl"]}
+        color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
       >
-        <Box
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="xl"
-          pt="50px"
-          fontSize={["md", "lg", "xl"]}
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        <Grid
+          templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+          gap={6}
+          pos={"relative"}
         >
-          <SimpleGrid
-            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
-            spacing="10"
-            pos={"relative"}
-          >
-            <Box>
-              {pages.map(({ key, link, isLast, Wrapper }) => (
-                <Wrapper key={key}>
-                  <EventsList
-                    link={link}
-                    linkColor={linkColor}
-                    categories={categories}
-                  />
-                  {isLast && <Divider h="10px" mt="10" />}
-                  <Box w="full" mb="40px" textAlign={"center"}>
-                    {isFetching && <Loading />}
-                    {isLimit && (
-                      <Button onClick={fetchNext}>Load Next Page</Button>
-                    )}
-                    {isError && (
-                      <Button onClick={fetchNext}>
-                        Something failed - Retry
-                      </Button>
-                    )}
-                  </Box>
-                </Wrapper>
-              ))}
-            </Box>
+          <GridItem colSpan={3} px={10}>
+            {pages.map(({ key, link, isLast, Wrapper }) => (
+              <Wrapper key={key}>
+                <EventsList
+                  link={link}
+                  linkColor={linkColor}
+                  categories={categories}
+                />
+                {isLast && <Divider h="10px" mt="10" />}
+                <Box w="full" mb="40px" textAlign={"center"}>
+                  {isFetching && <Loading />}
+                  {isLimit && (
+                    <Button onClick={fetchNext}>Load Next Page</Button>
+                  )}
+                  {isError && (
+                    <Button onClick={fetchNext}>
+                      Something failed - Retry
+                    </Button>
+                  )}
+                </Box>
+              </Wrapper>
+            ))}
+          </GridItem>
+          <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
               categories={categories}
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
             />
-          </SimpleGrid>
-          {/* <Pagination mt="56px" /> */}
-        </Box>
+          </GridItem>
+        </Grid>
+        {/* <Pagination mt="56px" /> */}
       </Section>
     </LightPatternBox>
   );

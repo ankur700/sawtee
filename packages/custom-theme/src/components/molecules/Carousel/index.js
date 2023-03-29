@@ -105,6 +105,7 @@ const Carousel = (props) => {
             onClick={next}
             className="right-arrow"
             {...arrowStyles}
+            right={"26px"}
             colorScheme={useColorModeValue("primary")}
           >
             <HiOutlineArrowNarrowRight />

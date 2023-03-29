@@ -59,9 +59,9 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
               "0 4px 6px rgba(160, 174, 192, 0.6)",
               "0 4px 6px rgba(9, 17, 28, 0.9)"
             )}
-            // border="1px solid"
-            // borderColor="blue.100"
             _hover={{
+              border: "1px solid",
+              borderColor: "primary.700",
               boxShadow: "none",
             }}
             initial={{ y: 200, opacity: 0 }}

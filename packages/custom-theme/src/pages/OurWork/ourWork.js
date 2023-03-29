@@ -88,23 +88,20 @@ const OurWork = ({ state, actions, libraries }) => {
         >
           {OurThemes.map((theme, index) => {
             return (
-              <Button
-                px="10"
+              <Link
                 key={index}
-                variant="outline"
-                colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+                link={theme.href}
+                _hover={{ textDecoration: "none" }}
               >
-                <Link link={theme.href} _hover={{ textDecoration: "none" }}>
-                  <Text
-                    color={useColorModeValue(
-                      state.theme.colors.linkColor,
-                      "accent.100"
-                    )}
-                  >
-                    {theme.name}
-                  </Text>
-                </Link>
-              </Button>
+                <Button
+                  px="10"
+                  size="sm"
+                  colorScheme={"primary"}
+                  variant="outline"
+                >
+                  {theme.name}
+                </Button>
+              </Link>
             );
           })}
         </GlassBox>

@@ -3,7 +3,8 @@ import {
   Divider,
   Heading,
   Image,
-  SimpleGrid,
+  Grid,
+  GridItem,
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -24,6 +25,7 @@ const Publications = ({ state, categories }) => {
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
 
+  const size = useBreakpointValue(["sm", "md", "lg", "huge", "max"]);
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
 
@@ -78,7 +80,7 @@ const Publications = ({ state, categories }) => {
       </Box>
       <GlassBox
         as={Section}
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+        // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         mt={"6"}
         size={"lg"}
       >
@@ -90,52 +92,54 @@ const Publications = ({ state, categories }) => {
         )}
       </GlassBox>
 
-      <Section pb="80px" w="full" m="0" size={useBreakpointValue(["sm", "md", "lg", "huge"])}>
-        <Box
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="xl"
-          pt="50px"
-          fontSize={["md", "lg", "xl"]}
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+      <Box
+        as={Section}
+        px={{ base: "32px", md: "0" }}
+        w="full"
+        size={size}
+        pt="50px"
+        pb={"80px"}
+        fontSize={["md", "lg", "xl"]}
+        color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+      >
+        <Grid
+          templateColumns={{ base: "1fr", lg: "repeat(6, 1fr)" }}
+          gap={6}
+          pos={"relative"}
         >
-          <SimpleGrid
-            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
-            spacing="8"
-            pos={"relative"}
-          >
-            <Box>
-              {pages.map(({ key, link, isLast, Wrapper }) => (
-                <Wrapper key={key}>
-                  <PublicationSliders
-                    link={link}
-                    linkColor={state.theme.colors.linkColor}
-                    categories={categories}
-                  />
-                  {isLast && <Divider h="10px" mt="10" />}
-                  <Box w="full" mb="40px" textAlign={"center"}>
-                    {isFetching && <Loading />}
-                    {isLimit && (
-                      <Button onClick={fetchNext}>Load Next Page</Button>
-                    )}
-                    {isError && (
-                      <Button onClick={fetchNext}>
-                        Something failed - Retry
-                      </Button>
-                    )}
-                  </Box>
-                </Wrapper>
-              ))}
-            </Box>
+          <GridItem colSpan={4} px={10}>
+            {pages.map(({ key, link, isLast, Wrapper }) => (
+              <Wrapper key={key}>
+                <PublicationSliders
+                  link={link}
+                  linkColor={state.theme.colors.linkColor}
+                  categories={categories}
+                />
+                {isLast && <Divider h="10px" mt="10" />}
+                <Box w="full" mb="40px" textAlign={"center"}>
+                  {isFetching && <Loading />}
+                  {isLimit && (
+                    <Button onClick={fetchNext}>Load Next Page</Button>
+                  )}
+                  {isError && (
+                    <Button onClick={fetchNext}>
+                      Something failed - Retry
+                    </Button>
+                  )}
+                </Box>
+              </Wrapper>
+            ))}
+          </GridItem>
+          <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
               categories={categories}
             />
-          </SimpleGrid>
-        </Box>
-      </Section>
+          </GridItem>
+        </Grid>
+      </Box>
     </LightPatternBox>
   );
 };
