@@ -6,6 +6,7 @@ import {
   Text,
   useColorModeValue,
   Image,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 // import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { formatCPTData } from "../../components/helpers";
@@ -16,6 +17,9 @@ import Carousel from "../../components/molecules/Carousel";
 
 const PublicationSliders = ({ state, link, categories }) => {
   const data = state.source.get(link);
+
+  const show = useBreakpointValue([1, 2, 3]);
+
   const publications = useMemo(() => {
     let array = [];
     data?.items.map((item) => {
@@ -86,13 +90,14 @@ const PublicationSliders = ({ state, link, categories }) => {
                 >
                   <Link link={cat.link}>{cat.name}</Link>
                 </Text>
-                <Carousel show={3}>
+                <Carousel show={show}>
                   {cat.slides.map((slide, idx) => {
                     return (
                       <LinkOverlay
                         key={slide.alt + idx}
                         title={sliderData.alt}
                         href={slide.link}
+                        w={`calc(100% / ${show} - 30px)`}
                       >
                         <Image
                           src={slide.src ? slide.src : slide.featured_media.src}
@@ -110,7 +115,7 @@ const PublicationSliders = ({ state, link, categories }) => {
                             "whiteAlpha.900"
                           )}
                           objectFit="cover"
-                          style={{ width: "220px", height: "300px" }}
+                          style={{ width: "220px", height: "280px" }}
                         />
                       </LinkOverlay>
                     );

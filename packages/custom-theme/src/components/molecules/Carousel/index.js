@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  useColorModeValue,
+} from "@chakra-ui/react";
+
+import {
+  HiOutlineArrowNarrowLeft,
+  HiOutlineArrowNarrowRight,
+} from "react-icons/hi";
 
 const arrowStyles = {
   position: "absolute",
@@ -9,7 +18,7 @@ const arrowStyles = {
   width: "48px",
   height: "48px",
   borderRadius: "24px",
-  backgroundColor: "white",
+  // backgroundColor: useColorModeValue("whiteAlpha.600", "gray.500"),
   border: "1px solid #ddd",
 };
 
@@ -72,9 +81,10 @@ const Carousel = (props) => {
           <Button
             onClick={prev}
             className="left-arrow"
-            style={{ ...arrowStyles }}
+            {...arrowStyles}
+            colorScheme={useColorModeValue("primary")}
           >
-            &#10094;
+            <HiOutlineArrowNarrowLeft />
           </Button>
         )}
         <Box
@@ -84,7 +94,6 @@ const Carousel = (props) => {
         >
           <Box
             className={`carousel-content show-${show}`}
-            height={"350px"}
             transform={`translateX(-${currentIndex * (100 / show)}%)`}
           >
             {children}
@@ -95,9 +104,10 @@ const Carousel = (props) => {
           <Button
             onClick={next}
             className="right-arrow"
-            style={{ ...arrowStyles }}
+            {...arrowStyles}
+            colorScheme={useColorModeValue("primary")}
           >
-            &#10095;
+            <HiOutlineArrowNarrowRight />
           </Button>
         )}
       </Box>

@@ -1,4 +1,4 @@
-import { useColorModeValue, Stack, Button, Text } from "@chakra-ui/react";
+import { useColorModeValue, Stack, Button } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 import Link from "../../components/atoms/link";
 
@@ -25,15 +25,16 @@ const PublicationFilter = ({ categories, linkColor }) => {
             .filter((category) => category.parent === 5)
             .map(({ name, id, link }) => {
               return (
-                <Button
-                  key={id}
-                  colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
-                  variant="outline"
-                >
-                  <Text color={useColorModeValue(linkColor, "accent.100")}>
-                    <Link link={link}>{name}</Link>
-                  </Text>
-                </Button>
+                <Link link={link}>
+                  <Button
+                    key={id}
+                    colorScheme={"primary"}
+                    variant="outline"
+                    size="sm"
+                  >
+                    {name}
+                  </Button>
+                </Link>
               );
             })}
       </Stack>

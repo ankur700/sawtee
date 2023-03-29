@@ -7,6 +7,7 @@ const ViewAllBtn = ({ text, link, ...rest }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
+    <Link link={link ? link : "#"} _hover={{ textDecoration: "none" }}>
     <Button
       variant="outline"
       colorScheme={"primary"}
@@ -17,10 +18,9 @@ const ViewAllBtn = ({ text, link, ...rest }) => {
       rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
       {...rest}
     >
-      <Link link={link ? link : "#"} _hover={{ textDecoration: "none" }}>
         {text}
-      </Link>
     </Button>
+      </Link>
   );
 };
 

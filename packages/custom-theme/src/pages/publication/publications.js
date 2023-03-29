@@ -4,6 +4,7 @@ import {
   Heading,
   Image,
   SimpleGrid,
+  useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
@@ -79,8 +80,7 @@ const Publications = ({ state, categories }) => {
         as={Section}
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         mt={"6"}
-        size={"huge"}
-        w="8xl"
+        size={"lg"}
       >
         {categories && (
           <PublicationFilter
@@ -90,7 +90,7 @@ const Publications = ({ state, categories }) => {
         )}
       </GlassBox>
 
-      <Section pb="80px" w="full" m="0" size="xl">
+      <Section pb="80px" w="full" m="0" size={useBreakpointValue(["sm", "md", "lg", "huge"])}>
         <Box
           as={Section}
           px={{ base: "32px", md: "0" }}

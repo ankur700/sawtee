@@ -83,13 +83,14 @@ const BlogSection = ({ state, actions, linkColor, categories }) => {
         {eventsList.length > 0 && (
           <Show above="lg">
             <ViewAllBtn
-              w="12em"
+              px={["4", "6", "8"]}
               link={
                 eventsList[0]
                   ? `/category/` + eventsList[0].categories[0].name
                   : "/category/events"
               }
               text={"View All"}
+              size="sm"
             />
           </Show>
         )}

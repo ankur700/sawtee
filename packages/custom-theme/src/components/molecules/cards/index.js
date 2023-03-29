@@ -52,14 +52,12 @@ export const TopImageCard = (props) => {
       rounded="lg"
       bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       shadow="lg"
-      paddingTop={"4"}
       maxW="6xl"
-      px="4"
     >
       <Box
         role="group"
         cursor="pointer"
-        height="450px"
+        height="300px"
         width="100%"
         bgImage={defaultValues.imageUrl}
         pos="relative"
@@ -71,24 +69,43 @@ export const TopImageCard = (props) => {
             h="100%"
             w="100%"
             objectFit="cover"
-            rounded="lg"
+            borderRadius={"0.5rem 0.5rem 0 0"}
           />
         )}
       </Box>
 
       <Box p={6}>
-        <Box display="flex" className="categories">
+        <Box
+          display="flex"
+          className="categories"
+          flexDir={{ base: "column", md: "row" }}
+          alignItems={{ base: "start", md: "center" }}
+          gap={"10"}
+          justifyContent={"space-between"}
+        >
           <PostCategories
             justify="flex-start"
             categories={categories}
             color={useColorModeValue("gray.700", "whiteAlpha.700")}
+            width="max-content"
           />
+
+          <Box
+            as="time"
+            mx={1}
+            fontSize="sm"
+            color={useColorModeValue("gray.600", "whiteAlpha.600")}
+          >
+            {date
+              ? formatDateWithMoment(date)
+              : formatDateWithMoment(defaultValues.date)}
+          </Box>
         </Box>
         <Text
           display="block"
           color={useColorModeValue("gray.700", "whiteAlpha.700")}
           fontWeight="bold"
-          fontSize={{ base: "lg", md: "xl" }}
+          fontSize={{ base: "sm", md: "md", lg: "lg" }}
           mt={2}
           _hover={{
             color: linkColor,
@@ -101,51 +118,13 @@ export const TopImageCard = (props) => {
         </Text>
         <Text
           mt={2}
-          fontSize={{ base: "sm", md: "md" }}
+          fontSize={"sm"}
           noOfLines={3}
           color={useColorModeValue("gray.600", "whiteAlpha.600")}
           dangerouslySetInnerHTML={{
             __html: excerpt,
           }}
         />
-
-        <Box mt={4}>
-          <Flex
-            flexDir={{ base: "column", md: "row" }}
-            alignItems={{ base: "start", md: "center" }}
-            gap={"10"}
-            justifyContent={"space-between"}
-          >
-            {author && (
-              <Show above="md">
-                <Flex alignItems="center">
-                  <Text
-                    mx={2}
-                    fontWeight="bold"
-                    color={useColorModeValue("gray.600", "whiteAlpha.600")}
-                    __hover={{
-                      textDecor: "none",
-                    }}
-                  >
-                    <LinkOverlay href={author.link}>
-                      {author.name ? author.name : defaultValues.author}
-                    </LinkOverlay>
-                  </Text>
-                </Flex>
-              </Show>
-            )}
-            <Box
-              as="time"
-              mx={1}
-              fontSize="sm"
-              color={useColorModeValue("gray.600", "whiteAlpha.600")}
-            >
-              {date
-                ? formatDateWithMoment(date)
-                : formatDateWithMoment(defaultValues.date)}
-            </Box>
-          </Flex>
-        </Box>
       </Box>
     </LinkBox>
   );
@@ -156,6 +135,7 @@ export const NoImageCard = (props) => {
 
   return (
     <LinkBox
+      as="article"
       mx="auto"
       px={8}
       py={4}
@@ -163,22 +143,32 @@ export const NoImageCard = (props) => {
       shadow="lg"
       bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       maxW="3xl"
-      minH={"80"}
+      minH={"15rem"}
+      height={"15rem"}
       display="flex"
       flexDir={"column"}
-      justifyContent="space-between"
+      justifyContent={"center"}
     >
-      <Flex justifyContent="space-between" alignItems="center">
+      <Flex justifyContent="space-between" alignItems="center" mb="8">
         <PostCategories
           justify="flex-start"
           categories={categories}
           color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          width="max-content"
         />
+
+        <Box
+          as="time"
+          fontSize="xs"
+          color={useColorModeValue("gray.600", "whiteAlpha.600")}
+        >
+          {date ? formatDateWithMoment(date) : defaultValues.date}
+        </Box>
       </Flex>
 
       <Box>
         <Text
-          fontSize={{ base: "md", md: "xl" }}
+          fontSize={{ base: "sm", md: "md", lg: "md" }}
           color={useColorModeValue("gray.700", "whiteAlpha.700")}
           fontWeight="bold"
           lineHeight={"normal"}
@@ -198,15 +188,15 @@ export const NoImageCard = (props) => {
           _dark={{
             color: "whiteAlpha.600",
           }}
-          noOfLines={3}
-          fontSize={{ base: "sm", md: "md" }}
+          noOfLines={2}
+          fontSize={"sm"}
           dangerouslySetInnerHTML={{
             __html: excerpt ? excerpt : defaultValues.excerpt,
           }}
         />
       </Box>
 
-      <Flex justifyContent="space-between" alignItems="center" mt={4}>
+      {/* <Flex justifyContent="space-between" alignItems="center" mt={4}>
         {author && (
           <Show above="md">
             <Flex alignItems="center">
@@ -231,7 +221,7 @@ export const NoImageCard = (props) => {
         >
           {date ? formatDateWithMoment(date) : defaultValues.date}
         </Box>
-      </Flex>
+      </Flex> */}
     </LinkBox>
   );
 };

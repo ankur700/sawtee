@@ -120,7 +120,7 @@ body::-webkit-scrollbar-thumb {
 
 .carousel-content {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     transition: all 250ms linear;
     -ms-overflow-style: none;  /* hide scrollbar in IE and Edge */
     scrollbar-width: none;  /* hide scrollbar in Firefox */
@@ -132,43 +132,42 @@ body::-webkit-scrollbar-thumb {
 }
 
 .carousel-content > * {
-    width: 100%;
     flex-shrink: 0;
     flex-grow: 1;
     display: flex;
     justify-content: center;
 }
 
-.carousel-content.show-2 > * {
-    width: 50%;
-}
+// .carousel-content.show-2 > * {
+//     width: 50%;
+// }
 
-.carousel-content.show-3 > * {
-    width: calc((100% / 3) - 20px);
-}
+// .carousel-content.show-3 > * {
+//     width: calc((100% / 3) - 30px);
+// }
 
-.carousel-content.show-4 > * {
-    width: calc(100% / 4);
-}
+// .carousel-content.show-4 > * {
+//     width: calc(100% / 4);
+// }
 
-.left-arrow, .right-arrow {
-    position: absolute;
-    z-index: 50;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
-    border-radius: 24px;
-    background-color: white;
-    border: 1px solid #ddd;
-}
+// .left-arrow, .right-arrow {
+//     position: absolute;
+//     z-index: 50;
+//     top: 50%;
+//     transform: translateY(-50%);
+//     width: 48px;
+//     height: 48px;
+//     border-radius: 24px;
+//     background-color: white;
+//     border: 1px solid #ddd;
+// }
 
 .left-arrow {
-    left: 24px;
+    left: 0;
 }
 
 .right-arrow {
-    right: 24px;
+    right: 0;
 }
 
 @media (hover: none) and (pointer: coarse) {

@@ -12,6 +12,8 @@ import {
   Image,
   LinkOverlay,
   useColorModeValue,
+  useBreakpointValue,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { styled } from "frontity";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
@@ -22,7 +24,6 @@ import Carousel from "../../components/molecules/Carousel";
 
 const CustomGridItem = styled(GridItem)`
   position: relative;
-  min-height: 500px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -89,6 +90,7 @@ const AboutSection = ({
 }) => {
   const publicationsData = state.source.get("/publications");
   const [publicationsSlider, setPublicationsSlider] = React.useState([]);
+  const show = useBreakpointValue([1, 2, 3]);
 
   useEffect(() => {
     if (publicationsData.isReady && Publication_categories.length > 0) {
@@ -131,11 +133,8 @@ const AboutSection = ({
   }, []);
 
   return (
-    <Section width="full" overflow="hidden" id="about-section" display="flex">
-      <Grid
-        templateColumns={{ base: "1fr", md: "repeat(2, 1fr)" }}
-        templateRows="auto"
-      >
+    <Section width="full" overflow="hidden" id="about-section">
+      <SimpleGrid columns={2}>
         <CustomGridItem
           colSpan={1}
           w="full"
@@ -146,7 +145,7 @@ const AboutSection = ({
           <blockquote>
             {intro && (
               <Text
-                fontSize={["xl", "2xl", "3xl", "4xl"]}
+                fontSize={["xl", "2xl", "3xl"]}
                 color={"whiteAlpha.800"}
                 m="0"
                 maxW="xl"
@@ -161,90 +160,99 @@ const AboutSection = ({
 
         {publicationsData.isFetching && (
           <>
-            <GridItem colSpan={1} bg={"#463737"} px={"4"} w="full">
-              <Skeleton width="150px" height="30px" marginBlock={3} />
+            <GridItem
+              bg={useColorModeValue("rgba(70,55,55, 0.6)", "rgba(70,55,55, 1)")}
+              px={"4"}
+              w="full"
+            >
+              <Skeleton width="150px" height="30px" marginBlock={8} />
               <Flex
                 mt="3"
-                maxH={"350px"}
                 rounded="xl"
                 flexDir="row"
                 gap={{ base: "10px", sm: "20px", md: "30px" }}
                 className="wrapper"
               >
-                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
-                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
-                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
+                <Skeleton h="280px" w="220px" rounded={"xl"}></Skeleton>
+                <Skeleton h="280px" w="220px" rounded={"xl"}></Skeleton>
+                <Skeleton h="280px" w="220px" rounded={"xl"}></Skeleton>
               </Flex>
             </GridItem>
 
-            <GridItem colSpan={1} bg={"#463737"} px={"4"} w="full">
-              <Skeleton width="150px" height="30px" marginBlock={3} />
+            <GridItem
+              colSpan={1}
+              bg={useColorModeValue("rgba(70,55,55, 0.6)", "rgba(70,55,55, 1)")}
+              px={"4"}
+              w="full"
+            >
+              <Skeleton width="150px" height="30px" marginBlock={8} />
               <Flex
                 mt="3"
-                maxH={"350px"}
                 rounded="xl"
                 flexDir="row"
                 gap={{ base: "10px", sm: "20px", md: "30px" }}
                 className="wrapper"
               >
-                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
-                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
-                <Skeleton h="350px" w="300px" rounded={"xl"}></Skeleton>
+                <Skeleton h="280px" w="220px" rounded={"xl"}></Skeleton>
+                <Skeleton h="280px" w="220px" rounded={"xl"}></Skeleton>
+                <Skeleton h="280px" w="220px" rounded={"xl"}></Skeleton>
               </Flex>
             </GridItem>
           </>
         )}
-        {publicationsData.isReady &&
-          publicationsSlider.map((item) => {
-            return (
-              <GridItem
-                key={item.slider_title}
-                colSpan={1}
-                bg={"#463737"}
-                px={"4"}
-                overflow="hidden"
-              >
-                <Title
-                  py={["3", "6"]}
-                  text={item.slider_title}
-                  color="whiteAlpha.900"
-                />
-                <MultiItemCarousel my="3" slides={item.slider} />
-
-                {/* <Carousel show={3}>
-                  {item.slider.map((slide, idx) => {
-                    return (
-                      <LinkOverlay
-                        key={idx}
-                        title={slide.alt}
-                        href={slide.link}
-                      >
-                        <Image
-                          src={slide.src ? slide.src : slide.featured_media.src}
-                          srcSet={
-                            slide.srcSet
-                              ? slide.srcSet
-                              : slide.featured_media.srcSet
-                          }
-                          alt={slide.alt}
+        <GridItem
+          bg={useColorModeValue("rgba(70,55,55, 0.6)", "rgba(70,55,55, 1)")}
+          px={"6"}
+          overflow="hidden"
+          w="full"
+        >
+          {publicationsData.isReady &&
+            publicationsSlider.map((item) => {
+              return (
+                <Box key={item.slider_title} marginBlock="4">
+                  <Title
+                    py={["3", "6"]}
+                    text={item.slider_title}
+                    color="whiteAlpha.900"
+                  />
+                  {/* <MultiItemCarousel my="3" slides={item.slider} /> */}
+                  <Carousel show={show}>
+                    {item.slider.map((slide, idx) => {
+                      return (
+                        <LinkOverlay
+                          key={idx}
                           title={slide.alt}
-                          rounded="xl"
-                          border={`1px solid`}
-                          borderColor={useColorModeValue(
-                            "gray.900",
-                            "whiteAlpha.900"
-                          )}
-                          objectFit="cover"
-                          style={{ width: "220px", height: "300px" }}
-                        />
-                      </LinkOverlay>
-                    );
-                  })}
-                </Carousel> */}
-              </GridItem>
-            );
-          })}
-      </Grid>
+                          href={slide.link}
+                        >
+                          <Image
+                            src={
+                              slide.src ? slide.src : slide.featured_media.src
+                            }
+                            srcSet={
+                              slide.srcSet
+                                ? slide.srcSet
+                                : slide.featured_media.srcSet
+                            }
+                            alt={slide.alt}
+                            title={slide.alt}
+                            rounded="xl"
+                            border={`1px solid`}
+                            borderColor={useColorModeValue(
+                              "gray.900",
+                              "whiteAlpha.900"
+                            )}
+                            objectFit="cover"
+                            style={{ width: "220px", height: "300px" }}
+                          />
+                        </LinkOverlay>
+                      );
+                    })}
+                  </Carousel>
+                </Box>
+              );
+            })}
+        </GridItem>
+      </SimpleGrid>
     </Section>
   );
 };

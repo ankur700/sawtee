@@ -45,7 +45,7 @@ export const Sidebar = ({
   }, []);
 
   return (
-    <Stack spacing={16}>
+    <Stack spacing={16} maxW={'md'}>
       {showSawteeInMedia && (
         <GlassBox py="4" px="8" rounded="2xl" height="max-content">
           <Title text={"Sawtee in Media"} textAlign="center" mb={8} />
