@@ -94,7 +94,7 @@ const Publications = ({ state, categories }) => {
 
       <Box
         as={Section}
-        px={{ base: "32px", md: "0" }}
+        px={"32px"}
         w="full"
         size={size}
         pt="50px"

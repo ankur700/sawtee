@@ -4,7 +4,7 @@ const PostProgressBar = (props) => (
   <Progress
     pos="fixed"
     color="accent"
-    top={{ base: "5.5rem", md: "6.5rem" }}
+    top={"5rem"}
     height="4px"
     zIndex={2}
     width="100%"

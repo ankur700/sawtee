@@ -18,7 +18,7 @@ const arrowStyles = {
   width: "48px",
   height: "48px",
   borderRadius: "24px",
-  // backgroundColor: useColorModeValue("whiteAlpha.600", "gray.500"),
+  backgroundColor: "whiteAlpha",
   border: "1px solid #ddd",
 };
 
@@ -81,8 +81,9 @@ const Carousel = (props) => {
           <Button
             onClick={prev}
             className="left-arrow"
+            left={"-56px"}
             {...arrowStyles}
-            colorScheme={useColorModeValue("primary")}
+            // colorScheme={useColorModeValue("primary")}
           >
             <HiOutlineArrowNarrowLeft />
           </Button>
@@ -105,8 +106,8 @@ const Carousel = (props) => {
             onClick={next}
             className="right-arrow"
             {...arrowStyles}
-            right={"26px"}
-            colorScheme={useColorModeValue("primary")}
+            right={"-28px"}
+            // colorScheme={useColorModeValue("primary")}
           >
             <HiOutlineArrowNarrowRight />
           </Button>

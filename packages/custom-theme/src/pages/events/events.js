@@ -43,12 +43,12 @@ const EventsArchive = ({ state, categories }) => {
         <Box
           as="figure"
           mt={4}
-          height="500px"
+          height="350px"
           _after={{
             display: "block",
             content: '""',
             width: "100%",
-            height: "500px",
+            height: "350px",
             background: "rgba(0,0,0,0.4)",
             position: "absolute",
             top: 0,
@@ -87,7 +87,7 @@ const EventsArchive = ({ state, categories }) => {
         m="0 auto"
         size={size}
         pt="50px"
-        px={{ base: "32px", md: "0" }}
+        px={"32px"}
         fontSize={["md", "lg", "xl"]}
         color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
       >

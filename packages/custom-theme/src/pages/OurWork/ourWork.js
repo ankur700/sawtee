@@ -44,12 +44,13 @@ const OurWork = ({ state, actions, libraries }) => {
         {post.featured_media != null && (
           <FeaturedMedia
             mt="0"
+            height={"350px"}
             id={post.featured_media.id}
             _after={{
               display: "block",
               content: '""',
               width: "100%",
-              height: "500px",
+              height: "350px",
               background: "rgba(0,0,0,0.4)",
               position: "absolute",
               top: 0,
@@ -73,7 +74,6 @@ const OurWork = ({ state, actions, libraries }) => {
           left="15%"
         />
       </Box>
-
       <Section size="lg" marginBlock={6}>
         <GlassBox
           h="auto"
@@ -105,11 +105,9 @@ const OurWork = ({ state, actions, libraries }) => {
             );
           })}
         </GlassBox>
-      </Section>;
-
-      {
-        /* Look at the settings to see if we should include the featured image */
-      }
+      </Section>
+      ;
+      {/* Look at the settings to see if we should include the featured image */}
       <GlassBox as={Section} mb="50px" border="none" size="lg">
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
@@ -188,7 +186,8 @@ const OurWork = ({ state, actions, libraries }) => {
             })}
           </Box>
         </Content>
-      </GlassBox>;
+      </GlassBox>
+      ;
     </LightPatternBox>
   );
 };

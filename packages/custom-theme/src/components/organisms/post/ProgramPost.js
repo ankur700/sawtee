@@ -1,17 +1,16 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import { connect, styled } from "frontity";
-import React, { useEffect } from "react";
-import { formatPostData, getPostData } from "../../helpers";
-import useScrollProgress from "../../hooks/useScrollProgress";
+import { Box, useColorModeValue, Heading, Text } from "@chakra-ui/react";
+import { connect, styled, decode } from "frontity";
+import { formatDate, formatPostData, getPostData } from "../../helpers";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
-import List from "../archive";
 import FeaturedMedia from "./featured-media";
-import PostHeader from "./post-header";
+import useScrollProgress from "../../hooks/useScrollProgress";
+import List from "../archive";
 import PostProgressBar from "./post-progressbar";
-import ProgramPost from "./ProgramPost";
+import PostCategories from "./post-categories";
+import React, { useEffect } from "react";
 
-const Post = ({ state, actions, libraries }) => {
+const ProgramPost = ({ state, libraries, actions }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
 
@@ -30,9 +29,6 @@ const Post = ({ state, actions, libraries }) => {
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
-
-  if (postData.type === "programme") return <ProgramPost />;
-
   return (
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
@@ -40,19 +36,43 @@ const Post = ({ state, actions, libraries }) => {
       ref={ref}
     >
       <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
-        <PostHeader
+        <Box
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "3rem" }}
           color={useColorModeValue("gray.600", "whiteAlpha.600")}
-          categories={post.categories}
-          heading={post.title}
-          author={post.author}
-          date={post.publishDate}
-          isPage={postData.isPage}
-        />
+        >
+          <PostCategories
+            color="black"
+            categories={post.categories}
+            justifyContent="center"
+          />
+
+          <Heading
+            fontWeight="bold"
+            size={"2xl"}
+            mt="30px"
+            mb={{ base: "20px", lg: "32px" }}
+            textTransform="uppercase"
+            dangerouslySetInnerHTML={{ __html: post.title }}
+          />
+          <Text
+            fontSize="lg"
+            fontWeight="bold"
+            color={useColorModeValue("primary.600", "accent.200")}
+            textAlign={"center"}
+          >
+            For {decode(post.acf.program_partner)}
+          </Text>
+
+          <Text fontSize="md" mt="12px" textAlign={"center"}>
+            {formatDate(post.acf.program_starting_date) +
+              " - " +
+              formatDate(post.acf.program_ending_date)}
+          </Text>
+        </Box>
       </Box>
 
-      {!postData.isPage && <PostProgressBar value={scroll} />}
+      <PostProgressBar value={scroll} />
 
       {/* Look at the settings to see if we should include the featured image */}
       <Section
@@ -91,7 +111,7 @@ const Post = ({ state, actions, libraries }) => {
   );
 };
 
-export default connect(Post);
+export default connect(ProgramPost);
 
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.

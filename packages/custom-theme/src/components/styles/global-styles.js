@@ -138,38 +138,6 @@ body::-webkit-scrollbar-thumb {
     justify-content: center;
 }
 
-// .carousel-content.show-2 > * {
-//     width: 50%;
-// }
-
-// .carousel-content.show-3 > * {
-//     width: calc((100% / 3) - 30px);
-// }
-
-// .carousel-content.show-4 > * {
-//     width: calc(100% / 4);
-// }
-
-// .left-arrow, .right-arrow {
-//     position: absolute;
-//     z-index: 50;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     width: 48px;
-//     height: 48px;
-//     border-radius: 24px;
-//     background-color: white;
-//     border: 1px solid #ddd;
-// }
-
-.left-arrow {
-    left: 0;
-}
-
-.right-arrow {
-    right: 0;
-}
-
 @media (hover: none) and (pointer: coarse) {
     .left-arrow, .right-arrow {
         display: none;
