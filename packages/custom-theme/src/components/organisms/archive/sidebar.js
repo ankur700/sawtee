@@ -7,14 +7,13 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect, decode } from "frontity";
-import moment from "moment/moment";
 import React from "react";
 import GlassBox from "../../atoms/glassBox";
 import Link from "../../atoms/link";
 import SubscriptionCard from "../../atoms/subscriptionCard";
 import Title from "../../atoms/title";
 import TwitterTimeline from "../../atoms/twitterTimeline";
-import { formatCPTData } from "../../helpers";
+import { formatCPTData, formatedDate } from "../../helpers";
 
 export const Sidebar = ({
   showSawteeInMedia,
@@ -26,8 +25,6 @@ export const Sidebar = ({
 }) => {
   const newsData = state.source.get("/sawtee-in-media");
   const linkColor = state.theme.colors.linkColor;
-
-  const formatedDate = (date) => moment(date, "YYYYMMDD").fromNow();
 
   const news = React.useMemo(() => {
     if (newsData.isReady) {
@@ -45,7 +42,7 @@ export const Sidebar = ({
   }, []);
 
   return (
-    <Stack spacing={16} maxW={'md'}>
+    <Stack spacing={16} maxW={"md"}>
       {showSawteeInMedia && (
         <GlassBox py="4" px="8" rounded="2xl" height="max-content">
           <Title text={"Sawtee in Media"} textAlign="center" mb={8} />

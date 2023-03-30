@@ -2,6 +2,9 @@ import moment from "moment/moment";
 import { categoriesWidgetsHome } from "./config";
 const MAXIMUM_POSTS = 5;
 
+ export const formatedDate = (date) => moment(date, "YYYYMMDD").fromNow();
+
+
 const getPostsFromCategory = ({ post }, categoryId) =>
   Object.keys(post)
     .map((postID) => post[postID])

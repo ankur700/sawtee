@@ -1,6 +1,22 @@
-import { Box, useColorModeValue, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  useColorModeValue,
+  Heading,
+  Text,
+  Stack,
+  Divider,
+  SimpleGrid,
+  Grid,
+  GridItem,
+  Container,
+} from "@chakra-ui/react";
 import { connect, styled, decode } from "frontity";
-import { formatDate, formatPostData, getPostData } from "../../helpers";
+import {
+  formatCPTData,
+  formatDate,
+  formatPostData,
+  getPostData,
+} from "../../helpers";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
 import FeaturedMedia from "./featured-media";
@@ -9,11 +25,14 @@ import List from "../archive";
 import PostProgressBar from "./post-progressbar";
 import PostCategories from "./post-categories";
 import React, { useEffect } from "react";
+import GlassBox from "../../atoms/glassBox";
+import Title from "../../atoms/title";
+import Link from "@frontity/components/link";
 
 const ProgramPost = ({ state, libraries, actions }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-
+  const linkColor = state.theme.colors.linkColor;
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
@@ -21,11 +40,29 @@ const ProgramPost = ({ state, libraries, actions }) => {
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
   useEffect(() => {
-    actions.source.fetch("/");
-    List.preload();
+    actions.source.fetch("/programme");
   }, []);
+  // const programs = state.source[postData.type];
+
+  const data = state.source.get("/programme");
+  const [programs, setPrograms] = React.useState([]);
+  useEffect(() => {
+    let array = [];
+    if (data.isReady) {
+      data.items.map((item) => {
+        if (item.id !== post.id) {
+          const post = state.source[item.type][item.id];
+          array.push(post);
+        }
+      });
+    }
+    if (array.length > 0) {
+      setPrograms([...array]);
+    }
+  }, [data.isReady]);
 
   const [ref, scroll] = useScrollProgress();
+  console.log(programs);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -86,15 +123,64 @@ const ProgramPost = ({ state, libraries, actions }) => {
 
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
-        <Content
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="md"
-          pt="50px"
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
-        >
-          <Html2React html={post.content} />
-        </Content>
+
+        <Grid templateColumns={"repeat(5,1fr)"} gap={6}>
+          <GridItem colSpan={3}>
+            <Content
+              as={Container}
+              px={{ base: "32px", md: "0" }}
+              size="md"
+              pt="50px"
+              color={useColorModeValue(
+                "rgba(12, 17, 43, 0.8)",
+                "whiteAlpha.800"
+              )}
+            >
+              <Html2React html={post.content} />
+            </Content>
+          </GridItem>
+
+          <GridItem
+            display="flex"
+            flexDir="column"
+            colSpan={2}
+            gap={16}
+            maxW={"md"}
+          >
+            <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+              <Title text={"Sawtee in Media"} textAlign="center" mb={8} />
+              {programs &&
+                programs.map((item, index) => {
+                  return (
+                    <Stack spacing={2} mt="6" key={item.id}>
+                      <Heading
+                        className="title"
+                        fontSize={["sm", "md"]}
+                        mb="2"
+                        color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                        lineHeight={1.2}
+                        fontWeight="bold"
+                        _hover={{
+                          color: linkColor ? linkColor : "primary.700",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        <Link link={item.link}>
+                          {decode(item.title.rendered)}
+                        </Link>
+                      </Heading>
+
+                      <Divider
+                        display={
+                          index === programs.length - 1 ? "none" : "block"
+                        }
+                      />
+                    </Stack>
+                  );
+                })}
+            </GlassBox>
+          </GridItem>
+        </Grid>
 
         {/* <Divider borderBottom="1px solid" my="80px" />
 

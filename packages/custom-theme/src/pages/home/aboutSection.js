@@ -11,7 +11,6 @@ import {
   VStack,
   SkeletonText,
 } from "@chakra-ui/react";
-import { styled } from "frontity";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { connect } from "frontity";
 import { getPublicationSliders } from "../../components/helpers";
@@ -60,7 +59,7 @@ const AboutSection = ({
         ]);
       }
     }
-  }, [publicationsData.isReady, categories, Publication_categories]);
+  }, [publicationsData, categories, Publication_categories]);
 
   useEffect(() => {
     actions.source.fetch("/publications");
@@ -132,9 +131,24 @@ const AboutSection = ({
                 gap={{ base: "10px", sm: "20px", md: "30px" }}
                 className="wrapper"
               >
-                <Skeleton h="280px" w="220px" rounded={"xl"} bg={"rgba(255,255,255, 0.1)"}></Skeleton>
-                <Skeleton h="280px" w="220px" rounded={"xl"} bg={"rgba(255,255,255, 0.1)"}></Skeleton>
-                <Skeleton h="280px" w="220px" rounded={"xl"} bg={"rgba(255,255,255, 0.1)"}></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
               </Flex>
             </Box>
 
@@ -147,9 +161,24 @@ const AboutSection = ({
                 gap={{ base: "10px", sm: "20px", md: "30px" }}
                 className="wrapper"
               >
-                <Skeleton h="280px" w="220px" rounded={"xl"} bg={"rgba(255,255,255, 0.1)"}></Skeleton>
-                <Skeleton h="280px" w="220px" rounded={"xl"} bg={"rgba(255,255,255, 0.1)"}></Skeleton>
-                <Skeleton h="280px" w="220px" rounded={"xl"} bg={"rgba(255,255,255, 0.1)"}></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
               </Flex>
             </Box>
           </VStack>

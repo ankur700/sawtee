@@ -299,7 +299,12 @@ const settings = {
           homepage: "home",
           postsPage: "blog",
           params: {
-            type: ["publications, featured-events", "research"],
+            type: [
+              "publications, featured-events",
+              "research",
+              "programme",
+              "newsletter",
+            ],
             orderBy: "menu-order",
             order: "asc",
           },
