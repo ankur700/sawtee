@@ -1,11 +1,12 @@
 import {
   Box,
-  SimpleGrid,
   useColorModeValue,
   Image,
   Heading,
   Divider,
   Button,
+  GridItem,
+  Grid,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -15,13 +16,38 @@ import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1.jpg";
 import ResearchList from "./researchList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
+import React from "react";
+import { formatCPTData } from "../../components/helpers";
+import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
+import GlassBox from "../../components/atoms/glassBox";
+import TwitterTimeline from "../../components/atoms/twitterTimeline";
+import SubscriptionCard from "../../components/atoms/subscriptionCard";
 
-const ResearchArchive = ({ state, categories }) => {
+const ResearchArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
 
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
+
+  const newsData = state.source.get("/sawtee-in-media");
+
+  const news = React.useMemo(() => {
+    if (newsData.isReady) {
+      let newsArray = [];
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
+      return [...newsArray];
+    } else {
+      return [];
+    }
+  }, [newsData]);
+
+  React.useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -39,12 +65,12 @@ const ResearchArchive = ({ state, categories }) => {
         <Box
           as="figure"
           mt={4}
-          height="500px"
+          height="350px"
           _after={{
             display: "block",
             content: '""',
             width: "100%",
-            height: "500px",
+            height: "350px",
             background: "rgba(0,0,0,0.4)",
             position: "absolute",
             top: 0,
@@ -89,12 +115,12 @@ const ResearchArchive = ({ state, categories }) => {
           fontSize={["md", "lg", "xl"]}
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
-          <SimpleGrid
-            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
-            spacing="10"
+          <Grid
+            templateColumns={{ base: "1fr", lg: "repeat(5, 1fr" }}
+            gap="10"
             pos={"relative"}
           >
-            <Box>
+            <GridItem colSpan={3}>
               {pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
                   <ResearchList link={link} />
@@ -112,14 +138,41 @@ const ResearchArchive = ({ state, categories }) => {
                   </Box>
                 </Wrapper>
               ))}
-            </Box>
-            <Sidebar
-              showSawteeInMedia={true}
-              showTwitterTimeline={true}
-              showSubscriptionCard={true}
-              categories={categories}
-            />
-          </SimpleGrid>
+            </GridItem>
+            <GridItem colSpan={2} display={"flex"}>
+              <Sidebar>
+                <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+                  <SawteeInMediaWidget news={news} linkColor={linkColor} />
+                </GlassBox>
+                <GlassBox
+                  rounded="2xl"
+                  height="max-content"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  id="twitter-wrapper"
+                >
+                  <TwitterTimeline
+                    handle="sawteenp"
+                    width={"100%"}
+                    height="700px"
+                    maxH={"700px"}
+                    rounded="xl"
+                  />
+                </GlassBox>
+                <GlassBox
+                  py="4"
+                  px="8"
+                  rounded="2xl"
+                  height="max-content"
+                  position={"sticky"}
+                  top={"8.5rem"}
+                >
+                  <SubscriptionCard />
+                </GlassBox>
+              </Sidebar>
+            </GridItem>
+          </Grid>
           {/* <Pagination mt="56px" /> */}
         </Box>
       </Section>

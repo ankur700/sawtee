@@ -9,11 +9,13 @@ import {
   Grid,
   GridItem,
   Container,
+  useBreakpointValue,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { connect, styled, decode } from "frontity";
 import {
-  formatCPTData,
   formatDate,
+  formatDateWithMoment,
   formatPostData,
   getPostData,
 } from "../../helpers";
@@ -21,20 +23,23 @@ import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
 import FeaturedMedia from "./featured-media";
 import useScrollProgress from "../../hooks/useScrollProgress";
-import List from "../archive";
 import PostProgressBar from "./post-progressbar";
 import PostCategories from "./post-categories";
 import React, { useEffect } from "react";
 import GlassBox from "../../atoms/glassBox";
 import Title from "../../atoms/title";
 import Link from "@frontity/components/link";
+import Sidebar from "../archive/sidebar";
 
 const ProgramPost = ({ state, libraries, actions }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
   const linkColor = state.theme.colors.linkColor;
   // Get the html2react component.
+  const [programs, setPrograms] = React.useState([]);
   const Html2React = libraries.html2react.Component;
+
+  // const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -42,10 +47,8 @@ const ProgramPost = ({ state, libraries, actions }) => {
   useEffect(() => {
     actions.source.fetch("/programme");
   }, []);
-  // const programs = state.source[postData.type];
 
   const data = state.source.get("/programme");
-  const [programs, setPrograms] = React.useState([]);
   useEffect(() => {
     let array = [];
     if (data.isReady) {
@@ -62,7 +65,6 @@ const ProgramPost = ({ state, libraries, actions }) => {
   }, [data.isReady]);
 
   const [ref, scroll] = useScrollProgress();
-  console.log(programs);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -98,13 +100,13 @@ const ProgramPost = ({ state, libraries, actions }) => {
             color={useColorModeValue("primary.600", "accent.200")}
             textAlign={"center"}
           >
-            For {decode(post.acf.program_partner)}
+            Partner: {decode(post.acf.program_partner)}
           </Text>
 
           <Text fontSize="md" mt="12px" textAlign={"center"}>
-            {formatDate(post.acf.program_starting_date) +
+            {formatDateWithMoment(post.acf.program_starting_date, "MMMM YYYY") +
               " - " +
-              formatDate(post.acf.program_ending_date)}
+              formatDateWithMoment(post.acf.program_ending_date, "MMMM YYYY")}
           </Text>
         </Box>
       </Box>
@@ -113,9 +115,9 @@ const ProgramPost = ({ state, libraries, actions }) => {
 
       {/* Look at the settings to see if we should include the featured image */}
       <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+        // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
-        size="lg"
+        size={useBreakpointValue(["sm", "md", "lg", "huge"])}
       >
         {post.featured_media != null && (
           <FeaturedMedia id={post.featured_media.id} />
@@ -124,10 +126,10 @@ const ProgramPost = ({ state, libraries, actions }) => {
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
 
-        <Grid templateColumns={"repeat(5,1fr)"} gap={6}>
-          <GridItem colSpan={3}>
+        <Grid templateColumns={"repeat(5,1fr)"} gap={6} placeItems={"center"}>
+          <GridItem colSpan={3} placeSelf={"start"}>
             <Content
-              as={Container}
+              as={Section}
               px={{ base: "32px", md: "0" }}
               size="md"
               pt="50px"
@@ -145,10 +147,12 @@ const ProgramPost = ({ state, libraries, actions }) => {
             flexDir="column"
             colSpan={2}
             gap={16}
-            maxW={"md"}
+            minW="md"
+            maxW={"lg"}
           >
-            <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-              <Title text={"Sawtee in Media"} textAlign="center" mb={8} />
+            <GlassBox py="4" px="8" rounded="2xl">
+              <Title text={"Related Programs"} textAlign="center" mb={8} />
+
               {programs &&
                 programs.map((item, index) => {
                   return (
@@ -178,20 +182,18 @@ const ProgramPost = ({ state, libraries, actions }) => {
                     </Stack>
                   );
                 })}
+
+              {programs.length < 1 && (
+                <Stack spacing={6} mt="6">
+                  <SkeletonText noOfLines={2} />
+                  <SkeletonText noOfLines={1} />
+                  <SkeletonText noOfLines={1} />
+                </Stack>
+              )}
             </GlassBox>
+            <Sidebar showSawteeInMedia={true} showSubscriptionCard={true} />
           </GridItem>
         </Grid>
-
-        {/* <Divider borderBottom="1px solid" my="80px" />
-
-        <Section px={{ base: "32px", md: "0" }}>
-          <AuthorBio
-            image={post.author.avatar_urls["96"]}
-            name={post.author.name}
-            description={post.author.description}
-            link={post.author.link}
-          />
-        </Section> */}
       </Section>
     </LightPatternBox>
   );

@@ -25,13 +25,8 @@ const PublicationFilter = ({ categories, linkColor }) => {
             .filter((category) => category.parent === 5)
             .map(({ name, id, link }) => {
               return (
-                <Link link={link}>
-                  <Button
-                    key={id}
-                    colorScheme={"primary"}
-                    variant="outline"
-                    size="sm"
-                  >
+                <Link link={link} key={id}>
+                  <Button colorScheme={"primary"} variant="outline" size="sm">
                     {name}
                   </Button>
                 </Link>

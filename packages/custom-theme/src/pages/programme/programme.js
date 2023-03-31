@@ -17,12 +17,39 @@ import Loading from "../../components/atoms/loading";
 import ProgrammesList from "./programmesList";
 import Publication1 from "../../assets/publications-1.jpg";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
+import GlassBox from "../../components/atoms/glassBox";
+import TwitterTimeline from "../../components/atoms/twitterTimeline";
+import SubscriptionCard from "../../components/atoms/subscriptionCard";
+import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
+import React from "react";
+import { formatCPTData } from "../../components/helpers";
 
-const Programmes = ({ state, categories }) => {
+const Programmes = ({ state, actions, categories }) => {
   const postData = state.source.get(state.router.link);
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 2 });
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const linkColor = state.theme.colors.linkColor;
+  const [news, setNews] = React.useState([]);
+
+  React.useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
+
+  const newsData = state.source.get("/sawtee-in-media");
+  React.useEffect(() => {
+    let newsArray = [];
+    if (newsData.isReady) {
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
+    }
+    if (newsArray.length > 0) {
+      setNews([...newsArray]);
+    }
+  }, [newsData]);
+
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
@@ -86,7 +113,7 @@ const Programmes = ({ state, categories }) => {
       >
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-          gap={10}
+          gap={6}
           pos={"relative"}
         >
           <GridItem colSpan={3}>
@@ -109,12 +136,37 @@ const Programmes = ({ state, categories }) => {
             ))}
           </GridItem>
           <GridItem colSpan={2}>
-            <Sidebar
-              showSawteeInMedia={true}
-              showTwitterTimeline={true}
-              showSubscriptionCard={true}
-              categories={categories}
-            />
+            <Sidebar>
+              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+              </GlassBox>
+              <GlassBox
+                rounded="2xl"
+                height="max-content"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                id="twitter-wrapper"
+              >
+                <TwitterTimeline
+                  handle="sawteenp"
+                  width={"100%"}
+                  height="700px"
+                  maxH={"700px"}
+                  rounded="xl"
+                />
+              </GlassBox>
+              <GlassBox
+                py="4"
+                px="8"
+                rounded="2xl"
+                height="max-content"
+                position={"sticky"}
+                top={"8.5rem"}
+              >
+                <SubscriptionCard />
+              </GlassBox>
+            </Sidebar>
           </GridItem>
         </Grid>
         {/* <Pagination mt="56px" /> */}

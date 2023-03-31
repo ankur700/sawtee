@@ -8,25 +8,26 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { decode, connect } from "frontity";
-import moment from "moment/moment";
-import { formatCPTData } from "../../components/helpers";
-import { useMemo } from "react";
+import { formatCPTData, formatedDate } from "../../components/helpers";
+import { useEffect, useState } from "react";
 
 const ProgrammesList = ({ state, link, libraries, categories }) => {
   const Html2React = libraries.html2react.Component;
   const linkColor = state.theme.colors.linkColor;
 
+  const [programs, setPrograms] = useState([]);
+
   const data = state.source.get(link);
-  const programs = useMemo(() => {
+  useEffect(() => {
     let array = [];
     data.items.map((item) => {
       const post = state.source[item.type][item.id];
       array.push(formatCPTData(state, post, categories));
     });
     if (array.length > 0) {
-      return [...array];
+      setPrograms([...array]);
     }
-  }, [data, categories]);
+  }, [data]);
 
   return (
     <VStack spacing={8} w={{ base: "auto", md: "full" }}>
@@ -56,7 +57,7 @@ const ProgrammesList = ({ state, link, libraries, categories }) => {
                       color: "gray.400",
                     }}
                   >
-                    {moment(program.publishDate, "YYYYMMDD").fromNow()}
+                    {formatedDate(program.publishDate)}
                   </Text>
                 </Flex>
 

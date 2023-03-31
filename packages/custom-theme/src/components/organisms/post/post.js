@@ -38,6 +38,7 @@ const Post = ({ state, actions, libraries }) => {
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
       showPattern={state.theme.showBackgroundPattern}
       ref={ref}
+      pb={"40px"}
     >
       <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
         <PostHeader

@@ -304,6 +304,7 @@ const settings = {
               "research",
               "programme",
               "newsletter",
+              "sawtee-in-media",
             ],
             orderBy: "menu-order",
             order: "asc",

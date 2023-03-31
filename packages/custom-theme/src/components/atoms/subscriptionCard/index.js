@@ -23,9 +23,10 @@ const SubscriptionCard = () => {
       rounded="xl"
       textAlign="center"
       p={["4", "8"]}
+      color={useColorModeValue("gray.600", "whiteAlpha.600")}
     >
       <Box display={"flex"} justifyContent="center">
-        <HiMailOpen size={"90px"} />
+        <HiMailOpen size={"90px"} fill={useColorModeValue("#000", "white")} />
       </Box>
       <Heading
         as="h4"

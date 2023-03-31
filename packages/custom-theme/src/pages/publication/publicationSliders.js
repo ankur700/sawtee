@@ -8,28 +8,27 @@ import {
   Image,
   useBreakpointValue,
 } from "@chakra-ui/react";
-// import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { formatCPTData } from "../../components/helpers";
 import Link from "@frontity/components/link";
 import Carousel from "../../components/molecules/Carousel";
-// import Image from "@frontity/components/image";
-// import Image from "../../components/atoms/image";
 
 const PublicationSliders = ({ state, link, categories }) => {
   const data = state.source.get(link);
 
   const show = useBreakpointValue([1, 2, 3]);
-
-  const publications = useMemo(() => {
+  const [publications, setPublications] = useState([]);
+  useEffect(() => {
     let array = [];
-    data?.items.map((item) => {
-      const post = state.source[item.type][item.id];
-      array.push(formatCPTData(state, post, categories));
-    });
-    if (array.length > 0) {
-      return [...array];
+    if (data.isReady) {
+      data.items.map((item) => {
+        const post = state.source[item.type][item.id];
+        array.push(formatCPTData(state, post, categories));
+      });
     }
-  }, [data.isReady, categories]);
+    if (array.length > 0) {
+      setPublications([...array]);
+    }
+  }, [data]);
 
   const [sliderData, setSliderData] = useState([]);
 

@@ -30,17 +30,19 @@ const AboutSection = ({
       let array1 = [];
       let array2 = [];
 
-      publicationsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        post.categories.forEach((category) => {
-          if (category == Publication_categories[0].category_id) {
-            array1.push(getPublicationSliders(state, post, categories));
-          }
-          if (category == Publication_categories[1].category_id) {
-            array2.push(getPublicationSliders(state, post, categories));
-          }
+      if (publicationsData.isReady) {
+        publicationsData.items.forEach((item) => {
+          const post = state.source[item.type][item.id];
+          post.categories.forEach((category) => {
+            if (category == Publication_categories[0].category_id) {
+              array1.push(getPublicationSliders(state, post, categories));
+            }
+            if (category == Publication_categories[1].category_id) {
+              array2.push(getPublicationSliders(state, post, categories));
+            }
+          });
         });
-      });
+      }
 
       if ((array1.length && array2.length) > 0) {
         setPublicationsSlider([
@@ -59,7 +61,7 @@ const AboutSection = ({
         ]);
       }
     }
-  }, [publicationsData, categories, Publication_categories]);
+  }, [publicationsData]);
 
   useEffect(() => {
     actions.source.fetch("/publications");
@@ -81,16 +83,6 @@ const AboutSection = ({
           backgroundBlendMode="multiply"
           backgroundSize="cover"
         >
-          {/* <Box
-            className="quote-wrapper"
-            w="92%"
-            height={20}
-            zIndex={1}
-            pos={"absolute"}
-            inset={0}
-            bg={"rgba(255,255,255,0.1)"}
-            filter={"blur(5px)saturate(180%)"}
-          /> */}
           {intro ? (
             <Text
               as="blockquote"
@@ -184,28 +176,30 @@ const AboutSection = ({
           </VStack>
         )}
 
-        <VStack
-          spacing={8}
-          align="center"
-          bg={"rgba(70,55,55, 1)"}
-          px={6}
-          overflow="hidden"
-          w="full"
-        >
-          {publicationsData.isReady &&
-            publicationsSlider.map((item) => {
-              return (
-                <Box key={item.slider_title}>
-                  <Title
-                    py={["3", "6"]}
-                    text={item.slider_title}
-                    color="whiteAlpha.900"
-                  />
-                  <MultiItemCarousel my="3" slides={item.slider} />
-                </Box>
-              );
-            })}
-        </VStack>
+        {publicationsSlider.length > 0 && (
+          <VStack
+            spacing={8}
+            align="center"
+            bg={"rgba(70,55,55, 1)"}
+            px={6}
+            overflow="hidden"
+            w="full"
+          >
+            {publicationsData.isReady &&
+              publicationsSlider.map((item) => {
+                return (
+                  <Box key={item.slider_title}>
+                    <Title
+                      py={["3", "6"]}
+                      text={item.slider_title}
+                      color="whiteAlpha.900"
+                    />
+                    <MultiItemCarousel my="3" slides={item.slider} />
+                  </Box>
+                );
+              })}
+          </VStack>
+        )}
       </SimpleGrid>
     </Section>
   );

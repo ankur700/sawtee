@@ -81,7 +81,7 @@ const Carousel = (props) => {
           <Button
             onClick={prev}
             className="left-arrow"
-            left={"-56px"}
+            left={"0px"}
             {...arrowStyles}
             // colorScheme={useColorModeValue("primary")}
           >
@@ -106,7 +106,7 @@ const Carousel = (props) => {
             onClick={next}
             className="right-arrow"
             {...arrowStyles}
-            right={"-28px"}
+            right={"-24px"}
             // colorScheme={useColorModeValue("primary")}
           >
             <HiOutlineArrowNarrowRight />

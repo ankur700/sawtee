@@ -16,13 +16,34 @@ import {
 } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
+import GlassBox from "../../components/atoms/glassBox";
+import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
+import TwitterTimeline from "../../components/atoms/twitterTimeline";
+import SubscriptionCard from "../../components/atoms/subscriptionCard";
 
-
-
-const SawteeInMedia = ({ state }) => {
+const SawteeInMedia = ({ state, actions }) => {
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
   const linkColor = state.theme.colors.linkColor;
+
+  const newsData = state.source.get("/sawtee-in-media");
+
+  const news = React.useMemo(() => {
+    if (newsData.isReady) {
+      let newsArray = [];
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
+      return [...newsArray];
+    } else {
+      return [];
+    }
+  }, [newsData]);
+
+  React.useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
 
   return (
     <LightPatternBox
@@ -108,14 +129,37 @@ const SawteeInMedia = ({ state }) => {
                 </Wrapper>
               ))}
             </Box>
-            <Sidebar
-              data={null}
-              title="Sawtee in Media"
-              showSawteeInMedia={false}
-              showTwitterTimeline={true}
-              showSubscriptionCard={true}
-              linkColor={linkColor}
-            />
+            <Sidebar>
+              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+              </GlassBox>
+              <GlassBox
+                rounded="2xl"
+                height="max-content"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                id="twitter-wrapper"
+              >
+                <TwitterTimeline
+                  handle="sawteenp"
+                  width={"100%"}
+                  height="700px"
+                  maxH={"700px"}
+                  rounded="xl"
+                />
+              </GlassBox>
+              <GlassBox
+                py="4"
+                px="8"
+                rounded="2xl"
+                height="max-content"
+                position={"sticky"}
+                top={"8.5rem"}
+              >
+                <SubscriptionCard />
+              </GlassBox>
+            </Sidebar>
           </SimpleGrid>
           {/* <Pagination mt="56px" /> */}
         </Box>
