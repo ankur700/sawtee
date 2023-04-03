@@ -19,7 +19,7 @@ export const getBreakpointValue = (value, fallback, ssr) =>
     }
   );
 
-const getPostsFromCategory = ({ post }, categoryId) =>
+export const getPostsFromCategory = ({ post }, categoryId) =>
   Object.keys(post)
     .map((postID) => post[postID])
     .filter(({ categories }) => categories.includes(parseInt(categoryId)));

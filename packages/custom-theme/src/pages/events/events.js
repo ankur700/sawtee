@@ -27,11 +27,13 @@ import { formatCPTData } from "../../components/helpers";
 const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const sizeValue = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const [news, setNews] = React.useState([]);
   const linkColor = state.theme.colors.linkColor;
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
+
+  const [size, setSize] = React.useState(null);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -56,8 +58,16 @@ const EventsArchive = ({ state, actions, categories }) => {
   }, [newsData]);
 
   React.useEffect(() => {
+    if (sizeValue) {
+      setSize(sizeValue);
+    }
+  }, [sizeValue]);
+
+  React.useEffect(() => {
     actions.source.fetch("/sawtee-in-media");
   }, []);
+
+  console.log(news);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -124,7 +134,7 @@ const EventsArchive = ({ state, actions, categories }) => {
           gap={6}
           pos={"relative"}
         >
-          <GridItem colSpan={3} px={10}>
+          <GridItem colSpan={3} px={[6, 10]}>
             {pages.map(({ key, link, isLast, Wrapper }) => (
               <Wrapper key={key}>
                 <EventsList
@@ -150,7 +160,9 @@ const EventsArchive = ({ state, actions, categories }) => {
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
               <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+                {news && (
+                  <SawteeInMediaWidget news={news} linkColor={linkColor} />
+                )}
               </GlassBox>
               <GlassBox
                 rounded="2xl"

@@ -151,6 +151,7 @@ const AboutSection = ({
                   rounded={"xl"}
                   bg={"rgba(255,255,255, 0.1)"}
                 ></Skeleton>
+                  
               </Flex>
             </Box>
 

@@ -40,7 +40,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
   }, [data, categories]);
   const { ref, inView } = useInView({ triggerOnce: false });
   return (
-    <VStack spacing={8} w={{ base: "auto", md: "3xl" }} ref={ref}>
+    <VStack spacing={8} w={{ base: "auto", md: "full" }} maxW={"3xl"} ref={ref}>
       {events &&
         events.map((event) => (
           <MotionStack
@@ -105,8 +105,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
                 <Heading
                   as="h3"
                   color={useColorModeValue("gray.700", "whiteAlpha.800")}
-                  fontSize="xl"
-                  lineHeight={1.2}
+                  fontSize={{ base: "md", md: "lg", lg: "xl" }}
                   fontWeight="bold"
                   _hover={{ color: linkColor, textDecoration: "underline" }}
                 >
@@ -116,7 +115,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
                 </Heading>
                 <Text
                   as="div"
-                  fontSize="md"
+                  fontSize={{ base: "sm", md: "md" }}
                   color={useColorModeValue("gray.500", "gray.300")}
                   noOfLines={2}
                   lineHeight="normal"

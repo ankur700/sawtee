@@ -2,7 +2,7 @@ import { useColorModeValue, Stack, Button } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 import Link from "../../components/atoms/link";
 
-const PublicationFilter = ({ categories, linkColor }) => {
+const PublicationFilter = ({ categories }) => {
   return (
     <Section
       bg={useColorModeValue("transparent")}
@@ -20,18 +20,15 @@ const PublicationFilter = ({ categories, linkColor }) => {
         alignItems={"center"}
         justifyContent="center"
       >
-        {categories &&
-          categories
-            .filter((category) => category.parent === 5)
-            .map(({ name, id, link }) => {
-              return (
-                <Link link={link} key={id}>
-                  <Button colorScheme={"primary"} variant="outline" size="sm">
-                    {name}
-                  </Button>
-                </Link>
-              );
-            })}
+        {categories.map(({ name, id, link }) => {
+          return (
+            <Link link={link} key={id}>
+              <Button colorScheme={"primary"} variant="outline" size="sm">
+                {name}
+              </Button>
+            </Link>
+          );
+        })}
       </Stack>
     </Section>
   );

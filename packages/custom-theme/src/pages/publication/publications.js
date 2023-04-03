@@ -18,7 +18,7 @@ import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import GlassBox from "../../components/atoms/glassBox";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
@@ -26,17 +26,73 @@ import { formatCPTData } from "../../components/helpers";
 
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
+  const newsData = state.source.get("/sawtee-in-media");
   const linkColor = state.theme.colors.linkColor;
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
 
-  const [news, setNews] = React.useState([]);
+  const [news, setNews] = useState([]);
+  const [publications, setPublications] = useState([]);
+  const [sliderData, setSliderData] = useState([]);
+  const publicationCategories = () => {
+    if (!categories) return;
+    return categories.filter((cat) => cat.parent === 5);
+  }
 
-  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
-  const newsData = state.source.get("/sawtee-in-media");
+  const size =   useBreakpointValue(["sm", "md", "lg", "huge"]) ;
+  const show =   useBreakpointValue([1, 2, 3]);
 
-  React.useEffect(() => {
+
+  useEffect(() => {
+    let array = [];
+    if (data.isReady) {
+      data.items.map((item) => {
+        const post = state.source[item.type][item.id];
+        array.push(formatCPTData(state, post, categories));
+      });
+    }
+    if (array.length > 0) {
+      setPublications([...array]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    let array = [];
+    if (categories) {
+      categories
+        .filter(
+          (cat) =>
+            cat.parent !== 0 &&
+            Object.keys(state.source.category).includes(cat.id.toString())
+        )
+        .forEach((item) => {
+          array.push({
+            id: item.id,
+            name: item.name,
+            link: item.link,
+            slides: [],
+          });
+        });
+    }
+    if (array.length && publications.length > 0) {
+      array.forEach((item, i) => {
+        publications.forEach((pub) =>
+          pub.categories.map((category) => {
+            if (category.id === item.id && item.name !== "Publications") {
+              array[i].slides.push({
+                ...pub.featured_media,
+                link: pub.link,
+              });
+            }
+          })
+        );
+      });
+      setSliderData([...array]);
+    }
+  }, [ publications]);
+
+  useEffect(() => {
     let newsArray = [];
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
@@ -50,7 +106,7 @@ const Publications = ({ state, actions, categories }) => {
     }
   }, [newsData]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     actions.source.fetch("/sawtee-in-media");
   }, []);
 
@@ -105,64 +161,64 @@ const Publications = ({ state, actions, categories }) => {
           </Heading>
         </Box>
       </Box>
-      <GlassBox
-        as={Section}
-        // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
-        mt={"6"}
-        size={"lg"}
-      >
-        {categories && (
-          <PublicationFilter
-            categories={categories}
-            linkColor={state.theme.colors.linkColor}
-          />
-        )}
-      </GlassBox>
-
-      <Box
-        as={Section}
-        px={"32px"}
-        w="full"
-        size={"huge"}
-        pt="50px"
-        pb={"80px"}
-        fontSize={["md", "lg", "xl"]}
-        color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
-      >
-        <Grid
-          templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
-          gap={6}
-          pos={"relative"}
+      {categories ? (
+        <GlassBox
+          as={Section}
+          // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+          mt={"6"}
+          size={"lg"}
         >
-          <GridItem colSpan={3} px={4}>
-            {pages.map(({ key, link, isLast, Wrapper }) => (
-              <Wrapper key={key}>
-                <PublicationSliders
-                  link={link}
-                  linkColor={state.theme.colors.linkColor}
-                  categories={categories}
-                />
-                {isLast && <Divider h="10px" mt="10" />}
-                <Box w="full" mb="40px" textAlign={"center"}>
-                  {isFetching && <Loading />}
-                  {isLimit && (
-                    <Button onClick={fetchNext}>Load Next Page</Button>
-                  )}
-                  {isError && (
-                    <Button onClick={fetchNext}>
-                      Something failed - Retry
-                    </Button>
-                  )}
-                </Box>
-              </Wrapper>
-            ))}
-          </GridItem>
-          <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-            <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl">
-                <SawteeInMediaWidget news={news} linkColor={linkColor} />
-              </GlassBox>
-              <GlassBox
+          <PublicationFilter categories={publicationCategories()} />
+        </GlassBox>
+      ) : null}
+
+      {size ? (
+        <Box
+          as={Section}
+          px={"32px"}
+          w="full"
+          size={size}
+          pt="50px"
+          pb={"80px"}
+          fontSize={["md", "lg", "xl"]}
+          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        >
+          <Grid
+            templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
+            gap={6}
+            pos={"relative"}
+          >
+            <GridItem colSpan={3} px={4}>
+              {pages &&
+                pages.map(({ key, link, isLast, Wrapper }) => (
+                  <Wrapper key={key}>
+                    <PublicationSliders
+                      link={link}
+                      linkColor={linkColor}
+                      sliderData={sliderData}
+                      show={show}
+                    />
+                    {isLast && <Divider h="10px" mt="10" />}
+                    <Box w="full" mb="40px" textAlign={"center"}>
+                      {isFetching && <Loading />}
+                      {isLimit && (
+                        <Button onClick={fetchNext}>Load Next Page</Button>
+                      )}
+                      {isError && (
+                        <Button onClick={fetchNext}>
+                          Something failed - Retry
+                        </Button>
+                      )}
+                    </Box>
+                  </Wrapper>
+                ))}
+            </GridItem>
+            <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
+              <Sidebar>
+                <GlassBox py="4" px="8" rounded="2xl">
+                  <SawteeInMediaWidget news={news} linkColor={linkColor} />
+                </GlassBox>
+                {/* <GlassBox
                 rounded="2xl"
                 height="max-content"
                 display="flex"
@@ -177,21 +233,22 @@ const Publications = ({ state, actions, categories }) => {
                   maxH={"700px"}
                   rounded="xl"
                 />
-              </GlassBox>
-              <GlassBox
-                py="4"
-                px="8"
-                rounded="2xl"
-                height="max-content"
-                position={"sticky"}
-                top={"8.5rem"}
-              >
-                <SubscriptionCard />
-              </GlassBox>
-            </Sidebar>
-          </GridItem>
-        </Grid>
-      </Box>
+              </GlassBox> */}
+                <GlassBox
+                  py="4"
+                  px="8"
+                  rounded="2xl"
+                  height="max-content"
+                  position={"sticky"}
+                  top={"8.5rem"}
+                >
+                  <SubscriptionCard />
+                </GlassBox>
+              </Sidebar>
+            </GridItem>
+          </Grid>
+        </Box>
+      ) : null}
     </LightPatternBox>
   );
 };
