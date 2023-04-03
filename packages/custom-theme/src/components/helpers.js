@@ -1,9 +1,23 @@
 import moment from "moment/moment";
 import { categoriesWidgetsHome } from "./config";
+import { useBreakpointValue } from "@chakra-ui/react";
 const MAXIMUM_POSTS = 5;
 
- export const formatedDate = (date) => moment(date, "YYYYMMDD").fromNow();
+export const formatedDate = (date) => moment(date, "YYYYMMDD").fromNow();
+export function formatDateWithMoment(date, format) {
+  const f = format ? format : "MMMM DD YYYY";
+  const formatedDate = moment(date).format(f);
+  return formatedDate;
+}
 
+export const getBreakpointValue = (value, fallback, ssr) =>
+  useBreakpointValue(
+    value,
+    { fallback: fallback },
+    {
+      ssr: ssr,
+    }
+  );
 
 const getPostsFromCategory = ({ post }, categoryId) =>
   Object.keys(post)
@@ -88,11 +102,7 @@ export function getPublicationSliders(state, post, categories) {
   };
 }
 
-export function formatDateWithMoment(date, format) {
-  const f = format ? format : "MMMM DD YYYY";
-  const formatedDate = moment(date).format(f);
-  return formatedDate;
-}
+
 
 export function getPostCategories(state, post, categoriesPool) {
   if (categoriesPool) {

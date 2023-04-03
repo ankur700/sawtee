@@ -300,7 +300,8 @@ const settings = {
           postsPage: "blog",
           params: {
             type: [
-              "publications, featured-events",
+              "publications",
+              "featured-events",
               "research",
               "programme",
               "newsletter",

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HeroImage from "../../assets/hero-image.jpg";
 import Title from "../../components/atoms/title";
 import Section from "../../components/atoms/section";
@@ -13,7 +13,10 @@ import {
 } from "@chakra-ui/react";
 import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { connect } from "frontity";
-import { getPublicationSliders } from "../../components/helpers";
+import {
+  getBreakpointValue,
+  getPublicationSliders,
+} from "../../components/helpers";
 
 const AboutSection = ({
   state,
@@ -24,6 +27,8 @@ const AboutSection = ({
 }) => {
   const publicationsData = state.source.get("/publications");
   const [publicationsSlider, setPublicationsSlider] = React.useState([]);
+  const [nofOfItemsToshow, setNumberOfItemToShow] = useState(null);
+  const showValue = getBreakpointValue({ base: 1, md: 2, xl: 3 }, 3, true);
 
   useEffect(() => {
     if (publicationsData.isReady && Publication_categories.length > 0) {
@@ -64,6 +69,12 @@ const AboutSection = ({
   }, [publicationsData]);
 
   useEffect(() => {
+    if (showValue) {
+      setNumberOfItemToShow(showValue);
+    }
+  }, [showValue]);
+
+  useEffect(() => {
     actions.source.fetch("/publications");
   }, []);
 
@@ -78,12 +89,13 @@ const AboutSection = ({
           justifyContent="center"
           alignItems="center"
           overflow="hidden"
+          minH={"580px"}
           backgroundImage={`url(${HeroImage})`}
           backgroundColor="rgba(0,0,0,0.6)"
           backgroundBlendMode="multiply"
           backgroundSize="cover"
         >
-          {intro ? (
+          {intro && (
             <Text
               as="blockquote"
               fontSize={["xl", "2xl", "3xl"]}
@@ -101,9 +113,7 @@ const AboutSection = ({
             >
               {intro}
             </Text>
-          ) : (
-            <SkeletonText noOfLines={4} />
-          )}
+          ) }
         </Box>
 
         {publicationsData.isFetching && (
@@ -194,7 +204,11 @@ const AboutSection = ({
                       text={item.slider_title}
                       color="whiteAlpha.900"
                     />
-                    <MultiItemCarousel my="3" slides={item.slider} />
+                    <MultiItemCarousel
+                      my="3"
+                      slides={item.slider}
+                      noOfItems={nofOfItemsToshow}
+                    />
                   </Box>
                 );
               })}

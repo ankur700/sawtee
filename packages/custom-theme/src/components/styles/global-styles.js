@@ -120,7 +120,7 @@ body::-webkit-scrollbar-thumb {
 
 .carousel-content {
     display: flex;
-    gap: 30px;
+    // gap: 30px;
     transition: all 250ms linear;
     -ms-overflow-style: none;  /* hide scrollbar in IE and Edge */
     scrollbar-width: none;  /* hide scrollbar in Firefox */

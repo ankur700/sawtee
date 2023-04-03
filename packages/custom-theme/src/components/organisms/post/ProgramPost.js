@@ -30,6 +30,9 @@ import GlassBox from "../../atoms/glassBox";
 import Title from "../../atoms/title";
 import Link from "@frontity/components/link";
 import Sidebar from "../archive/sidebar";
+import SawteeInMediaWidget from "../../atoms/sawteeInMediaWidget";
+import TwitterTimeline from "../../atoms/twitterTimeline";
+import SubscriptionCard from "../../atoms/subscriptionCard";
 
 const ProgramPost = ({ state, libraries, actions }) => {
   const postData = getPostData(state);
@@ -39,7 +42,7 @@ const ProgramPost = ({ state, libraries, actions }) => {
   const [programs, setPrograms] = React.useState([]);
   const Html2React = libraries.html2react.Component;
 
-  // const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -104,9 +107,12 @@ const ProgramPost = ({ state, libraries, actions }) => {
           </Text>
 
           <Text fontSize="md" mt="12px" textAlign={"center"}>
-            {formatDateWithMoment(post.acf.program_starting_date, "MMMM YYYY") +
+            {formatDateWithMoment(
+              post.acf.program_starting_date,
+              "MMMM D YYYY"
+            ) +
               " - " +
-              formatDateWithMoment(post.acf.program_ending_date, "MMMM YYYY")}
+              formatDateWithMoment(post.acf.program_ending_date, "MMMM D YYYY")}
           </Text>
         </Box>
       </Box>
@@ -117,7 +123,8 @@ const ProgramPost = ({ state, libraries, actions }) => {
       <Section
         // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
-        size={useBreakpointValue(["sm", "md", "lg", "huge"])}
+        w="full"
+        size={"lg"}
       >
         {post.featured_media != null && (
           <FeaturedMedia id={post.featured_media.id} />
@@ -126,13 +133,18 @@ const ProgramPost = ({ state, libraries, actions }) => {
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
 
-        <Grid templateColumns={"repeat(5,1fr)"} gap={6} placeItems={"center"}>
-          <GridItem colSpan={3} placeSelf={"start"}>
+        <Grid
+          templateColumns={"repeat(5,1fr)"}
+          gap={6}
+          placeItems={"center"}
+          pt="50px"
+        >
+          <GridItem colSpan={3} placeSelf={"start"} display={"flex"}>
             <Content
               as={Section}
-              px={{ base: "32px", md: "0" }}
-              size="md"
-              pt="50px"
+              px={{ base: "20px", md: "0" }}
+              size="sm"
+              // w="full"
               color={useColorModeValue(
                 "rgba(12, 17, 43, 0.8)",
                 "whiteAlpha.800"
@@ -148,6 +160,7 @@ const ProgramPost = ({ state, libraries, actions }) => {
             colSpan={2}
             gap={16}
             minW="md"
+            w="full"
             maxW={"lg"}
           >
             <GlassBox py="4" px="8" rounded="2xl">
@@ -156,7 +169,7 @@ const ProgramPost = ({ state, libraries, actions }) => {
               {programs &&
                 programs.map((item, index) => {
                   return (
-                    <Stack spacing={2} mt="6" key={item.id}>
+                    <Stack spacing={2} mt="6" key={item.id} w="full">
                       <Heading
                         className="title"
                         fontSize={["sm", "md"]}
@@ -184,14 +197,26 @@ const ProgramPost = ({ state, libraries, actions }) => {
                 })}
 
               {programs.length < 1 && (
-                <Stack spacing={6} mt="6">
+                <Stack spacing={6} mt="6" w="full">
                   <SkeletonText noOfLines={2} />
                   <SkeletonText noOfLines={1} />
                   <SkeletonText noOfLines={1} />
                 </Stack>
               )}
             </GlassBox>
-            <Sidebar showSawteeInMedia={true} showSubscriptionCard={true} />
+
+            <Sidebar>
+              <GlassBox
+                py="4"
+                px="8"
+                rounded="2xl"
+                height="max-content"
+                position={"sticky"}
+                top={"8.5rem"}
+              >
+                <SubscriptionCard />
+              </GlassBox>
+            </Sidebar>
           </GridItem>
         </Grid>
       </Section>

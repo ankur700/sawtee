@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { Box } from "@chakra-ui/react";
 
 const sizes = {
@@ -7,7 +7,7 @@ const sizes = {
   md: "750px",
   lg: "1150px",
   huge: "1550px",
-  max: "2560px"
+  max: "2560px",
 };
 
 /**

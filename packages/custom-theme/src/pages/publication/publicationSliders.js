@@ -15,7 +15,7 @@ import Carousel from "../../components/molecules/Carousel";
 const PublicationSliders = ({ state, link, categories }) => {
   const data = state.source.get(link);
 
-  const show = useBreakpointValue([1, 2, 3]);
+  const [show, setShow] = useState(null);
   const [publications, setPublications] = useState([]);
   useEffect(() => {
     let array = [];
@@ -33,6 +33,13 @@ const PublicationSliders = ({ state, link, categories }) => {
   const [sliderData, setSliderData] = useState([]);
 
   const PublicationCategories = Object.keys(state.source.category);
+
+  let showValue = useBreakpointValue([1, 2, 3]);
+  useEffect(() => {
+    if (showValue) {
+      setShow(showValue);
+    }
+  }, [showValue]);
 
   useEffect(() => {
     let array = [];
@@ -75,6 +82,7 @@ const PublicationSliders = ({ state, link, categories }) => {
       }}
     >
       {sliderData &&
+        show &&
         sliderData.map((cat) => {
           if (PublicationCategories.includes(`${cat.id}`)) {
             getSlides(cat);
@@ -96,7 +104,7 @@ const PublicationSliders = ({ state, link, categories }) => {
                         key={slide.alt + idx}
                         title={sliderData.alt}
                         href={slide.link}
-                        w={`calc(100% / ${show} - 30px)`}
+                        w={`calc(100% / ${show} )`}
                       >
                         <Image
                           src={slide.src ? slide.src : slide.featured_media.src}

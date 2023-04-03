@@ -2,14 +2,13 @@ import {
   Box,
   Text,
   Image,
-  useBreakpointValue,
   LinkBox,
   LinkOverlay,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 
-const MultiItemCarousel = ({ slides, gap }) => {
+const MultiItemCarousel = ({ slides, noOfItems }) => {
   const arrowStyles = {
     cursor: "pointer",
     pos: "absolute",
@@ -38,8 +37,6 @@ const MultiItemCarousel = ({ slides, gap }) => {
       setLength(slides.length);
     }
   }, [slides]);
-
-  const show = useBreakpointValue([1, 2, 3]);
 
   const prevSlide = () => {
     if (currentIndex < length - show) {
@@ -73,8 +70,8 @@ const MultiItemCarousel = ({ slides, gap }) => {
           <Box
             className="mic-content"
             display="flex"
-            gap={gap ? gap : { base: "10px", sm: "20px", md: "30px" }}
-            transform={`translateX(-${currentIndex * (100 / show)}%)`}
+            gap={{ base: "10px", sm: "20px", md: "30px" }}
+            transform={`translateX(-${currentIndex * (100 / noOfItems)}%)`}
             transition={"all 250ms linear"}
           >
             {slides &&
@@ -85,11 +82,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
                     shadow="md"
                     flexShrink={0}
                     flexGrow={1}
-                    w={[
-                      "calc(100% - 10px)",
-                      "calc(50% - 20px) ",
-                      `calc(${100 / 3}% - 30px)`,
-                    ]}
+                    w={`calc(100% / ${noOfItems})`}
                     flex="none"
                     pos={"relative"}
                     title={slide.title || slide.alt}
@@ -147,7 +140,7 @@ const MultiItemCarousel = ({ slides, gap }) => {
               &#10094;
             </Text>
           )}
-          {currentIndex < length - show && (
+          {currentIndex < length - noOfItems && (
             <Text {...arrowStyles} right="0" onClick={nextSlide} zIndex={1}>
               &#10095;
             </Text>

@@ -123,14 +123,14 @@ const Publications = ({ state, actions, categories }) => {
         as={Section}
         px={"32px"}
         w="full"
-        size={size}
+        size={"huge"}
         pt="50px"
         pb={"80px"}
         fontSize={["md", "lg", "xl"]}
         color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
       >
         <Grid
-          templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+          templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
           gap={6}
           pos={"relative"}
         >
@@ -159,7 +159,7 @@ const Publications = ({ state, actions, categories }) => {
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+              <GlassBox py="4" px="8" rounded="2xl">
                 <SawteeInMediaWidget news={news} linkColor={linkColor} />
               </GlassBox>
               <GlassBox
