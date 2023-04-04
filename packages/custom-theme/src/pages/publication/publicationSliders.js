@@ -1,4 +1,4 @@
-import { connect } from "frontity";
+// import { connect } from "frontity";
 import {
   LinkOverlay,
   Stack,
@@ -36,7 +36,24 @@ const PublicationSliders = ({ sliderData, show }) => {
                     key={slide.alt + idx}
                     title={sliderData.alt}
                     href={slide.link}
+                    pos={"relative"}
                     w={`calc(100% / ${show} )`}
+                    _before={{
+                      content: `''`,
+                      position: "absolute",
+                      top: 0,
+                      left: "21px",
+                      width: "220px",
+                      height: "280px",
+                      borderRadius: "15px",
+                      background: "rgba(0,0,0,0.3)",
+                      backgroundBlendMode: "overlay",
+                    }}
+                    _hover={{
+                      _before: {
+                        background: "transparent",
+                      },
+                    }}
                   >
                     <Image
                       src={slide.src ? slide.src : slide.featured_media.src}
@@ -67,4 +84,4 @@ const PublicationSliders = ({ sliderData, show }) => {
   );
 };
 
-export default connect(PublicationSliders);
+export default PublicationSliders;

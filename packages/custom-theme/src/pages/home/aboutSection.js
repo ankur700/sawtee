@@ -113,10 +113,10 @@ const AboutSection = ({
             >
               {intro}
             </Text>
-          ) }
+          )}
         </Box>
 
-        {publicationsData.isFetching && (
+        {publicationsData.isFetching ? (
           <VStack
             w="full"
             align="center"
@@ -151,7 +151,6 @@ const AboutSection = ({
                   rounded={"xl"}
                   bg={"rgba(255,255,255, 0.1)"}
                 ></Skeleton>
-                  
               </Flex>
             </Box>
 
@@ -185,9 +184,7 @@ const AboutSection = ({
               </Flex>
             </Box>
           </VStack>
-        )}
-
-        {publicationsSlider.length > 0 && (
+        ) : (
           <VStack
             spacing={8}
             align="center"

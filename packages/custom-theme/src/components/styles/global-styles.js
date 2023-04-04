@@ -119,6 +119,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .carousel-content {
+    position: relative;
+    width: 100%;
     display: flex;
     // gap: 30px;
     transition: all 250ms linear;

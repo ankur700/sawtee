@@ -34,16 +34,16 @@ const Publications = ({ state, actions, categories }) => {
   const [news, setNews] = useState([]);
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
-  const publicationCategories = () => {
-    if (!categories) return;
-    return categories.filter((cat) => cat.parent === 5);
-  }
+  const [publicationCategories, setPublicationCategories] = useState([]);
+  let [pubArray, setPubArray] = useState([]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const show = useBreakpointValue([1, 2, 3]);
 
+  useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
 
-  const size =   useBreakpointValue(["sm", "md", "lg", "huge"]) ;
-  const show =   useBreakpointValue([1, 2, 3]);
-
-
+  // get publications
   useEffect(() => {
     let array = [];
     if (data.isReady) {
@@ -57,9 +57,29 @@ const Publications = ({ state, actions, categories }) => {
     }
   }, [data]);
 
+  // get news for sidebar
+  useEffect(() => {
+    let newsArray = [];
+    if (newsData.isReady) {
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
+    }
+
+    if (newsArray.length > 0) {
+      setNews([...newsArray]);
+    }
+  }, [newsData, categories]);
+
+
+  // get publication categories and publication array for later manipulation
   useEffect(() => {
     let array = [];
     if (categories) {
+      setPublicationCategories([
+        ...categories.filter((cat) => cat.parent === 5),
+      ]);
       categories
         .filter(
           (cat) =>
@@ -75,40 +95,34 @@ const Publications = ({ state, actions, categories }) => {
           });
         });
     }
-    if (array.length && publications.length > 0) {
-      array.forEach((item, i) => {
-        publications.forEach((pub) =>
-          pub.categories.map((category) => {
+
+    if (array.length > 0) {
+      setPubArray([...array]);
+    }
+  }, [categories]);
+
+
+// Get the slider Data with slides
+  useEffect(() => {
+    if (publications.length > 0 && pubArray.length > 0) {
+      let array = [...pubArray];
+      publications.forEach((publication) =>
+        publication.categories.map((category) => {
+          array.forEach((item) => {
             if (category.id === item.id && item.name !== "Publications") {
-              array[i].slides.push({
-                ...pub.featured_media,
-                link: pub.link,
+              item.slides.push({
+                ...publication.featured_media,
+                link: publication.link,
               });
             }
-          })
-        );
-      });
+          });
+        })
+      );
+
       setSliderData([...array]);
     }
-  }, [ publications]);
+  }, [publications, pubArray]);
 
-  useEffect(() => {
-    let newsArray = [];
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
-      });
-    }
-
-    if (newsArray.length > 0) {
-      setNews([...newsArray]);
-    }
-  }, [newsData]);
-
-  useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
-  }, []);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
@@ -161,23 +175,23 @@ const Publications = ({ state, actions, categories }) => {
           </Heading>
         </Box>
       </Box>
-      {categories ? (
+      {publicationCategories.length > 0 ? (
         <GlassBox
           as={Section}
           // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
           mt={"6"}
           size={"lg"}
         >
-          <PublicationFilter categories={publicationCategories()} />
+          <PublicationFilter categories={publicationCategories} />
         </GlassBox>
       ) : null}
 
-      {size ? (
+      {
         <Box
           as={Section}
           px={"32px"}
           w="full"
-          size={size}
+          size={size === undefined ? "lg" : size}
           pt="50px"
           pb={"80px"}
           fontSize={["md", "lg", "xl"]}
@@ -196,7 +210,7 @@ const Publications = ({ state, actions, categories }) => {
                       link={link}
                       linkColor={linkColor}
                       sliderData={sliderData}
-                      show={show}
+                      show={show ? show : 3}
                     />
                     {isLast && <Divider h="10px" mt="10" />}
                     <Box w="full" mb="40px" textAlign={"center"}>
@@ -248,7 +262,7 @@ const Publications = ({ state, actions, categories }) => {
             </GridItem>
           </Grid>
         </Box>
-      ) : null}
+      }
     </LightPatternBox>
   );
 };

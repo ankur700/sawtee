@@ -18,7 +18,7 @@ const SawteeInMediaWidget = ({ news, linkColor }) => {
   return (
     <>
       <Title text={"Sawtee in Media"} textAlign="center" mb={8} />
-      {news.length > 0 &&
+      {news.length > 0 ? (
         news.map((item, index) => {
           return (
             <Stack spacing={2} mt="6" key={item.id}>
@@ -68,9 +68,8 @@ const SawteeInMediaWidget = ({ news, linkColor }) => {
               <Divider display={index === news.length - 1 ? "none" : "block"} />
             </Stack>
           );
-        })}
-
-      {news.length === 0 && (
+        })
+      ) : (
         <Stack spacing={6} mt="3">
           <Box display={"flex"} flexDir={"column"} gap={2}>
             <Skeleton w="full" height="20px" />
