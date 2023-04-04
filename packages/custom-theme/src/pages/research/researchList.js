@@ -60,7 +60,7 @@ const ResearchList = ({ state, link, categories }) => {
   };
 
   return (
-    <Container maxW="7xl" p={{ base: 2, sm: 10 }}>
+    <Container maxW="3xl" p={{ base: 2, sm: 10 }}>
       <VStack textAlign="start" align="start" mb={5} spacing={10}>
         {tagsArray &&
           tagsArray.map((tagitem) => {

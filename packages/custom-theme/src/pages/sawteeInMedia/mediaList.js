@@ -1,30 +1,19 @@
-import { connect } from "frontity";
 import Loading from "../../components/atoms/loading";
-import { getCPTData } from "../../components/helpers";
-import MediaArticles from "./MediaArticles";
+import MediaArticle from "./MediaArticle";
+import { VStack } from "@chakra-ui/react";
 
-const SawteeInMedia = ({ state, link }) => {
-  const data = state.source.get(link);
-  const posts = () => {
-    let array = [];
-    data.items.map(({ type, id }) => {
-      array.push(state.source[type][id]);
-    });
-    if (array.length > 0) {
-      return array;
-    }
-  };
-  const news = getCPTData(posts(), state);
-  const linkColor = state.theme.colors.linkColor;
-
-  // Load the post, but only if the data is ready.
-  if (!data.isReady) return null;
-
-  return !news.length ? (
-    <Loading />
-  ) : (
-    <MediaArticles news={news} linkColor={linkColor} />
+const SawteeInMedia = ({ news, linkColor }) => {
+  return (
+    <VStack spacing={8}>
+      {news.map((newsItem) => (
+        <MediaArticle
+          key={newsItem.id}
+          newsItem={newsItem}
+          linkColor={linkColor}
+        />
+      ))}
+    </VStack>
   );
 };
 
-export default connect(SawteeInMedia);
+export default SawteeInMedia;

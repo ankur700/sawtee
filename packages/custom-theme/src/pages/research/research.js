@@ -7,6 +7,7 @@ import {
   Button,
   GridItem,
   Grid,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -26,22 +27,22 @@ import SubscriptionCard from "../../components/atoms/subscriptionCard";
 const ResearchArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-
+  const linkColor = state.theme.colors.linkColor;
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
-
+  const [news, setNews] = React.useState([]);
   const newsData = state.source.get("/sawtee-in-media");
 
-  const news = React.useMemo(() => {
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+
+  React.useEffect(() => {
     if (newsData.isReady) {
       let newsArray = [];
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
         newsArray.push(formatCPTData(state, post, categories));
       });
-      return [...newsArray];
-    } else {
-      return [];
+      setNews([...newsArray]);
     }
   }, [newsData]);
 
@@ -110,13 +111,13 @@ const ResearchArchive = ({ state, actions, categories }) => {
         <Box
           as={Section}
           px={{ base: "32px", md: "0" }}
-          size="xl"
+          size={size}
           pt="50px"
           fontSize={["md", "lg", "xl"]}
           color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           <Grid
-            templateColumns={{ base: "1fr", lg: "repeat(5, 1fr" }}
+            templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
             gap="10"
             pos={"relative"}
           >

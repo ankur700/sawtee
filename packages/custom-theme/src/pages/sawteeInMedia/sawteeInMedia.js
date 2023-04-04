@@ -20,31 +20,31 @@ import GlassBox from "../../components/atoms/glassBox";
 import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
+import { formatCPTData } from "../../components/helpers";
 
-const SawteeInMedia = ({ state, actions }) => {
+const SawteeInMedia = ({ state, categories }) => {
+  const data = state.source.get(state.router.link);
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
   const linkColor = state.theme.colors.linkColor;
+  const [news, setNews] = React.useState([]);
 
-  const newsData = state.source.get("/sawtee-in-media");
+  React.useEffect(() => {
+    let newsArray = [];
 
-  const news = React.useMemo(() => {
-    if (newsData.isReady) {
-      let newsArray = [];
-      newsData.items.forEach((item) => {
+    if (data.isReady) {
+      data.items.forEach((item) => {
         const post = state.source[item.type][item.id];
         newsArray.push(formatCPTData(state, post, categories));
       });
-      return [...newsArray];
-    } else {
-      return [];
     }
-  }, [newsData]);
+    if (newsArray.length > 0) {
+      setNews([...newsArray]);
+    }
+  }, [data, categories]);
 
-  React.useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
-  }, []);
-
+  if (!data.isReady) return null;
+  console.log(news);
   return (
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
@@ -88,7 +88,7 @@ const SawteeInMedia = ({ state, actions }) => {
             mb={{ base: "20px", lg: "32px" }}
             textTransform="uppercase"
           >
-            {pages[0].type}
+            {data.type}
           </Heading>
         </Box>
       </Box>
@@ -113,7 +113,7 @@ const SawteeInMedia = ({ state, actions }) => {
             <Box>
               {pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
-                  <MediaList link={link} />
+                  <MediaList news={news} link={link} />
                   {isLast && <Divider h="10px" mt="10" />}
                   <Box w="full" mb="40px" textAlign={"center"}>
                     {isFetching && <Loading />}
