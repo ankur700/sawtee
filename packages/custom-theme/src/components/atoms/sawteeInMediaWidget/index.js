@@ -12,13 +12,32 @@ import React from "react";
 import Link from "../../atoms/link";
 import Title from "../../atoms/title";
 import { formatedDate } from "../../helpers";
-import { decode } from "frontity";
+import { connect, decode } from "frontity";
 
-const SawteeInMediaWidget = ({ news, linkColor }) => {
+const SawteeInMediaWidget = ({ state, actions, categories, linkColor }) => {
+  const newsData = state.source.get("/sawtee-in-media");
+
+  // get news for sidebar
+  const news = React.useMemo(() => {
+    let newsArray = [];
+    if (newsData.isReady) {
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
+    }
+
+    return [...newsArray];
+  }, [newsData]);
+
+  React.useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
+
   return (
     <>
       <Title text={"Sawtee in Media"} textAlign="center" mb={8} />
-      {news.length > 0 ? (
+      {news ? (
         news.map((item, index) => {
           return (
             <Stack spacing={2} mt="6" key={item.id}>
@@ -98,4 +117,4 @@ const SawteeInMediaWidget = ({ news, linkColor }) => {
   );
 };
 
-export default SawteeInMediaWidget;
+export default connect(SawteeInMediaWidget);

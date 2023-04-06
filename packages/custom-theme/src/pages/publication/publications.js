@@ -24,24 +24,18 @@ import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData } from "../../components/helpers";
 
-const Publications = ({ state, actions, categories }) => {
+const Publications = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
-  const newsData = state.source.get("/sawtee-in-media");
   const linkColor = state.theme.colors.linkColor;
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
 
-  const [news, setNews] = useState([]);
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
   let [pubArray, setPubArray] = useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3]);
-
-  useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
-  }, []);
 
   // get publications
   useEffect(() => {
@@ -56,22 +50,6 @@ const Publications = ({ state, actions, categories }) => {
       setPublications([...array]);
     }
   }, [data]);
-
-  // get news for sidebar
-  useEffect(() => {
-    let newsArray = [];
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
-      });
-    }
-
-    if (newsArray.length > 0) {
-      setNews([...newsArray]);
-    }
-  }, [newsData, categories]);
-
 
   // get publication categories and publication array for later manipulation
   useEffect(() => {
@@ -101,8 +79,7 @@ const Publications = ({ state, actions, categories }) => {
     }
   }, [categories]);
 
-
-// Get the slider Data with slides
+  // Get the slider Data with slides
   useEffect(() => {
     if (publications.length > 0 && pubArray.length > 0) {
       let array = [...pubArray];
@@ -122,7 +99,6 @@ const Publications = ({ state, actions, categories }) => {
       setSliderData([...array]);
     }
   }, [publications, pubArray]);
-
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
@@ -230,7 +206,10 @@ const Publications = ({ state, actions, categories }) => {
             <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
               <Sidebar>
                 <GlassBox py="4" px="8" rounded="2xl">
-                  <SawteeInMediaWidget news={news} linkColor={linkColor} />
+                  <SawteeInMediaWidget
+                    categories={categories}
+                    linkColor={linkColor}
+                  />
                 </GlassBox>
                 {/* <GlassBox
                 rounded="2xl"
