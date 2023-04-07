@@ -10,13 +10,16 @@ import {
   SimpleGrid,
   VStack,
   SkeletonText,
+  LinkOverlay,
+  Image,
 } from "@chakra-ui/react";
-import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
+// import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { connect } from "frontity";
 import {
   getBreakpointValue,
   getPublicationSliders,
 } from "../../components/helpers";
+import Carousel from "../../components/molecules/Carousel";
 
 const AboutSection = ({
   state,
@@ -26,57 +29,67 @@ const AboutSection = ({
   Publication_categories,
 }) => {
   const publicationsData = state.source.get("/publications");
-  const [publicationsSlider, setPublicationsSlider] = React.useState([]);
-  const [nofOfItemsToshow, setNumberOfItemToShow] = useState(null);
-  const showValue = getBreakpointValue({ base: 1, md: 2, xl: 3 }, 3, true);
-
-  useEffect(() => {
-    if (publicationsData.isReady && Publication_categories.length > 0) {
-      let array1 = [];
-      let array2 = [];
-
-      if (publicationsData.isReady) {
-        publicationsData.items.forEach((item) => {
-          const post = state.source[item.type][item.id];
-          post.categories.forEach((category) => {
-            if (category == Publication_categories[0].category_id) {
-              array1.push(getPublicationSliders(state, post, categories));
-            }
-            if (category == Publication_categories[1].category_id) {
-              array2.push(getPublicationSliders(state, post, categories));
-            }
-          });
-        });
-      }
-
-      if ((array1.length && array2.length) > 0) {
-        setPublicationsSlider([
-          {
-            slider_title: array1[0].categories.filter(
-              (cat) => cat.parent !== 0
-            )[0].name,
-            slider: [...array1],
-          },
-          {
-            slider_title: array2[0].categories.filter(
-              (cat) => cat.parent !== 0
-            )[0].name,
-            slider: [...array2],
-          },
-        ]);
-      }
-    }
-  }, [publicationsData]);
-
-  useEffect(() => {
-    if (showValue) {
-      setNumberOfItemToShow(showValue);
-    }
-  }, [showValue]);
+  const [publications, setPublications] = useState([]);
+  const [publicationsSlider, setPublicationsSlider] = useState([]);
+  // const [array1, setArray1] = useState([]);
+  // const [array2, setArray2] = useState([]);
+  const show = getBreakpointValue({ base: 1, md: 2, xl: 3 }, 3, true);
 
   useEffect(() => {
     actions.source.fetch("/publications");
   }, []);
+
+  useEffect(() => {
+    let array = [];
+    if (publicationsData.isReady) {
+      publicationsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        array.push(getPublicationSliders(state, post, categories));
+      });
+    }
+
+    if (array.length > 0) {
+      setPublications([...array]);
+    }
+  }, [publicationsData]);
+
+  useEffect(() => {
+    let array1 = [];
+    let array2 = [];
+    if (publications.length > 0) {
+      publications.forEach((publication) => {
+        publication.categories.forEach((category) => {
+          if (category.id == Number(Publication_categories[0].category_id)) {
+            array1.push(publication);
+          }
+          if (category.id == Number(Publication_categories[1].category_id)) {
+            array2.push(publication);
+          }
+        });
+      });
+    }
+
+    if (array1.length > 0 && array2.length > 0) {
+      setPublicationsSlider([
+        {
+          slider_title: array1[0].categories.filter(
+            (cat) => cat.parent !== 0
+          )[0].name,
+          slider: [...array1],
+        },
+        {
+          slider_title: array2[0].categories.filter(
+            (cat) => cat.parent !== 0
+          )[0].name,
+          slider: [...array2],
+        },
+      ]);
+    }
+  }, [publications]);
+
+
+
+  console.log(publicationsSlider);
 
   return (
     <Section width="full" overflow="hidden" id="about-section" minH={80}>
@@ -116,7 +129,82 @@ const AboutSection = ({
           )}
         </Box>
 
-        {publicationsData.isFetching ? (
+        {publicationsSlider.length > 1 ? (
+          <VStack
+            spacing={8}
+            align="center"
+            bg={"rgba(70,55,55, 1)"}
+            px={6}
+            overflow="hidden"
+            w="full"
+          >
+            {publicationsSlider.map((item) => {
+              return (
+                <Box key={item.slider_title}>
+                  <Title
+                    py={["3", "6"]}
+                    text={item.slider_title}
+                    color="whiteAlpha.900"
+                  />
+                  <Carousel show={show}>
+                    {item.slider.map((slide, idx) => {
+                      return (
+                        <LinkOverlay
+                          key={slide.alt + idx}
+                          title={
+                            slide.featured_media.alt
+                              ? slide.featured_media.alt
+                              : ""
+                          }
+                          href={slide.link}
+                          pos={"relative"}
+                          w={`calc(100% / ${show} )`}
+                          _before={{
+                            content: `''`,
+                            position: "absolute",
+                            top: 0,
+                            left: "21px",
+                            width: "220px",
+                            height: "280px",
+                            borderRadius: "15px",
+                            background: "rgba(0,0,0,0.3)",
+                            backgroundBlendMode: "overlay",
+                          }}
+                          _hover={{
+                            _before: {
+                              background: "transparent",
+                            },
+                          }}
+                        >
+                          <Image
+                            src={
+                              slide.src ? slide.src : slide.featured_media.src
+                            }
+                            srcSet={
+                              slide.srcSet
+                                ? slide.srcSet
+                                : slide.featured_media.srcSet
+                            }
+                            alt={slide.alt}
+                            title={slide.alt}
+                            rounded="xl"
+                            border={`1px solid`}
+                            borderColor={useColorModeValue(
+                              "gray.900",
+                              "whiteAlpha.900"
+                            )}
+                            objectFit="cover"
+                            style={{ width: "220px", height: "280px" }}
+                          />
+                        </LinkOverlay>
+                      );
+                    })}
+                  </Carousel>
+                </Box>
+              );
+            })}
+          </VStack>
+        ) : (
           <VStack
             w="full"
             align="center"
@@ -183,33 +271,6 @@ const AboutSection = ({
                 ></Skeleton>
               </Flex>
             </Box>
-          </VStack>
-        ) : (
-          <VStack
-            spacing={8}
-            align="center"
-            bg={"rgba(70,55,55, 1)"}
-            px={6}
-            overflow="hidden"
-            w="full"
-          >
-            {publicationsData.isReady &&
-              publicationsSlider.map((item) => {
-                return (
-                  <Box key={item.slider_title}>
-                    <Title
-                      py={["3", "6"]}
-                      text={item.slider_title}
-                      color="whiteAlpha.900"
-                    />
-                    <MultiItemCarousel
-                      my="3"
-                      slides={item.slider}
-                      noOfItems={nofOfItemsToshow}
-                    />
-                  </Box>
-                );
-              })}
           </VStack>
         )}
       </SimpleGrid>

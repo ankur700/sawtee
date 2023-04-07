@@ -128,7 +128,7 @@ const MultiItemCarousel = ({ slides, noOfItems }) => {
                           "whiteAlpha.900"
                         )}
                         objectFit="cover"
-                        style={{ width: "220px", height: "260px" }}
+                        style={{ width: "220px", height: "auto" }}
                       />
                     </LinkOverlay>
                   </LinkBox>
