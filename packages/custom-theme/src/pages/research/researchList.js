@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   VStack,
   Heading,
@@ -19,17 +19,20 @@ const ResearchList = ({ state, link, categories }) => {
   const color = state.theme.colors.linkColor;
   // const toggleOpen = () => setIsOpen(!isOpen);
   const data = state.source.get(link);
+  const [researches, setResearches] = useState([]);
 
-  const researches = useMemo(() => {
+  useEffect(() => {
     let array = [];
-    data.items.map(({ type, id }) => {
-      const post = state.source[type][id];
-      array.push(formatCPTData(state, post, categories));
-    });
-    if (array.length > 0) {
-      return [...array];
+    if (data.isReady) {
+      data.items.map(({ type, id }) => {
+        const post = state.source[type][id];
+        array.push(formatCPTData(state, post, categories));
+      });
     }
-  }, [data, categories]);
+    if (array.length > 0) {
+      setResearches([...array]);
+    }
+  }, [data]);
 
   const tagsArray = useMemo(() => {
     let array = [];
@@ -45,7 +48,7 @@ const ResearchList = ({ state, link, categories }) => {
       });
     });
     if (array.length > 0) {
-      return [...array];
+      return [...array.sort((a, b) => a - b)];
     }
   }, [researches]);
 
@@ -60,7 +63,7 @@ const ResearchList = ({ state, link, categories }) => {
   };
 
   return (
-    <Container maxW="3xl" p={{ base: 2, sm: 10 }}>
+    <Container maxW="5xl" p={{ base: 2, sm: 10 }}>
       <VStack textAlign="start" align="start" mb={5} spacing={10}>
         {tagsArray &&
           tagsArray.map((tagitem) => {
@@ -79,16 +82,21 @@ const ResearchList = ({ state, link, categories }) => {
                   w="100%"
                   h="100%"
                   textAlign="left"
+                  display={"flex"}
+                  flexDirection={"column"}
                   alignItems="center"
                   spacing={4}
                   cursor="pointer"
                   _hover={{ shadow: "lg" }}
                 >
-                  {tagitem.posts.map((researchItem) => (
+                  {tagitem.posts.map((researchItem, idx) => (
                     <ReasearchItem
                       key={researchItem.id}
                       icon={HiOutlineNewspaper}
-                      skipTrail={tagitem.posts.length > 1 ? true : false}
+                      skipTrail={
+                        idx !== tagitem.posts.length - 1 ? true : false
+                      }
+                      minH={idx !== tagitem.posts.length - 1 ? 20 : "auto"}
                     >
                       <Text
                         color={useColorModeValue("gray.700", "whiteAlpha.700")}
@@ -126,7 +134,7 @@ const ReasearchItem = ({
 }) => {
   const color = useColorModeValue("gray.700", "gray.500");
   return (
-    <Flex minH={20} {...props}>
+    <Flex {...props}>
       <Flex flexDir="column" alignItems="center" mr={4} pos="relative">
         <Circle
           size={12}
@@ -141,7 +149,7 @@ const ReasearchItem = ({
           left="0.875rem"
           top="0.875rem"
         />
-        {skipTrail && <Box w="1px" flex={1} bg={color} my={1} />}
+        {skipTrail ? <Box w="1px" flex={1} bg={color} my={1} /> : null}
       </Flex>
       <Box pt={{ base: 1, sm: 3 }} {...boxProps}>
         {children}

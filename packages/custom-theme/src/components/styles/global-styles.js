@@ -122,7 +122,7 @@ body::-webkit-scrollbar-thumb {
     position: relative;
     width: 100%;
     display: flex;
-    // gap: 30px;
+    gap: 20px;
     transition: all 250ms linear;
     -ms-overflow-style: none;  /* hide scrollbar in IE and Edge */
     scrollbar-width: none;  /* hide scrollbar in Firefox */

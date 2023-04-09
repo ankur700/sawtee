@@ -3,7 +3,6 @@ import {
   Divider,
   Heading,
   Skeleton,
-  SkeletonText,
   Stack,
   Text,
   useColorModeValue,
@@ -12,32 +11,13 @@ import React from "react";
 import Link from "../../atoms/link";
 import Title from "../../atoms/title";
 import { formatedDate } from "../../helpers";
-import { connect, decode } from "frontity";
+import { decode } from "frontity";
 
-const SawteeInMediaWidget = ({ state, actions, categories, linkColor }) => {
-  const newsData = state.source.get("/sawtee-in-media");
-
-  // get news for sidebar
-  const news = React.useMemo(() => {
-    let newsArray = [];
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
-      });
-    }
-
-    return [...newsArray];
-  }, [newsData]);
-
-  React.useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
-  }, []);
-
+const SawteeInMediaWidget = ({ news, linkColor }) => {
   return (
     <>
       <Title text={"Sawtee in Media"} textAlign="center" mb={8} />
-      {news ? (
+      {news.length > 0 ? (
         news.map((item, index) => {
           return (
             <Stack spacing={2} mt="6" key={item.id}>
@@ -91,24 +71,24 @@ const SawteeInMediaWidget = ({ state, actions, categories, linkColor }) => {
       ) : (
         <Stack spacing={6} mt="3">
           <Box display={"flex"} flexDir={"column"} gap={2}>
-            <Skeleton w="full" height="20px" />
+            <Skeleton w="full" height="15px" />
             <Box display={"flex"} justifyContent={"space-between"}>
-              <Skeleton w="80px" height="15px" />
-              <Skeleton w="80px" height="15px" />
+              <Skeleton w="80px" height="10px" />
+              <Skeleton w="80px" height="10px" />
             </Box>
           </Box>
           <Box display={"flex"} flexDir={"column"} gap={2}>
-            <Skeleton w="full" height="20px" />
+            <Skeleton w="full" height="15px" />
             <Box display={"flex"} justifyContent={"space-between"}>
-              <Skeleton w="80px" height="15px" />
-              <Skeleton w="80px" height="15px" />
+              <Skeleton w="80px" height="10px" />
+              <Skeleton w="80px" height="10px" />
             </Box>
           </Box>
           <Box display={"flex"} flexDir={"column"} gap={2}>
-            <Skeleton w="full" height="20px" />
+            <Skeleton w="full" height="15px" />
             <Box display={"flex"} justifyContent={"space-between"}>
-              <Skeleton w="80px" height="15px" />
-              <Skeleton w="80px" height="15px" />
+              <Skeleton w="80px" height="10px" />
+              <Skeleton w="80px" height="10px" />
             </Box>
           </Box>
         </Stack>
@@ -117,4 +97,4 @@ const SawteeInMediaWidget = ({ state, actions, categories, linkColor }) => {
   );
 };
 
-export default connect(SawteeInMediaWidget);
+export default SawteeInMediaWidget;

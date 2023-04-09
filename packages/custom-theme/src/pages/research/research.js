@@ -36,15 +36,17 @@ const ResearchArchive = ({ state, actions, categories }) => {
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   React.useEffect(() => {
+    let newsArray = [];
     if (newsData.isReady) {
-      let newsArray = [];
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
         newsArray.push(formatCPTData(state, post, categories));
       });
-      setNews([...newsArray]);
     }
-  }, [newsData]);
+    if (newsArray.length > 0) {
+      setNews(newsArray);
+    }
+  }, [newsData.isReady]);
 
   React.useEffect(() => {
     actions.source.fetch("/sawtee-in-media");

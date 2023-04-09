@@ -9,17 +9,17 @@ import {
   Flex,
   SimpleGrid,
   VStack,
-  SkeletonText,
   LinkOverlay,
   Image,
+  useColorModeValue,
 } from "@chakra-ui/react";
-// import MultiItemCarousel from "../../components/molecules/multiItemCarousel";
 import { connect } from "frontity";
 import {
   getBreakpointValue,
   getPublicationSliders,
 } from "../../components/helpers";
 import Carousel from "../../components/molecules/Carousel";
+import Link from "../../components/atoms/link";
 
 const AboutSection = ({
   state,
@@ -31,8 +31,6 @@ const AboutSection = ({
   const publicationsData = state.source.get("/publications");
   const [publications, setPublications] = useState([]);
   const [publicationsSlider, setPublicationsSlider] = useState([]);
-  // const [array1, setArray1] = useState([]);
-  // const [array2, setArray2] = useState([]);
   const show = getBreakpointValue({ base: 1, md: 2, xl: 3 }, 3, true);
 
   useEffect(() => {
@@ -51,7 +49,7 @@ const AboutSection = ({
     if (array.length > 0) {
       setPublications([...array]);
     }
-  }, [publicationsData]);
+  }, [publicationsData.isReady]);
 
   useEffect(() => {
     let array1 = [];
@@ -87,13 +85,9 @@ const AboutSection = ({
     }
   }, [publications]);
 
-
-
-  console.log(publicationsSlider);
-
   return (
     <Section width="full" overflow="hidden" id="about-section" minH={80}>
-      <SimpleGrid columns={2}>
+      <SimpleGrid columns={{ base: 1, lg: 2 }}>
         <Box
           w="full"
           position="relative"
@@ -135,6 +129,7 @@ const AboutSection = ({
             align="center"
             bg={"rgba(70,55,55, 1)"}
             px={6}
+            py={6}
             overflow="hidden"
             w="full"
           >
@@ -149,21 +144,21 @@ const AboutSection = ({
                   <Carousel show={show}>
                     {item.slider.map((slide, idx) => {
                       return (
-                        <LinkOverlay
-                          key={slide.alt + idx}
+                        <Link
+                          key={slide.id + idx}
                           title={
                             slide.featured_media.alt
                               ? slide.featured_media.alt
                               : ""
                           }
-                          href={slide.link}
+                          link={slide.acf.pub_link}
                           pos={"relative"}
-                          w={`calc(100% / ${show} )`}
+                          w={`calc(100% / ${show} - 5% )`}
                           _before={{
                             content: `''`,
                             position: "absolute",
                             top: 0,
-                            left: "21px",
+                            left: "unset",
                             width: "220px",
                             height: "280px",
                             borderRadius: "15px",
@@ -196,7 +191,7 @@ const AboutSection = ({
                             objectFit="cover"
                             style={{ width: "220px", height: "280px" }}
                           />
-                        </LinkOverlay>
+                        </Link>
                       );
                     })}
                   </Carousel>

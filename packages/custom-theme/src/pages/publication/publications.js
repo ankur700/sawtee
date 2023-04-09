@@ -22,11 +22,12 @@ import React, { useState, useEffect } from "react";
 import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import { formatCPTData } from "../../components/helpers";
+import { formatCPTData, formatPostData } from "../../components/helpers";
 
-const Publications = ({ state, categories }) => {
+const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
+  const newsData = state.source.get("/sawtee-in-media");
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
 
@@ -34,26 +35,44 @@ const Publications = ({ state, categories }) => {
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
   let [pubArray, setPubArray] = useState([]);
+  const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3]);
 
+  // get news for sidebar
+
+  React.useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
+
   // get publications
   useEffect(() => {
-    let array = [];
+    let publicationsArray = [];
+    let newsArray = [];
+    let PubArray = [];
+
     if (data.isReady) {
       data.items.map((item) => {
         const post = state.source[item.type][item.id];
-        array.push(formatCPTData(state, post, categories));
+        publicationsArray.push(formatCPTData(state, post, categories));
       });
     }
-    if (array.length > 0) {
-      setPublications([...array]);
+    if (publicationsArray.length > 0) {
+      setPublications(publicationsArray);
     }
-  }, [data]);
 
-  // get publication categories and publication array for later manipulation
-  useEffect(() => {
-    let array = [];
+    if (newsData.isReady) {
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        // console.log(post);
+        newsArray.push(formatPostData(state, post, categories));
+      });
+    }
+
+    if (newsArray.length > 0) {
+      setNews(newsArray);
+    }
+
     if (categories) {
       setPublicationCategories([
         ...categories.filter((cat) => cat.parent === 5),
@@ -65,7 +84,7 @@ const Publications = ({ state, categories }) => {
             Object.keys(state.source.category).includes(cat.id.toString())
         )
         .forEach((item) => {
-          array.push({
+          PubArray.push({
             id: item.id,
             name: item.name,
             link: item.link,
@@ -74,10 +93,12 @@ const Publications = ({ state, categories }) => {
         });
     }
 
-    if (array.length > 0) {
-      setPubArray([...array]);
+    if (PubArray.length > 0) {
+      setPubArray(PubArray);
     }
-  }, [categories]);
+  }, [data, newsData.isReady, categories]);
+
+  // get publication categories and publication array for later manipulation
 
   // Get the slider Data with slides
   useEffect(() => {
@@ -206,10 +227,7 @@ const Publications = ({ state, categories }) => {
             <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
               <Sidebar>
                 <GlassBox py="4" px="8" rounded="2xl">
-                  <SawteeInMediaWidget
-                    categories={categories}
-                    linkColor={linkColor}
-                  />
+                  <SawteeInMediaWidget news={news} linkColor={linkColor} />
                 </GlassBox>
                 {/* <GlassBox
                 rounded="2xl"

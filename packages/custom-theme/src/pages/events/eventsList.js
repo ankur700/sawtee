@@ -37,12 +37,11 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
     if (array.length > 0) {
       return [...array];
     }
-  }, [data, categories]);
-  const { ref, inView } = useInView({ triggerOnce: false });
+  }, [data]);
   return (
-    <VStack spacing={8} w={{ base: "auto", md: "full" }} maxW={"3xl"} ref={ref}>
+    <VStack spacing={8} w={{ base: "auto", md: "full" }} maxW={"3xl"}>
       {events &&
-        events.map((event) => (
+        events.map((event, idx) => (
           <MotionStack
             direction="column"
             spacing={4}
@@ -65,10 +64,10 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
               boxShadow: "none",
             }}
             initial={{ y: 200, opacity: 0 }}
-            animate={{ y: inView ? 0 : 200, opacity: inView ? 1 : 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{
               duration: 0.5,
-              delay: 0.2,
+              delay: 0.2 * (idx + 1),
               type: "spring",
               bounce: 0.4,
             }}
@@ -136,7 +135,6 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
                     {moment(event.publishDate).format(format)}
                   </Text>
                   <HStack
-                    as={Link}
                     spacing={1}
                     p={1}
                     px={2}

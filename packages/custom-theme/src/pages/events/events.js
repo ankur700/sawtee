@@ -17,7 +17,7 @@ import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1.jpg";
 import EventsList from "./eventsList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
@@ -27,13 +27,11 @@ import { formatCPTData } from "../../components/helpers";
 const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-  const sizeValue = useBreakpointValue(["sm", "md", "lg", "huge"]);
-  const [news, setNews] = React.useState([]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const [news, setNews] = useState([]);
   const linkColor = state.theme.colors.linkColor;
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
-
-  const [size, setSize] = React.useState(null);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -41,33 +39,22 @@ const EventsArchive = ({ state, actions, categories }) => {
 
   const newsData = state.source.get("/sawtee-in-media");
 
-  React.useEffect(() => {
+  useEffect(() => {
     let newsArray = [];
     if (newsData.isReady) {
-      if (newsData.isReady) {
-        newsData.items.forEach((item) => {
-          const post = state.source[item.type][item.id];
-          newsArray.push(formatCPTData(state, post, categories));
-        });
-
-        if (newsArray.length > 0) {
-          setNews([...newsArray]);
-        }
-      }
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
     }
-  }, [newsData]);
-
-  React.useEffect(() => {
-    if (sizeValue) {
-      setSize(sizeValue);
+    if (newsArray.length > 0) {
+      setNews(newsArray);
     }
-  }, [sizeValue]);
+  }, [newsData.isReady]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     actions.source.fetch("/sawtee-in-media");
   }, []);
-
-  console.log(news);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -160,9 +147,7 @@ const EventsArchive = ({ state, actions, categories }) => {
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
               <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                {news && (
-                  <SawteeInMediaWidget news={news} linkColor={linkColor} />
-                )}
+                <SawteeInMediaWidget news={news} linkColor={linkColor} />
               </GlassBox>
               <GlassBox
                 rounded="2xl"
