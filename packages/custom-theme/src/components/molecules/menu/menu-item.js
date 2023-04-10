@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import Link from "../../atoms/link";
 
@@ -6,19 +6,25 @@ const MenuItem = ({ index, children, mb, link, ...rest }) => (
   <Box as="li" listStyleType="none" mb={mb} {...rest}>
     <Link
       display="block"
-      color="white"
+      color={useColorModeValue("gray.700", "whiteAlpha.700")}
       role="group"
       pos="relative"
       minH="40px"
       borderBottom="1px solid"
-      borderColor="#ffffff14"
+      borderColor={useColorModeValue("gray.500", "whiteAlpha.500")}
       _hover={{
-        bg: "rgba(236, 164, 25, 0.14)",
+        bg: `${useColorModeValue(
+          "rgba(0, 0, 0, 0.1)",
+          "rgba(255, 255, 255, 0.1)"
+        )}`,
         borderColor: "accent.400",
-        color: "accent.400",
+        color: `{useColorModeValue("primary.700", "accent.400")}`,
       }}
       _focus={{
-        bg: "rgba(236, 164, 25, 0.14)",
+        bg: `${useColorModeValue(
+          "rgba(0, 0, 0, 0.4)",
+          "rgba(255, 255, 255, 0.4)"
+        )}`,
         borderColor: "accent.400",
         color: "accent.400",
       }}
