@@ -112,7 +112,6 @@ const BlogSection = ({ state, actions, linkColor, categories }) => {
                     excerpt={article.excerpt}
                     target={article.link}
                     date={article.publishDate}
-                    author={article.author}
                     linkColor={linkColor}
                   />
                 ) : (
@@ -122,7 +121,7 @@ const BlogSection = ({ state, actions, linkColor, categories }) => {
                     excerpt={article.excerpt}
                     target={article.link}
                     date={article.publishDate}
-                    author={article.author}
+                    // author={article.author}
                     linkColor={linkColor}
                   />
                 )}
