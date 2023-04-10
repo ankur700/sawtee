@@ -25,9 +25,10 @@ const PostHeader = ({
     <Heading
       fontWeight="bold"
       size={"2xl"}
+      fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
       mt="30px"
       mb={{ base: "20px", lg: "32px" }}
-      textTransform="uppercase"
+      textTransform="capitalize"
       dangerouslySetInnerHTML={{ __html: heading }}
     />
     {description && <Text mt={4}>{description}</Text>}

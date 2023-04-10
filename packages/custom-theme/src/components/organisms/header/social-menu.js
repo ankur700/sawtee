@@ -1,4 +1,4 @@
-import { Box, VisuallyHidden } from "@chakra-ui/react";
+import { Box, VisuallyHidden, useColorModeValue } from "@chakra-ui/react";
 import React from "react";
 import { SiteMenu } from "./navigation";
 import {
@@ -23,10 +23,10 @@ export const SocialMenu = ({ menu, ...props }) => (
 
 const SocialMenuItem = ({ icon, label, link, ...props }) => (
   <Box
-    color={label === "youtube" ? "red" : label + ".600"}
+    color={useColorModeValue("gray.800", "whiteAlpha.900")}
     transition="all 0.3s"
     _hover={{
-      color: `${label === "youtube" ? "red" + ".400" : label + ".400"}`,
+      color: `${label === "youtube" ? "red" : label + ".400"}`,
     }}
     as="li"
     listStyleType="none"
