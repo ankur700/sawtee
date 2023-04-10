@@ -123,13 +123,12 @@ const AboutSection = ({
           )}
         </Box>
 
-        {publicationsSlider.length > 1 ? (
+        {publicationsSlider.length > 0 ? (
           <VStack
             spacing={8}
             align="center"
             bg={"rgba(70,55,55, 1)"}
-            px={6}
-            py={6}
+            p={6}
             overflow="hidden"
             w="full"
           >
@@ -201,13 +200,14 @@ const AboutSection = ({
           </VStack>
         ) : (
           <VStack
-            w="full"
-            align="center"
             spacing={8}
-            height={"100%"}
+            align="center"
             bg={"rgba(70,55,55, 1)"}
+            p={6}
+            overflow="hidden"
+            w="full"
           >
-            <Box px={"4"} w="full" pb={3}>
+            <Box px={"4"} pb={3}>
               <Skeleton width="150px" height="30px" marginBlock={8} />
               <Flex
                 mt="3"
@@ -237,7 +237,7 @@ const AboutSection = ({
               </Flex>
             </Box>
 
-            <Box px={"4"} pb={3} w="full">
+            <Box px={"4"} pb={3}>
               <Skeleton width="150px" height="30px" marginBlock={8} />
               <Flex
                 mt="3"
