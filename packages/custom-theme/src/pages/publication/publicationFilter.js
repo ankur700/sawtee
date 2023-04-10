@@ -23,7 +23,12 @@ const PublicationFilter = ({ categories }) => {
         {categories.map(({ name, id, link }) => {
           return (
             <Link link={link} key={id}>
-              <Button colorScheme={"primary"} variant="outline" size="sm">
+              <Button
+                colorScheme={"primary"}
+                color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                variant="outline"
+                size="sm"
+              >
                 {name}
               </Button>
             </Link>

@@ -96,88 +96,82 @@ const ResearchArchive = ({ state, actions, categories }) => {
         >
           <Heading
             fontWeight="bold"
-            size={"3xl"}
+            size={"2xl"}
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
-            textTransform="uppercase"
+            textTransform="capitalize"
           >
             {postData.type}
           </Heading>
         </Box>
       </Box>
       <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
-        size="xl"
+        px={{ base: "32px", md: "0" }}
+        size={size}
+        pt="50px"
+        fontSize={["md", "lg", "xl"]}
       >
-        <Box
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size={size}
-          pt="50px"
-          fontSize={["md", "lg", "xl"]}
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        <Grid
+          templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+          gap="10"
+          pos={"relative"}
         >
-          <Grid
-            templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-            gap="10"
-            pos={"relative"}
-          >
-            <GridItem colSpan={3}>
-              {pages.map(({ key, link, isLast, Wrapper }) => (
-                <Wrapper key={key}>
-                  <ResearchList link={link} />
-                  {isLast && <Divider h="10px" mt="10" />}
-                  <Box w="full" mb="40px" textAlign={"center"}>
-                    {isFetching && <Loading />}
-                    {isLimit && (
-                      <Button onClick={fetchNext}>Load Next Page</Button>
-                    )}
-                    {isError && (
-                      <Button onClick={fetchNext}>
-                        Something failed - Retry
-                      </Button>
-                    )}
-                  </Box>
-                </Wrapper>
-              ))}
-            </GridItem>
-            <GridItem colSpan={2} display={"flex"}>
-              <Sidebar>
-                <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                  <SawteeInMediaWidget news={news} linkColor={linkColor} />
-                </GlassBox>
-                <GlassBox
-                  rounded="2xl"
-                  height="max-content"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  id="twitter-wrapper"
-                >
-                  <TwitterTimeline
-                    handle="sawteenp"
-                    width={"100%"}
-                    height="700px"
-                    maxH={"700px"}
-                    rounded="xl"
-                  />
-                </GlassBox>
-                <GlassBox
-                  py="4"
-                  px="8"
-                  rounded="2xl"
-                  height="max-content"
-                  position={"sticky"}
-                  top={"8.5rem"}
-                >
-                  <SubscriptionCard />
-                </GlassBox>
-              </Sidebar>
-            </GridItem>
-          </Grid>
-          {/* <Pagination mt="56px" /> */}
-        </Box>
+          <GridItem colSpan={3}>
+            {pages.map(({ key, link, isLast, Wrapper }) => (
+              <Wrapper key={key}>
+                <ResearchList link={link} />
+                {isLast && <Divider h="10px" mt="10" />}
+                <Box w="full" mb="40px" textAlign={"center"}>
+                  {isFetching && <Loading />}
+                  {isLimit && (
+                    <Button onClick={fetchNext}>Load Next Page</Button>
+                  )}
+                  {isError && (
+                    <Button onClick={fetchNext}>
+                      Something failed - Retry
+                    </Button>
+                  )}
+                </Box>
+              </Wrapper>
+            ))}
+          </GridItem>
+          <GridItem colSpan={2} display={"flex"}>
+            <Sidebar>
+              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+              </GlassBox>
+              <GlassBox
+                rounded="2xl"
+                height="max-content"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                id="twitter-wrapper"
+              >
+                <TwitterTimeline
+                  handle="sawteenp"
+                  width={"100%"}
+                  height="700px"
+                  maxH={"700px"}
+                  rounded="xl"
+                />
+              </GlassBox>
+              <GlassBox
+                py="4"
+                px="8"
+                rounded="2xl"
+                height="max-content"
+                position={"sticky"}
+                top={"8.5rem"}
+              >
+                <SubscriptionCard />
+              </GlassBox>
+            </Sidebar>
+          </GridItem>
+        </Grid>
+        {/* <Pagination mt="56px" /> */}
       </Section>
     </LightPatternBox>
   );

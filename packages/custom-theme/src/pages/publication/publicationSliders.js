@@ -1,10 +1,12 @@
 // import { connect } from "frontity";
 import {
-  LinkOverlay,
   Stack,
   Text,
   useColorModeValue,
   Image,
+  Box,
+  LinkBox,
+  LinkOverlay,
 } from "@chakra-ui/react";
 import Link from "@frontity/components/link";
 import Carousel from "../../components/molecules/Carousel";
@@ -32,12 +34,10 @@ const PublicationSliders = ({ sliderData, show }) => {
             <Carousel show={show} gap={"10px"}>
               {cat.slides.map((slide, idx) => {
                 return (
-                  <Link
+                  <LinkBox
                     key={slide.alt + idx}
-                    title={sliderData.alt}
-                    href={slide.link}
-                    pos={"relative"}
                     w={`calc(100% / ${show} )`}
+                    pos={"relative"}
                     _before={{
                       content: `''`,
                       position: "absolute",
@@ -56,25 +56,27 @@ const PublicationSliders = ({ sliderData, show }) => {
                       },
                     }}
                   >
-                    <Image
-                      src={slide.src ? slide.src : slide.featured_media.src}
-                      srcSet={
-                        slide.srcSet
-                          ? slide.srcSet
-                          : slide.featured_media.srcSet
-                      }
-                      alt={slide.alt}
-                      title={slide.alt}
-                      rounded="xl"
-                      border={`1px solid`}
-                      borderColor={useColorModeValue(
-                        "gray.900",
-                        "whiteAlpha.900"
-                      )}
-                      objectFit="cover"
-                      style={{ width: "220px", height: "280px" }}
-                    />
-                  </Link>
+                    <LinkOverlay title={sliderData.alt} href={slide.link}>
+                      <Image
+                        src={slide.src ? slide.src : slide.featured_media.src}
+                        srcSet={
+                          slide.srcSet
+                            ? slide.srcSet
+                            : slide.featured_media.srcSet
+                        }
+                        alt={slide.alt}
+                        title={slide.alt}
+                        rounded="xl"
+                        border={`1px solid`}
+                        borderColor={useColorModeValue(
+                          "gray.900",
+                          "whiteAlpha.900"
+                        )}
+                        objectFit="cover"
+                        style={{ width: "220px", height: "280px" }}
+                      />
+                    </LinkOverlay>
+                  </LinkBox>
                 );
               })}
             </Carousel>

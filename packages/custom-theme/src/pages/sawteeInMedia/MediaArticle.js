@@ -16,8 +16,8 @@ const MediaArticle = ({ newsItem, linkColor }) => {
 
   return (
     <Box
-      p={4}
-      _hover={{ bg: useColorModeValue("gray.50", "gray.800") }}
+      p={8}
+      // _hover={{ bg: useColorModeValue("gray.50", "gray.800") }}
       rounded="md"
       border={"1px solid"}
       w="full"
@@ -25,13 +25,14 @@ const MediaArticle = ({ newsItem, linkColor }) => {
     >
       <VStack spacing={2} mb={5} alignItems={"start"}>
         <Heading
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          color={useColorModeValue("gray.700", "whiteAlpha.800")}
           fontSize="xl"
           lineHeight={1.2}
           fontWeight="bold"
           _hover={{ color: linkColor, textDecoration: "underline" }}
           textAlign="left"
           w="100%"
+          mb={4}
         >
           <Link link={link}> {decode(title)}</Link>
         </Heading>
@@ -39,7 +40,7 @@ const MediaArticle = ({ newsItem, linkColor }) => {
         <Text
           fontSize="md"
           noOfLines={3}
-          color={useColorModeValue("gray.500", "gray.200")}
+          color={useColorModeValue("gray.600", "gray.200")}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
       </VStack>
@@ -63,7 +64,7 @@ const MediaArticle = ({ newsItem, linkColor }) => {
                 px="4"
                 py={2}
                 as="a"
-                color={useColorModeValue("gray.700", "gray.100")}
+                color={useColorModeValue("gray.800", "gray.100")}
                 href={publisher.publisher_website}
                 _hover={{ textDecor: "underline" }}
               >
@@ -71,7 +72,7 @@ const MediaArticle = ({ newsItem, linkColor }) => {
               </Tag>
             );
           })}
-        <Text color={useColorModeValue("gray.500", "gray.200")}>
+        <Text color={useColorModeValue("gray.600", "gray.200")}>
           {formatDateWithMoment(publishDate)}
         </Text>
       </HStack>

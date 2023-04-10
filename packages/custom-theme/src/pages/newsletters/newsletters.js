@@ -81,10 +81,11 @@ const NewsletterArchive = ({ state }) => {
         >
           <Heading
             fontWeight="bold"
-            size={"3xl"}
+            size={"2xl"}
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
-            textTransform="uppercase"
+            textTransform="capitalize"
           >
             {postData.type}
           </Heading>

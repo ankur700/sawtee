@@ -11,13 +11,11 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import { formatCPTData, getPostTags } from "../../components/helpers";
+import { formatCPTData } from "../../components/helpers";
 import { HiOutlineNewspaper } from "react-icons/hi";
 
 const ResearchList = ({ state, link, categories }) => {
-  // const [isOpen, setIsOpen] = useState(false);
   const color = state.theme.colors.linkColor;
-  // const toggleOpen = () => setIsOpen(!isOpen);
   const data = state.source.get(link);
   const [researches, setResearches] = useState([]);
 
@@ -70,7 +68,12 @@ const ResearchList = ({ state, link, categories }) => {
             postsSortedByTags(tagitem);
             return (
               <Box zIndex={5} key={tagitem.id}>
-                <Heading fontSize="2xl" fontWeight="600" my={5}>
+                <Heading
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  my={5}
+                  color={useColorModeValue("gray.800", "whiteAlpha.800")}
+                >
                   {tagitem.name}
                 </Heading>
                 <Box
@@ -83,11 +86,12 @@ const ResearchList = ({ state, link, categories }) => {
                   h="100%"
                   textAlign="left"
                   display={"flex"}
+                  boxShadow={"lg"}
                   flexDirection={"column"}
                   alignItems="center"
-                  spacing={4}
+                  gap={4}
                   cursor="pointer"
-                  _hover={{ shadow: "lg" }}
+                  _hover={{ shadow: "md" }}
                 >
                   {tagitem.posts.map((researchItem, idx) => (
                     <ReasearchItem
@@ -99,7 +103,7 @@ const ResearchList = ({ state, link, categories }) => {
                       minH={idx !== tagitem.posts.length - 1 ? 20 : "auto"}
                     >
                       <Text
-                        color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                        color={useColorModeValue("gray.800", "whiteAlpha.800")}
                         fontSize="lg"
                         lineHeight={1.2}
                         fontWeight="bold"
@@ -132,7 +136,7 @@ const ReasearchItem = ({
   children,
   ...props
 }) => {
-  const color = useColorModeValue("gray.700", "gray.500");
+  const color = useColorModeValue("gray.700", "gray.200");
   return (
     <Flex {...props}>
       <Flex flexDir="column" alignItems="center" mr={4} pos="relative">

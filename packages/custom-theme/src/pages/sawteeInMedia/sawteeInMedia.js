@@ -9,42 +9,63 @@ import {
   Box,
   Image,
   Heading,
-  SimpleGrid,
   useColorModeValue,
   Divider,
   Button,
+  useBreakpointValue,
+  Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import GlassBox from "../../components/atoms/glassBox";
-import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData } from "../../components/helpers";
+import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
-const SawteeInMedia = ({ state, categories }) => {
+const SawteeInMedia = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
+  const programeData = state.source.get("/programme");
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
   const linkColor = state.theme.colors.linkColor;
   const [news, setNews] = React.useState([]);
+  const [programs, setPrograms] = React.useState([]);
+
+  const sectionSize = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   React.useEffect(() => {
     let newsArray = [];
-
+    let programesArray = [];
     if (data.isReady) {
       data.items.forEach((item) => {
         const post = state.source[item.type][item.id];
         newsArray.push(formatCPTData(state, post, categories));
       });
     }
-    if (newsArray.length > 0) {
-      setNews([...newsArray]);
+
+    if (programeData.isReady) {
+      programeData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        programesArray.push(formatCPTData(state, post, categories));
+      });
     }
-  }, [data, categories]);
+
+    if (newsArray.length > 0) {
+      setNews(newsArray);
+    }
+
+    if (programesArray.length > 0) {
+      setPrograms(programesArray);
+    }
+  }, [data, programeData.isReady]);
+
+  React.useEffect(() => {
+    actions.source.fetch("/programme");
+  }, []);
 
   if (!data.isReady) return null;
-  console.log(news);
   return (
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
@@ -55,12 +76,12 @@ const SawteeInMedia = ({ state, categories }) => {
         <Box
           as="figure"
           mt={4}
-          height="500px"
+          height="350px"
           _after={{
             display: "block",
             content: '""',
             width: "100%",
-            height: "500px",
+            height: "350px",
             background: "rgba(0,0,0,0.4)",
             position: "absolute",
             top: 0,
@@ -83,33 +104,30 @@ const SawteeInMedia = ({ state, categories }) => {
         >
           <Heading
             fontWeight="bold"
-            size={"3xl"}
+            size={"2xl"}
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
-            textTransform="uppercase"
+            textTransform="capitalize"
           >
             {data.type}
           </Heading>
         </Box>
       </Box>
       <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+        // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
-        size="xl"
+        size={sectionSize}
+        px={{ base: "32px", md: "0" }}
+        pt="50px"
+        fontSize={["md", "lg", "xl"]}
       >
-        <Box
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="xl"
-          pt="50px"
-          fontSize={["md", "lg", "xl"]}
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        <Grid
+          templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+          gap="10"
+          pos={"relative"}
         >
-          <SimpleGrid
-            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
-            spacing="10"
-            pos={"relative"}
-          >
+          <GridItem colSpan={{ base: 1, lg: 3 }}>
             <Box>
               {pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
@@ -129,9 +147,15 @@ const SawteeInMedia = ({ state, categories }) => {
                 </Wrapper>
               ))}
             </Box>
+          </GridItem>
+          <GridItem colSpan={{ base: 1, lg: 2 }}>
             <Sidebar>
               <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+                <SidebarWidget
+                  array={programs}
+                  title={"Programme"}
+                  linkColor={linkColor}
+                />
               </GlassBox>
               <GlassBox
                 rounded="2xl"
@@ -160,9 +184,9 @@ const SawteeInMedia = ({ state, categories }) => {
                 <SubscriptionCard />
               </GlassBox>
             </Sidebar>
-          </SimpleGrid>
-          {/* <Pagination mt="56px" /> */}
-        </Box>
+          </GridItem>
+        </Grid>
+        {/* <Pagination mt="56px" /> */}
       </Section>
     </LightPatternBox>
   );

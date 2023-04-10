@@ -97,6 +97,7 @@ const OurWork = ({ state, actions, libraries }) => {
                   px="10"
                   size="sm"
                   colorScheme={"primary"}
+                  color={useColorModeValue("gray.700", "whiteAlpha.700")}
                   variant="outline"
                 >
                   {theme.name}

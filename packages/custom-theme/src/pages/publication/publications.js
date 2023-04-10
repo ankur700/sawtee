@@ -110,7 +110,7 @@ const Publications = ({ state, actions, categories }) => {
             if (category.id === item.id && item.name !== "Publications") {
               item.slides.push({
                 ...publication.featured_media,
-                link: publication.link,
+                link: publication.acf.pub_link,
               });
             }
           });
@@ -166,7 +166,7 @@ const Publications = ({ state, actions, categories }) => {
             fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
-            textTransform="uppercase"
+            textTransform="capitalize"
           >
             {data.type}
           </Heading>
@@ -229,22 +229,22 @@ const Publications = ({ state, actions, categories }) => {
                 <GlassBox py="4" px="8" rounded="2xl">
                   <SawteeInMediaWidget news={news} linkColor={linkColor} />
                 </GlassBox>
-                {/* <GlassBox
-                rounded="2xl"
-                height="max-content"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                id="twitter-wrapper"
-              >
-                <TwitterTimeline
-                  handle="sawteenp"
-                  width={"100%"}
-                  height="700px"
-                  maxH={"700px"}
-                  rounded="xl"
-                />
-              </GlassBox> */}
+                <GlassBox
+                  rounded="2xl"
+                  height="max-content"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  id="twitter-wrapper"
+                >
+                  <TwitterTimeline
+                    handle="sawteenp"
+                    width={"100%"}
+                    height="700px"
+                    maxH={"700px"}
+                    rounded="xl"
+                  />
+                </GlassBox>
                 <GlassBox
                   py="4"
                   px="8"

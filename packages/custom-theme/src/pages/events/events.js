@@ -89,17 +89,18 @@ const EventsArchive = ({ state, actions, categories }) => {
           textAlign="center"
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "0" }}
-          color={"whiteAlpha.900"}
           position="absolute"
           bottom="15%"
           left="15%"
         >
           <Heading
             fontWeight="bold"
-            size={"3xl"}
+            size={"2xl"}
+            color={"whiteAlpha.900"}
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
-            textTransform="uppercase"
+            textTransform="capitalize"
           >
             {postData.type}
           </Heading>

@@ -1,4 +1,3 @@
-import Loading from "../../components/atoms/loading";
 import MediaArticle from "./MediaArticle";
 import { VStack } from "@chakra-ui/react";
 

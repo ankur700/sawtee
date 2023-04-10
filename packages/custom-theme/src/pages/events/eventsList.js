@@ -60,7 +60,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
             )}
             _hover={{
               border: "1px solid",
-              borderColor: "primary.700",
+              borderColor: `${useColorModeValue("primary.700", "accent.300")}`,
               boxShadow: "none",
             }}
             initial={{ y: 200, opacity: 0 }}
@@ -114,7 +114,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
                 </Heading>
                 <Text
                   as="div"
-                  fontSize={{ base: "sm", md: "md" }}
+                  fontSize={{ base: "sm", lg: "md" }}
                   color={useColorModeValue("gray.500", "gray.300")}
                   noOfLines={2}
                   lineHeight="normal"
