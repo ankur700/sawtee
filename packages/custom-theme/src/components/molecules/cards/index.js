@@ -118,7 +118,7 @@ export const TopImageCard = (props) => {
         </Text>
         <Text
           mt={2}
-          fontSize={"sm"}
+          fontSize={{ base: "sm", lg: "md" }}
           noOfLines={3}
           color={useColorModeValue("gray.600", "whiteAlpha.600")}
           dangerouslySetInnerHTML={{
@@ -168,7 +168,7 @@ export const NoImageCard = (props) => {
 
       <Box>
         <Text
-          fontSize={{ base: "sm", md: "md", lg: "md" }}
+          fontSize={{ base: "sm", md: "md", lg: "lg" }}
           color={useColorModeValue("gray.700", "whiteAlpha.700")}
           fontWeight="bold"
           lineHeight={"normal"}
@@ -189,14 +189,14 @@ export const NoImageCard = (props) => {
             color: "whiteAlpha.600",
           }}
           noOfLines={2}
-          fontSize={"sm"}
+          fontSize={{ base: "sm", lg: "md" }}
           dangerouslySetInnerHTML={{
             __html: excerpt ? excerpt : defaultValues.excerpt,
           }}
         />
       </Box>
 
-      {/* <Flex justifyContent="space-between" alignItems="center" mt={4}>
+      <Flex justifyContent="space-between" alignItems="center" mt={4}>
         {author && (
           <Show above="md">
             <Flex alignItems="center">
@@ -221,7 +221,7 @@ export const NoImageCard = (props) => {
         >
           {date ? formatDateWithMoment(date) : defaultValues.date}
         </Box>
-      </Flex> */}
+      </Flex>
     </LinkBox>
   );
 };
