@@ -84,6 +84,13 @@ const customTheme = {
       closeSearchModal: ({ state }) => {
         state.theme.isSearchModalOpen = false;
       },
+
+      beforeSSR: async ({ actions }) => {
+        await actions.source.fetch("/publications");
+        await actions.source.fetch("/sawtee-in-media");
+        await actions.source.fetch("/featured-events");
+        await actions.source.fetch("/categories");
+      },
     },
   },
   libraries: {
