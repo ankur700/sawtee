@@ -69,12 +69,7 @@ const Theme = ({ state, actions }) => {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        {/* <script src="https://unpkg.com/aos@next/dist/aos.js"></script> */}
-        <script
-          async
-          src="https://platform.twitter.com/widgets.js"
-          charset="utf-8"
-        ></script>
+
       </Head>
       {/* Accessibility: Provides ability to skip to main content */}
       <SkipLink as="a" href="#main">
