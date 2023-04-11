@@ -24,7 +24,7 @@ import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData, formatPostData } from "../../components/helpers";
 
-const Publications = ({ state, actions, categories }) => {
+const Publications = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/sawtee-in-media");
@@ -38,12 +38,6 @@ const Publications = ({ state, actions, categories }) => {
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3]);
-
-  // get news for sidebar
-
-  React.useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
-  }, []);
 
   // get publications
   useEffect(() => {
@@ -96,7 +90,7 @@ const Publications = ({ state, actions, categories }) => {
     if (PubArray.length > 0) {
       setPubArray(PubArray);
     }
-  }, [data, newsData.isReady, categories]);
+  }, [data, newsData, categories]);
 
   // get publication categories and publication array for later manipulation
 

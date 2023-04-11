@@ -29,13 +29,9 @@ const CustomGrid = styled(Grid)`
   }
 `;
 
-const BlogSection = ({ state, actions, linkColor, categories }) => {
+const BlogSection = ({ state, linkColor, categories }) => {
   const eventsData = state.source.get("/featured-events");
   const [eventsList, setEvetnsList] = useState([]);
-
-  useEffect(() => {
-    actions.source.fetch("/featured-events");
-  }, []);
 
   useEffect(() => {
     if (eventsData.isReady) {
@@ -49,7 +45,7 @@ const BlogSection = ({ state, actions, linkColor, categories }) => {
         setEvetnsList([...eventsArray]);
       }
     }
-  }, [eventsData.isReady]);
+  }, [eventsData]);
 
   const media = React.useMemo(() => {
     if (eventsList.length > 0) {
@@ -86,7 +82,7 @@ const BlogSection = ({ state, actions, linkColor, categories }) => {
               px={["4", "6", "8"]}
               link={
                 eventsList[0]
-                  ? `/category/` + eventsList[0].categories[0].name
+                  ? `/category/` + eventsList[0].categories[0].slug
                   : "/category/events"
               }
               text={"View All"}

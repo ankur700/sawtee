@@ -24,7 +24,7 @@ import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 
-const ResearchArchive = ({ state, actions, categories }) => {
+const ResearchArchive = ({ state, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
@@ -46,11 +46,7 @@ const ResearchArchive = ({ state, actions, categories }) => {
     if (newsArray.length > 0) {
       setNews(newsArray);
     }
-  }, [newsData.isReady]);
-
-  React.useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
-  }, []);
+  }, [newsData]);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits

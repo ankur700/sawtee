@@ -46,7 +46,8 @@ const ResearchList = ({ state, link, categories }) => {
       });
     });
     if (array.length > 0) {
-      return [...array.sort((a, b) => a - b)];
+      console.log(array);
+      return [...array.sort((a, b) => a.id - b.id)];
     }
   }, [researches]);
 

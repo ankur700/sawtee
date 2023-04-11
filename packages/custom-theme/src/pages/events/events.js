@@ -50,11 +50,7 @@ const EventsArchive = ({ state, actions, categories }) => {
     if (newsArray.length > 0) {
       setNews(newsArray);
     }
-  }, [newsData.isReady]);
-
-  useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
-  }, []);
+  }, [newsData]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -156,7 +152,6 @@ const EventsArchive = ({ state, actions, categories }) => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
-                id="twitter-wrapper"
               >
                 <TwitterTimeline
                   handle="sawteenp"

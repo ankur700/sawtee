@@ -12,6 +12,7 @@ import {
   LinkOverlay,
   Image,
   useColorModeValue,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import {
@@ -31,11 +32,11 @@ const AboutSection = ({
   const publicationsData = state.source.get("/publications");
   const [publications, setPublications] = useState([]);
   const [publicationsSlider, setPublicationsSlider] = useState([]);
-  const show = getBreakpointValue({ base: 1, md: 2, xl: 3 }, 3, true);
+  const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
-  useEffect(() => {
-    actions.source.fetch("/publications");
-  }, []);
+  // useEffect(() => {
+  //   actions.source.fetch("/publications");
+  // }, []);
 
   useEffect(() => {
     let array = [];
@@ -47,9 +48,9 @@ const AboutSection = ({
     }
 
     if (array.length > 0) {
-      setPublications([...array]);
+      setPublications(array);
     }
-  }, [publicationsData.isReady]);
+  }, [publicationsData]);
 
   useEffect(() => {
     let array1 = [];
@@ -83,7 +84,7 @@ const AboutSection = ({
         },
       ]);
     }
-  }, [publications]);
+  }, [publications, Publication_categories]);
 
   return (
     <Section width="full" overflow="hidden" id="about-section" minH={80}>
@@ -203,7 +204,7 @@ const AboutSection = ({
             spacing={8}
             align="center"
             bg={"rgba(70,55,55, 1)"}
-            p={6}
+            padding={6}
             overflow="hidden"
             w="full"
           >
