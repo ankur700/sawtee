@@ -23,7 +23,7 @@ import SkipLink from "./styles/skip-link";
 
 const config = {
   initialColorMode: "light",
-  useSystemColorMode: true,
+  useSystemColorMode: false,
 };
 
 // Theme is the root React component of our theme. The one we will export
@@ -69,7 +69,7 @@ const Theme = ({ state, actions }) => {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
-
+        <script async src="https://platform.twitter.com/widgets.js"></script>
       </Head>
       {/* Accessibility: Provides ability to skip to main content */}
       <SkipLink as="a" href="#main">

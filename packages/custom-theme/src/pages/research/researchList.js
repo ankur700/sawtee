@@ -90,7 +90,6 @@ const ResearchList = ({ state, link, categories }) => {
                   boxShadow={"lg"}
                   flexDirection={"column"}
                   alignItems="center"
-                  gap={4}
                   cursor="pointer"
                   _hover={{ shadow: "md" }}
                 >

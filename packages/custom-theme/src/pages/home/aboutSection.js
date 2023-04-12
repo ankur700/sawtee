@@ -9,26 +9,16 @@ import {
   Flex,
   SimpleGrid,
   VStack,
-  LinkOverlay,
   Image,
   useColorModeValue,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import {
-  getBreakpointValue,
-  getPublicationSliders,
-} from "../../components/helpers";
+import { getPublicationSliders } from "../../components/helpers";
 import Carousel from "../../components/molecules/Carousel";
 import Link from "../../components/atoms/link";
 
-const AboutSection = ({
-  state,
-  actions,
-  intro,
-  categories,
-  Publication_categories,
-}) => {
+const AboutSection = ({ state, intro, categories, Publication_categories }) => {
   const publicationsData = state.source.get("/publications");
   const [publications, setPublications] = useState([]);
   const [publicationsSlider, setPublicationsSlider] = useState([]);

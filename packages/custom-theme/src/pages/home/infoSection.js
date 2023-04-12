@@ -30,10 +30,8 @@ const InfoSection = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        id="twitter-wrapper"
-        bg="transparent"
       >
-        <TwitterTimeline height="700px" width="100%" handle="sawteenp" />
+        <TwitterTimeline height="700" width="100" handle="sawteenp" />
       </GlassBox>
     </Section>
   );

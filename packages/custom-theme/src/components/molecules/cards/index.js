@@ -214,13 +214,13 @@ export const NoImageCard = (props) => {
             </Flex>
           </Show>
         )}
-        <Box
+        {/* <Box
           as="time"
           fontSize="sm"
           color={useColorModeValue("gray.600", "whiteAlpha.600")}
         >
           {date ? formatDateWithMoment(date) : defaultValues.date}
-        </Box>
+        </Box> */}
       </Flex>
     </LinkBox>
   );

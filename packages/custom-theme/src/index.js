@@ -1,6 +1,7 @@
 import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
+import menuHandler from "./components/handlers/menu-handler";
 // import { theme } from "@chakra-ui/react";
 
 const customTheme = {
@@ -85,11 +86,12 @@ const customTheme = {
         state.theme.isSearchModalOpen = false;
       },
 
-      beforeSSR: async ({ actions }) => {
+      beforeSSR: async ({ state, actions }) => {
         await actions.source.fetch("/publications");
         await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("/featured-events");
         await actions.source.fetch("/categories");
+        // await actions.source.fetch(`/menu/${state.theme.menuUrl}/`);
       },
     },
   },
@@ -99,6 +101,9 @@ const customTheme = {
       // inside the content HTML. You can add your own processors too.
       processors: [image, ...processors],
     },
+    // source: {
+    //   handlers: [menuHandler],
+    // },
   },
 };
 
