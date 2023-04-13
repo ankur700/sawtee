@@ -30,7 +30,7 @@ export const PostCategories = ({
       : categories;
 
   return (
-    <Flex flexWrap="wrap" w="max-content" mt="12px" {...props}>
+    <Flex flexWrap="wrap" w="full" mt="12px" {...props}>
       {limitCategories.map((category) => (
         <PostCategory key={category.id} mr="6px" mb="6px">
           <Link

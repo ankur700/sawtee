@@ -1,15 +1,11 @@
 import image from "@frontity/html2react/processors/image";
 import link from "@frontity/html2react/processors/link";
-// import Theme from "./packages/custom-theme/src/components";
+import iframe from "@frontity/html2react/processors/iframe";
 
 const settings = {
   name: "sawtee-frontend",
-  // roots: {
-  //   theme: Theme,
-  // },
   state: {
     frontity: {
-      url: "https://sawtee.ankursingh.com.np/",
       title: "SAWTEE",
       description: "South Asia Watch on Trade, Economics and Environment",
       year: "1997",
@@ -29,7 +25,7 @@ const settings = {
       name: "custom-theme",
       state: {
         theme: {
-          logo: "https://www.sawtee.org/images/logo-sawtee.webp",
+          logo: "https://sawtee.org/images/logo-sawtee.webp",
           // show background pattern
           showBackgroundPattern: false,
           // show social links
@@ -272,7 +268,7 @@ const settings = {
             headerBg: "white",
             footerBg: "#006181",
             bodyBg: {
-              light: "rgba(0, 0, 0, 0.06)",
+              light: "rgba(255 255 255 / 1)",
               dark: "rgba(35, 39, 47, 0.8)",
             },
             linkColor: "rgb(8 126 164/1)",
@@ -290,7 +286,7 @@ const settings = {
             showOnPost: true,
           },
 
-          autoPreFetch: "hover",
+          autoPreFetch: "all",
           fontSets: "us-ascii",
         },
       },
@@ -299,9 +295,21 @@ const settings = {
       name: "@frontity/wp-source",
       state: {
         source: {
-          url: "https://sawtee.ankursingh.com.np/",
+          url: "https://sawtee.org/backend/",
           homepage: "home",
           postsPage: "blog",
+          params: {
+            type: [
+              "publications",
+              "featured-events",
+              "research",
+              "programme",
+              "newsletter",
+              "sawtee-in-media",
+            ],
+            orderBy: "menu-order",
+            order: "asc",
+          },
           postTypes: [
             {
               type: "featured-events",
@@ -319,9 +327,19 @@ const settings = {
               archive: "/sawtee-in-media",
             },
             {
-              type: "programmes",
-              endpoint: "programmes",
-              archive: "/programmes",
+              type: "programme",
+              endpoint: "programme",
+              archive: "/programme",
+            },
+            {
+              type: "newsletters",
+              endpoint: "newsletters",
+              archive: "/newsletters",
+            },
+            {
+              type: "research",
+              endpoint: "research",
+              archive: "/research",
             },
           ],
         },
@@ -338,7 +356,7 @@ const settings = {
        * and internal link inside the content HTML.
        * You can add your own processors too.
        */
-      processors: [image, link],
+      processors: [image, link, iframe],
     },
   },
 };

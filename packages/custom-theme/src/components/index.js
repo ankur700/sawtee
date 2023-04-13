@@ -1,29 +1,34 @@
-import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { connect, Global, Head } from "frontity";
+import { Box, ChakraProvider, ScaleFade, extendTheme } from "@chakra-ui/react";
 import Switch from "@frontity/components/switch";
-import React from "react";
-import SkipLink from "./styles/skip-link";
+import "focus-visible/dist/focus-visible";
+import { Global, Head, connect } from "frontity";
+import { useEffect, useMemo } from "react";
+import useSWR from "swr";
+import HomeArchive from "../components/organisms/archive/home-archive";
+import Post from "../components/organisms/post/post";
+import KnowUs from "../pages/KnowUs";
+import OurWork from "../pages/OurWork";
+import Home from "../pages/home";
+import Loading from "./atoms/loading";
+import Page404 from "./atoms/page404";
+import PageTitle from "./atoms/pageTitle";
+import { fetcher } from "./helpers";
+import SearchResults from "./molecules/search";
 import Archive from "./organisms/archive";
 import Footer from "./organisms/footer";
 import Header from "./organisms/header";
-import Loading from "./atoms/loading";
-import Page404 from "./atoms/page404";
-import SearchResults from "./molecules/search";
-import PageTitle from "./atoms/pageTitle";
 import FontFace from "./styles/font-face";
-import Home from "../pages/home";
-import OurWork from "../pages/OurWork";
-import KnowUs from "../pages/KnowUs";
-import Page from "../components/organisms/page";
 import globalStyles from "./styles/global-styles";
-import { Post } from "./organisms/page/post-item";
-import "focus-visible/dist/focus-visible";
+import SkipLink from "./styles/skip-link";
 
+const config = {
+  initialColorMode: "light",
+  useSystemColorMode: false,
+};
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
-const Theme = ({ state }) => {
-  // Get information about the current URL.
+const Theme = ({ state, actions }) => {
   const data = state.source.get(state.router.link);
 
   const overrides = extendTheme({
@@ -34,10 +39,20 @@ const Theme = ({ state }) => {
     colors: { ...state.theme.colors },
   });
 
-  const config = {
-    initialColorMode: "light",
-    useSystemColorMode: true,
-  };
+  const { data: categoriesData } = useSWR(
+    "https://sawtee.org/backend/wp-json/wp/v2/categories?per_page=25",
+    fetcher
+  );
+
+  const categories = useMemo(() => {
+    if (categoriesData) {
+      return [...categoriesData];
+    }
+  }, [categoriesData]);
+
+  useEffect(() => {
+    actions.source.fetch("/");
+  }, [actions.source]);
 
   return (
     <ChakraProvider resetCSS theme={{ config, ...overrides }}>
@@ -54,11 +69,7 @@ const Theme = ({ state }) => {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <script
-          async
-          src="https://platform.twitter.com/widgets.js"
-          charset="utf-8"
-        ></script>
+        <script async src="https://platform.twitter.com/widgets.js"></script>
       </Head>
       {/* Accessibility: Provides ability to skip to main content */}
       <SkipLink as="a" href="#main">
@@ -68,29 +79,21 @@ const Theme = ({ state }) => {
       <Header />
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
-
-      <Box
-        as="main"
-        mt={{ base: "5.5rem", md: "6.5rem" }}
-        minH="calc(100vh - 6.5rem)"
-      >
-        <Switch>
-          <Loading when={data.isFetching} />
-          <Home when={data.isHome} />
-          <OurWork when={data.route === "/our-work/"} />
-          <KnowUs when={data.route === "/about/"} />
-          <Page when={data.isPage} />
-          <Post
-            when={
-              data.isPostType || data.isPublications || data.isFeaturedEvents
-            }
-          />
-          <SearchResults when={data.isSearch} />
-          <Archive when={data.isArchive || data.route === "/blog/"} />
-          <Page404 when={data.is404} />
-        </Switch>
-      </Box>
-
+      <ScaleFade key={state.router.link} initialScale={0.9} in="true">
+        <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
+          <Switch>
+            <Loading when={data.isFetching} />
+            <Home when={data.isHome} categories={categories} />
+            <KnowUs when={data.route === "/about/"} />
+            <OurWork when={data.route === "/our-work/"} />
+            <Post when={data.isPostType} />
+            <SearchResults when={data.isSearch} />
+            <HomeArchive when={data.route === "/blog"} />
+            <Archive when={data.isArchive} categories={categories} />
+            <Page404 when={data.is404} />
+          </Switch>
+        </Box>
+      </ScaleFade>
       <Footer />
     </ChakraProvider>
   );

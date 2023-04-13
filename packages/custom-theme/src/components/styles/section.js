@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { Box } from "@chakra-ui/react";
 
 const sizes = {
@@ -7,13 +7,13 @@ const sizes = {
   md: "750px",
   lg: "1150px",
   huge: "1550px",
-  max: "2560px"
+  max: "2560px",
 };
 
 /**
  * @param {React.ComponentProps<typeof Box>} props
  */
 const Section = ({ size = "md", ...props }) => (
-  <Box width="92%" mx="auto" maxW={sizes[size]} {...props} />
+  <Box as="section" width="92%" mx="auto" maxW={sizes[size]} {...props} />
 );
 export default Section;

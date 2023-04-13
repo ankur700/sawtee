@@ -13,7 +13,7 @@ import {
   LinkBox,
   LinkOverlay,
 } from "@chakra-ui/react";
-import { connect } from "frontity";
+import { connect, decode } from "frontity";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
 import Sidebar from "./sidebar";
@@ -151,6 +151,7 @@ const MediaArticleCard = ({
       _hover={{ bg: useColorModeValue("gray.100", "gray.800") }}
       rounded="md"
       border={"1px solid"}
+      w="full"
       borderColor={useColorModeValue("gray.800", "whiteAlpha.800")}
     >
       <VStack spacing={2} mb={5} alignItems={"start"}>
@@ -162,7 +163,7 @@ const MediaArticleCard = ({
             fontWeight="bold"
             w="100%"
           >
-            {title}
+            {decode(title)}
           </chakra.h1>
         </LinkOverlay>
         <Text

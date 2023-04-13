@@ -1,5 +1,6 @@
 import { Button, Box, useColorMode, useColorModeValue } from "@chakra-ui/react";
 import { BsSun, BsMoonStarsFill } from "react-icons/bs";
+import { IoMoon, IoSunny } from "react-icons/io5";
 import { AnimatePresence, motion } from "framer-motion";
 
 const ToggleDiv = motion(Box);
@@ -28,7 +29,7 @@ const ThemeToggle = (props) => {
           variant="ghost"
           {...props}
         >
-          {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
+          {colorMode === "light" ? <IoMoon /> : <IoSunny />}
         </Button>
       </ToggleDiv>
     </AnimatePresence>

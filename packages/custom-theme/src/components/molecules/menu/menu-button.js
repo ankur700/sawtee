@@ -6,10 +6,12 @@ const MenuButton = forwardRef((props, ref) => (
   <Box
     ref={ref}
     as="button"
+    id="hamburger-menu"
     display={{ base: "flex", lg: "none" }}
     alignItems="center"
     justifyContent="center"
     flexShrink="0"
+    aria-label="Menu"
     // mr={{ base: "auto", lg: "0" }}
     ml={{ base: "12px", sm: "0" }}
     {...props}

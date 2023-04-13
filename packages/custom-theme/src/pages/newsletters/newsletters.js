@@ -1,35 +1,31 @@
+import useSWR from "swr";
 import {
   Box,
   SimpleGrid,
+  useColorModeValue,
   Image,
   Heading,
-  useColorModeValue,
+  Divider,
+  Button,
 } from "@chakra-ui/react";
-import useSWR from "swr";
 import { connect } from "frontity";
-import { LightPatternBox } from "../../styles/pattern-box";
-import Section from "../../styles/section";
-import PublicationFilter from "./publicationFilter";
-import Sidebar from "./sidebar";
-import PublicationSliders from "./publicationSliders";
-import { featuredEvents } from "../../../data";
-import Loading from "../../atoms/loading";
-import Publication1 from "../../../assets/publications-1.jpg";
-import { getCPTData, fetcher } from "../../helpers";
+import { LightPatternBox } from "../../components/styles/pattern-box";
+import Section from "../../components/styles/section";
+import Sidebar from "../../components/organisms/archive/sidebar";
+import Loading from "../../components/atoms/loading";
+import { fetcher, getCPTData } from "../../components/helpers";
+import Publication1 from "../../assets/publications-1.jpg";
+import Pagination from "../../components/organisms/archive/pagination";
+import NewsletterList from "./newslettersList";
+import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
-const PublicationsArchive = ({ state, actions, libraries }) => {
-  const data = state.source.get(state.router.link);
-  const posts = Object.values(state.source.publications);
-  const PublicationCategories = Object.keys(state.source.category);
+const NewsletterArchive = ({ state }) => {
+  // Get the data of the current list.
+  const postData = state.source.get(state.router.link);
+
   const linkColor = state.theme.colors.linkColor;
-  const publications = getCPTData(posts, state);
-  const { data: categories } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/categories?per_page=20`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-    }
-  );
+  const { pages, isFetching, isLimit, isError, fetchNext } =
+    useArchiveInfiniteScroll({ limit: 3 });
 
   const { data: news } = useSWR(
     `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
@@ -39,10 +35,14 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
     }
   );
 
-  console.log(categories, news);
-  // Load the post, but only if the data is ready.
-  if (!data.isReady) return null;
+  // console.log(newsletters);
 
+  // Once the post has loaded in the DOM, prefetch both the
+  // home posts and the list component so if the user visits
+  // the home page, everything is ready and it loads instantly.
+
+  // Load the post, but only if the data is ready.
+  if (!postData.isReady) return null;
   return (
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.300", "gray.800")}
@@ -81,18 +81,16 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
         >
           <Heading
             fontWeight="bold"
-            size={"3xl"}
+            size={"2xl"}
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
-            textTransform="uppercase"
+            textTransform="capitalize"
           >
-            {data.type}
+            {postData.type}
           </Heading>
         </Box>
       </Box>
-
-      <PublicationFilter data={categories} linkColor={linkColor} />
-
       <Section
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
@@ -108,30 +106,42 @@ const PublicationsArchive = ({ state, actions, libraries }) => {
         >
           <SimpleGrid
             templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
-            spacing="8"
+            spacing="10"
             pos={"relative"}
           >
-            {!publications.length ? (
-              <Loading />
-            ) : (
-              <PublicationSliders
-                data={publications}
-                categories={categories}
-                PublicationCategories={PublicationCategories}
-              />
-            )}
+            <Box>
+              {pages.map(({ key, link, isLast, Wrapper }) => (
+                <Wrapper key={key}>
+                  <NewsletterList link={link} linkColor={linkColor} />
+                  {isLast && <Divider h="10px" mt="10" />}
+                  <Box w="full" mb="40px" textAlign={"center"}>
+                    {isFetching && <Loading />}
+                    {isLimit && (
+                      <Button onClick={fetchNext}>Load Next Page</Button>
+                    )}
+                    {isError && (
+                      <Button onClick={fetchNext}>
+                        Something failed - Retry
+                      </Button>
+                    )}
+                  </Box>
+                </Wrapper>
+              ))}
+            </Box>
             <Sidebar
               data={news}
               title="Sawtee in Media"
               showSawteeInMedia={true}
               showTwitterTimeline={true}
               showSubscriptionCard={true}
+              linkColor={linkColor}
             />
           </SimpleGrid>
+          {/* <Pagination mt="56px" /> */}
         </Box>
       </Section>
     </LightPatternBox>
   );
 };
 
-export default connect(PublicationsArchive);
+export default connect(NewsletterArchive);

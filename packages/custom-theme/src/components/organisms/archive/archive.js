@@ -1,21 +1,28 @@
 import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
-import { connect } from "frontity";
+import { connect, decode } from "frontity";
 import React from "react";
+import Events from "../../../pages/events";
+import Newsletters from "../../../pages/newsletters";
+import Programme from "../../../pages/programme";
+import Publications from "../../../pages/publication";
+import Research from "../../../pages/research";
+import SawteeInMedia from "../../../pages/sawteeInMedia";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
-import EventsArchive from "./events-archive";
 import Pagination from "./pagination";
-import { decode } from "frontity";
-import PublicationsArchive from "./publications-archive";
-import SawteeInMediaArchive from "./sawtee-in-media-archive";
 
-const Archive = ({ state }) => {
+const Archive = ({ state, categories }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
-  if (data.isFeaturedEventsArchive) return <EventsArchive />;
 
-  if (data.isPublicationsArchive) return <PublicationsArchive />;
-  if (data.isSawteeInMediaArchive) return <SawteeInMediaArchive />;
+  if (data.isFeaturedEventsArchive) return <Events categories={categories} />;
+  if (data.isPublicationsArchive)
+    return <Publications categories={categories} />;
+  if (data.isSawteeInMediaArchive)
+    return <SawteeInMedia categories={categories} />;
+  if (data.isProgrammeArchive) return <Programme categories={categories} />;
+  if (data.isNewslettersArchive) return <Newsletters />;
+  if (data.isResearchArchive) return <Research categories={categories} />;
 
   return (
     <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">

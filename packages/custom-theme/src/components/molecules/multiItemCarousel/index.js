@@ -1,16 +1,14 @@
 import {
-  Flex,
   Box,
   Text,
   Image,
-  useBreakpointValue,
   LinkBox,
   LinkOverlay,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
-import Link from "@frontity/components/link";
+import React, { useState, useEffect } from "react";
 
-const MultiItemCarousel = ({ slides, gap }) => {
+const MultiItemCarousel = ({ slides, noOfItems }) => {
   const arrowStyles = {
     cursor: "pointer",
     pos: "absolute",
@@ -30,95 +28,126 @@ const MultiItemCarousel = ({ slides, gap }) => {
     },
   };
 
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const slidesCount = slides.length;
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [length, setLength] = useState(slides.length);
+
+  // Set the length to match slides children from props
+  useEffect(() => {
+    if (slides) {
+      setLength(slides.length);
+    }
+  }, [slides]);
 
   const prevSlide = () => {
-    setCurrentSlide((s) => (s === 0 ? slidesCount - 1 : s - 1));
+    if (currentIndex < length - show) {
+      setCurrentIndex((prevState) => prevState + 1);
+    }
   };
 
   const nextSlide = () => {
-    setCurrentSlide((s) => (s === slidesCount - 1 ? 0 : s + 1));
-  };
-
-  const carouselStyle = {
-    transition: "all .5s",
-    ml: `calc(-${
-      currentSlide * (100 / useBreakpointValue([1, 2, 3], { ssr: false }))
-    }%)`,
+    if (currentIndex > 0) {
+      setCurrentIndex((prevState) => prevState - 1);
+    }
   };
 
   return (
-    <Flex w="full" overflow="hidden" pos="relative" mb="6" mx="auto">
-      <Flex
-        // maxH={"350px"}
-        rounded="xl"
-        w={[
-          "calc(100% - 10px)",
-          "calc(50% - 20px) ",
-          `calc(${100 / 3}% - 30px)`,
-        ]}
-        gap={gap ? gap : { base: "10px", sm: "20px", md: "30px" }}
-        {...carouselStyle}
-        className="wrapper"
-      >
-        {slides &&
-          slides.map((slide, sid) => {
-            return (
-              <LinkBox
-                key={sid}
-                boxSize="full"
-                shadow="md"
-                w="full"
-                minHeight="310px"
-                flex="none"
-                pos={"relative"}
-                title={slide.alt || slide.title}
-                rounded="xl"
-                ml={sid === 0 ? { base: "10px", md: "15px" } : "0"}
-                _after={{
-                  content: "''",
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "0.75rem",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  bg: "rgba(0,0,0,0.3)",
-                }}
-                _hover={{ _after: { bg: "rgba(0,0,0,0.1)" } }}
-              >
-                <Text
-                  color="white"
-                  fontSize="xs"
-                  p="8px 12px"
-                  pos="absolute"
-                  top="0"
-                  zIndex="1"
-                >
-                  {sid + 1} / {slidesCount}
-                </Text>
-                <LinkOverlay href={slide.link}>
-                  <Image
-                    src={slide.src || slide.slide_image.url}
-                    srcSet={slide.srcSet}
-                    alt={slide.alt || slide.slide_image.title}
-                    boxSize="full"
+    <Box
+      display="flex"
+      className="mic-container"
+      w="full"
+      flexDir={"column"}
+      overflow="hidden"
+      pos="relative"
+      mb="6"
+    >
+      <Box className="mic-wrapper" display="flex" w="100%" pos="relative">
+        <Box
+          rounded="xl"
+          className="mic-content-wrapper"
+          w="100%"
+          height={"100%"}
+        >
+          <Box
+            className="mic-content"
+            display="flex"
+            gap={{ base: "10px", sm: "20px", md: "30px" }}
+            transform={`translateX(-${currentIndex * (100 / noOfItems)}%)`}
+            transition={"all 250ms linear"}
+          >
+            {slides &&
+              slides?.map((slide, sid) => {
+                return (
+                  <LinkBox
+                    key={sid}
+                    shadow="md"
+                    flexShrink={0}
+                    flexGrow={1}
+                    w={`calc(100% / ${noOfItems})`}
+                    flex="none"
+                    pos={"relative"}
+                    title={slide.title || slide.alt}
                     rounded="xl"
-                    // objectFit="cover"
-                  />
-                </LinkOverlay>
-              </LinkBox>
-            );
-          })}
-      </Flex>
-      <Text {...arrowStyles} left="0" onClick={prevSlide} zIndex={1}>
-        &#10094;
-      </Text>
-      <Text {...arrowStyles} right="0" onClick={nextSlide} zIndex={1}>
-        &#10095;
-      </Text>
-    </Flex>
+                    ml={sid === 0 ? { base: "10px", md: "15px" } : "0"}
+                    _after={{
+                      content: "''",
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "0.75rem",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      bg: "rgba(0,0,0,0.3)",
+                    }}
+                    _hover={{ _after: { bg: "rgba(0,0,0,0.1)" } }}
+                  >
+                    <Text
+                      color="white"
+                      fontSize="xs"
+                      p="8px 12px"
+                      pos="absolute"
+                      top="0"
+                      zIndex="1"
+                    >
+                      {sid + 1} / {length}
+                    </Text>
+                    <LinkOverlay href={slide.link}>
+                      <Image
+                        src={slide.src ? slide.src : slide.featured_media.src}
+                        srcSet={
+                          slide.srcSet
+                            ? slide.srcSet
+                            : slide.featured_media.srcSet
+                        }
+                        alt={slide.alt ? slide.alt : ""}
+                        boxSize="full"
+                        title={slide.alt}
+                        rounded="xl"
+                        border={`1px solid`}
+                        borderColor={useColorModeValue(
+                          "gray.900",
+                          "whiteAlpha.900"
+                        )}
+                        objectFit="cover"
+                        style={{ width: "220px", height: "auto" }}
+                      />
+                    </LinkOverlay>
+                  </LinkBox>
+                );
+              })}
+          </Box>
+          {currentIndex > 0 && (
+            <Text {...arrowStyles} left="0" onClick={prevSlide} zIndex={1}>
+              &#10094;
+            </Text>
+          )}
+          {currentIndex < length - noOfItems && (
+            <Text {...arrowStyles} right="0" onClick={nextSlide} zIndex={1}>
+              &#10095;
+            </Text>
+          )}
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

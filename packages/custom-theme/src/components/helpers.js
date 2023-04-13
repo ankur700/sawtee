@@ -1,24 +1,71 @@
 import moment from "moment/moment";
+import { categoriesWidgetsHome } from "./config";
+import { useBreakpointValue } from "@chakra-ui/react";
+const MAXIMUM_POSTS = 5;
 
+export const formatedDate = (date) => moment(date, "YYYYMMDD").fromNow();
+export function formatDateWithMoment(date, format) {
+  const f = format ? format : "MMMM DD YYYY";
+  const formatedDate = moment(date).format(f);
+  return formatedDate;
+}
 
- export const fetcher = async (...args) =>
-   fetch(...args).then((res) => res.json());
+export const getBreakpointValue = (value, fallback, ssr) =>
+  useBreakpointValue(
+    value,
+    { fallback: fallback },
+    {
+      ssr: ssr,
+    }
+  );
 
- export function getSrcSet(media) {
-   const srcset =
-     Object.values(media.media_details.sizes)
-       // Get the url and width of each size.
-       .map((item) => [item.source_url, item.width])
-       // Recude them to a string with the format required by `srcset`.
-       .reduce(
-         (final, current, index, array) =>
-           final.concat(
-             `${current.join(" ")}w${index !== array.length - 1 ? ", " : ""}`
-           ),
-         ""
-       ) || null;
-   return srcset;
- }
+export const getPostsFromCategory = ({ post }, categoryId) =>
+  Object.keys(post)
+    .map((postID) => post[postID])
+    .filter(({ categories }) => categories.includes(parseInt(categoryId)));
+
+export const getPostsGroupedByCategory = (source) => {
+  return Object.values(categoriesWidgetsHome).reduce((acc, categoryId) => {
+    const posts = getPostsFromCategory(source, categoryId).slice(
+      0,
+      MAXIMUM_POSTS
+    );
+    const category = source.category[categoryId];
+    return [...acc, { posts, category }];
+  }, []);
+};
+
+export const fetcher = async (url) => {
+  const res = await fetch(url);
+
+  // If the status code is not in the range 200-299,
+  // we still try to parse and throw it.
+  if (!res.ok) {
+    const error = new Error("An error occurred while fetching the data.");
+    // Attach extra info to the error object.
+    error.info = await res.json();
+    error.status = res.status;
+    throw error;
+  }
+
+  return res.json();
+};
+
+export function getSrcSet(media) {
+  const srcset =
+    Object.values(media.media_details.sizes)
+      // Get the url and width of each size.
+      .map((item) => [item.source_url, item.width])
+      // Recude them to a string with the format required by `srcset`.
+      .reduce(
+        (final, current, index, array) =>
+          final.concat(
+            `${current.join(" ")}w${index !== array.length - 1 ? ", " : ""}`
+          ),
+        ""
+      ) || null;
+  return srcset;
+}
 
 export function getMediaAttributes(state, id) {
   const media = state.source.attachment[id];
@@ -34,36 +81,6 @@ export function getMediaAttributes(state, id) {
   };
 }
 
-// Fetch all categories
-export const fetchCategories = async (url, setState) => {
-  try {
-    const response = await fetch(url);
-    const results = await response.json();
-    let array = [];
-    results.forEach((result) => {
-      array.push(result);
-    });
-    setState([...array]);
-  } catch (error) {
-    console.log("error", error.message);
-  }
-};
-
-// Fetch all post from a specific post type
-export const fetchData = async (url, setState, state, categories) => {
-  try {
-    const response = await fetch(url);
-    const results = await response.json();
-    let array = [];
-    results.forEach((result) => {
-      array.push(formatCPTData(state, result, categories));
-    });
-    setState([...array]);
-  } catch (error) {
-    console.log("error", error.message);
-  }
-};
-
 export function getCPTData(posts, state) {
   let array = [];
   posts.forEach((post) => {
@@ -75,40 +92,17 @@ export function getCPTData(posts, state) {
   return {};
 }
 
-// Fetch media for a single post with postid
-export const fetchMedia = async (id, setState) => {
-  const url = `https://sawtee.ankursingh.com.np/wp-json/wp/v2/media/${id}`;
-
-  try {
-    const response = await fetch(url);
-    const responseData = await response.json();
-    const srcSet = getSrcSet(responseData);
-
-    if (setState) {
-      setState({
-        id,
-        alt: responseData.alt_text,
-        src: responseData.source_url,
-        srcSet,
-      });
-    } else {
-      return {
-        id,
-        alt: responseData.alt_text,
-        src: responseData.source_url,
-        srcSet,
-      };
-    }
-  } catch (error) {
-    console.error("Error fetching media", error.message);
-  }
-};
-
-export function formatDateWithMoment(date, format) {
-  const f = format ? format : "MMMM Do YYYY";
-  const formatedDate = moment(date).format(f);
-  return formatedDate;
+export function getPublicationSliders(state, post, categories) {
+  return {
+    id: post.id,
+    title: post.title.rendered,
+    categories: getPostCategories(state, post, categories),
+    featured_media: getMediaAttributes(state, post.featured_media),
+    acf: post.acf,
+  };
 }
+
+
 
 export function getPostCategories(state, post, categoriesPool) {
   if (categoriesPool) {
@@ -119,18 +113,20 @@ export function getPostCategories(state, post, categoriesPool) {
   }
 
   const allCategories = state.source.category;
-  const categories =
-    post.categories && post.categories.map((catId) => allCategories[catId]);
+  const categories = post.categories?.map((catId) => allCategories[catId]);
   return categories ? categories.filter(Boolean) : [];
 }
 
 export function getPostAuthor(state, post) {
-  return state.source.author[post.author];
+  if (state.source.author[post.author] !== undefined) {
+    return state.source.author[post.author];
+  }
+  return {};
 }
 
 export function getPostTags(state, post) {
   const allTags = state.source.tag;
-  const tags = post.tags && post.tags.map((tagId) => allTags[tagId]);
+  const tags = post.tags?.map((tagId) => allTags[tagId]);
   return tags ? tags.filter(Boolean) : [];
 }
 
@@ -138,6 +134,10 @@ export function getPostData(state) {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   return { ...post, isReady: data.isReady, isPage: data.isPage };
+}
+
+export function truthy(value) {
+  return value !== undefined && value !== null && value.length > 0;
 }
 
 export function formatCPTData(state, post, categories) {
@@ -149,9 +149,10 @@ export function formatCPTData(state, post, categories) {
     categories: getPostCategories(state, post, categories),
     tags: getPostTags(state, post),
     link: post.link,
-    featured_media: post.featured_media,
+    featured_media: getMediaAttributes(state, post.featured_media),
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
+    acf: post.acf,
   };
 }
 
@@ -168,10 +169,6 @@ export function formatPostData(state, post) {
     content: post.content.rendered,
     excerpt: post.excerpt.rendered,
     acf: post.acf,
-    sections: post.acf.sections,
-    memberInstitutions: post.acf.memberInstitutions,
-    sectors: post.acf.sectors,
-    intro: post.acf.intro,
   };
 }
 
@@ -235,7 +232,7 @@ const formatDay = (day) => {
 export function formatDate(date) {
   const jsDate = new Date(date);
   const day = jsDate.getDate();
-  const month = jsDate.getMonth() + 1;
+  const month = jsDate.getMonth();
   const year = jsDate.getFullYear();
 
   return `${formatDay(day)} ${monthNames[month]}, ${year}`;

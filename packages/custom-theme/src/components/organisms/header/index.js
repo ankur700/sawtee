@@ -2,7 +2,6 @@ import { connect } from "frontity";
 import React from "react";
 import MainHeader from "./header";
 import Navigation from "./navigation";
-import SocialNav from "./social-menu";
 import { SearchButton, SearchModal, SearchForm } from "../../molecules/search";
 import ThemeToggle from "./themeToggle";
 import { Box } from "@chakra-ui/react";

@@ -1,10 +1,11 @@
 import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
+import menuHandler from "./components/handlers/menu-handler";
 // import { theme } from "@chakra-ui/react";
 
-const chakraTheme = {
-  name: "chakra-theme",
+const customTheme = {
+  name: "custom-theme",
   roots: {
     // In Frontity, any package can add React components to the site.
     // We use roots for that, scoped to the "theme" namespace.
@@ -64,7 +65,8 @@ const chakraTheme = {
       },
       isSearchModalOpen: false,
       isMobileMenuOpen: false,
-      autoPreFetch: "all",
+      autoPreFetch: "in-view",
+      fontSet: "all",
     },
   },
   // Actions are functions that modify the state or deal with other parts of
@@ -83,6 +85,14 @@ const chakraTheme = {
       closeSearchModal: ({ state }) => {
         state.theme.isSearchModalOpen = false;
       },
+
+      beforeSSR: async ({ state, actions }) => {
+        await actions.source.fetch("/publications");
+        await actions.source.fetch("/sawtee-in-media");
+        await actions.source.fetch("/featured-events");
+        await actions.source.fetch("/categories");
+        // await actions.source.fetch(`/menu/${state.theme.menuUrl}/`);
+      },
     },
   },
   libraries: {
@@ -91,7 +101,10 @@ const chakraTheme = {
       // inside the content HTML. You can add your own processors too.
       processors: [image, ...processors],
     },
+    // source: {
+    //   handlers: [menuHandler],
+    // },
   },
 };
 
-export default chakraTheme;
+export default customTheme;

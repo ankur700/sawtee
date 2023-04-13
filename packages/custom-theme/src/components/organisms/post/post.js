@@ -1,21 +1,19 @@
-import { Box, Divider } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
-import List from "../archive";
+import { formatPostData, getPostData } from "../../helpers";
 import useScrollProgress from "../../hooks/useScrollProgress";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
-import AuthorBio from "./author-bio";
+import List from "../archive";
 import FeaturedMedia from "./featured-media";
 import PostHeader from "./post-header";
 import PostProgressBar from "./post-progressbar";
-import { getPostData, formatPostData } from "../../helpers";
+import ProgramPost from "./ProgramPost";
 
 const Post = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-
-  console.log(postData, post);
 
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
@@ -33,12 +31,20 @@ const Post = ({ state, actions, libraries }) => {
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
+  if (postData.type === "programme") return <ProgramPost />;
+
   return (
-    <LightPatternBox showPattern={state.theme.showBackgroundPattern} ref={ref}>
-      <Box pb={{ base: "2rem", lg: "50px" }}>
+    <LightPatternBox
+      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      showPattern={state.theme.showBackgroundPattern}
+      ref={ref}
+      pb={"40px"}
+    >
+      <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
         <PostHeader
           mt={{ base: "20px", lg: "4rem" }}
-          px={{ base: "32px", md: "0" }}
+          px={{ base: "32px", md: "3rem" }}
+          color={useColorModeValue("gray.600", "whiteAlpha.600")}
           categories={post.categories}
           heading={post.title}
           author={post.author}
@@ -50,7 +56,11 @@ const Post = ({ state, actions, libraries }) => {
       {!postData.isPage && <PostProgressBar value={scroll} />}
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section bg="white" pb="80px" size="lg">
+      <Section
+        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+        pb="80px"
+        size="lg"
+      >
         {post.featured_media != null && (
           <FeaturedMedia id={post.featured_media.id} />
         )}
@@ -62,11 +72,12 @@ const Post = ({ state, actions, libraries }) => {
           px={{ base: "32px", md: "0" }}
           size="md"
           pt="50px"
+          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           <Html2React html={post.content} />
         </Content>
 
-        <Divider borderBottom="1px solid" my="80px" />
+        {/* <Divider borderBottom="1px solid" my="80px" />
 
         <Section px={{ base: "32px", md: "0" }}>
           <AuthorBio
@@ -75,7 +86,7 @@ const Post = ({ state, actions, libraries }) => {
             description={post.author.description}
             link={post.author.link}
           />
-        </Section>
+        </Section> */}
       </Section>
     </LightPatternBox>
   );
@@ -86,7 +97,6 @@ export default connect(Post);
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.
 const Content = styled.div`
-  color: rgba(12, 17, 43, 0.8);
   word-break: break-word;
 
   * {

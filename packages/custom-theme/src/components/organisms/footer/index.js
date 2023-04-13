@@ -10,6 +10,8 @@ import React, { useState } from "react";
 import { SocialMenu } from "../header/social-menu";
 import { connect } from "frontity";
 import Subscription from "./subscription";
+
+
 const FooterSection = (props) => (
   <Box
     as="footer"
@@ -70,7 +72,6 @@ const Widget = ({ item, libraries }) => {
 
 const Footer = ({ state, libraries }) => {
   const { items } = state.source.get("/menus/footer_menu/");
-
   return (
     <FooterSection alignSelf="flex-end">
       <FooterSectionGroup
@@ -91,9 +92,10 @@ const Footer = ({ state, libraries }) => {
             <Link href="#">Address: Tukucha Marg, Baluwatar, Kathmandu</Link>
           </Stack>
         </Stack>
-        {Object.entries(items).map(([key, item]) => {
-          return <Widget key={key} item={item} libraries={libraries} />;
-        })}
+        {items &&
+          Object.entries(items).map(([key, item]) => {
+            return <Widget key={key} item={item} libraries={libraries} />;
+          })}
 
         <Subscription />
       </FooterSectionGroup>

@@ -1,6 +1,6 @@
 import { styled } from "frontity";
 
-const Image = ({ src, alt }) => {
+const Image = ({ src, alt, height, width }) => {
   return <CustomImage src={src} alt={alt} />;
 };
 

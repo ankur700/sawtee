@@ -26,7 +26,7 @@ const SiteHeaderInner = (props) => (
     // align="center"
     width={{ base: "auto", sm: "92%" }}
     mx="auto"
-    height={{ base: "5.5rem", sm: "6.5rem" }}
+    height={"5rem"}
     maxW="1550px"
     {...props}
     justifyContent="space-between"
@@ -36,7 +36,7 @@ const SiteHeaderInner = (props) => (
 
 const Logo = ({ isImage = true, src }) =>
   isImage ? (
-    <Box as="img" src={src} width="120px" />
+    <Box as="img" src={src} alt="Logo Image" width="120px" />
   ) : (
     <Box
       fontSize="2xl"
