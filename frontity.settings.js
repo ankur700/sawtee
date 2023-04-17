@@ -17,7 +17,7 @@ const settings = {
       name: "frontity-menu",
       state: {
         frontityMenu: {
-          menuSlugs: ["primary_menu", "footer_menu"],
+          menuSlugs: ["primary", "footer"],
         },
       },
     },

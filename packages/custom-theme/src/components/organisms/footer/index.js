@@ -71,7 +71,7 @@ const Widget = ({ item, libraries }) => {
 };
 
 const Footer = ({ state, libraries }) => {
-  const { items } = state.source.get("/menus/footer_menu/");
+  const { items } = state.source.get("/menus/footer/");
   return (
     <FooterSection alignSelf="flex-end">
       <FooterSectionGroup
