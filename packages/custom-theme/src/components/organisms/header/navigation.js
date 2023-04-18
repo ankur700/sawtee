@@ -1,9 +1,9 @@
 import { Box, Stack, useColorModeValue } from "@chakra-ui/react";
-import { styled } from "frontity";
+import { connect, styled } from "frontity";
 import React from "react";
 import FrontityLink from "../../atoms/link";
 
-const Link = styled(FrontityLink)`
+const MenuLink = styled(FrontityLink)`
   position: relative;
   text-decoration: none;
   font-weight: bold;
@@ -42,33 +42,46 @@ export const SiteMenu = (props) => (
   />
 );
 
-const SiteMenuItem = ({ link, ...props }) => (
-  <Box
-    as="li"
-    m="0"
-    color={useColorModeValue("rgb(8 126 164/1)", "whiteAlpha.900")}
-    fontSize={{ base: "sm", lg: "md" }}
-    fontWeight="medium"
-    textTransform="uppercase"
-    position="relative"
-    cursor="pointer"
-    letterSpacing={"1px"}
-    {...props}
-  >
-    <Link link={link}>{props.children}</Link>
-  </Box>
-);
+const SiteMenuItem = ({ item, ...props }) => {
+  return (
+    <Box
+      as="li"
+      m="0"
+      color={useColorModeValue("rgb(8 126 164/1)", "whiteAlpha.900")}
+      fontSize={{ base: "sm", lg: "md" }}
+      fontWeight="medium"
+      textTransform="uppercase"
+      position="relative"
+      cursor="pointer"
+      letterSpacing={"1px"}
+      {...props}
+    >
+      <MenuLink textDecoration={"none"} link={item.url}>
+        {item.title}
+      </MenuLink>
+    </Box>
+  );
+};
 
-const Navigation = ({ menu, ...props }) => (
-  <Box as="nav" width="100%" display={{ base: "none", lg: "block" }} {...props}>
-    <SiteMenu>
-      {menu.map((menu) => (
-        <SiteMenuItem key={menu.name} link={menu.href}>
-          {menu.name}
-        </SiteMenuItem>
-      ))}
-    </SiteMenu>
-  </Box>
-);
+const Navigation = ({ state, menu, ...props }) => {
+  const menuItems = state.source.get("/menus/primary/").items;
 
-export default Navigation;
+
+  return (
+    <Box
+      as="nav"
+      width="100%"
+      display={{ base: "none", lg: "block" }}
+      {...props}
+    >
+      <SiteMenu>
+        {menuItems &&
+          Object.entries(menuItems).map(([key, item]) => {
+            return <SiteMenuItem key={key} item={item} />;
+          })}
+      </SiteMenu>
+    </Box>
+  );
+};
+
+export default connect(Navigation);

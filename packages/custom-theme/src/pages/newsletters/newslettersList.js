@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {
   Box,
   Container,
@@ -13,22 +13,22 @@ import { connect } from "frontity";
 import { FaRegNewspaper } from "react-icons/fa";
 import { formatDateWithMoment } from "../../components/helpers";
 import Link from "../../components/atoms/link";
-import { getCPTData } from "../../components/helpers";
 
 const NewsletterList = ({ state, link, linkColor }) => {
   const data = state.source.get(link);
 
-  const posts = () => {
+  const [newsletters, setNewsletters] = useState([]);
+
+  useEffect(() => {
     let array = [];
-    data.items.map(({ type, id }) => {
-      array.push(state.source[type][id]);
+    data.items.map((item) => {
+      const post = state.source[item.type][item.id];
+      array.push(formatCPTData(state, post, categories));
     });
     if (array.length > 0) {
-      return array;
+      setNewsletters([...array]);
     }
-  };
-  const newsletters = getCPTData(posts(), state);
-
+  }, [data]);
   return (
     <>
       {newsletters.map((newsletter) => (

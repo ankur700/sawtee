@@ -1,39 +1,56 @@
-import useSWR from "swr";
 import {
   Box,
-  SimpleGrid,
   useColorModeValue,
   Image,
   Heading,
   Divider,
   Button,
+  Grid,
+  GridItem,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import { fetcher, getCPTData } from "../../components/helpers";
-import Publication1 from "../../assets/publications-1.jpg";
-import Pagination from "../../components/organisms/archive/pagination";
+import Publication1 from "../../assets/publications-1-resized.jpg";
+// import Pagination from "../../components/organisms/archive/pagination";
 import NewsletterList from "./newslettersList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
+import GlassBox from "../../components/atoms/glassBox";
+import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
+import TwitterTimeline from "../../components/atoms/twitterTimeline";
+import SubscriptionCard from "../../components/atoms/subscriptionCard";
+import React from "react";
+import { formatCPTData } from "../../components/helpers";
 
-const NewsletterArchive = ({ state }) => {
+const NewsletterArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
 
   const linkColor = state.theme.colors.linkColor;
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
+  const [news, setNews] = React.useState([]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  React.useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
 
-  const { data: news } = useSWR(
-    `https://sawtee.ankursingh.com.np/wp-json/wp/v2/sawtee-in-media`,
-    fetcher,
-    {
-      revalidateOnFocus: false,
+  const newsData = state.source.get("/sawtee-in-media");
+  React.useEffect(() => {
+    let newsArray = [];
+    if (newsData.isReady) {
+      newsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
     }
-  );
+    if (newsArray.length > 0) {
+      setNews([...newsArray]);
+    }
+  }, [newsData.isReady]);
 
   // console.log(newsletters);
 
@@ -91,26 +108,25 @@ const NewsletterArchive = ({ state }) => {
           </Heading>
         </Box>
       </Box>
-      <Section
+
+      <Box
+        as={Section}
         bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
-        size="xl"
+        size={size ? size : "lg"}
+        px={"32px"}
+        pt="50px"
+        fontSize={["md", "lg", "xl"]}
+        color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
       >
-        <Box
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="xl"
-          pt="50px"
-          fontSize={["md", "lg", "xl"]}
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        <Grid
+          templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+          gap={6}
+          pos={"relative"}
         >
-          <SimpleGrid
-            templateColumns={{ base: "1fr", lg: "3fr 2fr" }}
-            spacing="10"
-            pos={"relative"}
-          >
-            <Box>
-              {pages.map(({ key, link, isLast, Wrapper }) => (
+          <GridItem colSpan={3}>
+            {pages &&
+              pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
                   <NewsletterList link={link} linkColor={linkColor} />
                   {isLast && <Divider h="10px" mt="10" />}
@@ -127,19 +143,44 @@ const NewsletterArchive = ({ state }) => {
                   </Box>
                 </Wrapper>
               ))}
-            </Box>
-            <Sidebar
-              data={news}
-              title="Sawtee in Media"
-              showSawteeInMedia={true}
-              showTwitterTimeline={true}
-              showSubscriptionCard={true}
-              linkColor={linkColor}
-            />
-          </SimpleGrid>
-          {/* <Pagination mt="56px" /> */}
-        </Box>
-      </Section>
+          </GridItem>
+
+          <GridItem colSpan={2}>
+            <Sidebar>
+              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
+                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+              </GlassBox>
+              <GlassBox
+                rounded="2xl"
+                height="max-content"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                id="twitter-wrapper"
+              >
+                <TwitterTimeline
+                  handle="sawteenp"
+                  width={"100%"}
+                  height="700px"
+                  maxH={"700px"}
+                  rounded="xl"
+                />
+              </GlassBox>
+              <GlassBox
+                py="4"
+                px="8"
+                rounded="2xl"
+                height="max-content"
+                position={"sticky"}
+                top={"8.5rem"}
+              >
+                <SubscriptionCard />
+              </GlassBox>
+            </Sidebar>
+          </GridItem>
+        </Grid>
+        {/* <Pagination mt="56px" /> */}
+      </Box>
     </LightPatternBox>
   );
 };

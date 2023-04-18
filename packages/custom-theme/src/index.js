@@ -2,6 +2,7 @@ import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
 import menuHandler from "./components/handlers/menu-handler";
+import CategoriesHandler from "./components/handlers/categories-handler";
 // import { theme } from "@chakra-ui/react";
 
 const customTheme = {
@@ -90,7 +91,7 @@ const customTheme = {
         await actions.source.fetch("/publications");
         await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("/featured-events");
-        await actions.source.fetch("/categories");
+        await actions.source.fetch("all-categories");
         // await actions.source.fetch(`/menu/${state.theme.menuUrl}/`);
       },
     },
@@ -101,9 +102,9 @@ const customTheme = {
       // inside the content HTML. You can add your own processors too.
       processors: [image, ...processors],
     },
-    // source: {
-    //   handlers: [menuHandler],
-    // },
+    source: {
+      handlers: [CategoriesHandler],
+    },
   },
 };
 

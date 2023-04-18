@@ -31,6 +31,8 @@ const config = {
 const Theme = ({ state, actions }) => {
   const data = state.source.get(state.router.link);
 
+  const categories = state.source.data["all-categories/"];
+
   const overrides = extendTheme({
     fonts: {
       heading: "Inter, system-ui, Helvetica, sans-serif",
@@ -39,19 +41,9 @@ const Theme = ({ state, actions }) => {
     colors: { ...state.theme.colors },
   });
 
-  const { data: categoriesData } = useSWR(
-    "https://sawtee.org/backend/wp-json/wp/v2/categories?per_page=25",
-    fetcher
-  );
-
-  const categories = useMemo(() => {
-    if (categoriesData) {
-      return [...categoriesData];
-    }
-  }, [categoriesData]);
-
   useEffect(() => {
     actions.source.fetch("/");
+    actions.source.fetch("all-categories");
   }, [actions.source]);
 
   return (
