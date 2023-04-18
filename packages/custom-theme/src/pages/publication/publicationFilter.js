@@ -20,9 +20,12 @@ const PublicationFilter = ({ categories }) => {
         alignItems={"center"}
         justifyContent="center"
       >
-        {categories.map(({ name, id, link }) => {
+        {categories.map(({ name, id, link, slug }) => {
           return (
-            <Link link={link} key={id}>
+            <Link
+              link={`/category/publications/${slug.toLowerCase()}`}
+              key={id}
+            >
               <Button
                 colorScheme={"primary"}
                 color={useColorModeValue("gray.700", "whiteAlpha.700")}

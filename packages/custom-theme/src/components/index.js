@@ -31,7 +31,7 @@ const config = {
 const Theme = ({ state, actions }) => {
   const data = state.source.get(state.router.link);
 
-  const categories = state.source.data["all-categories/"];
+  const categories = state.source.data["all-categories/"].items;
 
   const overrides = extendTheme({
     fonts: {
