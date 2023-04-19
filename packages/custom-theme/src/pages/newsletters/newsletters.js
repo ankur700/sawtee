@@ -69,12 +69,12 @@ const NewsletterArchive = ({ state, actions, categories }) => {
         <Box
           as="figure"
           mt={4}
-          height="500px"
+          height="350px"
           _after={{
             display: "block",
             content: '""',
             width: "100%",
-            height: "500px",
+            height: "350px",
             background: "rgba(0,0,0,0.4)",
             position: "absolute",
             top: 0,
