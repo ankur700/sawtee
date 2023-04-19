@@ -1,4 +1,4 @@
-import { Box, Text, Stack, Heading, Image } from "@chakra-ui/react";
+import { Box, Text, Heading } from "@chakra-ui/react";
 import Link from "@frontity/components/link";
 import { HiOutlineExternalLink } from "react-icons/hi";
 

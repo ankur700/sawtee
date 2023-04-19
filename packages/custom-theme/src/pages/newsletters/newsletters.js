@@ -15,7 +15,6 @@ import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1-resized.jpg";
-// import Pagination from "../../components/organisms/archive/pagination";
 import NewsletterList from "./newslettersList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import GlassBox from "../../components/atoms/glassBox";
@@ -62,7 +61,7 @@ const NewsletterArchive = ({ state, actions, categories }) => {
   if (!postData.isReady) return null;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >

@@ -4,7 +4,7 @@ import React from "react";
 import Loading from "../../components/atoms/loading";
 import MediaList from "./mediaList";
 import { LightPatternBox } from "../../components/styles/pattern-box";
-import Publication1 from "../../assets/publications-1.jpg";
+import Publication1 from "../../assets/publications-1-resized.jpg";
 import {
   Box,
   Image,
@@ -68,7 +68,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
   if (!data.isReady) return null;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >

@@ -9,7 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import Publication1 from "../../assets/publications-1.jpg";
+import Publication1 from "../../assets/publications-1-resized.jpg";
 import Loading from "../../components/atoms/loading";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -119,7 +119,7 @@ const Publications = ({ state, categories }) => {
   if (!data.isReady) return null;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >

@@ -10,7 +10,6 @@ import { getPostData, formatPostData } from "../../components/helpers";
 import PageSection from "./PageSection";
 import Members from "./Members";
 import GlassBox from "../../components/atoms/glassBox";
-
 const KnowUs = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
@@ -30,20 +29,21 @@ const KnowUs = ({ state, actions, libraries }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
       showPattern={state.theme.showBackgroundPattern}
-      py="50px"
+      pt="0"
     >
-      <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
+      <Box pos="relative">
         {post.featured_media != null && (
           <FeaturedMedia
             mt="0"
+            height={"350px"}
             id={post.featured_media.id}
             _after={{
               display: "block",
               content: '""',
               width: "100%",
-              height: "500px",
+              height: "350px",
               background: "rgba(0,0,0,0.4)",
               position: "absolute",
               top: 0,
@@ -54,41 +54,47 @@ const KnowUs = ({ state, actions, libraries }) => {
           />
         )}
         <PostHeader
-          pt={{ base: "20px", lg: "4rem" }}
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          mt={{ base: "20px", lg: "4rem" }}
+          px={{ base: "32px", md: "0" }}
+          color={"whiteAlpha.900"}
           categories={post.categories}
           heading={post.title}
           author={post.author}
           date={post.publishDate}
           isPage={postData.isPage}
+          position="absolute"
+          bottom="15%"
+          left="15%"
         />
       </Box>
 
       {/* Look at the settings to see if we should include the featured image */}
-      <GlassBox as={Section} mb="50px" border="none" size="lg">
-        {/* Render the content using the Html2React component so the HTML is processed
+      <Section paddingBlock={10} size={"md"}>
+        <GlassBox border="none">
+          {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
-        <Content
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="sm"
-          paddingBlock="50px"
-          fontSize={["sm", "md"]}
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
-        >
-          {sections.map((section) => (
-            <PageSection
-              key={section.title}
-              libraries={libraries}
-              section={section}
+          <Content
+            as={Section}
+            px={{ base: "32px", md: "0" }}
+            size="sm"
+            paddingBlock="50px"
+            fontSize={["sm", "md"]}
+            color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+          >
+            {sections.map((section) => (
+              <PageSection
+                key={section.title}
+                libraries={libraries}
+                section={section}
+              />
+            ))}
+            <Members
+              memberInstitutions={memberInstitutions}
+              linkColor={state.theme.colors.linkColor}
             />
-          ))}
-          <Members
-            memberInstitutions={memberInstitutions}
-            linkColor={state.theme.colors.linkColor}
-          />
-        </Content>
-      </GlassBox>
+          </Content>
+        </GlassBox>
+      </Section>
     </LightPatternBox>
   );
 };

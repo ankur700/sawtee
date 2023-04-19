@@ -1,4 +1,4 @@
-import { Box, useColorMode } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Chart from "../../components/molecules/chart";
 import Section from "../../components/atoms/section";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";

@@ -10,6 +10,7 @@ import {
 import { decode, connect } from "frontity";
 import { formatCPTData, formatedDate } from "../../components/helpers";
 import { useEffect, useState } from "react";
+import PostCategories from "../../components/organisms/post/post-categories";
 
 const ProgrammesList = ({ state, link, libraries, categories }) => {
   const Html2React = libraries.html2react.Component;
@@ -63,7 +64,7 @@ const ProgrammesList = ({ state, link, libraries, categories }) => {
 
                 <Box mt={2}>
                   <Heading
-                    color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                    color={useColorModeValue("gray.800", "whiteAlpha.800")}
                     fontSize="xl"
                     lineHeight={1.2}
                     fontWeight="bold"
@@ -90,9 +91,9 @@ const ProgrammesList = ({ state, link, libraries, categories }) => {
 
                 <Flex justifyContent="space-between" alignItems="center" mt={4}>
                   <Link
-                    color="primary.600"
+                    color="gray.800"
                     _dark={{
-                      color: "primary.400",
+                      color: "whiteAlpha.800",
                     }}
                     href={program.link}
                     _hover={{
@@ -102,28 +103,18 @@ const ProgrammesList = ({ state, link, libraries, categories }) => {
                     Read more
                   </Link>
                   <Box display="flex" gap="4" justifyContent={"space-between"}>
-                    {program.categories
-                      .filter((cat) => cat.name !== "Programme")
-                      .map((category) => {
-                        return (
-                          <Link
-                            key={category.id}
-                            px={3}
-                            py={1}
-                            bg="gray.600"
-                            color="gray.100"
-                            fontSize="sm"
-                            fontWeight="700"
-                            rounded="md"
-                            href={category.link}
-                            _hover={{
-                              bg: "gray.500",
-                            }}
-                          >
-                            {category.name}
-                          </Link>
-                        );
-                      })}
+                    {program.categories && (
+                      <Flex justifyContent="space-between" alignItems="center">
+                        <PostCategories
+                          justify="flex-start"
+                          categories={program.categories}
+                          color={useColorModeValue(
+                            "gray.700",
+                            "whiteAlpha.700"
+                          )}
+                        />
+                      </Flex>
+                    )}
                   </Box>
                 </Flex>
               </Box>

@@ -9,15 +9,40 @@ import {
 } from "@chakra-ui/react";
 import Link from "@frontity/components/link";
 import { connect, decode, styled } from "frontity";
-import React, { useEffect } from "react";
+import React from "react";
 import { formatPostData, getPostData } from "../../components/helpers";
-import List from "../../components/organisms/archive";
 import FeaturedMedia from "../../components/organisms/post/featured-media";
 import PostHeader from "../../components/organisms/post/post-header";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
-import { OurThemes } from "../../data";
 import GlassBox from "../../components/atoms/glassBox";
+
+const OurThemes = [
+  {
+    name: "COVID 19",
+    href: "#",
+  },
+  {
+    name: "Trade and Climate Change",
+    href: "#",
+  },
+  {
+    name: "Theme",
+    href: "#",
+  },
+  {
+    name: "Theme",
+    href: "#",
+  },
+  {
+    name: "Financial Mangement",
+    href: "#",
+  },
+  {
+    name: "Remittance and Development",
+    href: "#",
+  },
+];
 
 const OurWork = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
@@ -26,17 +51,12 @@ const OurWork = ({ state, actions, libraries }) => {
   const intro = post.acf.intro;
   const Html2React = libraries.html2react.Component;
 
-  useEffect(() => {
-    actions.source.fetch("/");
-    List.preload();
-  }, []);
-
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("white", "gray.700")}
+      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -109,7 +129,7 @@ const OurWork = ({ state, actions, libraries }) => {
       </Section>
       ;
       {/* Look at the settings to see if we should include the featured image */}
-      <GlassBox as={Section} mb="50px" border="none" size="lg">
+      <GlassBox as={Section} mb="50px" border="none" size={"lg"}>
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
         <Content

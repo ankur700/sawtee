@@ -10,13 +10,21 @@ const Home = ({ state, categories }) => {
   const slides = post.acf?.slides;
   const linkColor = state.theme.colors.linkColor;
   const introText = post.acf?.about_section_intro;
+  const introImage = post.acf?.about_section_image;
   const Publication_categories = post.acf?.publication_sliders;
+
+  /*
+
+    ? Question
+    TODO: Load webP image in About Section
+  */
 
   return (
     <>
       <CarouselSection data={slides} />
       <AboutSection
         intro={introText}
+        image={introImage.sizes.medium_large}
         categories={categories}
         Publication_categories={Publication_categories}
       />

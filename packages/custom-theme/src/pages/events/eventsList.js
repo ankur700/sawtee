@@ -6,7 +6,6 @@ import {
   Stack,
   Text,
   Icon,
-  Tag,
   Flex,
   useColorModeValue,
   Heading,
@@ -18,8 +17,7 @@ import { motion } from "framer-motion";
 import { GoChevronRight } from "react-icons/go";
 import Link from "../../components/atoms/link";
 import { decode, connect } from "frontity";
-import useInView from "@frontity/hooks/use-in-view";
-import { formatCPTData } from "../../components/helpers";
+import { formatCPTData, formatDateWithMoment } from "../../components/helpers";
 import PostCategories from "../../components/organisms/post/post-categories";
 
 const EventsList = ({ state, link, libraries, linkColor, categories }) => {
@@ -132,7 +130,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
                     fontSize="sm"
                     color={useColorModeValue("gray.500", "gray.300")}
                   >
-                    {moment(event.publishDate).format(format)}
+                    {formatDateWithMoment(event.publishDate, format)}
                   </Text>
                   <HStack
                     spacing={1}

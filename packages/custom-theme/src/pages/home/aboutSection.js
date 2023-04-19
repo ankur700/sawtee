@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import HeroImage from "../../assets/hero-image.jpg";
+// import HeroImage from "../../assets/hero-image.jpg";
 import Title from "../../components/atoms/title";
 import Section from "../../components/atoms/section";
 import {
@@ -17,16 +17,14 @@ import { connect } from "frontity";
 import { getPublicationSliders } from "../../components/helpers";
 import Carousel from "../../components/molecules/Carousel";
 import Link from "../../components/atoms/link";
+import AboutImage from '../../assets/hero-image.jpg';
 
-const AboutSection = ({ state, intro, categories, Publication_categories }) => {
+const AboutSection = ({ state, intro, image, categories, Publication_categories }) => {
   const publicationsData = state.source.get("/publications");
   const [publications, setPublications] = useState([]);
   const [publicationsSlider, setPublicationsSlider] = useState([]);
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
-  // useEffect(() => {
-  //   actions.source.fetch("/publications");
-  // }, []);
 
   useEffect(() => {
     let array = [];
@@ -88,7 +86,7 @@ const AboutSection = ({ state, intro, categories, Publication_categories }) => {
           alignItems="center"
           overflow="hidden"
           minH={"580px"}
-          backgroundImage={`url(${HeroImage})`}
+          backgroundImage={`url(${AboutImage})`}
           backgroundColor="rgba(0,0,0,0.6)"
           backgroundBlendMode="multiply"
           backgroundSize="cover"

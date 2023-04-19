@@ -15,7 +15,7 @@ import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
 import ProgrammesList from "./programmesList";
-import Publication1 from "../../assets/publications-1.jpg";
+import Publication1 from "../../assets/publications-1-resized.jpg";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
@@ -55,7 +55,7 @@ const Programmes = ({ state, actions, categories }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >

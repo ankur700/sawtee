@@ -14,7 +14,7 @@ import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import Publication1 from "../../assets/publications-1.jpg";
+import Publication1 from "../../assets/publications-1-resized.jpg";
 import EventsList from "./eventsList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import React, { useState, useEffect } from "react";
@@ -56,7 +56,7 @@ const EventsArchive = ({ state, actions, categories }) => {
   if (!postData.isReady) return null;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
