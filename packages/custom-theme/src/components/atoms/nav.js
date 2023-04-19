@@ -28,7 +28,7 @@ const Container = styled.nav`
 const Item = styled.div`
   padding: 0;
   margin: 0 16px;
-  color: #fff;
+  color: #f1f1f1;
   font-size: 0.9em;
   box-sizing: border-box;
   flex-shrink: 0;

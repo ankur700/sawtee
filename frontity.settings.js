@@ -253,13 +253,13 @@ const settings = {
               800: "#252b29",
               900: "#0b0f0d",
             },
-            headerBg: "white",
+            headerBg: "#e8f3ff",
             footerBg: "#006181",
             bodyBg: {
-              light: "#e8f3ff",
+              light: "#fff",
               dark: "#343e4b",
             },
-            linkColor: "rgba(8 126 164/1)",
+            linkColor: "rgba(8 ,126, 164, 1)",
           },
           showSearchInHeader: true,
           // State for the menu on mobile
