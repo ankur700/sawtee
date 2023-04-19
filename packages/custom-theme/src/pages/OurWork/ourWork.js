@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Container,
   Heading,
   LinkBox,
   LinkOverlay,
@@ -44,7 +45,7 @@ const OurThemes = [
   },
 ];
 
-const OurWork = ({ state, actions, libraries }) => {
+const OurWork = ({ state, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
   const sectors = post.acf.sectors;
@@ -105,6 +106,7 @@ const OurWork = ({ state, actions, libraries }) => {
           flexWrap="wrap"
           justifyContent="center"
           alignItems="center"
+          boxShadow={"md"}
         >
           {OurThemes.map((theme, index) => {
             return (
@@ -137,13 +139,19 @@ const OurWork = ({ state, actions, libraries }) => {
           px={{ base: "32px", md: "16px" }}
           size="lg"
           paddingBlock="50px"
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.700")}
         >
-          <Box className="intro" pos="relative" mb="20" maxW="3xl" mx="auto">
-            <Text fontSize={["md", "lg"]} textAlign="justify">
-              <Html2React html={intro} />
-            </Text>
-          </Box>
+          <Container
+            // className="intro"
+            pos="relative"
+            mb="20"
+            maxW="2xl"
+            centerContent
+          >
+            <Box textAlign="center">
+              <Html2React html={intro} fontSize={["lg", "2xl"]} />
+            </Box>
+          </Container>
           <Box
             display="flex"
             flexDir={{ base: "column", md: "row" }}
@@ -163,7 +171,7 @@ const OurWork = ({ state, actions, libraries }) => {
                   bgColor={"rgba(0,0,0,0.3)"}
                   backgroundBlendMode="overlay"
                   border="3px solid"
-                  borderColor={useColorModeValue("gray.900", "whiteAlpha.900")}
+                  borderColor={useColorModeValue("gray.700", "whiteAlpha.700")}
                   overflow="hidden"
                   key={title}
                   rounded="xl"
@@ -181,10 +189,7 @@ const OurWork = ({ state, actions, libraries }) => {
                     // height="20%"
                     py={{ base: 4, lg: 8 }}
                   >
-                    <LinkOverlay
-                      color={"whiteAlpha.800 !important"}
-                      href={link}
-                    >
+                    <LinkOverlay color={"whiteAlpha.700"} href={link}>
                       {decode(title)}
                     </LinkOverlay>
                   </Heading>
@@ -218,112 +223,7 @@ export default connect(OurWork);
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.
 const Content = styled(Box)`
-  word-break: break-word;
-
-  * {
-    max-width: 100%;
-  }
-
-  & ul,
-  li {
-    font-size: inherit;
-  }
-
-  ul {
-    padding: 1rem;
-  }
-
-  img {
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  figure {
-    margin: 24px auto;
-    /* next line overrides an inline style of the figure element. */
-    width: 100% !important;
-  }
-
-  iframe {
-    display: block;
-    margin: auto;
-  }
-
-  /* Input fields styles */
-
-  input[type="text"],
-  input[type="email"],
-  input[type="url"],
-  input[type="tel"],
-  input[type="number"],
-  input[type="date"],
-  textarea,
-  select {
-    display: block;
-    padding: 6px 12px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    outline-color: transparent;
-    transition: outline-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    margin: 8px 0 4px 0;
-
-    &:focus {
-      outline-color: #1f38c5;
-    }
-  }
-
-  input[type="submit"] {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid #1f38c5;
-    padding: 12px 36px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #1f38c5;
-  }
-
-  /* WordPress Core Align Classes */
-
   @media (min-width: 420px) {
-    img.aligncenter,
-    img.alignleft,
-    img.alignright {
-      width: auto;
-    }
-
-    .aligncenter {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .alignright {
-      float: right;
-      margin-left: 24px;
-    }
-
-    .alignleft {
-      float: left;
-      margin-right: 24px;
-    }
-
     & .cards {
       & .title {
         color: white !important;

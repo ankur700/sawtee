@@ -14,8 +14,9 @@ import {
   ModalCloseButton,
   useDisclosure,
   Button,
+  Grid,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { SocialMenu } from "../header/social-menu";
 import { connect } from "frontity";
 import Subscription from "./subscription";
@@ -25,7 +26,7 @@ const FooterSection = (props) => (
   <Box
     as="footer"
     pos="relative"
-    bg={useColorModeValue("#f1f1f1", "primary.900")}
+    bg={useColorModeValue("#e8f3ff", "primary.900")}
     color={useColorModeValue("gray.800", "whiteAlpha.800")}
     py={{ base: "32px", lg: "40px" }}
     {...props}
@@ -33,7 +34,7 @@ const FooterSection = (props) => (
 );
 
 const FooterSectionGroup = (props) => (
-  <SimpleGrid
+  <Grid
     // columns={{ base: 1, sm: 2, md: 4 }}
     templateColumns={{ sm: "1fr", md: "1fr 2fr 1fr" }}
     maxWidth="1150px"
@@ -100,7 +101,7 @@ const Widget = ({ item, libraries }) => {
           )}
           maxW={"2xl"}
         >
-          <ModalHeader color={useColorModeValue("gray.700", "whiteAlpha.800")}>
+          <ModalHeader color={useColorModeValue("gray.700", "whiteAlpha.900")}>
             Our Location
           </ModalHeader>
           <ModalCloseButton />
@@ -131,9 +132,6 @@ const Widget = ({ item, libraries }) => {
   );
 };
 
-
-
-
 const Footer = ({ state, libraries }) => {
   const { items } = state.source.get("/menus/footer/");
   return (
@@ -142,8 +140,8 @@ const Footer = ({ state, libraries }) => {
         templateColumns={{ sm: "1fr 1fr", md: "1fr 1fr 1fr 2fr" }}
         spacing={8}
       >
-        <Stack id={"Contact"}>
-          <ListHeader color={useColorModeValue("gray.800", "whiteAlpha.800")}>
+        <Stack colSpan={1} id={"Contact"}>
+          <ListHeader color={useColorModeValue("gray.800", "whiteAlpha.900")}>
             {"Contact Us"}
           </ListHeader>
           <Stack as="ul" alignItems={"start"} listStyleType="none">
@@ -158,14 +156,17 @@ const Footer = ({ state, libraries }) => {
         </Stack>
         {items &&
           Object.entries(items).map(([key, item]) => {
-            return <Widget key={key} item={item} libraries={libraries} />;
+            return (
+              <Widget colSpan={1} key={key} item={item} libraries={libraries} />
+            );
           })}
 
         <Subscription />
       </FooterSectionGroup>
 
-      <FooterSectionGroup columns={{ base: 1, md: 3 }} mt="12">
+      <FooterSectionGroup templateColumns={["1fr", "repeat(3, 1fr)"]} mt="12">
         <FooterSectionItem
+          colSpan={1}
           fontWeight="bold"
           fontFamily="heading"
           textTransform="uppercase"
@@ -173,7 +174,7 @@ const Footer = ({ state, libraries }) => {
           © {new Date().getFullYear()} {state.frontity.title}
         </FooterSectionItem>
 
-        <FooterSectionItem borderColor="accent.400">
+        <FooterSectionItem colSpan={1} borderColor="accent.400">
           <SocialMenu
             ml="0"
             justifyContent="center"
@@ -182,6 +183,7 @@ const Footer = ({ state, libraries }) => {
         </FooterSectionItem>
 
         <FooterSectionItem
+          colSpan={1}
           fontWeight="bold"
           fontFamily="heading"
           textTransform="uppercase"

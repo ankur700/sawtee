@@ -7,6 +7,7 @@ const MenuLink = styled(FrontityLink)`
   position: relative;
   text-decoration: none;
   font-weight: bold;
+  font-family: var(--chakra-fonts-heading)
 
   &:after {
     transition: bottom ease 0.25s, background-color ease 0.25s;
@@ -47,13 +48,12 @@ const SiteMenuItem = ({ item, ...props }) => {
     <Box
       as="li"
       m="0"
-      color={useColorModeValue("rgb(8 126 164/1)", "whiteAlpha.900")}
+      color={useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800")}
       fontSize={{ base: "sm", lg: "md" }}
       fontWeight="medium"
       textTransform="uppercase"
       position="relative"
       cursor="pointer"
-      letterSpacing={"1px"}
       {...props}
     >
       <MenuLink textDecoration={"none"} link={item.url}>

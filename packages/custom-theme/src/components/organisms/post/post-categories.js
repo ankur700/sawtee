@@ -24,10 +24,13 @@ export const PostCategories = ({
   color = "white",
   ...props
 }) => {
-  const limitCategories =
-    categories.length > limit
-      ? categories.filter((cat, idx) => idx < limit && cat.parent !== 0)
-      : categories;
+
+          const limitCategories =
+            categories.length > limit
+              ? categories.filter((cat, idx) => {
+                  idx < limit && cat.parent !== 0;
+                })
+              : categories.filter((cat) => cat.parent !== 0);
 
   return (
     <Flex flexWrap="wrap" w="full" mt="12px" {...props}>

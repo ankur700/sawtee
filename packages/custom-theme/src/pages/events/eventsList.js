@@ -58,7 +58,7 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
             )}
             _hover={{
               border: "1px solid",
-              borderColor: `${useColorModeValue("primary.700", "accent.300")}`,
+              borderColor: "primary.700",
               boxShadow: "none",
             }}
             initial={{ y: 200, opacity: 0 }}

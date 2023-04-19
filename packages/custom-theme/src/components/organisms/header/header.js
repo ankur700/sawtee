@@ -13,7 +13,7 @@ const SiteHeader = (props) => (
     pos="fixed"
     top="0"
     left="0"
-    bg={useColorModeValue("#f1f1f1", "primary.900")}
+    bg={useColorModeValue("#fff", "primary.900")}
     zIndex="90"
     boxShadow="md"
     justifyContent="space-between"
@@ -63,7 +63,7 @@ const SiteLogo = connect(({ state, ...props }) => {
       <Link link="/">
         <Logo isImage={isImage} src={state.theme.logo} />
       </Link>
-      <Text as="b" color={useColorModeValue("primary.700", "white")}>
+      <Text as="b" color={useColorModeValue("primary.700", "whiteAlpha.800")}>
         Estd: {state.frontity.year}
       </Text>
     </Box>
