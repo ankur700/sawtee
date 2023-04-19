@@ -9,7 +9,7 @@ const settings = {
       title: "SAWTEE",
       description: "South Asia Watch on Trade, Economics and Environment",
       year: "1997",
-      logo: "/assets/logo-sawtee.webp",
+      logo: "/assets/webp/logo-sawtee.webp",
     },
   },
   packages: [
@@ -212,23 +212,23 @@ const settings = {
             },
           ],
           colors: {
-            gray: {
-              50: "#e8f3ff",
-              100: "#cfd8e3",
-              200: "#b5bdcc",
-              300: "#97a3b4",
-              400: "#7b899d",
-              500: "#626f84",
-              600: "#4b5768",
-              700: "#343e4b",
-              800: "#1e2530",
-              900: "#070c18",
-            },
-            darkgray: {
-              base: "#6D6D6D",
-              light: "#DCD7CA",
-              lighter: "#F5EFE0",
-            },
+            // gray: {
+            //   50: "#e8f3ff",
+            //   100: "#cfd8e3",
+            //   200: "#b5bdcc",
+            //   300: "#97a3b4",
+            //   400: "#7b899d",
+            //   500: "#626f84",
+            //   600: "#4b5768",
+            //   700: "#343e4b",
+            //   800: "#1e2530",
+            //   900: "#070c18",
+            // },
+            // darkgray: {
+            //   base: "#6D6D6D",
+            //   light: "#DCD7CA",
+            //   lighter: "#F5EFE0",
+            // },
             primary: {
               50: "#e1f8ff",
               100: "#bee4f1",
@@ -271,7 +271,7 @@ const settings = {
               light: "rgba(255 255 255 / 1)",
               dark: "rgba(35, 39, 47, 0.8)",
             },
-            linkColor: "rgb(8 126 164/1)",
+            linkColor: "rgba(8 126 164/1)",
           },
           showSearchInHeader: true,
           // State for the menu on mobile
