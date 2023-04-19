@@ -71,11 +71,7 @@ const BlogSection = ({ state, linkColor, categories }) => {
         justifyContent={{ base: "center", lg: "space-between" }}
         alignItems="center"
       >
-        <Title
-          px={["6", "12", "16"]}
-          py={["4", "6", "8"]}
-          text="Policy Outreach"
-        />
+        <Title py={["4", "6", "8"]} text="Policy Outreach" />
         {eventsList.length > 0 && (
           <Show above="lg">
             <ViewAllBtn

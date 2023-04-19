@@ -25,7 +25,7 @@ const FooterSection = (props) => (
   <Box
     as="footer"
     pos="relative"
-    bg={useColorModeValue("primary.50", "primary.900")}
+    bg={useColorModeValue("#f1f1f1", "primary.900")}
     color={useColorModeValue("gray.800", "whiteAlpha.800")}
     py={{ base: "32px", lg: "40px" }}
     {...props}

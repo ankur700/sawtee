@@ -86,7 +86,6 @@ export const TopImageCard = (props) => {
           <PostCategories
             justify="flex-start"
             categories={categories}
-            color={useColorModeValue("gray.700", "whiteAlpha.700")}
             width="max-content"
           />
 
@@ -94,7 +93,7 @@ export const TopImageCard = (props) => {
             as="time"
             mx={1}
             fontSize="sm"
-            color={useColorModeValue("gray.600", "whiteAlpha.600")}
+            color={useColorModeValue("gray.700", "whiteAlpha.700")}
           >
             {date
               ? formatDateWithMoment(date)
@@ -103,7 +102,7 @@ export const TopImageCard = (props) => {
         </Box>
         <Text
           display="block"
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          color={useColorModeValue("gray.800", "whiteAlpha.900")}
           fontWeight="bold"
           fontSize={{ base: "sm", md: "md", lg: "lg" }}
           mt={2}
@@ -120,7 +119,7 @@ export const TopImageCard = (props) => {
           mt={2}
           fontSize={{ base: "sm", lg: "md" }}
           noOfLines={3}
-          color={useColorModeValue("gray.600", "whiteAlpha.600")}
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
           dangerouslySetInnerHTML={{
             __html: excerpt,
           }}
@@ -153,14 +152,13 @@ export const NoImageCard = (props) => {
         <PostCategories
           justify="flex-start"
           categories={categories}
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
           width="max-content"
         />
 
         <Box
           as="time"
           fontSize="xs"
-          color={useColorModeValue("gray.600", "whiteAlpha.600")}
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
         >
           {date ? formatDateWithMoment(date) : defaultValues.date}
         </Box>
@@ -169,7 +167,7 @@ export const NoImageCard = (props) => {
       <Box>
         <Text
           fontSize={{ base: "sm", md: "md", lg: "lg" }}
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          color={useColorModeValue("gray.800", "whiteAlpha.900")}
           fontWeight="bold"
           lineHeight={"normal"}
           noOfLines={2}
@@ -184,9 +182,9 @@ export const NoImageCard = (props) => {
         </Text>
         <Text
           mt={3}
-          color="gray.600"
+          color="gray.700"
           _dark={{
-            color: "whiteAlpha.600",
+            color: "whiteAlpha.700",
           }}
           noOfLines={2}
           fontSize={{ base: "sm", lg: "md" }}

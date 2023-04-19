@@ -69,7 +69,7 @@ const KnowUs = ({ state, actions, libraries }) => {
       </Box>
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section paddingBlock={10} size={"md"}>
+      <Section paddingBlock={10} size={"lg"}>
         <GlassBox border="none">
           {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
