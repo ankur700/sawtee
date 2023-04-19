@@ -82,17 +82,12 @@ const PageSection = ({ section, libraries }) => {
                       ),
                     }}
                   >
-                    <Text
-                      as="h4"
-                      fontSize={["md", "lg", "xl"]}
-                      flex="1"
-                      textAlign="left"
-                    >
+                    <Text as="h4" flex="1" textAlign="left">
                       {tab_title}
                     </Text>
                     <AccordionIcon />
                   </AccordionButton>
-                  <AccordionPanel fontSize="inherit" px={["5", "10"]}>
+                  <AccordionPanel px={["5", "10"]}>
                     <Html2React html={tab_content} />
                   </AccordionPanel>
                 </AccordionItem>
