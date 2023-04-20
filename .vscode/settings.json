@@ -3,7 +3,7 @@
   "files.restoreUndoStack": false,
   "workbench.editor.restoreViewState": false,
   "workbench.startupEditor": "none",
-  "editor.minimap.enabled": true,
+  "editor.minimap.enabled": false,
   "editor.codeLens": false,
   "editor.formatOnSave": true,
   "cSpell.words": ["Baluwatar", "Tukucha"]

@@ -3,6 +3,7 @@ import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
 import menuHandler from "./components/handlers/menu-handler";
 import CategoriesHandler from "./components/handlers/categories-handler";
+import PostsFromCategory from "./components/handlers/category-posts-handler";
 // import { theme } from "@chakra-ui/react";
 
 const customTheme = {
@@ -92,6 +93,7 @@ const customTheme = {
         await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("/featured-events");
         await actions.source.fetch("all-categories");
+
         // await actions.source.fetch(`/menu/${state.theme.menuUrl}/`);
       },
     },
@@ -103,7 +105,7 @@ const customTheme = {
       processors: [image, ...processors],
     },
     source: {
-      handlers: [CategoriesHandler],
+      handlers: [CategoriesHandler, PostsFromCategory],
     },
   },
 };

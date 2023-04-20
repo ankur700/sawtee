@@ -3,6 +3,7 @@ import CarouselSection from "./carouselSection";
 import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
+import { Newsletter } from "../../components/atoms/newsletter";
 
 const Home = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
@@ -30,6 +31,7 @@ const Home = ({ state, categories }) => {
       />
       <InfoSection />
       <BlogSection linkColor={linkColor} categories={categories} />
+      {/* <Newsletter /> */}
     </>
   );
 };

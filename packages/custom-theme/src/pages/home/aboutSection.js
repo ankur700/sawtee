@@ -19,12 +19,32 @@ import Carousel from "../../components/molecules/Carousel";
 import Link from "../../components/atoms/link";
 import AboutImage from '../../assets/hero-image.jpg';
 
-const AboutSection = ({ state, intro, image, categories, Publication_categories }) => {
+const AboutSection = ({
+  state,
+  actions,
+  libraries,
+  intro,
+  image,
+  categories,
+  Publication_categories,
+}) => {
   const publicationsData = state.source.get("/publications");
   const [publications, setPublications] = useState([]);
   const [publicationsSlider, setPublicationsSlider] = useState([]);
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
+  let slug1 = categories.filter(
+    (cat) => cat.id === Number(Publication_categories[0].category_id)
+  )[0].slug;
 
+  // const { api } = libraries.source;
+
+  // const one = async ()  => await api.get({
+  //   endpoint: 'posts',
+  //   params: {
+  //     _embed: true,
+  //     categories: `${Publication_categories[0].category_id}, ${Publication_categories[0].category_id}}`
+  //   }
+  // })
 
   useEffect(() => {
     let array = [];
@@ -38,41 +58,79 @@ const AboutSection = ({ state, intro, image, categories, Publication_categories 
     if (array.length > 0) {
       setPublications(array);
     }
-  }, [publicationsData]);
+  }, [publicationsData.isReady]);
 
   useEffect(() => {
-    let array1 = [];
-    let array2 = [];
-    if (publications.length > 0) {
-      publications.forEach((publication) => {
-        publication.categories.forEach((category) => {
-          if (category.id == Number(Publication_categories[0].category_id)) {
-            array1.push(publication);
-          }
-          if (category.id == Number(Publication_categories[1].category_id)) {
-            array2.push(publication);
-          }
+    // let array1 = [];
+    // let array2 = [];
+    // if (publications.length > 0) {
+    //   publications.forEach((publication) => {
+    //     publication.categories.forEach((category) => {
+    //       if (category.id == Number(Publication_categories[0].category_id)) {
+    //         array1.push(publication);
+    //       }
+    //       if (category.id == Number(Publication_categories[1].category_id)) {
+    //         array2.push(publication);
+    //       }
+    //     });
+    //   });
+    // }
+
+    // if (array1.length > 0 && array2.length > 0) {
+    //   setPublicationsSlider([
+    //     {
+    //       slider_title: array1[0].categories.filter(
+    //         (cat) => cat.parent !== 0
+    //       )[0].name,
+    //       slider: [...array1],
+    //     },
+    //     {
+    //       slider_title: array2[0].categories.filter(
+    //         (cat) => cat.parent !== 0
+    //       )[0].name,
+    //       slider: [...array2],
+    //     },
+    //   ]);
+    // }
+    let array = [];
+    const categoryName = (id) => categories.filter((cat) => cat.id === id);
+
+    let postArray = [];
+    const posts = (id) => {
+      publications.forEach((pub) => {
+        const cats = pub.categories.filter((category) => {
+          category.id === id;
+        });
+
+        console.log(cats);
+
+        cats.length > 0 ? postArray.push(pub) : null;
+      });
+
+      if (postArray.length > 0) {
+        return postArray;
+      }
+      return [];
+    };
+
+    if (Publication_categories.length > 0) {
+      Publication_categories.forEach((pub_cat) => {
+        let id = Number(pub_cat.category_id);
+
+        array.push({
+          id: id,
+          slider_title: categoryName(id)[0].name,
+          slider: posts(id),
         });
       });
     }
 
-    if (array1.length > 0 && array2.length > 0) {
-      setPublicationsSlider([
-        {
-          slider_title: array1[0].categories.filter(
-            (cat) => cat.parent !== 0
-          )[0].name,
-          slider: [...array1],
-        },
-        {
-          slider_title: array2[0].categories.filter(
-            (cat) => cat.parent !== 0
-          )[0].name,
-          slider: [...array2],
-        },
-      ]);
+    if (array.length > 0) {
+      setPublicationsSlider(array);
     }
-  }, [publications, Publication_categories]);
+  }, [publications, categories, Publication_categories]);
+
+  console.log(publicationsSlider);
 
   return (
     <Section width="full" overflow="hidden" id="about-section" minH={80}>
@@ -121,71 +179,75 @@ const AboutSection = ({ state, intro, image, categories, Publication_categories 
             overflow="hidden"
             w="full"
           >
-            {publicationsSlider.map((item) => {
-              return (
-                <Box key={item.slider_title}>
-                  <Title
-                    py={["3", "6"]}
-                    text={item.slider_title}
-                    color="whiteAlpha.900"
-                  />
-                  <Carousel show={show}>
-                    {item.slider.map((slide, idx) => {
-                      return (
-                        <Link
-                          key={slide.id + idx}
-                          title={
-                            slide.featured_media.alt
-                              ? slide.featured_media.alt
-                              : ""
-                          }
-                          link={slide.acf.pub_link}
-                          pos={"relative"}
-                          w={`calc(100% / ${show} - 5% )`}
-                          _before={{
-                            content: `''`,
-                            position: "absolute",
-                            top: 0,
-                            left: "unset",
-                            width: "220px",
-                            height: "280px",
-                            borderRadius: "15px",
-                            background: "rgba(0,0,0,0.3)",
-                            backgroundBlendMode: "overlay",
-                          }}
-                          _hover={{
-                            _before: {
-                              background: "transparent",
-                            },
-                          }}
-                        >
-                          <Image
-                            src={
-                              slide.src ? slide.src : slide.featured_media.src
-                            }
-                            srcSet={
-                              slide.srcSet
-                                ? slide.srcSet
-                                : slide.featured_media.srcSet
-                            }
-                            alt={slide.alt}
-                            title={slide.alt}
-                            rounded="xl"
-                            border={`1px solid`}
-                            borderColor={useColorModeValue(
-                              "gray.900",
-                              "whiteAlpha.900"
-                            )}
-                            objectFit="cover"
-                            style={{ width: "220px", height: "280px" }}
-                          />
-                        </Link>
-                      );
-                    })}
-                  </Carousel>
-                </Box>
-              );
-            })}
+            {publicationsSlider.length > 0 &&
+              publicationsSlider.map((item) => {
+                return (
+                  <Box key={item.slider_title}>
+                    <Title
+                      py={["3", "6"]}
+                      text={item.slider_title}
+                      color="whiteAlpha.900"
+                    />
+                    <Carousel show={show}>
+                      {item.slider.length > 0 &&
+                        item.slider.map((slide, idx) => {
+                          return (
+                            <Link
+                              key={slide.id + idx}
+                              title={
+                                slide.featured_media.alt
+                                  ? slide.featured_media.alt
+                                  : ""
+                              }
+                              link={slide.acf.pub_link}
+                              pos={"relative"}
+                              w={`calc(100% / ${show} - 5% )`}
+                              _before={{
+                                content: `''`,
+                                position: "absolute",
+                                top: 0,
+                                left: "unset",
+                                width: "220px",
+                                height: "280px",
+                                borderRadius: "15px",
+                                background: "rgba(0,0,0,0.3)",
+                                backgroundBlendMode: "overlay",
+                              }}
+                              _hover={{
+                                _before: {
+                                  background: "transparent",
+                                },
+                              }}
+                            >
+                              <Image
+                                src={
+                                  slide.src
+                                    ? slide.src
+                                    : slide.featured_media.src
+                                }
+                                srcSet={
+                                  slide.srcSet
+                                    ? slide.srcSet
+                                    : slide.featured_media.srcSet
+                                }
+                                alt={slide.alt}
+                                title={slide.alt}
+                                rounded="xl"
+                                border={`1px solid`}
+                                borderColor={useColorModeValue(
+                                  "gray.900",
+                                  "whiteAlpha.900"
+                                )}
+                                objectFit="cover"
+                                style={{ width: "220px", height: "280px" }}
+                              />
+                            </Link>
+                          );
+                        })}
+                    </Carousel>
+                  </Box>
+                );
+              })}
           </VStack>
         ) : (
           <VStack
