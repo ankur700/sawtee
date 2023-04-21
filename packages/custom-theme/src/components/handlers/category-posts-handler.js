@@ -4,6 +4,7 @@ const PostsFromCategory = {
     // Get the page of the current route.
     const { page } = libraries.source.parse(route);
 
+
     // Get the id of the parent category.
     const parentCatResponse = await libraries.source.api.get({
       endpoint: "categories",
@@ -28,7 +29,7 @@ const PostsFromCategory = {
 
     // Get the posts from those categories.
     const postsResponse = await libraries.source.api.get({
-      endpoint: "posts",
+      endpoint: "publications",
       params: { categories: ids.join(","), page, _embed: true },
     });
     const items = await libraries.source.populate({
