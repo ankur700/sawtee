@@ -31,60 +31,78 @@ const AboutSection = ({
 }) => {
   const [publicationsSlider, setPublicationsSlider] = useState([]);
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
-
+  const [sliderCatName, setSliderCatName] = useState([]);
+  const [catOnePosts, setCatOnePosts] = useState([]);
+  const [catTwoPosts, setCatTwoPosts] = useState([]);
 
   const catOne = state.source.get(
     `/category/publications/${Publication_categories[0].category_slug}`
-  ).items;
+  );
 
   const catTwo = state.source.get(
     `/category/publications/${Publication_categories[1].category_slug}`
-  ).items;
+  );
 
   useEffect(() => {
     if (Publication_categories.length > 0) {
-      actions.source.fetch(
-        `/category/publications/${Publication_categories[0].category_slug}`
-      );
-      actions.source.fetch(
-        `/category/publications/${Publication_categories[1].category_slug}`
-      );
+      Publication_categories.map((pub_cat) => {
+        let categoryName = categories.filter(
+          (cat) => cat.id === Number(pub_cat.category_id)
+        )[0].name;
+        actions.source.fetch(`/category/publications/${pub_cat.category_slug}`);
+        setSliderCatName((prevValue) => [...prevValue, categoryName]);
+      });
     }
-  }, [Publication_categories, categories]);
+  }, [Publication_categories]);
 
   useEffect(() => {
-    let array1 = [];
-    let array2 = [];
-    let array = [];
-    catOne.forEach((item) => {
-      const post = state.source[item.type][item.id];
-      array1.push(getPublicationSliders(state, post, categories));
-    });
+    if (catOne.isReady) {
+      catOne.items.map((item) => {
+        let post = getPublicationSliders(
+          state,
+          state.source[item.type][item.id],
+          categories
+        );
 
-    catTwo.forEach((item) => {
-      const post = state.source[item.type][item.id];
-      array2.push(getPublicationSliders(state, post, categories));
-    });
-
-      if (
-        array1.length > 0 &&
-        array2.length > 0 &&
-        Publication_categories.length > 0
-      ) {
-        Publication_categories.map((item, idx) => {
-          array.push({
-            slider_title: categories.filter(
-              (cat) => cat.id === Number(item.category_id)
-            )[0].name,
-            slider: idx === 0 ? array1 : array2,
-          });
-        });
-      }
-
-    if (array.length > 0) {
-      setPublicationsSlider(array);
+        setCatOnePosts((prevValue) => [...prevValue, post]);
+      });
     }
-  }, [catOne, catTwo]);
+  }, [catOne]);
+
+  useEffect(() => {
+    if (catTwo.isReady) {
+      catTwo.items.map((item) => {
+        let post = getPublicationSliders(
+          state,
+          state.source[item.type][item.id],
+          categories
+        );
+        setCatTwoPosts((prevValue) => [...prevValue, post]);
+      });
+    }
+  }, [catTwo]);
+
+  useEffect(() => {
+    const slider = setTimeout(() => {
+      if (catOnePosts.length > 0 && catTwoPosts.length > 0) {
+        if (sliderCatName.length > 0) {
+          sliderCatName.map((name, idx) => {
+            setPublicationsSlider((prevValue) => [
+              ...prevValue,
+              {
+                slider_title: name,
+                slider: idx === 0 ? catOnePosts : catTwoPosts,
+              },
+            ]);
+          });
+        }
+      }
+    }, 1000);
+
+    slider;
+
+    return () => clearTimeout(slider);
+  }, [catOnePosts, catTwoPosts, sliderCatName]);
 
   console.log(publicationsSlider);
 
@@ -156,7 +174,7 @@ const AboutSection = ({
                             }
                             link={slide.acf.pub_link}
                             pos={"relative"}
-                            // w={`calc(100% / ${show} - 5% )`}
+                            w={`calc(100% / ${show} - 5% )`}
                             _before={{
                               content: `''`,
                               position: "absolute",
