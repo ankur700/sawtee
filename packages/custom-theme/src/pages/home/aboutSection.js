@@ -56,55 +56,48 @@ const AboutSection = ({
   }, [Publication_categories]);
 
   useEffect(() => {
+    let posts = [];
     if (catOne.isReady) {
       catOne.items.map((item) => {
-        let post = getPublicationSliders(
-          state,
-          state.source[item.type][item.id],
-          categories
-        );
-
-        setCatOnePosts((prevValue) => [...prevValue, post]);
+        let post = state.source[item.type][item.id];
+        posts.push(getPublicationSliders(state, post, categories));
       });
+      if (posts.length === catOne.items.length) {
+        setCatOnePosts([...posts]);
+      }
     }
-  }, [catOne]);
+  }, [catOne.isReady]);
 
   useEffect(() => {
+    let posts = [];
     if (catTwo.isReady) {
       catTwo.items.map((item) => {
-        let post = getPublicationSliders(
-          state,
-          state.source[item.type][item.id],
-          categories
-        );
-        setCatTwoPosts((prevValue) => [...prevValue, post]);
+        let post = state.source[item.type][item.id];
+        posts.push(getPublicationSliders(state, post, categories));
       });
-    }
-  }, [catTwo]);
-
-  useEffect(() => {
-    const slider = setTimeout(() => {
-      if (catOnePosts.length > 0 && catTwoPosts.length > 0) {
-        if (sliderCatName.length > 0) {
-          sliderCatName.map((name, idx) => {
-            setPublicationsSlider((prevValue) => [
-              ...prevValue,
-              {
-                slider_title: name,
-                slider: idx === 0 ? catOnePosts : catTwoPosts,
-              },
-            ]);
-          });
-        }
+      if (posts.length === catTwo.items.length) {
+        setCatTwoPosts([...posts]);
       }
-    }, 1000);
+    }
+  }, [catTwo.isReady]);
 
-    slider;
+  // useEffect(() => {
+  //   if (catOnePosts.length > 0 && catTwoPosts.length > 0) {
+  //     if (sliderCatName.length > 0) {
+  //       sliderCatName.map((name, idx) => {
+  //         setPublicationsSlider((prevValue) => [
+  //           ...prevValue,
+  //           {
+  //             slider_title: name,
+  //             slider: idx === 0 ? catOnePosts : catTwoPosts,
+  //           },
+  //         ]);
+  //       });
+  //     }
+  //   }
+  // }, [catOnePosts, catTwoPosts, sliderCatName]);
 
-    return () => clearTimeout(slider);
-  }, [catOnePosts, catTwoPosts, sliderCatName]);
-
-  console.log(publicationsSlider);
+  console.log(catOnePosts, catTwoPosts);
 
   return (
     <Section width="full" overflow="hidden" id="about-section" minH={80}>
