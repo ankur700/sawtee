@@ -29,73 +29,65 @@ const AboutSection = ({
   categories,
   Publication_categories,
 }) => {
-  const [publicationsSlider, setPublicationsSlider] = useState([]);
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
   const [sliderCatName, setSliderCatName] = useState([]);
   const [catOnePosts, setCatOnePosts] = useState([]);
   const [catTwoPosts, setCatTwoPosts] = useState([]);
 
-  const catOne = state.source.get(
-    `/category/publications/${Publication_categories[0].category_slug}`
-  );
+  const catOne =
+    state.source.data[
+      `/category/publications/${Publication_categories[0].category_slug}/`
+    ].items;
 
-  const catTwo = state.source.get(
-    `/category/publications/${Publication_categories[1].category_slug}`
-  );
-
-  useEffect(() => {
-    if (Publication_categories.length > 0) {
-      Publication_categories.map((pub_cat) => {
-        let categoryName = categories.filter(
-          (cat) => cat.id === Number(pub_cat.category_id)
-        )[0].name;
-        actions.source.fetch(`/category/publications/${pub_cat.category_slug}`);
-        setSliderCatName((prevValue) => [...prevValue, categoryName]);
-      });
-    }
-  }, [Publication_categories]);
+  const catTwo =
+    state.source.data[
+      `/category/publications/${Publication_categories[1].category_slug}/`
+    ].items;
 
   useEffect(() => {
-    let posts = [];
-    if (catOne.isReady) {
-      catOne.items.map((item) => {
-        let post = state.source[item.type][item.id];
-        posts.push(getPublicationSliders(state, post, categories));
-      });
-      if (posts.length === catOne.items.length) {
-        setCatOnePosts([...posts]);
-      }
+    actions.source.fetch(
+      `/category/publications/${Publication_categories[0].category_slug}`
+    );
+    actions.source.fetch(
+      `/category/publications/${Publication_categories[1].category_slug}`
+    );
+
+    let array = [];
+
+    Publication_categories.map((pub_cat) => {
+      let categoryName = categories.filter(
+        (cat) => cat.id === Number(pub_cat.category_id)
+      )[0].name;
+      array.push(categoryName);
+      // setSliderCatName((prevValue) => [...prevValue, categoryName]);
+    });
+
+    if (array.length > 0) {
+      setSliderCatName([...array]);
     }
-  }, [catOne.isReady]);
+  }, []);
 
   useEffect(() => {
-    let posts = [];
-    if (catTwo.isReady) {
-      catTwo.items.map((item) => {
-        let post = state.source[item.type][item.id];
-        posts.push(getPublicationSliders(state, post, categories));
+    if (catOne && catTwo) {
+      catOne.map((item) => {
+        let data = state.source[item.type][item.id];
+        data &&
+          setCatOnePosts((prev) => [
+            ...prev,
+            getPublicationSliders(state, data, categories),
+          ]);
       });
-      if (posts.length === catTwo.items.length) {
-        setCatTwoPosts([...posts]);
-      }
-    }
-  }, [catTwo.isReady]);
 
-  // useEffect(() => {
-  //   if (catOnePosts.length > 0 && catTwoPosts.length > 0) {
-  //     if (sliderCatName.length > 0) {
-  //       sliderCatName.map((name, idx) => {
-  //         setPublicationsSlider((prevValue) => [
-  //           ...prevValue,
-  //           {
-  //             slider_title: name,
-  //             slider: idx === 0 ? catOnePosts : catTwoPosts,
-  //           },
-  //         ]);
-  //       });
-  //     }
-  //   }
-  // }, [catOnePosts, catTwoPosts, sliderCatName]);
+      catTwo.map((item) => {
+        let data = state.source[item.type][item.id];
+        data &&
+          setCatTwoPosts((prev) => [
+            ...prev,
+            getPublicationSliders(state, data, categories),
+          ]);
+      });
+    }
+  }, [catOne, catTwo]);
 
   console.log(catOnePosts, catTwoPosts);
 
@@ -145,136 +137,191 @@ const AboutSection = ({
           overflow="hidden"
           w="full"
         >
-          {publicationsSlider.length > 0 ? (
-            publicationsSlider.map((item) => {
+          {sliderCatName.map((item) => {
+            if (item === "Trade Insight") {
               return (
-                <Box key={item.slider_title}>
-                  <Title
-                    py={["3", "6"]}
-                    text={item.slider_title}
-                    color="whiteAlpha.900"
-                  />
+                <Box key={item}>
+                  <Title py={["3", "6"]} text={item} color="whiteAlpha.900" />
                   <Carousel show={show}>
-                    {item.slider.length > 0 &&
-                      item.slider.map((slide, idx) => {
-                        return (
-                          <Link
-                            key={slide.id + idx}
-                            title={
-                              slide.featured_media.alt
-                                ? slide.featured_media.alt
-                                : ""
+                    {catOnePosts.map((slide, idx) => {
+                      return (
+                        <Link
+                          key={slide.id + idx}
+                          title={
+                            slide.featured_media.alt
+                              ? slide.featured_media.alt
+                              : ""
+                          }
+                          link={slide.acf.pub_link}
+                          pos={"relative"}
+                          w={`calc(100% / ${show} - 5% )`}
+                          _before={{
+                            content: `''`,
+                            position: "absolute",
+                            top: 0,
+                            left: "unset",
+                            width: "220px",
+                            height: "280px",
+                            borderRadius: "15px",
+                            background: "rgba(0,0,0,0.3)",
+                            backgroundBlendMode: "overlay",
+                          }}
+                          _hover={{
+                            _before: {
+                              background: "transparent",
+                            },
+                          }}
+                        >
+                          <Image
+                            src={
+                              slide.src ? slide.src : slide.featured_media.src
                             }
-                            link={slide.acf.pub_link}
-                            pos={"relative"}
-                            w={`calc(100% / ${show} - 5% )`}
-                            _before={{
-                              content: `''`,
-                              position: "absolute",
-                              top: 0,
-                              left: "unset",
-                              width: "220px",
-                              height: "280px",
-                              borderRadius: "15px",
-                              background: "rgba(0,0,0,0.3)",
-                              backgroundBlendMode: "overlay",
-                            }}
-                            _hover={{
-                              _before: {
-                                background: "transparent",
-                              },
-                            }}
-                          >
-                            <Image
-                              src={
-                                slide.src ? slide.src : slide.featured_media.src
-                              }
-                              srcSet={
-                                slide.srcSet
-                                  ? slide.srcSet
-                                  : slide.featured_media.srcSet
-                              }
-                              alt={slide.alt}
-                              title={slide.alt}
-                              rounded="xl"
-                              border={`1px solid`}
-                              borderColor={useColorModeValue(
-                                "gray.900",
-                                "whiteAlpha.900"
-                              )}
-                              objectFit="cover"
-                              style={{ width: "220px", height: "280px" }}
-                            />
-                          </Link>
-                        );
-                      })}
+                            srcSet={
+                              slide.srcSet
+                                ? slide.srcSet
+                                : slide.featured_media.srcSet
+                            }
+                            alt={slide.alt}
+                            title={slide.alt}
+                            rounded="xl"
+                            border={`1px solid`}
+                            borderColor={useColorModeValue(
+                              "gray.900",
+                              "whiteAlpha.900"
+                            )}
+                            objectFit="cover"
+                            style={{ width: "220px", height: "280px" }}
+                          />
+                        </Link>
+                      );
+                    })}
                   </Carousel>
                 </Box>
               );
-            })
-          ) : (
-            <>
-              <Box px={"4"} pb={3}>
-                <Skeleton width="150px" height="30px" marginBlock={8} />
-                <Flex
-                  mt="3"
-                  rounded="xl"
-                  flexDir="row"
-                  gap={{ base: "10px", sm: "20px", md: "30px" }}
-                  className="wrapper"
-                >
-                  <Skeleton
-                    h="280px"
-                    w="220px"
-                    rounded={"xl"}
-                    bg={"rgba(255,255,255, 0.1)"}
-                  ></Skeleton>
-                  <Skeleton
-                    h="280px"
-                    w="220px"
-                    rounded={"xl"}
-                    bg={"rgba(255,255,255, 0.1)"}
-                  ></Skeleton>
-                  <Skeleton
-                    h="280px"
-                    w="220px"
-                    rounded={"xl"}
-                    bg={"rgba(255,255,255, 0.1)"}
-                  ></Skeleton>
-                </Flex>
-              </Box>
+            } else {
+              return (
+                <Box key={item}>
+                  <Title py={["3", "6"]} text={item} color="whiteAlpha.900" />
+                  <Carousel show={show}>
+                    {catTwoPosts.map((slide, idx) => {
+                      return (
+                        <Link
+                          key={slide.id + idx}
+                          title={
+                            slide.featured_media.alt
+                              ? slide.featured_media.alt
+                              : ""
+                          }
+                          link={slide.acf.pub_link}
+                          pos={"relative"}
+                          w={`calc(100% / ${show} - 5% )`}
+                          _before={{
+                            content: `''`,
+                            position: "absolute",
+                            top: 0,
+                            left: "unset",
+                            width: "220px",
+                            height: "280px",
+                            borderRadius: "15px",
+                            background: "rgba(0,0,0,0.3)",
+                            backgroundBlendMode: "overlay",
+                          }}
+                          _hover={{
+                            _before: {
+                              background: "transparent",
+                            },
+                          }}
+                        >
+                          <Image
+                            src={
+                              slide.src ? slide.src : slide.featured_media.src
+                            }
+                            srcSet={
+                              slide.srcSet
+                                ? slide.srcSet
+                                : slide.featured_media.srcSet
+                            }
+                            alt={slide.alt}
+                            title={slide.alt}
+                            rounded="xl"
+                            border={`1px solid`}
+                            borderColor={useColorModeValue(
+                              "gray.900",
+                              "whiteAlpha.900"
+                            )}
+                            objectFit="cover"
+                            style={{ width: "220px", height: "280px" }}
+                          />
+                        </Link>
+                      );
+                    })}
+                  </Carousel>
+                </Box>
+              );
+            }
+          })}
 
-              <Box px={"4"} pb={3}>
-                <Skeleton width="150px" height="30px" marginBlock={8} />
-                <Flex
-                  mt="3"
-                  rounded="xl"
-                  flexDir="row"
-                  gap={{ base: "10px", sm: "20px", md: "30px" }}
-                  className="wrapper"
-                >
-                  <Skeleton
-                    h="280px"
-                    w="220px"
-                    rounded={"xl"}
-                    bg={"rgba(255,255,255, 0.1)"}
-                  ></Skeleton>
-                  <Skeleton
-                    h="280px"
-                    w="220px"
-                    rounded={"xl"}
-                    bg={"rgba(255,255,255, 0.1)"}
-                  ></Skeleton>
-                  <Skeleton
-                    h="280px"
-                    w="220px"
-                    rounded={"xl"}
-                    bg={"rgba(255,255,255, 0.1)"}
-                  ></Skeleton>
-                </Flex>
-              </Box>
-            </>
-          )}
+          {/* <>
+            <Box px={"4"} pb={3}>
+              <Skeleton width="150px" height="30px" marginBlock={8} />
+              <Flex
+                mt="3"
+                rounded="xl"
+                flexDir="row"
+                gap={{ base: "10px", sm: "20px", md: "30px" }}
+                className="wrapper"
+              >
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+              </Flex>
+            </Box>
+
+            <Box px={"4"} pb={3}>
+              <Skeleton width="150px" height="30px" marginBlock={8} />
+              <Flex
+                mt="3"
+                rounded="xl"
+                flexDir="row"
+                gap={{ base: "10px", sm: "20px", md: "30px" }}
+                className="wrapper"
+              >
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+                <Skeleton
+                  h="280px"
+                  w="220px"
+                  rounded={"xl"}
+                  bg={"rgba(255,255,255, 0.1)"}
+                ></Skeleton>
+              </Flex>
+            </Box>
+          </> */}
         </VStack>
       </SimpleGrid>
     </Section>

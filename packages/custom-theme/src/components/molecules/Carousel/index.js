@@ -26,7 +26,7 @@ const Carousel = (props) => {
   const { children, show, gap } = props;
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [length, setLength] = useState(children.length);
+  const [length, setLength] = useState(children?.length);
 
   const [touchPosition, setTouchPosition] = useState(null);
 
