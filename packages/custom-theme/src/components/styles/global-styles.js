@@ -66,7 +66,7 @@ body::-webkit-scrollbar-thumb {
 
     button,
     span {
-      font-family: "Open Sans", monospace;
+      // font-family: "Open Sans", monospace;
     }
   }
 

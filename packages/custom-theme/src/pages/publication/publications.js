@@ -41,30 +41,24 @@ const Publications = ({ state, categories }) => {
 
   // get publications
   useEffect(() => {
-    let publicationsArray = [];
-    let newsArray = [];
-    let PubArray = [];
-
     if (data.isReady) {
       data.items.map((item) => {
         const post = state.source[item.type][item.id];
-        publicationsArray.push(formatCPTData(state, post, categories));
+        setPublications((prevValue) => [
+          ...prevValue,
+          formatCPTData(state, post, categories),
+        ]);
       });
-    }
-    if (publicationsArray.length > 0) {
-      setPublications(publicationsArray);
     }
 
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
-        // console.log(post);
-        newsArray.push(formatPostData(state, post, categories));
+        setNews((prevValue) => [
+          ...prevValue,
+          formatPostData(state, post, categories),
+        ]);
       });
-    }
-
-    if (newsArray.length > 0) {
-      setNews(newsArray);
     }
 
     if (categories) {
@@ -78,19 +72,20 @@ const Publications = ({ state, categories }) => {
             Object.keys(state.source.category).includes(cat.id.toString())
         )
         .forEach((item) => {
-          PubArray.push({
-            id: item.id,
-            name: item.name,
-            link: item.link,
-            slides: [],
-          });
+          setPubArray((prev) => [
+            ...prev,
+            {
+              id: item.id,
+              name: item.name,
+              link: item.link,
+              slides: [],
+            },
+          ]);
         });
     }
-
-    if (PubArray.length > 0) {
-      setPubArray(PubArray);
-    }
   }, [data, newsData, categories]);
+
+  console.log(sliderData);
 
   // get publication categories and publication array for later manipulation
 

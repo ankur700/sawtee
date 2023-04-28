@@ -32,10 +32,11 @@ const CustomGrid = styled(Grid)`
 const BlogSection = ({ state, actions, linkColor, categories }) => {
   const eventsData = state.source.get("/featured-events");
   const [eventsList, setEvetnsList] = useState([]);
+  const [media, setMedia] = useState(null);
 
-  useEffect(() => {
-    actions.source.fetch("/featured-events");
-  }, []);
+  // useEffect(() => {
+  //   actions.source.fetch("/featured-events");
+  // }, []);
 
   useEffect(() => {
     if (eventsData.isReady) {
@@ -51,13 +52,13 @@ const BlogSection = ({ state, actions, linkColor, categories }) => {
     }
   }, [eventsData]);
 
-  const media = React.useMemo(() => {
+  useEffect(() => {
     if (eventsList.length > 0) {
-      return {
+      setMedia({
         alt: eventsList[0].featured_media.alt,
         src: eventsList[0].featured_media.src,
         srcSet: eventsList[0].featured_media.srcSet,
-      };
+      });
     }
   }, [eventsList]);
 

@@ -19,69 +19,71 @@ const PublicationSliders = ({ sliderData, show }) => {
         rowGap: "60px",
       }}
     >
-      {sliderData.map((cat) => {
-        return (
-          <Stack key={cat.name} spacing="4">
-            <Text
-              as="h3"
-              m="0"
-              fontSize={{ base: "xl", lg: "3xl" }}
-              fontFamily="heading"
-              color={useColorModeValue("gray.800", "whiteAlpha.800")}
-            >
-              <Link link={cat.link}>{cat.name}</Link>
-            </Text>
-            <Carousel show={show} gap={"10px"}>
-              {cat.slides.map((slide, idx) => {
-                return (
-                  <LinkBox
-                    key={slide.alt + idx}
-                    w={`calc(100% / ${show} )`}
-                    pos={"relative"}
-                    _before={{
-                      content: `''`,
-                      position: "absolute",
-                      top: 0,
-                      left: "unset",
-                      right: "unset",
-                      width: "220px",
-                      height: "100%",
-                      borderRadius: "15px",
-                      background: "rgba(0,0,0,0.3)",
-                      backgroundBlendMode: "overlay",
-                    }}
-                    _hover={{
-                      _before: {
-                        background: "transparent",
-                      },
-                    }}
-                  >
-                    <LinkOverlay title={sliderData.alt} href={slide.link}>
-                      <Image
-                        src={slide.src ? slide.src : slide.featured_media.src}
-                        srcSet={
-                          slide.srcSet
-                            ? slide.srcSet
-                            : slide.featured_media.srcSet
-                        }
-                        alt={slide.alt}
-                        title={slide.alt}
-                        rounded="xl"
-                        border={`1px solid`}
-                        borderColor={useColorModeValue(
-                          "gray.900",
-                          "whiteAlpha.900"
-                        )}
-                        objectFit="cover"
-                        style={{ width: "220px", height: "280px" }}
-                      />
-                    </LinkOverlay>
-                  </LinkBox>
-                );
-              })}
-            </Carousel>
-          </Stack>
-        );
+      {sliderData.map((item) => {
+        if (item.slides.length > 0) {
+          return (
+            <Stack key={item.name} spacing="4">
+              <Text
+                as="h3"
+                m="0"
+                fontSize={{ base: "xl", lg: "2xl" }}
+                fontFamily="heading"
+                color={useColorModeValue("gray.800", "whiteAlpha.800")}
+              >
+                <Link link={item.link}>{item.name}</Link>
+              </Text>
+              <Carousel show={show} gap={"10px"}>
+                {item.slides.map((slide, idx) => {
+                  return (
+                    <LinkBox
+                      key={slide.alt + idx}
+                      w={`calc(100% / ${show} -30px )`}
+                      pos={"relative"}
+                      _before={{
+                        content: `''`,
+                        position: "absolute",
+                        top: 0,
+                        left: "unset",
+                        right: "unset",
+                        width: "220px",
+                        height: "100%",
+                        borderRadius: "15px",
+                        background: "rgba(0,0,0,0.3)",
+                        backgroundBlendMode: "overlay",
+                      }}
+                      _hover={{
+                        _before: {
+                          background: "transparent",
+                        },
+                      }}
+                    >
+                      <LinkOverlay title={sliderData.alt} href={slide.link}>
+                        <Image
+                          src={slide.src ? slide.src : slide.featured_media.src}
+                          srcSet={
+                            slide.srcSet
+                              ? slide.srcSet
+                              : slide.featured_media.srcSet
+                          }
+                          alt={slide.alt}
+                          title={slide.alt}
+                          rounded="xl"
+                          border={`1px solid`}
+                          borderColor={useColorModeValue(
+                            "gray.900",
+                            "whiteAlpha.900"
+                          )}
+                          objectFit="cover"
+                          style={{ width: "220px", height: "280px" }}
+                        />
+                      </LinkOverlay>
+                    </LinkBox>
+                  );
+                })}
+              </Carousel>
+            </Stack>
+          );
+        }
       })}
     </Stack>
   );

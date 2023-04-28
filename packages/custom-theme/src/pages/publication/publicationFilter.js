@@ -31,6 +31,7 @@ const PublicationFilter = ({ categories }) => {
                 color={useColorModeValue("gray.700", "whiteAlpha.700")}
                 variant="outline"
                 size="sm"
+                fontWeight={"normal"}
               >
                 {name}
               </Button>
