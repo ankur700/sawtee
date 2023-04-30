@@ -20,9 +20,11 @@ export const getBreakpointValue = (value, fallback, ssr) =>
   );
 
 export const getPostsFromCategory = ({ post }, categoryId) =>
-  Object.keys(post)
+{
+  return Object.keys(post)
     .map((postID) => post[postID])
     .filter(({ categories }) => categories.includes(parseInt(categoryId)));
+}
 
 export const getPostsGroupedByCategory = (source) => {
   return Object.values(categoriesWidgetsHome).reduce((acc, categoryId) => {
