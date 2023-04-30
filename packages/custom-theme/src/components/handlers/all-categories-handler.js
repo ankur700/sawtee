@@ -1,4 +1,4 @@
-const CategoriesHandler = {
+const AllCategoriesHandler = {
   name: "allCategories",
   priority: 10,
   pattern: "all-categories",
@@ -25,4 +25,4 @@ const CategoriesHandler = {
   },
 };
 
-export default CategoriesHandler;
+export default AllCategoriesHandler;
