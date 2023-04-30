@@ -32,12 +32,12 @@ const PublicationSliders = ({ sliderData, show }) => {
               >
                 <Link link={item.link}>{item.name}</Link>
               </Text>
-              <Carousel show={show} gap={"10px"}>
+              <Carousel show={show} gap={"20px"}>
                 {item.slides.map((slide, idx) => {
                   return (
                     <LinkBox
                       key={slide.alt + idx}
-                      w={`calc(100% / ${show} -30px )`}
+                      w={`calc(100% / ${show} - 20px)`}
                       pos={"relative"}
                       _before={{
                         content: `''`,
@@ -45,7 +45,7 @@ const PublicationSliders = ({ sliderData, show }) => {
                         top: 0,
                         left: "unset",
                         right: "unset",
-                        width: "220px",
+                        width: "175px",
                         height: "100%",
                         borderRadius: "15px",
                         background: "rgba(0,0,0,0.3)",
@@ -74,7 +74,7 @@ const PublicationSliders = ({ sliderData, show }) => {
                             "whiteAlpha.900"
                           )}
                           objectFit="cover"
-                          style={{ width: "220px", height: "280px" }}
+                          style={{ width: "175px", height: "230px" }}
                         />
                       </LinkOverlay>
                     </LinkBox>

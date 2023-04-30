@@ -22,7 +22,11 @@ import React, { useState, useEffect } from "react";
 import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import { formatCPTData, formatPostData } from "../../components/helpers";
+import {
+  formatCPTData,
+  formatPostData,
+  getPostsFromCategory,
+} from "../../components/helpers";
 
 const Publications = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
@@ -37,8 +41,10 @@ const Publications = ({ state, categories }) => {
   let [pubArray, setPubArray] = useState([]);
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
-  const show = useBreakpointValue([1, 2, 3]);
+  const show = useBreakpointValue([1, 2, 3, 4]);
 
+  const books = state.source.get("/publications/books");
+  console.log("🚀 ~ file: publications.js:47 ~ Publications ~ books:", books);
   // get publications
   useEffect(() => {
     if (data.isReady) {
