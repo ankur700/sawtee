@@ -18,6 +18,7 @@ import Header from "./organisms/header";
 import FontFace from "./styles/font-face";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
+import Contact from "../pages/contact";
 
 const config = {
   initialColorMode: "light",
@@ -34,7 +35,7 @@ const Theme = ({ state, actions }) => {
   const overrides = extendTheme({
     fonts: {
       heading: "Inter, system-ui, Helvetica, sans-serif",
-      body: "Open Sans, sans-serif",
+      body: "Open Sans, system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,Liberation Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji ,sans-serif",
     },
     colors: { ...state.theme.colors },
   });
@@ -76,6 +77,7 @@ const Theme = ({ state, actions }) => {
             <Home when={data.isHome} categories={categories} />
             <KnowUs when={data.route === "/about/"} />
             <OurWork when={data.route === "/our-work/"} />
+            <Contact when={data.route === "/contact/"} />
             <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />
             <HomeArchive when={data.route === "/blog"} />
