@@ -33,13 +33,13 @@ const Home = ({ state, categories }) => {
       });
       Publication_categories[1].category_posts.map((item) => {
         let post = getCategoryPost(item);
-
         array2.push(post);
       });
     }
 
     if (array1.length > 0) {
-      setPublicationSlider([
+      setPublicationSlider((prevValue) => [
+        ...prevValue,
         {
           slider_title: Publication_categories[0].category_name,
           slider: [...array1],
@@ -57,10 +57,6 @@ const Home = ({ state, categories }) => {
     }
   }, [Publication_categories]);
 
-  console.log(
-    "🚀 ~ file: home.js:19 ~ Home ~ PublicationSlider:",
-    PublicationSlider
-  );
 
   /*
 
