@@ -13,6 +13,7 @@ const settings = {
     },
   },
   packages: [
+    "@aamodtgroup/frontity-contact-form-7",
     {
       name: "frontity-menu",
       state: {
@@ -297,6 +298,7 @@ const settings = {
             ],
             orderBy: "menu-order",
             order: "asc",
+            per_page: "100",
           },
           postTypes: [
             {
