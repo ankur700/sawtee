@@ -83,7 +83,7 @@ const Contact = ({ state, libraries }) => {
             </Box>
             <VStack alignItems={"start"}>
               <Box>
-                <Heading as="h4" className={"info-heading"}>
+                <Heading as="h4" className={"info-heading"} fontSize={{base: 'xl', md: '3xl'}}>
                   <Text as="span" fontSize={"36px"} color={"inherit"}>
                     Vist
                   </Text>
@@ -92,7 +92,7 @@ const Contact = ({ state, libraries }) => {
                 </Heading>
               </Box>
               <Box>
-                <Heading as="h4" className={"info-heading"}>
+                <Heading as="h4" className={"info-heading"} fontSize={{base: 'xl', md: '3xl'}}>
                   Opening Hours
                 </Heading>
                 <Text className="info-text">
@@ -100,19 +100,19 @@ const Contact = ({ state, libraries }) => {
                 </Text>
               </Box>
               <Box>
-                <Heading as="h4" className={"info-heading"}>
+                <Heading as="h4" className={"info-heading"} fontSize={{base: 'xl', md: '3xl'}}>
                   Address
                 </Heading>
-                <Text as="address" className="info-text">
+                <Text as="address" className="info-text" fontSize={{base: 'xl', md: '3xl'}}>
                   Tukucha Marg, Baluwatar, Kathmandu, Nepal
                 </Text>
               </Box>
               <Box>
-                <Heading as="h4" className={"info-heading"}>
+                <Heading as="h4" className={"info-heading"} fontSize={{base: 'xl', md: '3xl'}}>
                   General Information
                 </Heading>
                 <Text className="info-text">No Current Job Openings</Text>
-                <Heading as="h4" className={"info-heading"}>
+                <Heading as="h4" className={"info-heading"} fontSize={{base: 'xl', md: '3xl'}}>
                   Queries
                 </Heading>
                 <Text className="info-text">
@@ -159,7 +159,7 @@ const Content = styled(Box)`
       color: #fff;
     }
 
-    & .info-heading {
+    & h4,.info-heading {
       font-size: 36px;
       color: #000;
       text-transform: uppercase;

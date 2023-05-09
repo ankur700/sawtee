@@ -59,12 +59,8 @@ const PublicationSliders = ({ sliderData, show }) => {
                     >
                       <LinkOverlay title={sliderData.alt} href={slide.link}>
                         <Image
-                          src={slide.src ? slide.src : slide.featured_media.src}
-                          srcSet={
-                            slide.srcSet
-                              ? slide.srcSet
-                              : slide.featured_media.srcSet
-                          }
+                          src={slide.src ? slide.src : ""}
+                          srcSet={slide.srcSet ? slide.srcSet : ""}
                           alt={slide.alt}
                           title={slide.alt}
                           rounded="xl"
