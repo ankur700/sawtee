@@ -298,7 +298,7 @@ const settings = {
             ],
             orderBy: "menu-order",
             order: "asc",
-            per_page: "100",
+            per_page: "10",
           },
           postTypes: [
             {

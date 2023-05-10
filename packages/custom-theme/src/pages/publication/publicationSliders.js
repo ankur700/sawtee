@@ -7,11 +7,16 @@ import {
   Box,
   LinkBox,
   LinkOverlay,
+  Button,
 } from "@chakra-ui/react";
 import Link from "@frontity/components/link";
 import Carousel from "../../components/molecules/Carousel";
+import React, { useState } from "react";
 
 const PublicationSliders = ({ sliderData, show }) => {
+  const [defaultValue, setDefaultValue] = useState(10);
+  const data = sliderData.sort((a, b) => a.id - b.id);
+
   return (
     <Stack
       spacing={8}
@@ -19,8 +24,8 @@ const PublicationSliders = ({ sliderData, show }) => {
         rowGap: "60px",
       }}
     >
-      {sliderData.map((item) => {
-        if (item.slides.length > 0) {
+      {data.map((item, idx) => {
+        if (idx < defaultValue && item.slides.length > 0) {
           return (
             <Stack key={item.name} spacing="4">
               <Text
@@ -81,6 +86,9 @@ const PublicationSliders = ({ sliderData, show }) => {
           );
         }
       })}
+      {defaultValue === 10 && (
+        <Button onClick={() => setDefaultValue(20)}>Show All</Button>
+      )}
     </Stack>
   );
 };

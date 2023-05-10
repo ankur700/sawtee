@@ -4,7 +4,7 @@ import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
 import { Newsletter } from "../../components/atoms/newsletter";
-import { getPublicationSliders } from "../../components/helpers";
+import { formatCPTData, getPublicationSliders } from "../../components/helpers";
 import React, { useEffect, useState } from "react";
 
 const Home = ({ state, categories }) => {
@@ -16,6 +16,38 @@ const Home = ({ state, categories }) => {
   const introImage = post.acf?.about_section_image;
   const Publication_categories = post.acf?.publication_slider;
   const [PublicationSlider, setPublicationSlider] = useState([]);
+
+  const eventsData = state.source.get("/featured-events");
+  const [eventsList, setEvetnsList] = useState([]);
+  const [media, setMedia] = useState(null);
+
+  // useEffect(() => {
+  //   actions.source.fetch("/featured-events");
+  // }, []);
+
+  useEffect(() => {
+    if (eventsData.isReady) {
+      let eventsArray = [];
+      eventsData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        eventsArray.push(formatCPTData(state, post, categories));
+      });
+
+      if (eventsArray.length > 0) {
+        setEvetnsList([...eventsArray]);
+      }
+    }
+  }, [eventsData]);
+
+  useEffect(() => {
+    if (eventsList.length > 0) {
+      setMedia({
+        alt: eventsList[0].featured_media.alt,
+        src: eventsList[0].featured_media.src,
+        srcSet: eventsList[0].featured_media.srcSet,
+      });
+    }
+  }, [eventsList]);
 
   const getCategoryPost = (item) => {
     let data = state.source["publications"][item];
@@ -57,7 +89,6 @@ const Home = ({ state, categories }) => {
     }
   }, [Publication_categories]);
 
-
   /*
 
     ? Question
@@ -73,7 +104,7 @@ const Home = ({ state, categories }) => {
         PublicationSlider={PublicationSlider}
       />
       <InfoSection />
-      <BlogSection linkColor={linkColor} categories={categories} />
+      <BlogSection linkColor={linkColor} media={media} events={eventsList} />
       {/* <Newsletter /> */}
     </>
   );

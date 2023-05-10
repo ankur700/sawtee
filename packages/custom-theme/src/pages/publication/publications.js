@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   Heading,
   Image,
   Grid,
@@ -10,31 +9,22 @@ import {
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import Publication1 from "../../assets/publications-1-resized.jpg";
-import Loading from "../../components/atoms/loading";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
-import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import GlassBox from "../../components/atoms/glassBox";
 import React, { useState, useEffect } from "react";
 import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import {
-  formatCPTData,
-  formatPostData,
-  getPostsFromCategory,
-} from "../../components/helpers";
+import { formatCPTData, formatPostData } from "../../components/helpers";
 
 const Publications = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/sawtee-in-media");
-  const { pages, isFetching, isLimit, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 3 });
-
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
@@ -43,8 +33,10 @@ const Publications = ({ state, categories }) => {
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3, 4]);
 
-  const books = state.source.get("/publications/books");
-  console.log("🚀 ~ file: publications.js:47 ~ Publications ~ books:", books);
+  useEffect(() => {
+    actions.source.fetch("/publications");
+  }, []);
+
   // get publications
   useEffect(() => {
     if (data.isReady) {
@@ -90,8 +82,6 @@ const Publications = ({ state, categories }) => {
         });
     }
   }, [data, newsData, categories]);
-
-  console.log(sliderData);
 
   // get publication categories and publication array for later manipulation
 
@@ -195,29 +185,11 @@ const Publications = ({ state, categories }) => {
             pos={"relative"}
           >
             <GridItem colSpan={3} px={4}>
-              {pages &&
-                pages.map(({ key, link, isLast, Wrapper }) => (
-                  <Wrapper key={key}>
-                    <PublicationSliders
-                      link={link}
-                      linkColor={linkColor}
-                      sliderData={sliderData}
-                      show={show ? show : 3}
-                    />
-                    {isLast && <Divider h="10px" mt="10" />}
-                    <Box w="full" mb="40px" textAlign={"center"}>
-                      {isFetching && <Loading />}
-                      {isLimit && (
-                        <Button onClick={fetchNext}>Load Next Page</Button>
-                      )}
-                      {isError && (
-                        <Button onClick={fetchNext}>
-                          Something failed - Retry
-                        </Button>
-                      )}
-                    </Box>
-                  </Wrapper>
-                ))}
+              <PublicationSliders
+                linkColor={linkColor}
+                sliderData={sliderData}
+                show={show ? show : 3}
+              />
             </GridItem>
             <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
               <Sidebar>
