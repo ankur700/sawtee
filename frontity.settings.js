@@ -289,7 +289,6 @@ const settings = {
           postsPage: "blog",
           params: {
             type: [
-              "publications",
               "featured-events",
               "research",
               "programme",

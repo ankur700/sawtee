@@ -9,7 +9,7 @@ const PublicationHandler = {
     const response = await api.get({
       endpoint: "publications",
       params: {
-        _ember: true,
+        _embed: true,
         orderBy: "menu-order",
         order: "asc",
         per_page: 100, // To make sure you get all of them

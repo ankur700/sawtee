@@ -6,6 +6,8 @@ import {
   GridItem,
   useBreakpointValue,
   useColorModeValue,
+  Divider,
+  Button,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import Publication1 from "../../assets/publications-1-resized.jpg";
@@ -20,11 +22,16 @@ import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData, formatPostData } from "../../components/helpers";
+import { useArchiveInfiniteScroll } from "@frontity/hooks";
+import Loading from "../../components/atoms/loading";
 
-const Publications = ({ state, categories }) => {
+const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/sawtee-in-media");
+
+  const { pages, isLimit, isFetching, isError, fetchNext } =
+    useArchiveInfiniteScroll({ limit: 2 });
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
@@ -185,11 +192,27 @@ const Publications = ({ state, categories }) => {
             pos={"relative"}
           >
             <GridItem colSpan={3} px={4}>
-              <PublicationSliders
-                linkColor={linkColor}
-                sliderData={sliderData}
-                show={show ? show : 3}
-              />
+              {pages.map(({ key, link, isLast, Wrapper }) => (
+                <Wrapper key={key}>
+                  <PublicationSliders
+                    linkColor={linkColor}
+                    sliderData={sliderData}
+                    show={show ? show : 3}
+                  />
+                  {isLast && <Divider h="10px" mt="10" />}
+                  <Box w="full" mb="40px" textAlign={"center"}>
+                    {isFetching && <Loading />}
+                    {isLimit && (
+                      <Button onClick={fetchNext}>Load Next Page</Button>
+                    )}
+                    {isError && (
+                      <Button onClick={fetchNext}>
+                        Something failed - Retry
+                      </Button>
+                    )}
+                  </Box>
+                </Wrapper>
+              ))}
             </GridItem>
             <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
               <Sidebar>

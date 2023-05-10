@@ -86,9 +86,9 @@ const PublicationSliders = ({ sliderData, show }) => {
           );
         }
       })}
-      {defaultValue === 10 && (
+      {/* {defaultValue === 10 && (
         <Button onClick={() => setDefaultValue(20)}>Show All</Button>
-      )}
+      )} */}
     </Stack>
   );
 };

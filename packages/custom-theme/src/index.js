@@ -94,7 +94,7 @@ const customTheme = {
         await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("/featured-events");
         await actions.source.fetch("all-categories");
-        await actions.source.fetch("/publications");
+        // await actions.source.fetch("/publications");
 
         // await actions.source.fetch("/category/publications");
 
