@@ -43,13 +43,13 @@ const SubscriptionCard = ({ state, libraries }) => {
         Don't miss out on our future issues!
       </Heading>
 
-      <HStack>
-        <Checkbox defaultChecked colorScheme="primary" size="lg">
+      {/* <HStack margin={"0 auto"}>
+        <Checkbox defaultChecked colorScheme="primary" size="md">
           <Text as="span" fontSize={"sm"} fontStyle="italic">
             By subscribing you agree to receiving emails from us.
           </Text>
         </Checkbox>
-      </HStack>
+      </HStack> */}
 
       {post && <Html2React html={post.content.rendered} />}
     </SubscriptionBox>
@@ -68,6 +68,12 @@ const SubscriptionBox = styled(Box)`
     flex-direction: column;
     gap: 20px;
     align-content: stretch;
+
+    & p {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
   }
 
   & .wpcf7-list-item-label {
@@ -77,7 +83,7 @@ const SubscriptionBox = styled(Box)`
 
   & input[type="email"] {
     flex: 1 0 auto;
-    width: 95%;
+    width: 100%;
     border: 1px solid #999 !important;
     background-color: #eee;
     height: 40px;
@@ -87,12 +93,13 @@ const SubscriptionBox = styled(Box)`
   }
 
   & input[type="submit"] {
-    width: 95%;
+    width: 100%;
+    margin: 0 auto;
     height: 40px;
-    margin-top: 10px;
     background-color: #000;
     color: #fff;
     border-radius: 10px;
+    margin-bottom: 20px;
   }
 
   & input[type="checkbox"] {

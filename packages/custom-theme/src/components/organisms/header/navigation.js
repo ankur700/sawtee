@@ -38,7 +38,7 @@ export const SiteMenu = (props) => (
     alignItems="center"
     direction="row"
     color="white"
-    justifyContent={"center"}
+    // justifyContent={"center"}
     {...props}
   />
 );
@@ -66,12 +66,11 @@ const SiteMenuItem = ({ item, ...props }) => {
 const Navigation = ({ state, menu, ...props }) => {
   const menuItems = state.source.get("/menus/primary/").items;
 
-
   return (
     <Box
       as="nav"
       width="100%"
-      display={{ base: "none", lg: "block" }}
+      display={{ base: "none", lg: "flex" }}
       {...props}
     >
       <SiteMenu>

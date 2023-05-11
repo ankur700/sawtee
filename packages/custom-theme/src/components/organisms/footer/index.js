@@ -38,9 +38,9 @@ const FooterSectionGroup = (props) => (
   <Grid
     // columns={{ base: 1, sm: 2, md: 4 }}
     templateColumns={{ sm: "1fr", md: "1fr 2fr 1fr" }}
-    maxWidth="1150px"
+    maxWidth="7xl"
     mx="auto"
-    width="90%"
+    width="100%"
     spacing={8}
     {...props}
   />
@@ -48,9 +48,8 @@ const FooterSectionGroup = (props) => (
 
 const FooterSectionItem = (props) => (
   <Box
-    padding="24px"
+    padding={props.padding ? props.padding : "24px"}
     color={useColorModeValue("gray.800", "whiteAlpha.800")}
-    textAlign="center"
     {...props}
   />
 );
@@ -140,7 +139,7 @@ const Footer = ({ state, libraries }) => {
   return (
     <FooterSection alignSelf="flex-end">
       <FooterSectionGroup
-        templateColumns={{ sm: "1fr 1fr", md: "1fr 1fr 1fr 2fr" }}
+        templateColumns={{ sm: "1fr", md: "1fr 1fr 1fr" }}
         spacing={8}
       >
         <Stack colSpan={1} id={"Contact"}>
@@ -163,11 +162,12 @@ const Footer = ({ state, libraries }) => {
               <Widget colSpan={1} key={key} item={item} libraries={libraries} />
             );
           })}
-        <FooterSubscription post={post} Html2React={Html2React} />
+        {/* <FooterSubscription post={post} Html2React={Html2React} /> */}
       </FooterSectionGroup>
 
       <FooterSectionGroup templateColumns={["1fr", "repeat(3, 1fr)"]} mt="12">
         <FooterSectionItem
+          padding={"24px 0"}
           colSpan={1}
           fontWeight="bold"
           fontFamily="heading"
@@ -176,15 +176,19 @@ const Footer = ({ state, libraries }) => {
           © {new Date().getFullYear()} {state.frontity.title}
         </FooterSectionItem>
 
-        <FooterSectionItem colSpan={1} borderColor="accent.400">
+        <FooterSectionItem
+          padding={"24px 0"}
+          colSpan={1}
+          borderColor="accent.400"
+        >
           <SocialMenu
             ml="0"
-            justifyContent="center"
             menu={state.theme.socialLinks}
           />
         </FooterSectionItem>
 
         <FooterSectionItem
+          padding={"24px 0"}
           colSpan={1}
           fontWeight="bold"
           fontFamily="heading"

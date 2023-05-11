@@ -1,16 +1,5 @@
 import { useState } from "react";
-import {
-  Stack,
-  FormControl,
-  Input,
-  Button,
-  useColorModeValue,
-  Heading,
-  Text,
-  Container,
-  Flex,
-  Box,
-} from "@chakra-ui/react";
+import { Stack, Heading, Text, Container, Box } from "@chakra-ui/react";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { styled } from "frontity";
 
@@ -35,57 +24,7 @@ const FooterSubscription = ({ post, Html2React }) => {
       >
         Subscribe to our Newsletter
       </Heading>
-      <Form
-        direction={{ base: "column", md: "row" }}
-        as={"form"}
-        spacing={"12px"}
-        onSubmit={(e) => {
-          e.preventDefault();
-          setError(false);
-          setState("submitting");
-
-          // remove this code and implement your submit logic right here
-          setTimeout(() => {
-            if (email === "fail@example.com") {
-              setError(true);
-              setState("initial");
-              return;
-            }
-
-            setState("success");
-          }, 1000);
-        }}
-      >
-        {/* <FormControl>
-          <Input
-            variant={"solid"}
-            borderWidth={1}
-            color={"gray.800"}
-            _placeholder={{
-              color: "gray.400",
-            }}
-            borderColor={useColorModeValue("gray.300", "gray.700")}
-            id={"email"}
-            type={"email"}
-            required
-            placeholder={"Your Email"}
-            aria-label={"Your Email"}
-            value={email}
-            disabled={state !== "initial"}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </FormControl>
-        <FormControl w={{ base: "100%", md: "40%" }}>
-          <Button
-            colorScheme={state === "success" ? "green" : "blue"}
-            isLoading={state === "submitting"}
-            w="100%"
-            type={state === "success" ? "button" : "submit"}
-          >
-            {state === "success" ? <IoIosCheckmarkCircleOutline /> : "Submit"}
-          </Button>
-        </FormControl> */}
-
+      <Form direction={{ base: "column", md: "row" }} spacing={"12px"}>
         <Box margin={"0 auto"}>
           {post && <Html2React html={post.content.rendered} />}
         </Box>
