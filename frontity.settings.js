@@ -288,16 +288,10 @@ const settings = {
           homepage: "home",
           postsPage: "blog",
           params: {
-            type: [
-              "featured-events",
-              "research",
-              "programme",
-              "newsletter",
-              "sawtee-in-media",
-            ],
+            type: ["publications"],
             orderBy: "menu-order",
             order: "asc",
-            per_page: "10",
+            per_page: "100",
           },
           postTypes: [
             {

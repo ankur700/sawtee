@@ -28,10 +28,7 @@ import Loading from "../../components/atoms/loading";
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
-  const newsData = state.source.get("/sawtee-in-media");
-
-  const { pages, isLimit, isFetching, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 2 });
+  const newsData = state.source.get("/news");
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
@@ -40,8 +37,11 @@ const Publications = ({ state, actions, categories }) => {
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3, 4]);
 
+  const [defaultValue, setDefaultValue] = useState(10);
+
   useEffect(() => {
-    actions.source.fetch("/publications");
+    // actions.source.fetch("/get-publications");
+    actions.source.fetch("/news");
   }, []);
 
   // get publications
@@ -95,7 +95,7 @@ const Publications = ({ state, actions, categories }) => {
   // Get the slider Data with slides
   useEffect(() => {
     if (publications.length > 0 && pubArray.length > 0) {
-      let array = [...pubArray];
+      let array = [...pubArray].sort((a, b) => a.id - b.id);
       publications.forEach((publication) =>
         publication.categories.map((category) => {
           array.forEach((item) => {
@@ -111,7 +111,7 @@ const Publications = ({ state, actions, categories }) => {
 
       setSliderData([...array]);
     }
-  }, [publications, pubArray]);
+  }, [publications]);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return null;
@@ -192,27 +192,15 @@ const Publications = ({ state, actions, categories }) => {
             pos={"relative"}
           >
             <GridItem colSpan={3} px={4}>
-              {pages.map(({ key, link, isLast, Wrapper }) => (
-                <Wrapper key={key}>
-                  <PublicationSliders
-                    linkColor={linkColor}
-                    sliderData={sliderData}
-                    show={show ? show : 3}
-                  />
-                  {isLast && <Divider h="10px" mt="10" />}
-                  <Box w="full" mb="40px" textAlign={"center"}>
-                    {isFetching && <Loading />}
-                    {isLimit && (
-                      <Button onClick={fetchNext}>Load Next Page</Button>
-                    )}
-                    {isError && (
-                      <Button onClick={fetchNext}>
-                        Something failed - Retry
-                      </Button>
-                    )}
-                  </Box>
-                </Wrapper>
-              ))}
+              <PublicationSliders
+                linkColor={linkColor}
+                sliderData={sliderData}
+                show={show ? show : 3}
+                defaultValue={defaultValue}
+              />
+              {defaultValue === 10 && (
+                <Button onClick={() => setDefaultValue(20)}>Show All</Button>
+              )}
             </GridItem>
             <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
               <Sidebar>

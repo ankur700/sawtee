@@ -1,7 +1,7 @@
 const PublicationHandler = {
   name: "publications",
   priority: 10,
-  pattern: "/publications",
+  pattern: "/get-publications",
   func: async ({ route, params, state, libraries }) => {
     const { api } = libraries.source;
 
@@ -18,6 +18,7 @@ const PublicationHandler = {
 
     // 2. get an array with each item in json format
     const items = await response.json();
+
     // 3. add data to source
     const currentPageData = state.source.data[route];
 

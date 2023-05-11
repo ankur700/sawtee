@@ -13,10 +13,7 @@ import Link from "@frontity/components/link";
 import Carousel from "../../components/molecules/Carousel";
 import React, { useState } from "react";
 
-const PublicationSliders = ({ sliderData, show }) => {
-  const [defaultValue, setDefaultValue] = useState(10);
-  const data = sliderData.sort((a, b) => a.id - b.id);
-
+const PublicationSliders = ({ sliderData, defaultValue, show }) => {
   return (
     <Stack
       spacing={8}
@@ -24,7 +21,7 @@ const PublicationSliders = ({ sliderData, show }) => {
         rowGap: "60px",
       }}
     >
-      {data.map((item, idx) => {
+      {sliderData.map((item, idx) => {
         if (idx < defaultValue && item.slides.length > 0) {
           return (
             <Stack key={item.name} spacing="4">
@@ -42,7 +39,11 @@ const PublicationSliders = ({ sliderData, show }) => {
                   return (
                     <LinkBox
                       key={slide.alt + idx}
-                      w={`calc(100% / ${show} - 20px)`}
+                      w={
+                        show
+                          ? `calc(100% / ${show} - 20px)`
+                          : `calc(100% - 20px)`
+                      }
                       pos={"relative"}
                       _before={{
                         content: `''`,
@@ -86,9 +87,6 @@ const PublicationSliders = ({ sliderData, show }) => {
           );
         }
       })}
-      {/* {defaultValue === 10 && (
-        <Button onClick={() => setDefaultValue(20)}>Show All</Button>
-      )} */}
     </Stack>
   );
 };

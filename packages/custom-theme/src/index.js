@@ -6,6 +6,8 @@ import AllCategoriesHandler from "./components/handlers/all-categories-handler";
 import PostsFromCategory from "./components/handlers/category-posts-handler";
 import PublicationArchiveHandler from "./components/handlers/publication-archive-handler";
 import EventsHandler from "./components/handlers/events-handler";
+import PublicationHandler from "./components/handlers/publications-handler";
+import NewsHandler from "./components/handlers/news-handler";
 // import { theme } from "@chakra-ui/react";
 
 const customTheme = {
@@ -91,10 +93,12 @@ const customTheme = {
       },
 
       beforeSSR: async ({ state, actions }) => {
+        await actions.source.fetch("/events");
+        await actions.source.fetch("/news");
         await actions.source.fetch("/sawtee-in-media");
-        await actions.source.fetch("/featured-events");
         await actions.source.fetch("all-categories");
-        // await actions.source.fetch("/publications");
+        await actions.source.fetch("/subscription-page");
+        // await actions.source.fetch("/get-publications");
 
         // await actions.source.fetch("/category/publications");
 
@@ -114,6 +118,8 @@ const customTheme = {
         PostsFromCategory,
         PublicationArchiveHandler,
         EventsHandler,
+        PublicationHandler,
+        NewsHandler,
       ],
     },
   },
