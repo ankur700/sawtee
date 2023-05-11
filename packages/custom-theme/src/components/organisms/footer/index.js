@@ -21,6 +21,7 @@ import { SocialMenu } from "../header/social-menu";
 import { connect } from "frontity";
 import Subscription from "./subscription";
 import Iframe from "@frontity/components/iframe";
+import FooterSubscription from "./footer-subscription";
 
 const FooterSection = (props) => (
   <Box
@@ -134,7 +135,8 @@ const Widget = ({ item, libraries }) => {
 
 const Footer = ({ state, libraries }) => {
   const { items } = state.source.get("/menus/footer/");
-
+  const post = state.source["page"][735];
+  const Html2React = libraries.html2react.Component;
   return (
     <FooterSection alignSelf="flex-end">
       <FooterSectionGroup
@@ -161,8 +163,7 @@ const Footer = ({ state, libraries }) => {
               <Widget colSpan={1} key={key} item={item} libraries={libraries} />
             );
           })}
-
-        <Subscription />
+        <FooterSubscription post={post} Html2React={Html2React} />
       </FooterSectionGroup>
 
       <FooterSectionGroup templateColumns={["1fr", "repeat(3, 1fr)"]} mt="12">
