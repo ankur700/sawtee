@@ -98,47 +98,6 @@ body::-webkit-scrollbar-thumb {
     color: rgb(20 158 202/1);
   }
 
-  // Carousel Styles
-
-  .carousel-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.carousel-wrapper {
-    display: flex;
-    width: 100%;
-    position: relative;
-}
-
-.carousel-content-wrapper {
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-}
-
-.carousel-content {
-    position: relative;
-    width: 100%;
-    display: flex;
-    gap: 20px;
-    transition: all 250ms linear;
-    -ms-overflow-style: none;  /* hide scrollbar in IE and Edge */
-    scrollbar-width: none;  /* hide scrollbar in Firefox */
-}
-
-/* hide scrollbar in webkit browser */
-.carousel-content::-webkit-scrollbar, .carousel-content::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-content > * {
-    flex-shrink: 0;
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-}
 
 @media (hover: none) and (pointer: coarse) {
     .left-arrow, .right-arrow {

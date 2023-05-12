@@ -1,7 +1,7 @@
 const PublicationHandler = {
   name: "publications",
   priority: 10,
-  pattern: "/get-publications",
+  pattern: "publication",
   func: async ({ route, params, state, libraries }) => {
     const { api } = libraries.source;
 

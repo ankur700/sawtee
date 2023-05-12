@@ -9,7 +9,7 @@ import {
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
 } from "react-icons/hi";
-
+import { styled } from "frontity";
 const arrowStyles = {
   position: "absolute",
   zIndex: 10,
@@ -74,14 +74,14 @@ const Carousel = (props) => {
   };
 
   return (
-    <Box className="carousel-container">
+    <CarouselContainer>
       <Box className="carousel-wrapper">
         {/* You can alwas change the content of the button to other things */}
         {currentIndex > 0 && (
           <Button
             onClick={prev}
             className="left-arrow"
-            left={0}
+            left={"-21px"}
             {...arrowStyles}
             // colorScheme={useColorModeValue("primary")}
           >
@@ -115,8 +115,50 @@ const Carousel = (props) => {
           </Button>
         )}
       </Box>
-    </Box>
+    </CarouselContainer>
   );
 };
 
 export default Carousel;
+
+const CarouselContainer = styled(Box)`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  & .carousel-wrapper {
+    display: flex;
+    width: 100%;
+    position: relative;
+  }
+
+  & .carousel-content-wrapper {
+    overflow: hidden;
+    width: 90%;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  & .carousel-content {
+    position: relative;
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    transition: all 250ms linear;
+    -ms-overflow-style: none; /* hide scrollbar in IE and Edge */
+    scrollbar-width: none; /* hide scrollbar in Firefox */
+  }
+
+  /* hide scrollbar in webkit browser */
+  & .carousel-content::-webkit-scrollbar,
+  .carousel-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  & .carousel-content > * {
+    flex-shrink: 0;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  }
+`;

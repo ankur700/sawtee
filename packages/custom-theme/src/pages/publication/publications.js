@@ -28,34 +28,55 @@ import Loading from "../../components/atoms/loading";
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
-  const newsData = state.source.get("/news");
+  const newsData = state.source.get("/sawtee-in-media");
+  const publicationData = state.source.get("publication");
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
   let [pubArray, setPubArray] = useState([]);
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
-  const show = useBreakpointValue([1, 2, 3, 4]);
+  const show = useBreakpointValue([1, 2, 3]);
+  const [checkedItems, setCheckedItems] = React.useState(() => {
+    let array = [];
+    categories.map((_, idx) => {
+      if (idx < 6) {
+        array.push(true);
+      } else {
+        array.push(false);
+      }
+    });
 
-  const [defaultValue, setDefaultValue] = useState(10);
+    return array;
+  });
+  console.log(publicationData);
+
+  const allChecked = checkedItems.every(Boolean);
+  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+
+  // console.log(publicationData.items.length);
 
   useEffect(() => {
-    // actions.source.fetch("/get-publications");
-    actions.source.fetch("/news");
+    // actions.source.fetch("publications");
   }, []);
+
+  useEffect(() => {
+    if (publicationData.isReady) {
+      publicationData.items.map((item) => {
+        const post = state.source[item.type][item.id];
+        {
+          post &&
+            setPublications((prevValue) => [
+              ...prevValue,
+              formatCPTData(state, post, categories),
+            ]);
+        }
+      });
+    }
+  }, [publicationData]);
 
   // get publications
   useEffect(() => {
-    if (data.isReady) {
-      data.items.map((item) => {
-        const post = state.source[item.type][item.id];
-        setPublications((prevValue) => [
-          ...prevValue,
-          formatCPTData(state, post, categories),
-        ]);
-      });
-    }
-
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
@@ -65,10 +86,14 @@ const Publications = ({ state, actions, categories }) => {
         ]);
       });
     }
+  }, [newsData]);
 
+  useEffect(() => {
     if (categories) {
       setPublicationCategories([
-        ...categories.filter((cat) => cat.parent === 5),
+        ...categories
+          .filter((cat) => cat.parent === 5)
+          .sort((a, b) => a.id - b.id),
       ]);
       categories
         .filter(
@@ -88,7 +113,7 @@ const Publications = ({ state, actions, categories }) => {
           ]);
         });
     }
-  }, [data, newsData, categories]);
+  }, [categories]);
 
   // get publication categories and publication array for later manipulation
 
@@ -170,8 +195,19 @@ const Publications = ({ state, actions, categories }) => {
           // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
           mt={"6"}
           size={"lg"}
+          px={{ base: "32px", md: "16px" }}
+          py="6"
+          display="flex"
+          // pos={"sticky"}
+          // top={"8rem"}
         >
-          <PublicationFilter categories={publicationCategories} />
+          <PublicationFilter
+            categories={publicationCategories}
+            allChecked={allChecked}
+            isIndeterminate={isIndeterminate}
+            checkedItems={checkedItems}
+            setCheckedItems={setCheckedItems}
+          />
         </GlassBox>
       ) : null}
 
@@ -196,11 +232,8 @@ const Publications = ({ state, actions, categories }) => {
                 linkColor={linkColor}
                 sliderData={sliderData}
                 show={show ? show : 3}
-                defaultValue={defaultValue}
+                checkedItems={checkedItems}
               />
-              {defaultValue === 10 && (
-                <Button onClick={() => setDefaultValue(20)}>Show All</Button>
-              )}
             </GridItem>
             <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
               <Sidebar>

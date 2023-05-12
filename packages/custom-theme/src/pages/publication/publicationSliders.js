@@ -13,7 +13,7 @@ import Link from "@frontity/components/link";
 import Carousel from "../../components/molecules/Carousel";
 import React, { useState } from "react";
 
-const PublicationSliders = ({ sliderData, defaultValue, show }) => {
+const PublicationSliders = ({ sliderData, show, checkedItems }) => {
   return (
     <Stack
       spacing={8}
@@ -22,7 +22,7 @@ const PublicationSliders = ({ sliderData, defaultValue, show }) => {
       }}
     >
       {sliderData.map((item, idx) => {
-        if (idx < defaultValue && item.slides.length > 0) {
+        if (checkedItems[idx] && item.slides.length > 0) {
           return (
             <Stack key={item.name} spacing="4">
               <Text

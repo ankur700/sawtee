@@ -134,40 +134,41 @@ const Widget = ({ item, libraries }) => {
 
 const Footer = ({ state, libraries }) => {
   const { items } = state.source.get("/menus/footer/");
-  const post = state.source["page"][735];
-  const Html2React = libraries.html2react.Component;
   return (
     <FooterSection alignSelf="flex-end">
       <FooterSectionGroup
         templateColumns={{ sm: "1fr", md: "1fr 1fr 1fr" }}
         spacing={8}
       >
-        <Stack colSpan={1} id={"Contact"}>
-          <ListHeader color={useColorModeValue("gray.800", "whiteAlpha.900")}>
-            {"Contact Us"}
-          </ListHeader>
-          <Stack as="ul" alignItems={"start"} listStyleType="none">
-            <Link href="tel:+977-1-4444438">Phone: +977-1-4444438</Link>
-            <Link href="tel:+977 1 4444570">Fax: +977-1-4444570</Link>
-            <Link href="mailto:sawtee@sawtee.org">
-              Email: sawtee@sawtee.org
-            </Link>
+        <FooterSectionItem>
+          <Stack colSpan={1} id={"Contact"}>
+            <ListHeader color={useColorModeValue("gray.800", "whiteAlpha.900")}>
+              {"Contact Us"}
+            </ListHeader>
+            <Stack as="ul" alignItems={"start"} listStyleType="none">
+              <Link href="tel:+977-1-4444438">Phone: +977-1-4444438</Link>
+              <Link href="tel:+977 1 4444570">Fax: +977-1-4444570</Link>
+              <Link href="mailto:sawtee@sawtee.org">
+                Email: sawtee@sawtee.org
+              </Link>
 
-            <Link href="#">Address: Tukucha Marg, Baluwatar, Kathmandu</Link>
+              <Link href="#">Address: Tukucha Marg, Baluwatar, Kathmandu</Link>
+            </Stack>
           </Stack>
-        </Stack>
+        </FooterSectionItem>
         {items &&
           Object.entries(items).map(([key, item]) => {
             return (
-              <Widget colSpan={1} key={key} item={item} libraries={libraries} />
+              <FooterSectionItem key={key}>
+                <Widget colSpan={1} item={item} libraries={libraries} />
+              </FooterSectionItem>
             );
           })}
-        {/* <FooterSubscription post={post} Html2React={Html2React} /> */}
       </FooterSectionGroup>
 
       <FooterSectionGroup templateColumns={["1fr", "repeat(3, 1fr)"]} mt="12">
         <FooterSectionItem
-          padding={"24px 0"}
+          // padding={"24px 0"}
           colSpan={1}
           fontWeight="bold"
           fontFamily="heading"
@@ -177,18 +178,15 @@ const Footer = ({ state, libraries }) => {
         </FooterSectionItem>
 
         <FooterSectionItem
-          padding={"24px 0"}
+          // padding={"24px 0"}
           colSpan={1}
           borderColor="accent.400"
         >
-          <SocialMenu
-            ml="0"
-            menu={state.theme.socialLinks}
-          />
+          <SocialMenu ml="0" menu={state.theme.socialLinks} />
         </FooterSectionItem>
 
         <FooterSectionItem
-          padding={"24px 0"}
+          // padding={"24px 0"}
           colSpan={1}
           fontWeight="bold"
           fontFamily="heading"
