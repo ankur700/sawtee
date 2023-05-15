@@ -3,10 +3,9 @@ import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
 import menuHandler from "./components/handlers/menu-handler";
 import AllCategoriesHandler from "./components/handlers/all-categories-handler";
-import PostsFromCategory from "./components/handlers/category-posts-handler";
-import PublicationArchiveHandler from "./components/handlers/publication-archive-handler";
+import CategoriesArchiveHandler from "./components/handlers/publication-archive-handler";
 import EventsHandler from "./components/handlers/events-handler";
-import PublicationHandler from "./components/handlers/publications-handler";
+import PublicationsHandler from "./components/handlers/publications-handler";
 import NewsHandler from "./components/handlers/news-handler";
 // import { theme } from "@chakra-ui/react";
 
@@ -98,9 +97,9 @@ const customTheme = {
         await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("all-categories");
         await actions.source.fetch("/subscription-page");
-        await actions.source.fetch("publication");
+        await actions.source.fetch("get-publications");
 
-        // await actions.source.fetch("/category/publications");
+        // await actions.source.fetch("/category/(.*)?/:slug");
 
         // await actions.source.fetch(`/menu/${state.theme.menuUrl}/`);
       },
@@ -115,10 +114,9 @@ const customTheme = {
     source: {
       handlers: [
         AllCategoriesHandler,
-        PostsFromCategory,
-        PublicationArchiveHandler,
+        CategoriesArchiveHandler,
         EventsHandler,
-        PublicationHandler,
+        PublicationsHandler,
         NewsHandler,
       ],
     },

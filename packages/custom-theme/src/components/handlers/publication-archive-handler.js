@@ -1,10 +1,10 @@
-const PublicationArchiveHandler = {
-  name: "publications",
-  priority: 10,
-  pattern: "/publications/:slug",
+const CategoriesArchiveHandler = {
+  pattern: "/category/(.*)?/:slug",
   func: async ({ route, params, state, libraries }) => {
     // Get the page of the current route.
     const { page } = libraries.source.parse(route);
+
+    console.log(params.slug);
 
     // Get the id of the parent category.
     const parentCatResponse = await libraries.source.api.get({
@@ -21,7 +21,7 @@ const PublicationArchiveHandler = {
       endpoint: "categories",
       params: { parent: parentCat.id },
     });
-    const childCats = await libraries.msource.populate({
+    const childCats = await libraries.source.populate({
       state,
       response: childCatsResponse,
     });
@@ -31,7 +31,7 @@ const PublicationArchiveHandler = {
     // Get the posts from those categories.
     const postsResponse = await libraries.source.api.get({
       endpoint: "publications",
-      params: { categories: ids.join(","), page, _embed: true, per_page: 100 },
+      params: { categories: ids.join(","), page, _embed: true },
     });
     const items = await libraries.source.populate({
       state,
@@ -54,4 +54,4 @@ const PublicationArchiveHandler = {
   },
 };
 
-export default PublicationArchiveHandler;
+export default CategoriesArchiveHandler;

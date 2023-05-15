@@ -6,8 +6,6 @@ import {
   GridItem,
   useBreakpointValue,
   useColorModeValue,
-  Divider,
-  Button,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import Publication1 from "../../assets/publications-1-resized.jpg";
@@ -22,58 +20,39 @@ import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData, formatPostData } from "../../components/helpers";
-import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import Loading from "../../components/atoms/loading";
 
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/sawtee-in-media");
-  const publicationData = state.source.get("publication");
-  const [publications, setPublications] = useState([]);
+  // const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
-  let [pubArray, setPubArray] = useState([]);
+
+  // let [pubArray, setPubArray] = useState([]);
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3]);
-  const [checkedItems, setCheckedItems] = React.useState(() => {
-    let array = [];
-    categories.map((_, idx) => {
-      if (idx < 6) {
-        array.push(true);
-      } else {
-        array.push(false);
-      }
-    });
-
-    return array;
-  });
-  console.log(publicationData);
+  const [checkedItems, setCheckedItems] = React.useState([]);
 
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
-  // console.log(publicationData.items.length);
-
-  useEffect(() => {
-    // actions.source.fetch("publications");
-  }, []);
-
-  useEffect(() => {
-    if (publicationData.isReady) {
-      publicationData.items.map((item) => {
-        const post = state.source[item.type][item.id];
-        {
-          post &&
-            setPublications((prevValue) => [
-              ...prevValue,
-              formatCPTData(state, post, categories),
-            ]);
-        }
-      });
-    }
-  }, [publicationData]);
+  // useEffect(() => {
+  //   if (data.isReady) {
+  //     data.items.map((item) => {
+  //       const post = state.source[item.type][item.id];
+  //       {
+  //         post &&
+  //           setPublications((prevValue) => [
+  //             ...prevValue,
+  //             formatCPTData(state, post, categories),
+  //           ]);
+  //       }
+  //     });
+  //   }
+  // }, [data]);
 
   // get publications
   useEffect(() => {
@@ -102,44 +81,67 @@ const Publications = ({ state, actions, categories }) => {
             Object.keys(state.source.category).includes(cat.id.toString())
         )
         .forEach((item) => {
-          setPubArray((prev) => [
-            ...prev,
-            {
-              id: item.id,
-              name: item.name,
-              link: item.link,
-              slides: [],
-            },
-          ]);
+          actions.source.fetch(`/category/publications/${item.slug}`);
         });
     }
   }, [categories]);
 
+  useEffect(() => {
+    let array = [];
+    publicationCategories.map((cat, idx) => {
+      const posts = state.source.get(cat.slug);
+      console.log(
+        "🚀 ~ file: publications.js:121 ~ publicationCategories.forEach ~ posts:",
+        posts
+      );
+
+      posts.isReady &&
+        setSliderData((prev) => [
+          ...prev,
+          {
+            id: cat.id,
+            name: cat.name,
+            link: cat.link,
+            slides: [...posts.items],
+          },
+        ]);
+      if (idx < 5) {
+        array.push(true);
+      } else {
+        array.push(false);
+      }
+    });
+
+    setCheckedItems(array);
+  }, [publicationCategories]);
+
+  console.log(sliderData);
+
   // get publication categories and publication array for later manipulation
 
   // Get the slider Data with slides
-  useEffect(() => {
-    if (publications.length > 0 && pubArray.length > 0) {
-      let array = [...pubArray].sort((a, b) => a.id - b.id);
-      publications.forEach((publication) =>
-        publication.categories.map((category) => {
-          array.forEach((item) => {
-            if (category.id === item.id && item.name !== "Publications") {
-              item.slides.push({
-                ...publication.featured_media,
-                link: publication.acf.pub_link,
-              });
-            }
-          });
-        })
-      );
+  // useEffect(() => {
+  //   if (publications.length > 0 && pubArray.length > 0) {
+  //     let array = [...pubArray].sort((a, b) => a.id - b.id);
+  //     publications.forEach((publication) =>
+  //       publication.categories.map((category) => {
+  //         array.forEach((item) => {
+  //           if (category.id === item.id && item.name !== "Publications") {
+  //             item.slides.push({
+  //               ...publication.featured_media,
+  //               link: publication.acf.pub_link,
+  //             });
+  //           }
+  //         });
+  //       })
+  //     );
 
-      setSliderData([...array]);
-    }
-  }, [publications]);
+  //     setSliderData([...array]);
+  //   }
+  // }, [publications]);
 
   // Load the post, but only if the data is ready.
-  if (!data.isReady) return null;
+  if (!data.isReady) return <Loading />;
   return (
     <LightPatternBox
       bg={useColorModeValue("whiteAlpha.700", "gray.700")}

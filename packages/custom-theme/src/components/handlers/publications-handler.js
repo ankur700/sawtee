@@ -1,7 +1,7 @@
-const PublicationHandler = {
+const PublicationsHandler = {
   name: "publications",
   priority: 10,
-  pattern: "publication",
+  pattern: "get-publications",
   func: async ({ route, params, state, libraries }) => {
     const { api } = libraries.source;
 
@@ -23,10 +23,9 @@ const PublicationHandler = {
     const currentPageData = state.source.data[route];
 
     Object.assign(currentPageData, {
-      isReady: true,
       items,
     });
   },
 };
 
-export default PublicationHandler;
+export default PublicationsHandler;
