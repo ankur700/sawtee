@@ -36,14 +36,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
   const sectionSize = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   React.useEffect(() => {
-    let newsArray = [];
     let programesArray = [];
-    if (data.isReady) {
-      data.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
-      });
-    }
 
     if (programeData.isReady) {
       programeData.items.forEach((item) => {
@@ -52,14 +45,25 @@ const SawteeInMedia = ({ state, actions, categories }) => {
       });
     }
 
-    if (newsArray.length > 0) {
-      setNews(newsArray);
-    }
-
     if (programesArray.length > 0) {
       setPrograms(programesArray);
     }
-  }, [data, programeData.isReady]);
+  }, [programeData]);
+
+  React.useEffect(() => {
+    let newsArray = [];
+
+    if (data.isReady) {
+      data.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        newsArray.push(formatCPTData(state, post, categories));
+      });
+    }
+
+    if (newsArray.length > 0) {
+      setNews(newsArray);
+    }
+  }, [data]);
 
   React.useEffect(() => {
     actions.source.fetch("/programme");
@@ -131,7 +135,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
             <Box>
               {pages.map(({ key, link, isLast, Wrapper }) => (
                 <Wrapper key={key}>
-                  <MediaList news={news} link={link} />
+                  <MediaList news={news} link={link} linkColor={linkColor} />
                   {isLast && <Divider h="10px" mt="10" />}
                   <Box w="full" mb="40px" textAlign={"center"}>
                     {isFetching && <Loading />}
@@ -148,7 +152,11 @@ const SawteeInMedia = ({ state, actions, categories }) => {
               ))}
             </Box>
           </GridItem>
-          <GridItem colSpan={{ base: 1, lg: 2 }}>
+          <GridItem
+            colSpan={{ base: 1, lg: 2 }}
+            display={"flex"}
+            justifyContent={"center"}
+          >
             <Sidebar>
               <GlassBox py="4" px="8" rounded="2xl" height="max-content">
                 <SidebarWidget

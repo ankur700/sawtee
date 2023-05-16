@@ -21,16 +21,22 @@ import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData, formatPostData } from "../../components/helpers";
 import Loading from "../../components/atoms/loading";
+import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
-  const newsData = state.source.get("/sawtee-in-media");
-  // const [publications, setPublications] = useState([]);
+  const newsData = state.source.get("/news");
+  const publicationsData = state.source.data["/get-publications/"];
+  // console.log(
+  //   "🚀 ~ file: publications.js:31 ~ Publications ~ publicationsData:",
+  //   publicationsData
+  // );
+  const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
 
-  // let [pubArray, setPubArray] = useState([]);
+  const [pubArray, setPubArray] = useState([]);
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3]);
@@ -39,22 +45,21 @@ const Publications = ({ state, actions, categories }) => {
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
-  // useEffect(() => {
-  //   if (data.isReady) {
-  //     data.items.map((item) => {
-  //       const post = state.source[item.type][item.id];
-  //       {
-  //         post &&
-  //           setPublications((prevValue) => [
-  //             ...prevValue,
-  //             formatCPTData(state, post, categories),
-  //           ]);
-  //       }
-  //     });
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data.isReady) {
+      data.items.map((item) => {
+        const post = state.source[item.type][item.id];
+        {
+          post &&
+            setPublications((prevValue) => [
+              ...prevValue,
+              formatCPTData(state, post, categories),
+            ]);
+        }
+      });
+    }
+  }, [data]);
 
-  // get publications
   useEffect(() => {
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
@@ -68,43 +73,33 @@ const Publications = ({ state, actions, categories }) => {
   }, [newsData]);
 
   useEffect(() => {
-    if (categories) {
-      setPublicationCategories([
-        ...categories
-          .filter((cat) => cat.parent === 5)
-          .sort((a, b) => a.id - b.id),
-      ]);
-      categories
-        .filter(
-          (cat) =>
-            cat.parent !== 0 &&
-            Object.keys(state.source.category).includes(cat.id.toString())
-        )
-        .forEach((item) => {
-          actions.source.fetch(`/category/publications/${item.slug}`);
-        });
-    }
+    setPublicationCategories([
+      ...categories
+        .filter((cat) => cat.parent === 5)
+        .sort((a, b) => a.id - b.id),
+    ]);
+    categories
+      .filter(
+        (cat) =>
+          cat.parent !== 0 &&
+          Object.keys(state.source.category).includes(cat.id.toString())
+      )
+      .forEach((item) => {
+        setPubArray((prev) => [
+          ...prev,
+          {
+            id: item.id,
+            name: item.name,
+            link: item.link,
+            slides: [],
+          },
+        ]);
+      });
   }, [categories]);
 
   useEffect(() => {
     let array = [];
     publicationCategories.map((cat, idx) => {
-      const posts = state.source.get(cat.slug);
-      console.log(
-        "🚀 ~ file: publications.js:121 ~ publicationCategories.forEach ~ posts:",
-        posts
-      );
-
-      posts.isReady &&
-        setSliderData((prev) => [
-          ...prev,
-          {
-            id: cat.id,
-            name: cat.name,
-            link: cat.link,
-            slides: [...posts.items],
-          },
-        ]);
       if (idx < 5) {
         array.push(true);
       } else {
@@ -120,25 +115,25 @@ const Publications = ({ state, actions, categories }) => {
   // get publication categories and publication array for later manipulation
 
   // Get the slider Data with slides
-  // useEffect(() => {
-  //   if (publications.length > 0 && pubArray.length > 0) {
-  //     let array = [...pubArray].sort((a, b) => a.id - b.id);
-  //     publications.forEach((publication) =>
-  //       publication.categories.map((category) => {
-  //         array.forEach((item) => {
-  //           if (category.id === item.id && item.name !== "Publications") {
-  //             item.slides.push({
-  //               ...publication.featured_media,
-  //               link: publication.acf.pub_link,
-  //             });
-  //           }
-  //         });
-  //       })
-  //     );
+  useEffect(() => {
+    if (publications.length > 0 && pubArray.length > 0) {
+      let array = [...pubArray].sort((a, b) => a.id - b.id);
+      publications.forEach((publication) =>
+        publication.categories.map((category) => {
+          array.forEach((item) => {
+            if (category.id === item.id && item.name !== "Publications") {
+              item.slides.push({
+                ...publication.featured_media,
+                link: publication.acf.pub_link,
+              });
+            }
+          });
+        })
+      );
 
-  //     setSliderData([...array]);
-  //   }
-  // }, [publications]);
+      setSliderData([...array]);
+    }
+  }, [publications]);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return <Loading />;
@@ -240,7 +235,12 @@ const Publications = ({ state, actions, categories }) => {
             <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
               <Sidebar>
                 <GlassBox py="4" px="8" rounded="2xl">
-                  <SawteeInMediaWidget news={news} linkColor={linkColor} />
+                  {/* <SawteeInMediaWidget news={news} linkColor={linkColor} /> */}
+                  <SidebarWidget
+                    array={news}
+                    title={"Sawtee in Media"}
+                    linkColor={linkColor}
+                  />
                 </GlassBox>
                 <GlassBox
                   rounded="2xl"

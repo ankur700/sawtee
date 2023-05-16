@@ -1,5 +1,4 @@
 const PublicationsHandler = {
-  name: "publications",
   priority: 10,
   pattern: "get-publications",
   func: async ({ route, params, state, libraries }) => {
@@ -10,7 +9,7 @@ const PublicationsHandler = {
       endpoint: "publications",
       params: {
         _embed: true,
-        orderBy: "menu-order",
+        orderBy: "menu_order",
         order: "asc",
         per_page: 100, // To make sure you get all of them
       },

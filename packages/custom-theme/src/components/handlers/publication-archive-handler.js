@@ -31,7 +31,7 @@ const CategoriesArchiveHandler = {
     // Get the posts from those categories.
     const postsResponse = await libraries.source.api.get({
       endpoint: "publications",
-      params: { categories: ids.join(","), page, _embed: true },
+      params: { categories: ids.join(","), page, _embed: true, per_page: 100 },
     });
     const items = await libraries.source.populate({
       state,

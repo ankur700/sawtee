@@ -294,9 +294,9 @@ const settings = {
               "programme",
               "research",
             ],
-            orderBy: "menu-order",
-            order: "asc",
-            per_page: "10",
+            orderBy: "menu_order",
+            order: "desc",
+            per_page: "20",
           },
           postTypes: [
             {

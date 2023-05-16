@@ -1,7 +1,7 @@
 import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
-import menuHandler from "./components/handlers/menu-handler";
+// import menuHandler from "./components/handlers/menu-handler";
 import AllCategoriesHandler from "./components/handlers/all-categories-handler";
 import CategoriesArchiveHandler from "./components/handlers/publication-archive-handler";
 import EventsHandler from "./components/handlers/events-handler";
