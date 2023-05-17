@@ -50,7 +50,7 @@ const Home = ({ state, categories }) => {
   }, [eventsList]);
 
   const getCategoryPost = (item) => {
-    let data = state.source["publications"][item];
+    let data = state.source.data["get-publications/"][item];
     let post = getPublicationSliders(state, data, categories);
     return post;
   };

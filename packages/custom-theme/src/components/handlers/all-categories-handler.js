@@ -14,8 +14,8 @@ const AllCategoriesHandler = {
     });
 
     // 2. get an array with each item in json format
-    const items = await response.json();
-
+    const results = await response.json();
+    const items = results.sort((a, b) => a.id - b.id);
     // 3. add data to source
     const currentPageData = state.source.data[route];
 

@@ -9,9 +9,9 @@ const NewsHandler = {
     const response = await api.get({
       endpoint: "sawtee-in-media",
       params: {
-        _ember: true,
-        orderBy: "menu-order",
-        order: "asc",
+        _embed: true,
+        orderBy: "menu_order",
+        order: "desc",
         per_page: 10, // To make sure you get all of them
       },
     });

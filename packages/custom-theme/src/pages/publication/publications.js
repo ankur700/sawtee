@@ -16,7 +16,7 @@ import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
 import GlassBox from "../../components/atoms/glassBox";
 import React, { useState, useEffect } from "react";
-import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
+// import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData, formatPostData } from "../../components/helpers";
@@ -27,11 +27,7 @@ const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/news");
-  const publicationsData = state.source.data["/get-publications/"];
-  // console.log(
-  //   "🚀 ~ file: publications.js:31 ~ Publications ~ publicationsData:",
-  //   publicationsData
-  // );
+  const publicationData = state.source.data["get-publications/"];
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
@@ -46,9 +42,9 @@ const Publications = ({ state, actions, categories }) => {
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
   useEffect(() => {
-    if (data.isReady) {
-      data.items.map((item) => {
-        const post = state.source[item.type][item.id];
+    if (publicationData.isReady) {
+      publicationData.items.map((_, idx) => {
+        const post = state.source.data["get-publications/"].items[idx];
         {
           post &&
             setPublications((prevValue) => [
@@ -58,9 +54,9 @@ const Publications = ({ state, actions, categories }) => {
         }
       });
     }
-  }, [data]);
+  }, [publicationData.isReady]);
 
-  useEffect(() => {
+    useEffect(() => {
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
@@ -75,15 +71,10 @@ const Publications = ({ state, actions, categories }) => {
   useEffect(() => {
     setPublicationCategories([
       ...categories
-        .filter((cat) => cat.parent === 5)
-        .sort((a, b) => a.id - b.id),
+      .filter((cat) => cat.parent === 5)
     ]);
     categories
-      .filter(
-        (cat) =>
-          cat.parent !== 0 &&
-          Object.keys(state.source.category).includes(cat.id.toString())
-      )
+      .filter(cat => cat.parent === 5)
       .forEach((item) => {
         setPubArray((prev) => [
           ...prev,
@@ -95,7 +86,7 @@ const Publications = ({ state, actions, categories }) => {
           },
         ]);
       });
-  }, [categories]);
+    }, [categories]);
 
   useEffect(() => {
     let array = [];
@@ -110,18 +101,17 @@ const Publications = ({ state, actions, categories }) => {
     setCheckedItems(array);
   }, [publicationCategories]);
 
-  console.log(sliderData);
 
   // get publication categories and publication array for later manipulation
 
   // Get the slider Data with slides
   useEffect(() => {
     if (publications.length > 0 && pubArray.length > 0) {
-      let array = [...pubArray].sort((a, b) => a.id - b.id);
+      let array = [...pubArray];
       publications.forEach((publication) =>
         publication.categories.map((category) => {
           array.forEach((item) => {
-            if (category.id === item.id && item.name !== "Publications") {
+            if (category.id === item.id ) {
               item.slides.push({
                 ...publication.featured_media,
                 link: publication.acf.pub_link,
@@ -133,7 +123,9 @@ const Publications = ({ state, actions, categories }) => {
 
       setSliderData([...array]);
     }
-  }, [publications]);
+  }, [publications, pubArray]);
+
+  console.log(publications);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return <Loading />;

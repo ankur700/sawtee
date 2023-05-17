@@ -294,7 +294,7 @@ const settings = {
               "programme",
               "research",
             ],
-            orderBy: "menu_order",
+            orderBy: "id",
             order: "desc",
             per_page: "20",
           },
