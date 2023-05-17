@@ -17,13 +17,10 @@ const Home = ({ state, categories }) => {
   const Publication_categories = post.acf?.publication_slider;
   const [PublicationSlider, setPublicationSlider] = useState([]);
 
-  const eventsData = state.source.get("/featured-events");
+  const eventsData = state.source.get("/events");
   const [eventsList, setEvetnsList] = useState([]);
   const [media, setMedia] = useState(null);
 
-  // useEffect(() => {
-  //   actions.source.fetch("/featured-events");
-  // }, []);
 
   useEffect(() => {
     if (eventsData.isReady) {
@@ -50,8 +47,10 @@ const Home = ({ state, categories }) => {
   }, [eventsList]);
 
   const getCategoryPost = (item) => {
-    let data = state.source.data["get-publications/"][item];
-    let post = getPublicationSliders(state, data, categories);
+    let data = state.source.data["get-publications/"].items.filter(
+      (pub) => pub.id === item
+    );
+    let post = getPublicationSliders(state, data[0], categories);
     return post;
   };
 

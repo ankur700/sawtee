@@ -16,7 +16,6 @@ import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
 import GlassBox from "../../components/atoms/glassBox";
 import React, { useState, useEffect } from "react";
-// import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData, formatPostData } from "../../components/helpers";
@@ -31,6 +30,12 @@ const Publications = ({ state, actions, categories }) => {
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
+
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
 
   const [pubArray, setPubArray] = useState([]);
   const [news, setNews] = React.useState([]);
@@ -56,7 +61,7 @@ const Publications = ({ state, actions, categories }) => {
     }
   }, [publicationData.isReady]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
@@ -69,12 +74,9 @@ const Publications = ({ state, actions, categories }) => {
   }, [newsData]);
 
   useEffect(() => {
-    setPublicationCategories([
-      ...categories
-      .filter((cat) => cat.parent === 5)
-    ]);
+    setPublicationCategories([...categories.filter((cat) => cat.parent === 5)]);
     categories
-      .filter(cat => cat.parent === 5)
+      .filter((cat) => cat.parent === 5)
       .forEach((item) => {
         setPubArray((prev) => [
           ...prev,
@@ -86,7 +88,7 @@ const Publications = ({ state, actions, categories }) => {
           },
         ]);
       });
-    }, [categories]);
+  }, [categories]);
 
   useEffect(() => {
     let array = [];
@@ -101,7 +103,6 @@ const Publications = ({ state, actions, categories }) => {
     setCheckedItems(array);
   }, [publicationCategories]);
 
-
   // get publication categories and publication array for later manipulation
 
   // Get the slider Data with slides
@@ -111,7 +112,7 @@ const Publications = ({ state, actions, categories }) => {
       publications.forEach((publication) =>
         publication.categories.map((category) => {
           array.forEach((item) => {
-            if (category.id === item.id ) {
+            if (category.id === item.id) {
               item.slides.push({
                 ...publication.featured_media,
                 link: publication.acf.pub_link,
@@ -131,7 +132,7 @@ const Publications = ({ state, actions, categories }) => {
   if (!data.isReady) return <Loading />;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+      bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -209,7 +210,7 @@ const Publications = ({ state, actions, categories }) => {
           pt="50px"
           pb={"80px"}
           fontSize={["md", "lg", "xl"]}
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+          color={contentColor}
         >
           <Grid
             templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
