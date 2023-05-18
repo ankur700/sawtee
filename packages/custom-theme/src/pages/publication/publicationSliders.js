@@ -38,7 +38,7 @@ const PublicationSliders = ({ sliderData, show, checkedItems }) => {
                 {item.slides.map((slide, idx) => {
                   return (
                     <LinkBox
-                      key={slide.alt + idx}
+                      key={slide.alt + `${idx}`}
                       w={
                         show
                           ? `calc(100% / ${show} - 20px)`
