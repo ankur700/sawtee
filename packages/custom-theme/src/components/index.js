@@ -19,6 +19,7 @@ import FontFace from "./styles/font-face";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Contact from "../pages/contact";
+import Publications from "../pages/publication/publications";
 
 const config = {
   initialColorMode: "light",
@@ -77,6 +78,10 @@ const Theme = ({ state, actions }) => {
             <Home when={data.isHome} categories={categories} />
             <KnowUs when={data.route === "/about/"} />
             <OurWork when={data.route === "/our-work/"} />
+            <Publications
+              when={data.route === "/publications/"}
+              categories={categories}
+            />
             <Contact when={data.route === "/contact/"} />
             <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />

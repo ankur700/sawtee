@@ -26,7 +26,8 @@ const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/news");
-  const publicationData = state.source.data["get-publications/"];
+  const publicationData = state.source.get("get-publications");
+
   const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
@@ -61,6 +62,21 @@ const Publications = ({ state, actions, categories }) => {
     }
   }, [publicationData.isReady]);
 
+  // useEffect(() => {
+  //   if (data.isReady) {
+  //     data.items.map((item, idx) => {
+  //       const post = state.source[item.type][item.id];
+  //       {
+  //         post &&
+  //           setPublications((prevValue) => [
+  //             ...prevValue,
+  //             formatCPTData(state, post, categories),
+  //           ]);
+  //       }
+  //     });
+  //   }
+  // }, [data]);
+
   useEffect(() => {
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
@@ -93,7 +109,7 @@ const Publications = ({ state, actions, categories }) => {
   useEffect(() => {
     let array = [];
     publicationCategories.map((cat, idx) => {
-      if (idx < 5) {
+      if (idx < 7) {
         array.push(true);
       } else {
         array.push(false);
@@ -122,11 +138,9 @@ const Publications = ({ state, actions, categories }) => {
         })
       );
 
-      setSliderData([...array]);
+      setSliderData(array);
     }
   }, [publications, pubArray]);
-
-  console.log(publications);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return <Loading />;
@@ -182,7 +196,6 @@ const Publications = ({ state, actions, categories }) => {
       {publicationCategories.length > 0 ? (
         <GlassBox
           as={Section}
-          // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
           mt={"6"}
           size={"lg"}
           px={{ base: "32px", md: "16px" }}
@@ -228,7 +241,6 @@ const Publications = ({ state, actions, categories }) => {
             <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
               <Sidebar>
                 <GlassBox py="4" px="8" rounded="2xl">
-                  {/* <SawteeInMediaWidget news={news} linkColor={linkColor} /> */}
                   <SidebarWidget
                     array={news}
                     title={"Sawtee in Media"}

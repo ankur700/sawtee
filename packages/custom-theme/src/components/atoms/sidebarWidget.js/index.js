@@ -42,23 +42,21 @@ const SidebarWidget = ({ array, linkColor, title }) => {
                 fontWeight="semibold"
                 color={useColorModeValue("gray.600", "whiteAlpha.600")}
               >
-                {item.categories &&
-                  item.categories
-                    .filter((cat) => cat.parent !== 0)
-                    .map((category, idx) => {
-                      return (
-                        <Text
-                          as="a"
-                          key={idx}
-                          href={category.link}
-                          _hover={{ textDecor: "underline" }}
-                          maxW="180px"
-                          noOfLines={1}
-                        >
-                          {category.name}
-                        </Text>
-                      );
-                    })}
+                {item.acf.publishers &&
+                  item.acf.publishers.map((publisher, idx) => {
+                    return (
+                      <Text
+                        as="a"
+                        key={idx}
+                        href={publisher.publisher_website}
+                        _hover={{ textDecor: "underline" }}
+                        maxW="180px"
+                        noOfLines={1}
+                      >
+                        {publisher.publisher}
+                      </Text>
+                    );
+                  })}
                 <Box
                   as="time"
                   dateTime={new Date(item.publishDate).toLocaleDateString()}

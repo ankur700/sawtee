@@ -16,8 +16,9 @@ const Archive = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
 
   if (data.isFeaturedEventsArchive) return <Events categories={categories} />;
-  if (data.isPublicationsArchive)
-    return <Publications categories={categories} />;
+
+  // if (data.isPublicationsArchive)
+  //   return <Publications categories={categories} />;
   if (data.isSawteeInMediaArchive)
     return <SawteeInMedia categories={categories} />;
   if (data.isProgrammeArchive) return <Programme categories={categories} />;

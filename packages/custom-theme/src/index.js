@@ -94,7 +94,7 @@ const customTheme = {
       beforeSSR: async ({ state, actions }) => {
         await actions.source.fetch("/events");
         await actions.source.fetch("/featured-events");
-        await actions.source.fetch("/publications");
+        // await actions.source.fetch("/publications");
         await actions.source.fetch("/news");
         await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("all-categories");
@@ -116,7 +116,7 @@ const customTheme = {
         EventsHandler,
         NewsHandler,
         PublicationsHandler,
-        CategoriesArchiveHandler,
+        // CategoriesArchiveHandler,
       ],
     },
   },

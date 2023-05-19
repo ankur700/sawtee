@@ -47,9 +47,7 @@ const Home = ({ state, categories }) => {
   }, [eventsList]);
 
   const getCategoryPost = (item) => {
-    let data = state.source.data["get-publications/"].items.filter(
-      (pub) => pub.id === item
-    );
+    let data = state.source[item.type][item];
     let post = getPublicationSliders(state, data[0], categories);
     return post;
   };

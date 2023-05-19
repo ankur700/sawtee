@@ -296,7 +296,7 @@ const settings = {
             ],
             orderBy: "id",
             order: "desc",
-            per_page: "50",
+            per_page: 20,
           },
           postTypes: [
             {
