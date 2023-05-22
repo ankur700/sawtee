@@ -18,11 +18,7 @@ import GlassBox from "../../components/atoms/glassBox";
 import React, { useState, useEffect } from "react";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import {
-  formatCPTData,
-  formatPostData,
-  getMediaAttributes,
-} from "../../components/helpers";
+import { formatCPTData, formatPostData } from "../../components/helpers";
 import Loading from "../../components/atoms/loading";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
@@ -31,6 +27,10 @@ const Publications = ({ state, actions, categories }) => {
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/news");
   const [sliderData, setSliderData] = useState([]);
+  console.log(
+    "🚀 ~ file: publications.js:33 ~ Publications ~ sliderData:",
+    sliderData
+  );
   const [publicationCategories, setPublicationCategories] = useState([]);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
@@ -70,7 +70,6 @@ const Publications = ({ state, actions, categories }) => {
 
   useEffect(() => {
     let array = [];
-    let slidesArray = [];
     publicationCategories.map((cat, idx) => {
       let data = state.source.get(`/publications/${cat.slug}/`);
 
@@ -99,32 +98,34 @@ const Publications = ({ state, actions, categories }) => {
 
   // Get the slider Data with slides
   useEffect(() => {
-    pubArray.forEach((pub) => {
-      let array = [];
-      pub.slides.map((item) => {
-        let post = formatCPTData(
-          state,
-          state.source[item.type][item.id],
-          categories
-        );
-        post &&
-          array.push({
-            ...post.featured_media,
-            link: post.acf.pub_link,
-          });
-      });
+    if (pubArray.length > 0) {
+      pubArray.forEach((pub) => {
+        let array = [];
+        pub.slides.map((item) => {
+          let post = formatCPTData(
+            state,
+            state.source[item.type][item.id],
+            categories
+          );
+          post &&
+            array.push({
+              ...post.featured_media,
+              link: post.acf.pub_link,
+            });
+        });
 
-      array.length > 4 &&
-        setSliderData((prev) => [
-          ...prev,
-          {
-            id: pub.id,
-            name: pub.name,
-            link: pub.link,
-            slides: [...array],
-          },
-        ]);
-    });
+        array.length > 4 &&
+          setSliderData((prev) => [
+            ...prev,
+            {
+              id: pub.id,
+              name: pub.name,
+              link: pub.link,
+              slides: [...array],
+            },
+          ]);
+      });
+    }
   }, [pubArray]);
 
   // Load the post, but only if the data is ready.

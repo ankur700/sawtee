@@ -36,7 +36,7 @@ const Carousel = (props) => {
   }, [children]);
 
   const next = () => {
-    if (currentIndex < length) {
+    if (currentIndex < length - show) {
       setCurrentIndex((prevState) => prevState + 1);
     }
   };
@@ -96,7 +96,7 @@ const Carousel = (props) => {
           <Box
             className={`carousel-content show-${show}`}
             //  w={`calc(100% / ${show} - 5% )`}
-            transform={`translateX(-${currentIndex * 100}%)`}
+            transform={`translateX(-${(currentIndex * 100) / show}%)`}
             gap={gap}
           >
             {children}

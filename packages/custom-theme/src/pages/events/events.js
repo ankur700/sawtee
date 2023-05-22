@@ -32,12 +32,13 @@ const EventsArchive = ({ state, actions, categories }) => {
   const linkColor = state.theme.colors.linkColor;
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
 
-  // Once the post has loaded in the DOM, prefetch both the
-  // home posts and the list component so if the user visits
-  // the home page, everything is ready and it loads instantly.
-
-  const newsData = state.source.get("/sawtee-in-media");
+  const newsData = state.source.get("/news");
 
   useEffect(() => {
     let newsArray = [];
@@ -56,7 +57,7 @@ const EventsArchive = ({ state, actions, categories }) => {
   if (!postData.isReady) return null;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+      bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -103,15 +104,13 @@ const EventsArchive = ({ state, actions, categories }) => {
         </Box>
       </Box>
       <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
-        pb="80px"
-        w="full"
-        m="0 auto"
-        size={size}
-        pt="50px"
         px={"32px"}
+        w="full"
+        size={size === undefined ? "lg" : size}
+        pt="50px"
+        pb={"80px"}
         fontSize={["md", "lg", "xl"]}
-        color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        color={contentColor}
       >
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}

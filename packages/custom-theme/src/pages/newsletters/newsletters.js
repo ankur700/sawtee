@@ -51,7 +51,7 @@ const NewsletterArchive = ({ state, actions, categories }) => {
     }
   }, [newsData.isReady]);
 
-  // console.log(newsletters);
+  console.log(postData);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
