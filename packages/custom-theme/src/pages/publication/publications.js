@@ -18,7 +18,11 @@ import GlassBox from "../../components/atoms/glassBox";
 import React, { useState, useEffect } from "react";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import { formatCPTData, formatPostData } from "../../components/helpers";
+import {
+  formatCPTData,
+  formatPostData,
+  getMediaAttributes,
+} from "../../components/helpers";
 import Loading from "../../components/atoms/loading";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
@@ -26,12 +30,8 @@ const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/news");
-  const publicationData = state.source.get("get-publications");
-
-  const [publications, setPublications] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [publicationCategories, setPublicationCategories] = useState([]);
-
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
@@ -46,36 +46,6 @@ const Publications = ({ state, actions, categories }) => {
 
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
-
-  useEffect(() => {
-    if (publicationData.isReady) {
-      publicationData.items.map((_, idx) => {
-        const post = state.source.data["get-publications/"].items[idx];
-        {
-          post &&
-            setPublications((prevValue) => [
-              ...prevValue,
-              formatCPTData(state, post, categories),
-            ]);
-        }
-      });
-    }
-  }, [publicationData.isReady]);
-
-  // useEffect(() => {
-  //   if (data.isReady) {
-  //     data.items.map((item, idx) => {
-  //       const post = state.source[item.type][item.id];
-  //       {
-  //         post &&
-  //           setPublications((prevValue) => [
-  //             ...prevValue,
-  //             formatCPTData(state, post, categories),
-  //           ]);
-  //       }
-  //     });
-  //   }
-  // }, [data]);
 
   useEffect(() => {
     if (newsData.isReady) {
@@ -94,21 +64,27 @@ const Publications = ({ state, actions, categories }) => {
     categories
       .filter((cat) => cat.parent === 5)
       .forEach((item) => {
-        setPubArray((prev) => [
-          ...prev,
-          {
-            id: item.id,
-            name: item.name,
-            link: item.link,
-            slides: [],
-          },
-        ]);
+        actions.source.fetch(`/publications/${item.slug}`);
       });
   }, [categories]);
 
   useEffect(() => {
     let array = [];
+    let slidesArray = [];
     publicationCategories.map((cat, idx) => {
+      let data = state.source.get(`/publications/${cat.slug}/`);
+
+      if (data.isReady) {
+        setPubArray((prev) => [
+          ...prev,
+          {
+            id: cat.id,
+            name: cat.name,
+            link: cat.link,
+            slides: [...data.items],
+          },
+        ]);
+      }
       if (idx < 7) {
         array.push(true);
       } else {
@@ -123,24 +99,33 @@ const Publications = ({ state, actions, categories }) => {
 
   // Get the slider Data with slides
   useEffect(() => {
-    if (publications.length > 0 && pubArray.length > 0) {
-      let array = [...pubArray];
-      publications.forEach((publication) =>
-        publication.categories.map((category) => {
-          array.forEach((item) => {
-            if (category.id === item.id) {
-              item.slides.push({
-                ...publication.featured_media,
-                link: publication.acf.pub_link,
-              });
-            }
+    pubArray.forEach((pub) => {
+      let array = [];
+      pub.slides.map((item) => {
+        let post = formatCPTData(
+          state,
+          state.source[item.type][item.id],
+          categories
+        );
+        post &&
+          array.push({
+            ...post.featured_media,
+            link: post.acf.pub_link,
           });
-        })
-      );
+      });
 
-      setSliderData(array);
-    }
-  }, [publications, pubArray]);
+      array.length > 4 &&
+        setSliderData((prev) => [
+          ...prev,
+          {
+            id: pub.id,
+            name: pub.name,
+            link: pub.link,
+            slides: [...array],
+          },
+        ]);
+    });
+  }, [pubArray]);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return <Loading />;

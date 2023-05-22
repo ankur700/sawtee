@@ -63,22 +63,44 @@ const PublicationSliders = ({ sliderData, show, checkedItems }) => {
                         },
                       }}
                     >
-                      <LinkOverlay title={sliderData.alt} href={slide.link}>
-                        <Image
-                          src={slide.src ? slide.src : ""}
-                          srcSet={slide.srcSet ? slide.srcSet : ""}
-                          alt={slide.alt}
-                          title={slide.alt}
-                          rounded="xl"
-                          border={`1px solid`}
-                          borderColor={useColorModeValue(
-                            "gray.900",
-                            "whiteAlpha.900"
-                          )}
-                          objectFit="cover"
-                          style={{ width: "175px", height: "230px" }}
-                        />
-                      </LinkOverlay>
+                      {idx <= 5 ? (
+                        <LinkOverlay title={sliderData.alt} href={slide.link}>
+                          <Image
+                            src={slide.src ? slide.src : ""}
+                            srcSet={slide.srcSet ? slide.srcSet : ""}
+                            alt={slide.alt}
+                            title={slide.alt}
+                            rounded="xl"
+                            border={`1px solid`}
+                            borderColor={useColorModeValue(
+                              "gray.900",
+                              "whiteAlpha.900"
+                            )}
+                            objectFit="cover"
+                            style={{ width: "175px", height: "230px" }}
+                          />
+                        </LinkOverlay>
+                      ) : (
+                        <LinkOverlay title={"view all"} href={item.link}>
+                          <Box
+                            bg={"gray.600"}
+                            rounded="xl"
+                            border={`1px solid`}
+                            borderColor={useColorModeValue(
+                              "gray.900",
+                              "whiteAlpha.900"
+                            )}
+                            display={"flex"}
+                            justifyContent={"center"}
+                            alignItems={"center"}
+                            style={{ width: "175px", height: "230px" }}
+                          >
+                            <Button variant="ghost">
+                              <Text>{item.name}</Text>
+                            </Button>
+                          </Box>
+                        </LinkOverlay>
+                      )}
                     </LinkBox>
                   );
                 })}
