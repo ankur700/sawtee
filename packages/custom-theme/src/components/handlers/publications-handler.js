@@ -10,8 +10,8 @@ const PublicationsHandler = {
       params: {
         _embed: true,
         orderBy: "menu_order",
-        order: "asc",
-        per_page: 100, // To make sure you get all of them
+        order: "desc",
+        per_page: 60, // To make sure you get all of them
       },
     });
 

@@ -27,7 +27,6 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
           width="100%"
           display="flex"
           justifyContent="center"
-          alignItems="center"
           overflow="hidden"
           backgroundImage={`url(${image})`}
           backgroundColor="rgba(0,0,0,0.6)"
@@ -40,6 +39,7 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
               fontSize={["xl", "2xl", "3xl"]}
               color={"whiteAlpha.800"}
               m="0"
+              alignSelf={"center"}
               zIndex={10}
               px={{ base: "2rem", md: "4rem" }}
               margin={{ base: "1rem 20px", lg: "1rem auto" }}

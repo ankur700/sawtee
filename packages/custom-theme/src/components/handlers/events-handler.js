@@ -12,7 +12,7 @@ const EventsHandler = {
         _embed: true,
         orderBy: "id",
         order: "desc",
-        offset: 1,
+        // offset: 1,
         per_page: 6, // To make sure you get all of them
       },
     });

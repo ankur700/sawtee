@@ -46,8 +46,11 @@ const Home = ({ state, categories }) => {
     }
   }, [eventsList]);
 
-  const getCategoryPost = (item) => {
-    let data = state.source[item.type][item];
+  const getCategoryPost = (item, idx) => {
+    console.log("🚀 ~ file: home.js:50 ~ getCategoryPost ~ item:", item);
+    let data = state.source.data["get-publications/"].items.filter(
+      (pub) => pub.id === item
+    );
     let post = getPublicationSliders(state, data[0], categories);
     return post;
   };
@@ -57,6 +60,7 @@ const Home = ({ state, categories }) => {
     let array2 = [];
     if (Publication_categories.length > 1) {
       Publication_categories[0].category_posts.map((item) => {
+        console.log(item);
         let post = getCategoryPost(item);
         array1.push(post);
       });

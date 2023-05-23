@@ -27,6 +27,8 @@ const Publications = ({ state, actions, categories }) => {
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/news");
   const [sliderData, setSliderData] = useState([]);
+
+  const [slides, setSlides] = useState([]);
   console.log(
     "🚀 ~ file: publications.js:33 ~ Publications ~ sliderData:",
     sliderData
@@ -38,7 +40,6 @@ const Publications = ({ state, actions, categories }) => {
     "whiteAlpha.800"
   );
 
-  const [pubArray, setPubArray] = useState([]);
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3]);
@@ -60,73 +61,44 @@ const Publications = ({ state, actions, categories }) => {
   }, [newsData]);
 
   useEffect(() => {
-    setPublicationCategories([...categories.filter((cat) => cat.parent === 5)]);
     categories
       .filter((cat) => cat.parent === 5)
       .forEach((item) => {
-        actions.source.fetch(`/publications/${item.slug}`);
+        actions.source.fetch(`/publications/${item.slug}/`);
+        setPublicationCategories((prev) => [...prev, item]);
+        state.source.get(`/publications/${item.slug}/`);
       });
-  }, [categories]);
+  }, []);
 
   useEffect(() => {
-    let array = [];
-    publicationCategories.map((cat, idx) => {
-      let data = state.source.get(`/publications/${cat.slug}/`);
-
-      if (data.isReady) {
-        setPubArray((prev) => [
+    publicationCategories.forEach((cat, idx) => {
+      let sliderArray = [];
+      state.source.data[`/publications/${cat.slug}/`].items?.forEach((item) => {
+        let post = state.source[item.type][item.id];
+        let postItem = formatCPTData(state, post, categories);
+        sliderArray.push({
+          ...postItem.featured_media,
+          link: postItem.acf.pub_link,
+        });
+      });
+      sliderArray.length > 0 &&
+        setSliderData((prev) => [
           ...prev,
           {
             id: cat.id,
             name: cat.name,
             link: cat.link,
-            slides: [...data.items],
+            slides: [...sliderArray],
           },
         ]);
-      }
-      if (idx < 7) {
-        array.push(true);
-      } else {
-        array.push(false);
-      }
-    });
 
-    setCheckedItems(array);
+      setCheckedItems((prev) => [...prev, idx < 7]);
+    });
   }, [publicationCategories]);
 
-  // get publication categories and publication array for later manipulation
-
-  // Get the slider Data with slides
   useEffect(() => {
-    if (pubArray.length > 0) {
-      pubArray.forEach((pub) => {
-        let array = [];
-        pub.slides.map((item) => {
-          let post = formatCPTData(
-            state,
-            state.source[item.type][item.id],
-            categories
-          );
-          post &&
-            array.push({
-              ...post.featured_media,
-              link: post.acf.pub_link,
-            });
-        });
-
-        array.length > 4 &&
-          setSliderData((prev) => [
-            ...prev,
-            {
-              id: pub.id,
-              name: pub.name,
-              link: pub.link,
-              slides: [...array],
-            },
-          ]);
-      });
-    }
-  }, [pubArray]);
+    setSlides([...sliderData]);
+  }, [sliderData]);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return <Loading />;
@@ -205,7 +177,7 @@ const Publications = ({ state, actions, categories }) => {
           as={Section}
           px={"32px"}
           w="full"
-          size={size === undefined ? "lg" : size}
+          size={size}
           pt="50px"
           pb={"80px"}
           fontSize={["md", "lg", "xl"]}
@@ -219,7 +191,7 @@ const Publications = ({ state, actions, categories }) => {
             <GridItem colSpan={3} px={4}>
               <PublicationSliders
                 linkColor={linkColor}
-                sliderData={sliderData}
+                sliderData={slides}
                 show={show ? show : 3}
                 checkedItems={checkedItems}
               />

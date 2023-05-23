@@ -4,6 +4,7 @@ import {
   CheckboxGroup,
   Checkbox,
 } from "@chakra-ui/react";
+import Link from "@frontity/components/link";
 import React from "react";
 
 const PublicationFilter = ({
@@ -13,6 +14,10 @@ const PublicationFilter = ({
   checkedItems,
   setCheckedItems,
 }) => {
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
   return (
     <>
       <CheckboxGroup colorScheme="primary" size="md" variant="outline">
@@ -26,6 +31,7 @@ const PublicationFilter = ({
         >
           <Checkbox
             isChecked={allChecked}
+            color={contentColor}
             isIndeterminate={isIndeterminate}
             onChange={(e) =>
               setCheckedItems(() => {
@@ -44,6 +50,7 @@ const PublicationFilter = ({
             return (
               <Checkbox
                 key={id}
+                color={contentColor}
                 isChecked={checkedItems[idx]}
                 onChange={(e) => {
                   let array = [...checkedItems];

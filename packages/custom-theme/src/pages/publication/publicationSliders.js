@@ -25,13 +25,15 @@ const PublicationSliders = ({ sliderData, show, checkedItems }) => {
           <Stack key={item.name} spacing="4">
             <Text
               as="h3"
-
+              id={item.name}
               m="0 0 2rem 0"
               fontSize={{ base: "xl", lg: "2xl" }}
               fontFamily="heading"
               color={TitleTextColor}
             >
-              <Link title={`View All ${item.name}`} link={item.link}>{item.name}</Link>
+              <Link title={`View All ${item.name}`} link={item.link}>
+                {item.name}
+              </Link>
             </Text>
             <Carousel show={show} gap={"20px"}>
               {item.slides.map((slide, idx) => {
