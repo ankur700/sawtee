@@ -26,19 +26,15 @@ const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/news");
-  const [sliderData, setSliderData] = useState([]);
 
-  const [slides, setSlides] = useState([]);
-  console.log(
-    "🚀 ~ file: publications.js:33 ~ Publications ~ sliderData:",
-    sliderData
-  );
   const [publicationCategories, setPublicationCategories] = useState([]);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
+  const [slides, setSlides] = useState([]);
+  const [sliderData, setSliderData] = useState([]);
 
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
@@ -66,39 +62,66 @@ const Publications = ({ state, actions, categories }) => {
       .forEach((item) => {
         actions.source.fetch(`/publications/${item.slug}/`);
         setPublicationCategories((prev) => [...prev, item]);
-        state.source.get(`/publications/${item.slug}/`);
       });
-  }, []);
+  }, [categories]);
+
+  const categoryPosts = React.useMemo(() => {
+    let array = [];
+    categories
+      .filter((cat) => cat.parent === 5)
+      .forEach((item) => {
+        let posts = state.source.get(`/publications/${item.slug}/`);
+        posts.isReady && array.push(posts.items);
+      });
+
+    if (array.length > 10) {
+      return array;
+    } else {
+      return null;
+    }
+  }, [categories]);
+  console.log(
+    "🚀 ~ file: publications.js:78 ~ categoryPosts ~ categoryPosts:",
+    categoryPosts
+  );
+
+  useEffect(() => {
+      publicationCategories.forEach((cat, idx) => {
+        categoryPosts[idx].items.forEach((item) => {
+          let post = state.source[item.type][item.id];
+          console.log(
+            "🚀 ~ file: publications.js:82 ~ categoryPosts.items.forEach ~ post:",
+            post
+          );
+
+          setSlides((prev) => [
+            ...prev,
+            {
+              ...formatCPTData(state, post, categories).featured_media,
+              link: formatCPTData(state, post, categories).acf.pub_link,
+            },
+          ]);
+        });
+        setCheckedItems((prev) => [...prev, idx < 7]);
+      });
+  }, [categoryPosts]);
 
   useEffect(() => {
     publicationCategories.forEach((cat, idx) => {
-      let sliderArray = [];
-      state.source.data[`/publications/${cat.slug}/`].items?.forEach((item) => {
-        let post = state.source[item.type][item.id];
-        let postItem = formatCPTData(state, post, categories);
-        sliderArray.push({
-          ...postItem.featured_media,
-          link: postItem.acf.pub_link,
-        });
-      });
-      sliderArray.length > 0 &&
+      if (slides.length > idx) {
         setSliderData((prev) => [
           ...prev,
           {
             id: cat.id,
             name: cat.name,
             link: cat.link,
-            slides: [...sliderArray],
+            slides: slides[idx],
           },
         ]);
-
-      setCheckedItems((prev) => [...prev, idx < 7]);
+      }
     });
-  }, [publicationCategories]);
-
-  useEffect(() => {
-    setSlides([...sliderData]);
-  }, [sliderData]);
+  }, [slides]);
+  console.log("🚀 ~ file: publications.js:96 ~ slides ~ slides:", slides);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return <Loading />;
@@ -191,7 +214,7 @@ const Publications = ({ state, actions, categories }) => {
             <GridItem colSpan={3} px={4}>
               <PublicationSliders
                 linkColor={linkColor}
-                sliderData={slides}
+                sliderData={sliderData}
                 show={show ? show : 3}
                 checkedItems={checkedItems}
               />

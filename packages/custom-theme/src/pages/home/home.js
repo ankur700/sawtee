@@ -47,7 +47,6 @@ const Home = ({ state, categories }) => {
   }, [eventsList]);
 
   const getCategoryPost = (item, idx) => {
-    console.log("🚀 ~ file: home.js:50 ~ getCategoryPost ~ item:", item);
     let data = state.source.data["get-publications/"].items.filter(
       (pub) => pub.id === item
     );
