@@ -3,11 +3,10 @@ import CarouselSection from "./carouselSection";
 import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
-import { Newsletter } from "../../components/atoms/newsletter";
 import { formatCPTData, getPublicationSliders } from "../../components/helpers";
 import React, { useEffect, useState } from "react";
 
-const Home = ({ state, categories }) => {
+const Home = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
@@ -16,23 +15,33 @@ const Home = ({ state, categories }) => {
   const introImage = post.acf?.about_section_image;
   const Publication_categories = post.acf?.publication_slider;
   const [PublicationSlider, setPublicationSlider] = useState([]);
+  const [CategoryOnePosts, setCategoryOnePosts] = useState([]);
+  const [CategoryTwoPosts, setCategoryTwoPosts] = useState([]);
 
   const eventsData = state.source.get("/events");
   const [eventsList, setEvetnsList] = useState([]);
   const [media, setMedia] = useState(null);
 
+  const CategoryOne = state.source.get(`/publications/${Publication_categories[0].category_slug}/`);
+  const CategoryTwo = state.source.get(
+    `/publications/${Publication_categories[1].category_slug}/`
+    );
+
+  useEffect(() => {
+    Publication_categories.map((cat) => {
+      actions.source.fetch(`/publications/${cat.category_slug}`);
+    });
+  }, [Publication_categories]);
 
   useEffect(() => {
     if (eventsData.isReady) {
-      let eventsArray = [];
       eventsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
-        eventsArray.push(formatCPTData(state, post, categories));
+        setEvetnsList((prev) => [
+          ...prev,
+          formatCPTData(state, post, categories),
+        ]);
       });
-
-      if (eventsArray.length > 0) {
-        setEvetnsList([...eventsArray]);
-      }
     }
   }, [eventsData]);
 
@@ -46,48 +55,44 @@ const Home = ({ state, categories }) => {
     }
   }, [eventsList]);
 
-  const getCategoryPost = (item, idx) => {
-    let data = state.source.data["get-publications/"].items.filter(
-      (pub) => pub.id === item
-    );
-    let post = getPublicationSliders(state, data[0], categories);
-    return post;
-  };
+
 
   useEffect(() => {
-    let array1 = [];
-    let array2 = [];
-    if (Publication_categories.length > 1) {
-      Publication_categories[0].category_posts.map((item) => {
-        console.log(item);
-        let post = getCategoryPost(item);
-        array1.push(post);
-      });
-      Publication_categories[1].category_posts.map((item) => {
-        let post = getCategoryPost(item);
-        array2.push(post);
-      });
+    if (CategoryOne.isReady) {
+      CategoryOne.items.map((item) => {
+        let post = state.source['publications'][item.id];
+        setCategoryOnePosts((prev) => [
+          ...prev,
+          getPublicationSliders(state, post, categories),
+        ]);
+      })
     }
 
-    if (array1.length > 0) {
-      setPublicationSlider((prevValue) => [
-        ...prevValue,
+  }, [CategoryOne.isReady])
+
+  useEffect(() => {
+    if (CategoryTwo.isReady) {
+      CategoryTwo.items.map((item) => {
+        let post = state.source['publications'][item.id];
+        setCategoryTwoPosts((prev) => [
+          ...prev,
+          getPublicationSliders(state, post, categories),
+        ]);
+      });
+    }
+  }, [CategoryTwo.isReady]);
+
+  useEffect(() => {
+    if(CategoryOnePosts.length > 0 && CategoryTwoPosts.length > 0){Publication_categories.map((cat, idx) => {
+      setPublicationSlider((prev) => [
+        ...prev,
         {
-          slider_title: Publication_categories[0].category_name,
-          slider: [...array1],
+          slider_title: cat.category_name,
+          slider: idx === 0 ? CategoryOnePosts : CategoryTwoPosts,
         },
       ]);
-    }
-    if (array2.length > 0) {
-      setPublicationSlider((prevValue) => [
-        ...prevValue,
-        {
-          slider_title: Publication_categories[1].category_name,
-          slider: [...array2],
-        },
-      ]);
-    }
-  }, [Publication_categories]);
+    })}
+  }, [CategoryOnePosts, CategoryTwoPosts])
 
   /*
 

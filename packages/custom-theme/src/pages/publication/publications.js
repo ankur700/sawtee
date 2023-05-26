@@ -33,7 +33,7 @@ const Publications = ({ state, actions, categories }) => {
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-  const [slides, setSlides] = useState([]);
+
   const [sliderData, setSliderData] = useState([]);
 
   const [news, setNews] = React.useState([]);
@@ -43,6 +43,21 @@ const Publications = ({ state, actions, categories }) => {
 
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+
+  const tradeInsight = state.source.get("/publications/trade-insight/");
+  const books = state.source.get("/publications/books/");
+  const discussionPaper = state.source.get("/publications/discussion-paper/");
+  const policyBrief = state.source.get("/publications/policy-brief/");
+  const briefingPaper = state.source.get("/publications/briefing-paper/");
+  const issuePaper = state.source.get("/publications/issue-paper/");
+  const workingPaper = state.source.get("/publications/working-paper/");
+  const researchBrief = state.source.get("/publications/research-paper/");
+  const others = state.source.get("/publications/others/");
+  const publicationsInNepali = state.source.get(
+    "/publications/publications-in-nepali/"
+  );
+  const BookChapters = state.source.get("/publications/book-chapters/");
+
 
   useEffect(() => {
     if (newsData.isReady) {
@@ -60,68 +75,63 @@ const Publications = ({ state, actions, categories }) => {
     categories
       .filter((cat) => cat.parent === 5)
       .forEach((item) => {
-        actions.source.fetch(`/publications/${item.slug}/`);
+        actions.source.fetch(`/publications/${item.slug}`);
         setPublicationCategories((prev) => [...prev, item]);
       });
-  }, [categories]);
+  }, []);
 
   const categoryPosts = React.useMemo(() => {
     let array = [];
-    categories
-      .filter((cat) => cat.parent === 5)
-      .forEach((item) => {
-        let posts = state.source.get(`/publications/${item.slug}/`);
-        posts.isReady && array.push(posts.items);
+    publicationCategories.forEach((item) => {
+      let post = item.slug.replace(/\w+/g, function (w) {
+        return w[0].toUpperCase() + w.slice(1).toLowerCase();
       });
+      console.log("🚀 ~ file: publications.js:75 ~ .forEach ~ post:", post);
+      array.push({
+        id: item.id,
+        name: item.name,
+        link: item.link,
+        posts: post.items !== undefined ? post.items : [],
+      });
+    });
+    return [...array];
+  }, [publicationCategories]);
 
-    if (array.length > 10) {
-      return array;
-    } else {
-      return null;
-    }
-  }, [categories]);
   console.log(
-    "🚀 ~ file: publications.js:78 ~ categoryPosts ~ categoryPosts:",
+    "🚀 ~ file: publications.js:86 ~ categoryPosts ~ categoryPosts:",
     categoryPosts
   );
 
   useEffect(() => {
-      publicationCategories.forEach((cat, idx) => {
-        categoryPosts[idx].items.forEach((item) => {
-          let post = state.source[item.type][item.id];
-          console.log(
-            "🚀 ~ file: publications.js:82 ~ categoryPosts.items.forEach ~ post:",
-            post
-          );
-
-          setSlides((prev) => [
-            ...prev,
-            {
-              ...formatCPTData(state, post, categories).featured_media,
-              link: formatCPTData(state, post, categories).acf.pub_link,
-            },
-          ]);
-        });
-        setCheckedItems((prev) => [...prev, idx < 7]);
+    categoryPosts.forEach((cat, idx) => {
+      let slides = [];
+      cat.posts.forEach((item) => {
+        let post = state.source[item.type][item.id];
+        post &&
+          slides.push({
+            ...formatCPTData(state, post, categories).featured_media,
+            link: formatCPTData(state, post, categories).acf.pub_link,
+          });
       });
-  }, [categoryPosts]);
-
-  useEffect(() => {
-    publicationCategories.forEach((cat, idx) => {
-      if (slides.length > idx) {
+      if (slides.length > 0) {
         setSliderData((prev) => [
           ...prev,
           {
             id: cat.id,
             name: cat.name,
             link: cat.link,
-            slides: slides[idx],
+            slides: [...slides],
           },
         ]);
       }
     });
-  }, [slides]);
-  console.log("🚀 ~ file: publications.js:96 ~ slides ~ slides:", slides);
+  }, [categoryPosts]);
+
+  useEffect(() => {
+    publicationCategories.map((_, idx) => {
+      setCheckedItems((prev) => [...prev, idx < 7]);
+    });
+  }, [publicationCategories]);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return <Loading />;

@@ -72,15 +72,16 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
                     color="whiteAlpha.900"
                   />
                   <Carousel show={show} gap={"30px"}>
-                    {item.slider.map((slide, idx) => {
+                    {item.slider.map((slide) => {
                       return (
                         <Link
-                          key={slide.id + idx}
+                          key={slide.id}
                           title={
                             slide.featured_media.alt
                               ? slide.featured_media.alt
                               : ""
                           }
+                          height={"auto"}
                           link={slide.acf.pub_link}
                           pos={"relative"}
                           w={`calc(100% / ${show} - 30px )`}
@@ -89,8 +90,8 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
                             position: "absolute",
                             top: 0,
                             left: "unset",
-                            width: `175px`,
-                            height: "100%",
+                            width: `100%`,
+                            height: "auto",
                             borderRadius: "15px",
                             background: "rgba(0,0,0,0.3)",
                             backgroundBlendMode: "overlay",
@@ -119,7 +120,7 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
                               "whiteAlpha.900"
                             )}
                             objectFit="cover"
-                            style={{ width: "175px", height: "230px" }}
+                            style={{ width: "100%", height: "auto" }}
                           />
                         </Link>
                       );

@@ -1,5 +1,5 @@
 const PublicationArchiveHandler = {
-  pattern: "/publications/:slug/",
+  pattern: "/publications/:slug",
   func: async ({ route, params, state, libraries }) => {
     // Get the page of the current route.
     const { page } = libraries.source.parse(route);
