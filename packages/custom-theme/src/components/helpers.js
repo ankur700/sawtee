@@ -10,6 +10,19 @@ export function formatDateWithMoment(date, format) {
   return formatedDate;
 }
 
+export const slugToCamelCase = (string, type, separators) => {
+  if (!separators || typeof separators != "string") {
+    separators = "-_.";
+  }
+  let result = string.replace(
+    new RegExp("[" + separators + "][a-z]", "ig"),
+    function (s) {
+      return s.substr(1, 1).toUpperCase();
+    }
+  );
+  return result;
+};
+
 export const getBreakpointValue = (value, fallback, ssr) =>
   useBreakpointValue(
     value,
@@ -19,12 +32,11 @@ export const getBreakpointValue = (value, fallback, ssr) =>
     }
   );
 
-export const getPostsFromCategory = ({ post }, categoryId) =>
-{
+export const getPostsFromCategory = ({ post }, categoryId) => {
   return Object.keys(post)
     .map((postID) => post[postID])
     .filter(({ categories }) => categories.includes(parseInt(categoryId)));
-}
+};
 
 export const getPostsGroupedByCategory = (source) => {
   return Object.values(categoriesWidgetsHome).reduce((acc, categoryId) => {
@@ -103,8 +115,6 @@ export function getPublicationSliders(state, post, categories) {
     acf: post.acf,
   };
 }
-
-
 
 export function getPostCategories(state, post, categoriesPool) {
   if (categoriesPool) {
@@ -241,8 +251,8 @@ export function formatDate(date) {
 }
 
 export function isUrl(str) {
-  var regexp =
-    /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!-/]))?/;
+  let regexp =
+    /(ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!-/]))?/;
   return regexp.test(str);
 }
 

@@ -18,46 +18,55 @@ import GlassBox from "../../components/atoms/glassBox";
 import React, { useState, useEffect } from "react";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import { formatCPTData, formatPostData } from "../../components/helpers";
+import {
+  formatCPTData,
+  formatPostData,
+  slugToCamelCase,
+} from "../../components/helpers";
 import Loading from "../../components/atoms/loading";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
-  const linkColor = state.theme.colors.linkColor;
   const newsData = state.source.get("/news");
-
   const [publicationCategories, setPublicationCategories] = useState([]);
+  const [categoryPosts, setCategoryPosts] = useState([]);
+  const [categoryVariables, setCategoryVariables] = useState([]);
+  const [sliderData, setSliderData] = useState([]);
+  const [news, setNews] = React.useState([]);
+  const [checkedItems, setCheckedItems] = React.useState([]);
+
+  const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-
-  const [sliderData, setSliderData] = useState([]);
-
-  const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3]);
-  const [checkedItems, setCheckedItems] = React.useState([]);
-
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
-  const tradeInsight = state.source.get("/publications/trade-insight/");
-  const books = state.source.get("/publications/books/");
-  const discussionPaper = state.source.get("/publications/discussion-paper/");
-  const policyBrief = state.source.get("/publications/policy-brief/");
-  const briefingPaper = state.source.get("/publications/briefing-paper/");
-  const issuePaper = state.source.get("/publications/issue-paper/");
-  const workingPaper = state.source.get("/publications/working-paper/");
-  const researchBrief = state.source.get("/publications/research-paper/");
-  const others = state.source.get("/publications/others/");
-  const publicationsInNepali = state.source.get(
-    "/publications/publications-in-nepali/"
-  );
-  const BookChapters = state.source.get("/publications/book-chapters/");
-
+  useEffect(() => {
+    categories
+      .filter((cat) => cat.parent === 5)
+      .forEach((item) => {
+        actions.source.fetch(`/publications/${item.slug}`);
+        setPublicationCategories((prev) => [...prev, item]);
+        let post = state.source.get(`/publications/${item.slug}`).items;
+        console.log("🚀 ~ file: publications.js:57 ~ .forEach ~ post:", post);
+        setCategoryVariables((prev) => [
+          ...prev,
+          {
+            id: item.id,
+            name: item.name,
+            link: item.link,
+            slug: item.slug,
+            [slugToCamelCase(item.slug)]: post ? [...post] : [],
+          },
+        ]);
+      });
+  }, [categories]);
 
   useEffect(() => {
     if (newsData.isReady) {
@@ -72,34 +81,27 @@ const Publications = ({ state, actions, categories }) => {
   }, [newsData]);
 
   useEffect(() => {
-    categories
-      .filter((cat) => cat.parent === 5)
-      .forEach((item) => {
-        actions.source.fetch(`/publications/${item.slug}`);
-        setPublicationCategories((prev) => [...prev, item]);
-      });
-  }, []);
-
-  const categoryPosts = React.useMemo(() => {
-    let array = [];
-    publicationCategories.forEach((item) => {
-      let post = item.slug.replace(/\w+/g, function (w) {
-        return w[0].toUpperCase() + w.slice(1).toLowerCase();
-      });
-      console.log("🚀 ~ file: publications.js:75 ~ .forEach ~ post:", post);
-      array.push({
-        id: item.id,
-        name: item.name,
-        link: item.link,
-        posts: post.items !== undefined ? post.items : [],
-      });
+    categoryVariables.forEach((item) => {
+      let posts = item[slugToCamelCase(item.slug)];
+      console.log(
+        "🚀 ~ file: publications.js:87 ~ categoryVariables.forEach ~ post:",
+        posts
+      );
+      setCategoryPosts((prev) => [
+        ...prev,
+        {
+          id: item.id,
+          name: item.name,
+          link: item.link,
+          posts: posts,
+        },
+      ]);
     });
-    return [...array];
-  }, [publicationCategories]);
+  }, [categoryVariables]);
 
   console.log(
     "🚀 ~ file: publications.js:86 ~ categoryPosts ~ categoryPosts:",
-    categoryPosts
+    categoryPosts,
   );
 
   useEffect(() => {
