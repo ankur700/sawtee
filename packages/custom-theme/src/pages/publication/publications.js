@@ -31,8 +31,8 @@ const Publications = ({ state, actions, categories }) => {
   const newsData = state.source.get("/news");
   const [publicationCategories, setPublicationCategories] = useState([]);
   const [categoryPosts, setCategoryPosts] = useState([]);
-  const [categoryVariables, setCategoryVariables] = useState([]);
   const [sliderData, setSliderData] = useState([]);
+
   const [news, setNews] = React.useState([]);
   const [checkedItems, setCheckedItems] = React.useState([]);
 
@@ -47,26 +47,127 @@ const Publications = ({ state, actions, categories }) => {
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
+  const tradeInsight = state.source.get("/publications/trade-insight/");
+  const books = state.source.get("/publications/books/");
+  const discussionPaper = state.source.get("/publications/discussion-paper/");
+  const policyBrief = state.source.get("/publications/policy-brief/");
+  const briefingPaper = state.source.get("/publications/briefing-paper/");
+  const issuePaper = state.source.get("/publications/issue-paper/");
+  const workingPaper = state.source.get("/publications/working-paper/");
+  const researchBrief = state.source.get("/publications/research-brief/");
+  const others = state.source.get("/publications/others/");
+  const publicationsInNepali = state.source.get(
+    "/publications/publications-in-nepali/"
+  );
+  const bookChapters = state.source.get("/publications/book-chapters/");
+
   useEffect(() => {
     categories
       .filter((cat) => cat.parent === 5)
       .forEach((item) => {
         actions.source.fetch(`/publications/${item.slug}`);
         setPublicationCategories((prev) => [...prev, item]);
-        let post = state.source.get(`/publications/${item.slug}`).items;
-        console.log("🚀 ~ file: publications.js:57 ~ .forEach ~ post:", post);
-        setCategoryVariables((prev) => [
-          ...prev,
-          {
-            id: item.id,
-            name: item.name,
-            link: item.link,
-            slug: item.slug,
-            [slugToCamelCase(item.slug)]: post ? [...post] : [],
-          },
-        ]);
       });
-  }, [categories]);
+  }, []);
+
+  useEffect(() => {
+    if (tradeInsight.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: tradeInsight.id, posts: [...tradeInsight.items] },
+      ]);
+    }
+  }, [tradeInsight.isReady]);
+
+  useEffect(() => {
+    if (books.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: books.id, posts: [...books.items] },
+      ]);
+    }
+  }, [books.isReady]);
+
+  useEffect(() => {
+    if (discussionPaper.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: discussionPaper.id, posts: [...discussionPaper.items] },
+      ]);
+    }
+  }, [discussionPaper.isReady]);
+
+  useEffect(() => {
+    if (policyBrief.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: policyBrief.id, posts: [...policyBrief.items] },
+      ]);
+    }
+  }, [policyBrief.isReady]);
+
+  useEffect(() => {
+    if (briefingPaper.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: briefingPaper.id, posts: [...briefingPaper.items] },
+      ]);
+    }
+  }, [briefingPaper.isReady]);
+
+  useEffect(() => {
+    if (issuePaper.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: issuePaper.id, posts: [...issuePaper.items] },
+      ]);
+    }
+  }, [issuePaper.isReady]);
+
+  useEffect(() => {
+    if (workingPaper.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: workingPaper.id, posts: [...workingPaper.items] },
+      ]);
+    }
+  }, [workingPaper.isReady]);
+
+  useEffect(() => {
+    if (researchBrief.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: researchBrief.id, posts: [...researchBrief.items] },
+      ]);
+    }
+  }, [researchBrief.isReady]);
+
+  useEffect(() => {
+    if (others.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: others.id, posts: [...others.items] },
+      ]);
+    }
+  }, [others.isReady]);
+
+  useEffect(() => {
+    if (publicationsInNepali.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: publicationsInNepali.id, posts: [...publicationsInNepali.items] },
+      ]);
+    }
+  }, [publicationsInNepali.isReady]);
+
+  useEffect(() => {
+    if (bookChapters.isReady) {
+      setCategoryPosts((prev) => [
+        ...prev,
+        { id: bookChapters.id, posts: [...bookChapters.items] },
+      ]);
+    }
+  }, [bookChapters.isReady]);
 
   useEffect(() => {
     if (newsData.isReady) {
@@ -81,53 +182,33 @@ const Publications = ({ state, actions, categories }) => {
   }, [newsData]);
 
   useEffect(() => {
-    categoryVariables.forEach((item) => {
-      let posts = item[slugToCamelCase(item.slug)];
-      console.log(
-        "🚀 ~ file: publications.js:87 ~ categoryVariables.forEach ~ post:",
-        posts
-      );
-      setCategoryPosts((prev) => [
-        ...prev,
-        {
-          id: item.id,
-          name: item.name,
-          link: item.link,
-          posts: posts,
-        },
-      ]);
-    });
-  }, [categoryVariables]);
-
-  console.log(
-    "🚀 ~ file: publications.js:86 ~ categoryPosts ~ categoryPosts:",
-    categoryPosts,
-  );
-
-  useEffect(() => {
-    categoryPosts.forEach((cat, idx) => {
-      let slides = [];
-      cat.posts.forEach((item) => {
-        let post = state.source[item.type][item.id];
-        post &&
-          slides.push({
-            ...formatCPTData(state, post, categories).featured_media,
-            link: formatCPTData(state, post, categories).acf.pub_link,
-          });
+    if (categoryPosts.length == publicationCategories.length) {
+      let result = categoryPosts.sort((a, b) => a.id - b.id);
+      publicationCategories.forEach((cat, idx) => {
+        let slides = [];
+        result[idx].posts.forEach((item) => {
+          let post = state.source[item.type][item.id];
+          post &&
+            slides.push({
+              ...formatCPTData(state, post, categories).featured_media,
+              link: formatCPTData(state, post, categories).acf.pub_link,
+            });
+        });
+        if (slides.length > 0) {
+          setSliderData((prev) => [
+            ...prev,
+            {
+              id: cat.id,
+              name: cat.name,
+              link: cat.link,
+              slides: [...slides],
+            },
+          ]);
+        }
       });
-      if (slides.length > 0) {
-        setSliderData((prev) => [
-          ...prev,
-          {
-            id: cat.id,
-            name: cat.name,
-            link: cat.link,
-            slides: [...slides],
-          },
-        ]);
-      }
-    });
-  }, [categoryPosts]);
+    }
+  }, [publicationCategories, categoryPosts]);
+
 
   useEffect(() => {
     publicationCategories.map((_, idx) => {
