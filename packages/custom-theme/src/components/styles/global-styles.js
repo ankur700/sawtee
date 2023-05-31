@@ -1,6 +1,6 @@
 import { css } from "frontity";
-// import gutenbergStyles from "./style.js";
-// import gutenbergTheme from "./theme.js";
+import gutenbergStyles from "./style.js";
+import gutenbergTheme from "./theme.js";
 
 /**
  * Styles for Document Setup.
@@ -116,205 +116,6 @@ const accessibilitySettings = css`
   }
 `;
 
-// const elementBase = (colors) => css`
-//   main {
-//     display: block;
-//   }
-
-//   h1,
-//   h2,
-//   h3,
-//   h4,
-//   h5,
-//   h6,
-//   .faux-heading {
-//     font-feature-settings: "lnum";
-//     font-variant-numeric: lining-nums;
-//     font-weight: 700;
-//     letter-spacing: -0.0415625em;
-//     line-height: 1.25;
-//     margin: 3.5rem 0 2rem;
-//     font-family: "Inter", sans-serif;
-//   }
-
-//   h1,
-//   .heading-size-1 {
-//     font-size: 3.6rem;
-//     font-weight: 800;
-//     line-height: 1.138888889;
-//   }
-
-//   h2,
-//   .heading-size-2 {
-//     font-size: 3.2rem;
-//   }
-
-//   h3,
-//   .heading-size-3 {
-//     font-size: 2.8rem;
-//   }
-
-//   h4,
-//   .heading-size-4 {
-//     font-size: 2.4rem;
-//   }
-
-//   h5,
-//   .heading-size-5 {
-//     font-size: 2.1rem;
-//   }
-
-//   h6,
-//   .heading-size-6 {
-//     font-size: 1.6rem;
-//     letter-spacing: 0.03125em;
-//     text-transform: uppercase;
-//   }
-
-//   p {
-//     line-height: 1.5;
-//     margin: 0 0 1em 0;
-//   }
-
-//   em,
-//   i,
-//   q,
-//   dfn {
-//     font-style: italic;
-//   }
-
-//   em em,
-//   em i,
-//   i em,
-//   i i,
-//   cite em,
-//   cite i {
-//     font-weight: bolder;
-//   }
-
-//   big {
-//     font-size: 1.2em;
-//   }
-
-//   small {
-//     font-size: 0.75em;
-//   }
-
-//   b,
-//   strong {
-//     font-weight: 700;
-//   }
-
-//   ins {
-//     text-decoration: underline;
-//   }
-
-//   sub,
-//   sup {
-//     font-size: 75%;
-//     line-height: 0;
-//     position: relative;
-//     vertical-align: baseline;
-//   }
-
-//   sup {
-//     top: -0.5em;
-//   }
-
-//   sub {
-//     bottom: -0.25em;
-//   }
-
-//   abbr,
-//   acronym {
-//     cursor: help;
-//   }
-
-//   address {
-//     line-height: 1.5;
-//     margin: 0 0 2rem 0;
-//   }
-
-//   hr {
-//     border-style: solid;
-//     border-width: 0.1rem 0 0 0;
-//     border-color: ${colors.gray.light};
-//     margin: 4rem 0;
-//   }
-
-//   // a {
-//   //   color: ${colors.gray["900"]};
-//   //   text-decoration: none;
-//   //   text-underline-offset: 3px;
-//   // }
-
-//   // a:hover,
-//   // a:focus {
-//   //   text-decoration: underline;
-//   // }
-// `;
-
-// const elementBase700 = css`
-//   @media (min-width: 700px) {
-//     h1,
-//     .heading-size-1,
-//     h2,
-//     .heading-size-2,
-//     h3,
-//     .heading-size-3 {
-//       margin: 6rem auto 3rem;
-//     }
-
-//     h4,
-//     .heading-size-4,
-//     h5,
-//     .heading-size-5,
-//     h6,
-//     .heading-size-6 {
-//       margin: 4.5rem auto 2.5rem;
-//     }
-
-//     h1,
-//     .heading-size-1 {
-//       font-size: 6.4rem;
-//     }
-
-//     h2,
-//     .heading-size-2 {
-//       font-size: 4.8rem;
-//     }
-
-//     h3,
-//     .heading-size-3 {
-//       font-size: 4rem;
-//     }
-
-//     h4,
-//     .heading-size-4 {
-//       font-size: 3.2rem;
-//     }
-
-//     h5,
-//     .heading-size-5 {
-//       font-size: 2.4rem;
-//     }
-
-//     h6,
-//     .heading-size-6 {
-//       font-size: 1.8rem;
-//     }
-//   }
-// `;
-
-// const elementBase1220 = css`
-//   @media (min-width: 1220px) {
-//     h1,
-//     .heading-size-1 {
-//       font-size: 8.4rem;
-//     }
-//   }
-// `;
-
 /**
  * Global styles for the TwentyTwenty theme.
  *
@@ -325,12 +126,9 @@ const globalStyle = (colors) =>
   css([
     documentSetup(colors),
     accessibilitySettings,
-    // elementBase(colors),
-    // elementBase700,
-    // elementBase1220,
-    // gutenbergTheme,
-    // gutenbergStyles,
-    // shortcodesUltimateStyles,
+
+    gutenbergTheme,
+    gutenbergStyles,
   ]);
 
 export default globalStyle;

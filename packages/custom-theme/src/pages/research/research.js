@@ -19,15 +19,20 @@ import ResearchList from "./researchList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import React from "react";
 import { formatCPTData } from "../../components/helpers";
-import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
+import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const ResearchArchive = ({ state, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
   const [news, setNews] = React.useState([]);
@@ -56,7 +61,7 @@ const ResearchArchive = ({ state, categories }) => {
   if (!postData.isReady) return null;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+      bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -104,10 +109,11 @@ const ResearchArchive = ({ state, categories }) => {
       </Box>
       <Section
         pb="80px"
-        px={{ base: "32px", md: "0" }}
-        size={size}
+        size={size ? size : "lg"}
+        px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
+        color={contentColor}
       >
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
@@ -133,10 +139,14 @@ const ResearchArchive = ({ state, categories }) => {
               </Wrapper>
             ))}
           </GridItem>
-          <GridItem colSpan={2} display={"flex"}>
+          <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+              <GlassBox py="4" px="8" rounded="2xl">
+                <SidebarWidget
+                  array={news}
+                  title={"Sawtee in Media"}
+                  linkColor={linkColor}
+                />
               </GlassBox>
               <GlassBox
                 rounded="2xl"

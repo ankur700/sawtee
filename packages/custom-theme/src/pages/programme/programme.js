@@ -20,23 +20,28 @@ import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import React from "react";
 import { formatCPTData } from "../../components/helpers";
+import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const Programmes = ({ state, actions, categories }) => {
   const postData = state.source.get(state.router.link);
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 2 });
+  const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const linkColor = state.theme.colors.linkColor;
-  const [news, setNews] = React.useState([]);
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
 
   React.useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
+    actions.source.fetch("/news");
   }, []);
 
-  const newsData = state.source.get("/sawtee-in-media");
+  const newsData = state.source.get("/news");
   React.useEffect(() => {
     let newsArray = [];
     if (newsData.isReady) {
@@ -55,7 +60,7 @@ const Programmes = ({ state, actions, categories }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+      bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -104,13 +109,12 @@ const Programmes = ({ state, actions, categories }) => {
 
       <Box
         as={Section}
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
         size={size ? size : "lg"}
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
-        color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        color={contentColor}
       >
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
@@ -136,10 +140,14 @@ const Programmes = ({ state, actions, categories }) => {
               </Wrapper>
             ))}
           </GridItem>
-          <GridItem colSpan={2}>
+          <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+              <GlassBox py="4" px="8" rounded="2xl">
+                <SidebarWidget
+                  array={news}
+                  title={"Sawtee in Media"}
+                  linkColor={linkColor}
+                />
               </GlassBox>
               <GlassBox
                 rounded="2xl"

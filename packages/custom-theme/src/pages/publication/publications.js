@@ -21,7 +21,6 @@ import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import {
   formatCPTData,
   formatPostData,
-  slugToCamelCase,
 } from "../../components/helpers";
 import Loading from "../../components/atoms/loading";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";

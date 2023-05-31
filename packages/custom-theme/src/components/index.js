@@ -20,6 +20,7 @@ import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Contact from "../pages/contact";
 import Publications from "../pages/publication/publications";
+import Career from "../pages/career";
 
 const config = {
   initialColorMode: "light",
@@ -83,6 +84,8 @@ const Theme = ({ state, actions }) => {
               categories={categories}
             />
             <Contact when={data.route === "/contact/"} />
+            <Career when={data.route === "/career/"} />
+
             <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />
             <HomeArchive when={data.route === "/blog"} />

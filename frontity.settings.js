@@ -8,7 +8,7 @@ const settings = {
     frontity: {
       title: "SAWTEE",
       description: "South Asia Watch on Trade, Economics and Environment",
-      year: "1997",
+      year: "1995",
       logo: "/assets/webp/logo-sawtee.webp",
     },
   },

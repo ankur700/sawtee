@@ -36,7 +36,7 @@ const ResearchList = ({ state, link, categories }) => {
     let array = [];
     researches.forEach(({ tags }, id) => {
       tags.map((tag) => {
-        if (array.length === 0) {
+        if (array.length <= 1) {
           array.push({ id: tag.id, name: tag.name, posts: [] });
         } else {
           if (array[id - 1].id !== tag.id) {
@@ -46,7 +46,6 @@ const ResearchList = ({ state, link, categories }) => {
       });
     });
     if (array.length > 0) {
-      console.log(array);
       return [...array.sort((a, b) => a.id - b.id)];
     }
   }, [researches]);
@@ -64,64 +63,68 @@ const ResearchList = ({ state, link, categories }) => {
   return (
     <Container maxW="5xl" p={{ base: 2, sm: 10 }}>
       <VStack textAlign="start" align="start" mb={5} spacing={10}>
-        {tagsArray &&
-          tagsArray.map((tagitem) => {
-            postsSortedByTags(tagitem);
-            return (
-              <Box zIndex={5} key={tagitem.id}>
-                <Heading
-                  fontSize="2xl"
-                  fontWeight="bold"
-                  my={5}
-                  color={useColorModeValue("gray.800", "whiteAlpha.800")}
-                >
-                  {tagitem.name}
-                </Heading>
-                <Box
-                  p={4}
-                  bg={useColorModeValue("white", "gray.800")}
-                  rounded="xl"
-                  borderWidth="1px"
-                  borderColor={useColorModeValue("gray.100", "gray.700")}
-                  w="100%"
-                  h="100%"
-                  textAlign="left"
-                  display={"flex"}
-                  boxShadow={"lg"}
-                  flexDirection={"column"}
-                  alignItems="center"
-                  cursor="pointer"
-                  _hover={{ shadow: "md" }}
-                >
-                  {tagitem.posts.map((researchItem, idx) => (
-                    <ReasearchItem
-                      key={researchItem.id}
-                      icon={HiOutlineNewspaper}
-                      skipTrail={
-                        idx !== tagitem.posts.length - 1 ? true : false
-                      }
-                      minH={idx !== tagitem.posts.length - 1 ? 20 : "auto"}
-                    >
-                      <Text
-                        color={useColorModeValue("gray.800", "whiteAlpha.800")}
-                        fontSize="lg"
-                        lineHeight={1.2}
-                        fontWeight="bold"
-                        _hover={{
-                          color: color,
-                          textDecoration: "underline",
-                        }}
+        {tagsArray
+          ? tagsArray.map((tagitem) => {
+              postsSortedByTags(tagitem);
+              return (
+                <Box zIndex={5} key={tagitem.id}>
+                  <Heading
+                    fontSize="2xl"
+                    fontWeight="bold"
+                    my={5}
+                    color={useColorModeValue("gray.800", "whiteAlpha.800")}
+                  >
+                    {tagitem.name}
+                  </Heading>
+                  <Box
+                    p={4}
+                    bg={useColorModeValue("white", "gray.800")}
+                    rounded="xl"
+                    borderWidth="1px"
+                    borderColor={useColorModeValue("gray.100", "gray.700")}
+                    w="100%"
+                    h="100%"
+                    textAlign="left"
+                    display={"flex"}
+                    boxShadow={"lg"}
+                    flexDirection={"column"}
+                    alignItems="center"
+                    cursor="pointer"
+                    _hover={{ shadow: "md" }}
+                  >
+                    {tagitem.posts.map((researchItem, idx) => (
+                      <ReasearchItem
+                        key={researchItem.id}
+                        icon={HiOutlineNewspaper}
+                        skipTrail={
+                          idx !== tagitem.posts.length - 1 ? true : false
+                        }
+                        minH={idx !== tagitem.posts.length - 1 ? 20 : "auto"}
                       >
-                        <Link href={researchItem.link}>
-                          {researchItem.title}
-                        </Link>
-                      </Text>
-                    </ReasearchItem>
-                  ))}
+                        <Text
+                          color={useColorModeValue(
+                            "gray.800",
+                            "whiteAlpha.800"
+                          )}
+                          fontSize="lg"
+                          lineHeight={1.2}
+                          fontWeight="bold"
+                          _hover={{
+                            color: color,
+                            textDecoration: "underline",
+                          }}
+                        >
+                          <Link href={researchItem.link}>
+                            {researchItem.title}
+                          </Link>
+                        </Text>
+                      </ReasearchItem>
+                    ))}
+                  </Box>
                 </Box>
-              </Box>
-            );
-          })}
+              );
+            })
+          : null}
       </VStack>
     </Container>
   );

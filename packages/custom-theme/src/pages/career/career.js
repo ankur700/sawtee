@@ -1,13 +1,5 @@
-import {
-  Box,
-  Container,
-  Heading,
-  SimpleGrid,
-  VStack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { connect, decode, styled } from "frontity";
+import { Box, useColorModeValue } from "@chakra-ui/react";
+import { connect, styled } from "frontity";
 import React from "react";
 import { formatPostData, getPostData } from "../../components/helpers";
 import FeaturedMedia from "../../components/organisms/post/featured-media";
@@ -17,7 +9,7 @@ import Section from "../../components/styles/section";
 import GlassBox from "../../components/atoms/glassBox";
 import Loading from "../../components/atoms/loading";
 
-const Contact = ({ state, libraries }) => {
+const Career = ({ state, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
   const Html2React = libraries.html2react.Component;
@@ -41,6 +33,7 @@ const Contact = ({ state, libraries }) => {
             mt="0"
             height={"350px"}
             id={post.featured_media.id}
+            objectFit={"contain"}
             _after={{
               display: "block",
               content: '""',
@@ -70,92 +63,36 @@ const Contact = ({ state, libraries }) => {
         />
       </Box>
       {/* Look at the settings to see if we should include the featured image */}
-      <GlassBox
-        as={Section}
-        border="none"
+      <Section
+        px={"32px"}
+        w="full"
         size={"lg"}
-        px={{ base: "32px", md: "16px" }}
-        paddingBlock="50px"
-        mt="50px"
+        pt="50px"
+        pb={"80px"}
+        fontSize={["md", "lg", "xl"]}
         color={contentColor}
       >
-        {/* Render the content using the Html2React component so the HTML is processed
+        <GlassBox border="none">
+          {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
-        <Content px={{ base: "32px", md: "16px" }}>
-          <SimpleGrid columns={2} spacing={6}>
-            <Box bg={"#000"} p={6}>
-              <Html2React html={post.content} />
-            </Box>
-            <VStack alignItems={"start"} pl={10} spacing={6}>
-              {/* <Box>
-                <Heading as="h4" className={"info-heading"} fontSize={{base: 'xl', md: '3xl'}}>
-                  <Text as="span" fontSize={"36px"} color={"inherit"}>
-                    Vist
-                  </Text>
-                  <br />
-                  SAWTEE
-                </Heading>
-              </Box> */}
-              <Box>
-                <Heading
-                  as="h4"
-                  className={"info-heading"}
-                  fontSize={{ base: "xl", md: "3xl" }}
-                >
-                  Opening Hours
-                </Heading>
-                <Text className="info-text">
-                  MONDAY-FRIDAY 9:00 AM – 5:30 PM
-                </Text>
-              </Box>
-              <Box>
-                <Heading
-                  as="h4"
-                  className={"info-heading"}
-                  fontSize={{ base: "xl", md: "3xl" }}
-                >
-                  Address
-                </Heading>
-                <Text
-                  as="address"
-                  className="info-text"
-                  fontSize={{ base: "xl", md: "2xl" }}
-                >
-                  Tukucha Marg, Baluwatar, Kathmandu, Nepal
-                </Text>
-              </Box>
-              <Box>
-                <Heading
-                  as="h4"
-                  className={"info-heading"}
-                  fontSize={{ base: "xl", md: "3xl" }}
-                >
-                  General Information
-                </Heading>
-                <Text className="info-text" pb={6}>
-                  No Current Job Openings
-                </Text>
-                <Heading
-                  as="h4"
-                  className={"info-heading"}
-                  fontSize={{ base: "xl", md: "3xl" }}
-                >
-                  Queries
-                </Heading>
-                <Text className="info-text">
-                  <a href="mailto:sawtee@sawtee.org">sawtee@sawtee.org</a>
-                </Text>
-              </Box>
-            </VStack>
-          </SimpleGrid>
-        </Content>
-      </GlassBox>
+          <Content
+            as={Section}
+            px={{ base: "32px", md: "0" }}
+            size="sm"
+            paddingBlock="50px"
+            fontSize={["sm", "md"]}
+            color={contentColor}
+          >
+            <Html2React html={post.content} />
+          </Content>
+        </GlassBox>
+      </Section>
       ;
     </LightPatternBox>
   );
 };
 
-export default connect(Contact);
+export default connect(Career);
 
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.
@@ -186,7 +123,8 @@ const Content = styled(Box)`
       color: #fff;
     }
 
-    & h4,.info-heading {
+    & h4,
+    .info-heading {
       font-size: 36px;
       color: #000;
       text-transform: uppercase;
