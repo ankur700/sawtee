@@ -51,13 +51,19 @@ const OurWork = ({ state, libraries }) => {
   const sectors = post.acf.sectors;
   const intro = post.acf.intro;
   const Html2React = libraries.html2react.Component;
-
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
+  const ButtonColor = useColorModeValue("gray.700", "whiteAlpha.700");
+  const linkColor = useColorModeValue("gray.700", "whiteAlpha.700");
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+      bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -108,10 +114,10 @@ const OurWork = ({ state, libraries }) => {
           alignItems="center"
           boxShadow={"md"}
         >
-          {OurThemes.map((theme, index) => {
+          {OurThemes.map((theme) => {
             return (
               <Link
-                key={index}
+                key={theme.name}
                 link={theme.href}
                 _hover={{ textDecoration: "none" }}
               >
@@ -119,7 +125,7 @@ const OurWork = ({ state, libraries }) => {
                   px="10"
                   size="sm"
                   colorScheme={"primary"}
-                  color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                  color={ButtonColor}
                   variant="outline"
                 >
                   {theme.name}
@@ -139,7 +145,7 @@ const OurWork = ({ state, libraries }) => {
           px={{ base: "32px", md: "16px" }}
           size="lg"
           paddingBlock="50px"
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.700")}
+          color={contentColor}
         >
           <Container
             // className="intro"
@@ -171,7 +177,7 @@ const OurWork = ({ state, libraries }) => {
                   bgColor={"rgba(0,0,0,0.3)"}
                   backgroundBlendMode="overlay"
                   border="3px solid"
-                  borderColor={useColorModeValue("gray.700", "whiteAlpha.700")}
+                  borderColor={linkColor}
                   overflow="hidden"
                   key={title}
                   rounded="xl"

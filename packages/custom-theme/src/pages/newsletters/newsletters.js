@@ -18,11 +18,11 @@ import Publication1 from "../../assets/publications-1-resized.jpg";
 import NewsletterList from "./newslettersList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import GlassBox from "../../components/atoms/glassBox";
-import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import React from "react";
 import { formatCPTData } from "../../components/helpers";
+import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const NewsletterArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
@@ -33,11 +33,12 @@ const NewsletterArchive = ({ state, actions, categories }) => {
     useArchiveInfiniteScroll({ limit: 3 });
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
-  React.useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
-  }, []);
-
-  const newsData = state.source.get("/sawtee-in-media");
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
+  const newsData = state.source.get("/news");
   React.useEffect(() => {
     let newsArray = [];
     if (newsData.isReady) {
@@ -61,7 +62,7 @@ const NewsletterArchive = ({ state, actions, categories }) => {
   if (!postData.isReady) return null;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+      bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
@@ -110,13 +111,12 @@ const NewsletterArchive = ({ state, actions, categories }) => {
 
       <Box
         as={Section}
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
         size={size ? size : "lg"}
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
-        color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
+        color={contentColor}
       >
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
@@ -124,30 +124,33 @@ const NewsletterArchive = ({ state, actions, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={3}>
-            {pages &&
-              pages.map(({ key, link, isLast, Wrapper }) => (
-                <Wrapper key={key}>
-                  <NewsletterList link={link} linkColor={linkColor} />
-                  {isLast && <Divider h="10px" mt="10" />}
-                  <Box w="full" mb="40px" textAlign={"center"}>
-                    {isFetching && <Loading />}
-                    {isLimit && (
-                      <Button onClick={fetchNext}>Load Next Page</Button>
-                    )}
-                    {isError && (
-                      <Button onClick={fetchNext}>
-                        Something failed - Retry
-                      </Button>
-                    )}
-                  </Box>
-                </Wrapper>
-              ))}
+            {pages.map(({ key, link, isLast, Wrapper }) => (
+              <Wrapper key={key}>
+                <NewsletterList link={link} linkColor={linkColor} />
+                {isLast && <Divider h="10px" mt="10" />}
+                <Box w="full" mb="40px" textAlign={"center"}>
+                  {isFetching && <Loading />}
+                  {isLimit && (
+                    <Button onClick={fetchNext}>Load Next Page</Button>
+                  )}
+                  {isError && (
+                    <Button onClick={fetchNext}>
+                      Something failed - Retry
+                    </Button>
+                  )}
+                </Box>
+              </Wrapper>
+            ))}
           </GridItem>
 
-          <GridItem colSpan={2}>
+          <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+              <GlassBox py="4" px="8" rounded="2xl">
+                <SidebarWidget
+                  array={news}
+                  title={"Sawtee in Media"}
+                  linkColor={linkColor}
+                />
               </GlassBox>
               <GlassBox
                 rounded="2xl"

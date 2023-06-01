@@ -19,7 +19,7 @@ const PublicationSliders = ({ sliderData, show, checkedItems }) => {
 
   return (
     <Stack divider={<StackDivider borderColor="gray.200" />} spacing={"60px"}>
-      {sliderData.length >= 7
+      {sliderData.length > 0
         ? sliderData.map((item, idx) => {
             return (
               checkedItems[idx] && (

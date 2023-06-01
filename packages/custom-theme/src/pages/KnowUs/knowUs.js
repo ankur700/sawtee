@@ -82,7 +82,7 @@ const KnowUs = ({ state, actions, libraries }) => {
           <Content
             as={Section}
             px={{ base: "32px", md: "0" }}
-            size="sm"
+            size="md"
             paddingBlock="50px"
             fontSize={["sm", "md"]}
             color={contentColor}

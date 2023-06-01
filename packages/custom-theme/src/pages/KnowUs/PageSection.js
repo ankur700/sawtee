@@ -50,10 +50,10 @@ const PageSection = ({ section, libraries }) => {
             ))}
           </TabList>
           <TabPanels>
-            {content_repeater.map(({ tab_content }, index) => (
+            {content_repeater.map(({ tab_content, tab_title }) => (
               <TabPanel
                 px={["5", "10"]}
-                key={index}
+                key={tab_title}
                 border={"1px solid"}
                 borderColor={tabBorderColor}
                 display="flex"
@@ -83,7 +83,7 @@ const PageSection = ({ section, libraries }) => {
                     ),
                   }}
                 >
-                  <Text as="h4" flex="1" textAlign="left">
+                  <Text as="h4" flex="1" fontSize={"lg"} textAlign="left">
                     {tab_title}
                   </Text>
                   <AccordionIcon />

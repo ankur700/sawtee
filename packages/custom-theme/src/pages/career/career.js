@@ -7,10 +7,10 @@ import PostHeader from "../../components/organisms/post/post-header";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import GlassBox from "../../components/atoms/glassBox";
-import Loading from "../../components/atoms/loading";
 
 const Career = ({ state, libraries }) => {
   const postData = getPostData(state);
+  console.log("🚀 ~ file: career.js:13 ~ Career ~ postData:", postData);
   const post = formatPostData(state, postData);
   const Html2React = libraries.html2react.Component;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");

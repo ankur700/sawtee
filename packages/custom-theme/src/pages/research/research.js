@@ -36,7 +36,7 @@ const ResearchArchive = ({ state, categories }) => {
   const { pages, isFetching, isLimit, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
   const [news, setNews] = React.useState([]);
-  const newsData = state.source.get("/sawtee-in-media");
+  const newsData = state.source.get("/news");
 
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
 

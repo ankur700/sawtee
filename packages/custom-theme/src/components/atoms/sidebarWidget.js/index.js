@@ -14,6 +14,9 @@ import { formatedDate } from "../../helpers";
 import { decode } from "frontity";
 
 const SidebarWidget = ({ array, linkColor, title }) => {
+  const HeadingColor = useColorModeValue("gray.700", "whiteAlpha.700");
+  const TextColor = useColorModeValue("gray.600", "whiteAlpha.600");
+
   return (
     <>
       <Title text={title} textAlign="center" mb={8} />
@@ -25,7 +28,7 @@ const SidebarWidget = ({ array, linkColor, title }) => {
                 className="title"
                 fontSize={["sm", "md"]}
                 mb="2"
-                color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                color={HeadingColor}
                 lineHeight={1.2}
                 fontWeight="bold"
                 _hover={{
@@ -40,23 +43,26 @@ const SidebarWidget = ({ array, linkColor, title }) => {
                 justifyContent="space-between"
                 fontSize={"sm"}
                 fontWeight="semibold"
-                color={useColorModeValue("gray.600", "whiteAlpha.600")}
+                color={TextColor}
               >
-                {item.acf.publishers &&
-                  item.acf.publishers.map((publisher, idx) => {
-                    return (
-                      <Text
-                        as="a"
-                        key={idx}
-                        href={publisher.publisher_website}
-                        _hover={{ textDecor: "underline" }}
-                        maxW="180px"
-                        noOfLines={1}
-                      >
-                        {publisher.publisher}
-                      </Text>
-                    );
-                  })}
+                {item.acf.publishers
+                  ? item.acf.publishers.map(
+                      ({ publisher, publisher_website }) => {
+                        return (
+                          <Text
+                            as="a"
+                            key={publisher}
+                            href={publisher_website}
+                            _hover={{ textDecor: "underline" }}
+                            maxW="180px"
+                            noOfLines={1}
+                          >
+                            {publisher}
+                          </Text>
+                        );
+                      }
+                    )
+                  : null}
                 <Box
                   as="time"
                   dateTime={new Date(item.publishDate).toLocaleDateString()}

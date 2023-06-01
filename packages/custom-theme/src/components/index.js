@@ -79,18 +79,17 @@ const Theme = ({ state, actions }) => {
             <Home when={data.isHome} categories={categories} />
             <KnowUs when={data.route === "/about/"} />
             <OurWork when={data.route === "/our-work/"} />
+            <Contact when={data.route === "/contact/"} />
+            <Career when={data.route === "/career/"} />
             <Publications
               when={data.route === "/publications/"}
               categories={categories}
             />
-            <Contact when={data.route === "/contact/"} />
-            <Career when={data.route === "/career/"} />
-
             <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />
             <HomeArchive when={data.route === "/blog"} />
             <Archive when={data.isArchive} categories={categories} />
-            <Page404 when={data.is404} />
+            <Page404 when={data.is404} />k
           </Switch>
         </Box>
       </ScaleFade>

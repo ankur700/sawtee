@@ -26,13 +26,13 @@ import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const SawteeInMedia = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
-  const programeData = state.source.get("/programme");
+  const programeData = state.source.get("/programmes");
   const { pages, isLimit, isFetching, isError, fetchNext } =
     useArchiveInfiniteScroll({ limit: 3 });
   const linkColor = state.theme.colors.linkColor;
   const [news, setNews] = React.useState([]);
   const [programs, setPrograms] = React.useState([]);
-
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const sectionSize = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   React.useEffect(() => {
@@ -65,14 +65,10 @@ const SawteeInMedia = ({ state, actions, categories }) => {
     }
   }, [data]);
 
-  React.useEffect(() => {
-    actions.source.fetch("/programme");
-  }, []);
-
   if (!data.isReady) return null;
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+      bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >

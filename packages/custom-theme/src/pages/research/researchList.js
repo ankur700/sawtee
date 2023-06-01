@@ -18,7 +18,10 @@ const ResearchList = ({ state, link, categories }) => {
   const color = state.theme.colors.linkColor;
   const data = state.source.get(link);
   const [researches, setResearches] = useState([]);
-
+  const HeadingColor = useColorModeValue("gray.800", "whiteAlpha.800");
+  const WrapperBackground = useColorModeValue("white", "gray.800");
+  const WrapperBorderColor = useColorModeValue("gray.100", "gray.700");
+  const TextColor = useColorModeValue("gray.800", "whiteAlpha.800");
   useEffect(() => {
     let array = [];
     if (data.isReady) {
@@ -72,16 +75,16 @@ const ResearchList = ({ state, link, categories }) => {
                     fontSize="2xl"
                     fontWeight="bold"
                     my={5}
-                    color={useColorModeValue("gray.800", "whiteAlpha.800")}
+                    color={HeadingColor}
                   >
                     {tagitem.name}
                   </Heading>
                   <Box
                     p={4}
-                    bg={useColorModeValue("white", "gray.800")}
+                    bg={WrapperBackground}
                     rounded="xl"
                     borderWidth="1px"
-                    borderColor={useColorModeValue("gray.100", "gray.700")}
+                    borderColor={WrapperBorderColor}
                     w="100%"
                     h="100%"
                     textAlign="left"
@@ -102,10 +105,7 @@ const ResearchList = ({ state, link, categories }) => {
                         minH={idx !== tagitem.posts.length - 1 ? 20 : "auto"}
                       >
                         <Text
-                          color={useColorModeValue(
-                            "gray.800",
-                            "whiteAlpha.800"
-                          )}
+                          color={TextColor}
                           fontSize="lg"
                           lineHeight={1.2}
                           fontWeight="bold"

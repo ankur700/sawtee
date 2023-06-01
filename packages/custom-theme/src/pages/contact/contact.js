@@ -1,13 +1,12 @@
 import {
   Box,
-  Container,
   Heading,
   SimpleGrid,
   VStack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { connect, decode, styled } from "frontity";
+import { connect, styled } from "frontity";
 import React from "react";
 import { formatPostData, getPostData } from "../../components/helpers";
 import FeaturedMedia from "../../components/organisms/post/featured-media";
@@ -15,7 +14,6 @@ import PostHeader from "../../components/organisms/post/post-header";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import GlassBox from "../../components/atoms/glassBox";
-import Loading from "../../components/atoms/loading";
 
 const Contact = ({ state, libraries }) => {
   const postData = getPostData(state);
@@ -41,6 +39,7 @@ const Contact = ({ state, libraries }) => {
             mt="0"
             height={"350px"}
             id={post.featured_media.id}
+            objectFit={"contain"}
             _after={{
               display: "block",
               content: '""',

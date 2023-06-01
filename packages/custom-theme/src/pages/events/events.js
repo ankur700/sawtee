@@ -21,8 +21,8 @@ import React, { useState, useEffect } from "react";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import SawteeInMediaWidget from "../../components/atoms/sawteeInMediaWidget";
 import { formatCPTData } from "../../components/helpers";
+import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
@@ -142,8 +142,12 @@ const EventsArchive = ({ state, actions, categories }) => {
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                <SawteeInMediaWidget news={news} linkColor={linkColor} />
+              <GlassBox py="4" px="8" rounded="2xl">
+                <SidebarWidget
+                  array={news}
+                  title={"Sawtee in Media"}
+                  linkColor={linkColor}
+                />
               </GlassBox>
               <GlassBox
                 rounded="2xl"
@@ -151,6 +155,7 @@ const EventsArchive = ({ state, actions, categories }) => {
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
+                id="twitter-wrapper"
               >
                 <TwitterTimeline
                   handle="sawteenp"
