@@ -10,7 +10,6 @@ import GlassBox from "../../components/atoms/glassBox";
 
 const Career = ({ state, libraries }) => {
   const postData = getPostData(state);
-  console.log("🚀 ~ file: career.js:13 ~ Career ~ postData:", postData);
   const post = formatPostData(state, postData);
   const Html2React = libraries.html2react.Component;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
