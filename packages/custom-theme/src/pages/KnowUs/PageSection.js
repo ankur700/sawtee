@@ -26,6 +26,7 @@ const PageSection = ({ section, libraries }) => {
     <Box>
       <Text
         as="h3"
+        id={title}
         fontSize={["lg", "xl", "2xl"]}
         fontFamily="heading"
         py={"4"}

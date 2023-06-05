@@ -9,9 +9,6 @@ import { Box } from "@chakra-ui/react";
 const Header = ({ state, actions }) => (
   <MainHeader>
     <Navigation justifyContent="center" menu={state.theme.menu} />
-    {/* {state.theme.showSocialLinks && (
-      <SocialNav menu={state.theme.socialLinks} />
-    )} */}
 
     <Box as="div" display={"flex"}>
       <ThemeToggle mr="4" />

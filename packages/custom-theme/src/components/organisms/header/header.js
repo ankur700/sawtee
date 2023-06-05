@@ -5,6 +5,7 @@ import MobileMenu from "../../molecules/menu";
 import { isUrl, omitConnectProps } from "../../helpers";
 import { connect } from "frontity";
 
+
 const SiteHeader = (props) => (
   <Box
     as="header"
@@ -28,26 +29,31 @@ const SiteHeaderInner = (props) => (
     mx="auto"
     height={"5rem"}
     maxW="1550px"
-    {...props}
     justifyContent="space-between"
     alignItems="center"
+    {...props}
   />
 );
 
-const Logo = ({ isImage = true, src }) =>
-  isImage ? (
-    <Box as="img" src={src} alt="Logo Image" width="120px" />
-  ) : (
-    <Box
-      fontSize="2xl"
-      color={useColorModeValue("white", "primary.700")}
-      fontFamily="heading"
-      textTransform="uppercase"
-      fontWeight="bold"
-    >
-      {src}
-    </Box>
-  );
+const Logo = ({ isImage = true, src }) => {
+  const TextLogoColor = useColorModeValue("white", "primary.700");
+
+  if (isImage) {
+    return <Box as="img" src={src} alt="Logo Image" width="120px" />;
+  } else {
+    return (
+      <Box
+        fontSize="2xl"
+        color={TextLogoColor}
+        fontFamily="heading"
+        textTransform="uppercase"
+        fontWeight="bold"
+      >
+        {src}
+      </Box>
+    );
+  }
+};
 
 const SiteLogo = connect(({ state, ...props }) => {
   // check if the logo is a url,
