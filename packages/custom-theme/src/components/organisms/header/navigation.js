@@ -9,6 +9,8 @@ import {
   Text,
   Flex,
   Avatar,
+  SimpleGrid,
+  VStack,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";
@@ -120,7 +122,7 @@ const ExpertCard = ({ expert }) => {
           mt={3}
         >
           <Text
-            fontSize="md"
+            fontSize="xs"
             fontWeight="bold"
             color="gray.800"
             _dark={{
@@ -132,7 +134,7 @@ const ExpertCard = ({ expert }) => {
 
           <Text
             fontSize="xs"
-            fontWeight="bold"
+            fontWeight="normal"
             color="gray.800"
             _dark={{
               color: "gray.200",
@@ -159,101 +161,180 @@ export const SiteMenu = (props) => (
   />
 );
 
-const MegaMenu = ({ item, ...styles }) => {
-  const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
-
+const AboutMegaMenu = ({ item, ...rest }) => {
   return (
-    <React.Fragment>
-      <Grid
-        templateColumns="repeat(6, 1fr)"
-        bg={"rgb(8, 126, 164,0.9)"}
-        pos="relative"
-        gap={{
-          base: 6,
-          sm: 8,
-        }}
-        p={10}
-        {...styles}
-      >
-        <GridItem colSpan={1}>
-          <SiteMenu direction="column" alignItems={"start"}>
-            {item.child_items.map((child) => {
+    <Grid
+      templateColumns="repeat(6, 1fr)"
+      bg={"rgb(8, 126, 164,0.9)"}
+      pos="relative"
+      gap={{
+        base: 6,
+        sm: 8,
+      }}
+      p={10}
+      {...rest}
+    >
+      <GridItem colSpan={1}>
+        <SiteMenu direction="column" alignItems={"start"} gap={8}>
+          {item.child_items.map((child) => {
+            return (
+              <Box
+                key={child.title}
+                as="li"
+                m="0"
+                color={"white"}
+                fontSize={"md"}
+                fontWeight="medium"
+                position="relative"
+                cursor="pointer"
+              >
+                <MenuLink link={child.url}>{child.title}</MenuLink>
+              </Box>
+            );
+          })}
+        </SiteMenu>
+      </GridItem>
+      <GridItem colSpan={3}>
+        <Box
+          w="full"
+          position="relative"
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          overflow="hidden"
+          backgroundImage={`url(${MapImage})`}
+          backgroundColor="rgba(0,0,0,0.6)"
+          backgroundBlendMode="multiply"
+          backgroundSize="cover"
+          h={"100%"}
+        >
+          <Text
+            fontSize={"lg"}
+            color={"whiteAlpha.800"}
+            m="0"
+            alignSelf={"center"}
+            zIndex={10}
+            px={{ base: 4, md: 6 }}
+            margin={"1rem auto"}
+          >
+            South Asia Watch on Trade, Economics and Environment (SAWTEE) was
+            launched in 1994 as a loose regional network of non-governmental
+            organizations (NGOs) from five South Asian countries: Bangladesh,
+            India, Nepal, Pakistan and Sri Lanka. Taking into consideration the
+            emerging need for fair, effective and meaningful integration of
+            South Asian countries into the regional as well as global economies,
+            the major motto of this regional initiative has been “GLOBALIZATION
+            YES, BUT WITH SAFETY NETS”
+          </Text>
+        </Box>
+      </GridItem>
+      <GridItem colSpan={2}>
+        <Box w="full">
+          <Text>Our Experts</Text>
+          <Grid
+            templateColumns={"repeat(3, 1fr)"}
+            templateRows={"repeat(2, 200px)"}
+          >
+            {Experts.map((expert) => {
               return (
-                <Box
-                  key={child.title}
-                  as="li"
-                  m="0"
-                  color={"white"}
-                  fontSize={"md" }
-                  fontWeight="medium"
-                  position="relative"
-                  cursor="pointer"
-                >
-                  <MenuLink link={child.url}>{child.title}</MenuLink>
-                </Box>
+                <GridItem key={expert.name}>
+                  <ExpertCard expert={expert} />
+                </GridItem>
               );
             })}
-          </SiteMenu>
-        </GridItem>
-        <GridItem colSpan={3}>
-          <Box
-            w="full"
-            position="relative"
-            width="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            overflow="hidden"
-            backgroundImage={`url(${MapImage})`}
-            backgroundColor="rgba(0,0,0,0.6)"
-            backgroundBlendMode="multiply"
-            backgroundSize="cover"
-            h={"100%"}
-          >
-            <Text
-              fontSize={"lg"}
-              color={"whiteAlpha.800"}
-              m="0"
-              alignSelf={"center"}
-              zIndex={10}
-              px={{ base: 4, md: 6 }}
-              margin={"1rem auto"}
-            >
-              South Asia Watch on Trade, Economics and Environment (SAWTEE) was
-              launched in 1994 as a loose regional network of non-governmental
-              organizations (NGOs) from five South Asian countries: Bangladesh,
-              India, Nepal, Pakistan and Sri Lanka. Taking into consideration
-              the emerging need for fair, effective and meaningful integration
-              of South Asian countries into the regional as well as global
-              economies, the major motto of this regional initiative has been
-              “GLOBALIZATION YES, BUT WITH SAFETY NETS”
-            </Text>
-          </Box>
-        </GridItem>
-        <GridItem colSpan={2}>
-          <Box w="full">
-            <Text>Our Experts</Text>
-            <Grid
-              templateColumns={"repeat(3, 1fr)"}
-              templateRows={"repeat(2, 200px)"}
-            >
-              {Experts.map((expert) => {
-                return (
-                  <GridItem key={expert.name}>
-                    <ExpertCard expert={expert} />
-                  </GridItem>
-                );
-              })}
-            </Grid>
-          </Box>
-        </GridItem>
-      </Grid>
-    </React.Fragment>
+          </Grid>
+        </Box>
+      </GridItem>
+    </Grid>
   );
 };
 
+const OurWorkMegaMenu = ({ item, ...rest }) => {
+  return (
+    <Box
+      bg={"rgb(8, 126, 164,0.9)"}
+      pos="relative"
+      gap="16"
+      p={10}
+      display="flex"
+      flexDirection={"column"}
+      {...rest}
+    >
+      <VStack spacing={10} maxW="90%" m="0 auto">
+        <Text fontSize="2xl" fontWeight="bold">
+          {item.child_items[0].title}
+        </Text>
+        <SimpleGrid columns={3} spacing={6} placeItems="center">
+          {item.child_items[0].child_items.map((grandChild) => {
+            return (
+              <MenuLink
+                key={grandChild.title}
+                link={grandChild.url}
+                textAlign="center"
+              >
+                {grandChild.title}
+              </MenuLink>
+            );
+          })}
+        </SimpleGrid>
+      </VStack>
+      <Grid
+        templateColumns={"repeat(5, 1fr)"}
+        columnGap={12}
+        templateRows={"auto"}
+        maxW="90%"
+        m="0 auto"
+        placeItems={"center"}
+      >
+        <GridItem colSpan={2} rowSpan={1}>
+          <VStack spacing={10}>
+            <Text fontSize="2xl" fontWeight="bold">
+              {item.child_items[1].title}
+            </Text>
+            <SimpleGrid columns={2} spacing={6}>
+              {item.child_items[1].child_items.map((grandChild) => {
+                return (
+                  <MenuLink key={grandChild.title} link={grandChild.url}>
+                    {grandChild.title}
+                  </MenuLink>
+                );
+              })}
+            </SimpleGrid>
+          </VStack>
+        </GridItem>
+        <GridItem colSpan={3} rowSpan={1}>
+          <VStack spacing={10}>
+            <Text fontSize="2xl" fontWeight="bold">
+              {item.child_items[2].title}
+            </Text>
+            <SimpleGrid columns={5} spacing={6}>
+              {item.child_items[2].child_items.map((grandChild) => {
+                return (
+                  <MenuLink key={grandChild.title} link={grandChild.url}>
+                    {grandChild.title}
+                  </MenuLink>
+                );
+              })}
+            </SimpleGrid>
+          </VStack>
+        </GridItem>
+      </Grid>
+    </Box>
+  );
+};
+
+const MegaMenu = ({ item }) => {
+  // const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
+
+  if (item.title === "Know Us") {
+    return <AboutMegaMenu item={item} />;
+  } else if (item.title === "Our Work") {
+    return <OurWorkMegaMenu item={item} />;
+  }
+};
+
 const SiteMenuItem = ({ item, ...props }) => {
-  const bg = useColorModeValue("gray.100", "gray.700");
   const cl = useColorModeValue("gray.800", "white");
   const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
 
@@ -334,6 +415,10 @@ const SiteMenuItem = ({ item, ...props }) => {
 
 const Navigation = ({ state, menu, ...props }) => {
   const menuItems = state.source.get("/menus/primary/").items;
+  console.log(
+    "🚀 ~ file: navigation.js:336 ~ Navigation ~ menuItems:",
+    menuItems
+  );
 
   return (
     <Box
