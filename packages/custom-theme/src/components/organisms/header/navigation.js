@@ -11,6 +11,7 @@ import {
   Avatar,
   SimpleGrid,
   VStack,
+  Divider,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";
@@ -84,7 +85,7 @@ const MenuLink = styled(FrontityLink)`
 
 const ExpertCard = ({ expert }) => {
   return (
-    <Flex p={5} w="full" alignItems="center" justifyContent="center">
+    <Flex p={3} w="full" alignItems="center" justifyContent="center">
       <Flex
         shadow="lg"
         rounded="lg"
@@ -93,8 +94,9 @@ const ExpertCard = ({ expert }) => {
           bg: "accent.600",
         }}
         direction="column"
+        justifyContent="center"
         minH="180px"
-        minW="130px"
+        w="full"
       >
         <Box
           height="100%"
@@ -109,7 +111,7 @@ const ExpertCard = ({ expert }) => {
             src={expert.image}
             name={expert.name}
             borderRadius="full"
-            boxSize="75px"
+            boxSize="65px"
           />
         </Box>
         <Box
@@ -163,78 +165,93 @@ export const SiteMenu = (props) => (
 
 const AboutMegaMenu = ({ item, ...rest }) => {
   return (
-    <Grid
-      templateColumns="repeat(6, 1fr)"
-      bg={"rgb(8, 126, 164,0.9)"}
-      pos="relative"
-      gap={{
-        base: 6,
-        sm: 8,
-      }}
-      p={10}
-      {...rest}
-    >
-      <GridItem colSpan={1}>
-        <SiteMenu direction="column" alignItems={"start"} gap={8}>
-          {item.child_items.map((child) => {
-            return (
-              <Box
-                key={child.title}
-                as="li"
-                m="0"
-                color={"white"}
-                fontSize={"md"}
-                fontWeight="medium"
-                position="relative"
-                cursor="pointer"
-              >
-                <MenuLink link={child.url}>{child.title}</MenuLink>
-              </Box>
-            );
-          })}
-        </SiteMenu>
-      </GridItem>
-      <GridItem colSpan={3}>
-        <Box
-          w="full"
-          position="relative"
-          width="100%"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          overflow="hidden"
-          backgroundImage={`url(${MapImage})`}
-          backgroundColor="rgba(0,0,0,0.6)"
-          backgroundBlendMode="multiply"
-          backgroundSize="cover"
-          h={"100%"}
-        >
-          <Text
-            fontSize={"lg"}
-            color={"whiteAlpha.800"}
-            m="0"
-            alignSelf={"center"}
-            zIndex={10}
-            px={{ base: 4, md: 6 }}
-            margin={"1rem auto"}
+    <Box bg={"rgb(8, 126, 164,0.9)"}>
+      <Grid
+        templateColumns="repeat(6, 1fr)"
+        pos="relative"
+        gap={8}
+        px={5}
+        py={16}
+        maxW={"92%"}
+        m="0 auto"
+        {...rest}
+      >
+        <GridItem colSpan={1}>
+          <Box
+            as="ul"
+            display="flex"
+            flexDirection="column"
+            alignItems={"start"}
+            gap={12}
           >
-            South Asia Watch on Trade, Economics and Environment (SAWTEE) was
-            launched in 1994 as a loose regional network of non-governmental
-            organizations (NGOs) from five South Asian countries: Bangladesh,
-            India, Nepal, Pakistan and Sri Lanka. Taking into consideration the
-            emerging need for fair, effective and meaningful integration of
-            South Asian countries into the regional as well as global economies,
-            the major motto of this regional initiative has been “GLOBALIZATION
-            YES, BUT WITH SAFETY NETS”
+            {item.child_items.map((child) => {
+              return (
+                <Box
+                  key={child.title}
+                  as="li"
+                  m="0"
+                  color={"white"}
+                  fontSize={"md"}
+                  fontWeight="medium"
+                  position="relative"
+                  cursor="pointer"
+                >
+                  <MenuLink link={child.url}>{child.title}</MenuLink>
+                </Box>
+              );
+            })}
+          </Box>
+        </GridItem>
+        <GridItem colSpan={3}>
+          <Box
+            w="full"
+            position="relative"
+            width="100%"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            overflow="hidden"
+            backgroundImage={`url(${MapImage})`}
+            // backgroundColor="rgba(0,0,0,0.6)"
+            // backgroundBlendMode="multiply"
+            backgroundSize="cover"
+            h={"100%"}
+            px={"2rem"}
+          >
+            <Text
+              fontSize={"lg"}
+              color={"whiteAlpha.800"}
+              m="0"
+              alignSelf={"center"}
+              zIndex={10}
+              px={6}
+              lineHeight={2.8}
+            >
+              South Asia Watch on Trade, Economics and Environment (SAWTEE) was
+              launched in 1994 as a loose regional network of non-governmental
+              organizations (NGOs) from five South Asian countries: Bangladesh,
+              India, Nepal, Pakistan and Sri Lanka. Taking into consideration
+              the emerging need for fair, effective and meaningful integration
+              of South Asian countries into the regional as well as global
+              economies, the major motto of this regional initiative has been
+              “GLOBALIZATION YES, BUT WITH SAFETY NETS”
+            </Text>
+          </Box>
+        </GridItem>
+        <GridItem
+          colSpan={2}
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          gap={10}
+        >
+          <Text fontSize="xl" fontWeight={"semibold"}>
+            Our Experts
           </Text>
-        </Box>
-      </GridItem>
-      <GridItem colSpan={2}>
-        <Box w="full">
-          <Text>Our Experts</Text>
           <Grid
             templateColumns={"repeat(3, 1fr)"}
-            templateRows={"repeat(2, 200px)"}
+            templateRows={"repeat(2, auto)"}
+            rowGap={8}
           >
             {Experts.map((expert) => {
               return (
@@ -244,9 +261,9 @@ const AboutMegaMenu = ({ item, ...rest }) => {
               );
             })}
           </Grid>
-        </Box>
-      </GridItem>
-    </Grid>
+        </GridItem>
+      </Grid>
+    </Box>
   );
 };
 
@@ -268,17 +285,18 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
         <SimpleGrid columns={3} spacing={6} placeItems="center">
           {item.child_items[0].child_items.map((grandChild) => {
             return (
-              <MenuLink
-                key={grandChild.title}
-                link={grandChild.url}
-                textAlign="center"
-              >
-                {grandChild.title}
-              </MenuLink>
+              <Text key={grandChild.title} noOfLines={1}>
+                <MenuLink link={grandChild.url} textAlign="center">
+                  {grandChild.title}
+                </MenuLink>
+              </Text>
             );
           })}
         </SimpleGrid>
       </VStack>
+
+      <Divider borderBottomWidth="2px" />
+
       <Grid
         templateColumns={"repeat(5, 1fr)"}
         columnGap={12}
@@ -415,10 +433,7 @@ const SiteMenuItem = ({ item, ...props }) => {
 
 const Navigation = ({ state, menu, ...props }) => {
   const menuItems = state.source.get("/menus/primary/").items;
-  console.log(
-    "🚀 ~ file: navigation.js:336 ~ Navigation ~ menuItems:",
-    menuItems
-  );
+
 
   return (
     <Box
