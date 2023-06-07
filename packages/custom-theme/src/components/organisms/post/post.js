@@ -107,6 +107,23 @@ const Content = styled.div`
     padding: 1rem;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bold;
+  }
+
+  h4 {
+    font-size: 1.225rem;
+  }
+
+  h5 {
+    font-size: 1.125rem;
+  }
+
   img {
     width: 100%;
     object-fit: cover;
