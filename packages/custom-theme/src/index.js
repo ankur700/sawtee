@@ -7,6 +7,7 @@ import NewsHandler from "./components/handlers/news-handler";
 import PublicationsHandler from "./components/handlers/publications-handler";
 import PublicationArchiveHandler from "./components/handlers/publication-archive-handler";
 import ProgramsHandler from "./components/handlers/programme-handler";
+import MenuHandler from "./components/handlers/menu-handler";
 
 const customTheme = {
   name: "custom-theme",
@@ -92,6 +93,7 @@ const customTheme = {
 
       beforeSSR: async ({ state, actions }) => {
         await actions.source.fetch("/events");
+        await actions.source.fetch("/menu/primary/");
         await actions.source.fetch("/programmes");
         await actions.source.fetch("/publications");
         await actions.source.fetch("/featured-events");
@@ -116,6 +118,7 @@ const customTheme = {
         PublicationsHandler,
         PublicationArchiveHandler,
         ProgramsHandler,
+        MenuHandler,
       ],
     },
   },

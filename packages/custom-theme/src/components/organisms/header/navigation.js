@@ -15,53 +15,14 @@ import {
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";
-import FrontityLink from "../../atoms/link";
+import link from "../../atoms/link";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import MapImage from "../../../assets/Airports_Network_Map.png";
+import { motion } from "framer-motion";
 
-const Experts = [
-  {
-    name: "Posh R. Pandey",
-    designation: "Director",
-    email: "posh.pandey@sawtee.org",
-    image: "../../../assets/webp/PRP.webp",
-  },
-  {
-    name: "Paras Kharel",
-    designation: "Executive Director",
-    email: "paras.kharel@sawtee.org",
-    image: "../../../assets/webp/paras foto.webp",
-  },
-  {
-    name: "Dhrubesh C. Regmi",
-    designation: "Founder",
-    email: "dhrubesh.regmi@sawtee.org",
-    image: "../../../assets/dhrubesh.JPG",
-  },
-  {
-    name: "Neelu Thapa",
-    designation: "Treasurer",
-    email: "neelu.thapa@sawtee.org",
-    image: "",
-  },
-  {
-    name: "Dikshya Singh",
-    designation: "Program Director",
-    email: "dikshya.singh@sawtee.org",
-    image: "../../../assets/dikshya.jpg",
-  },
-  {
-    name: "Kshitiz Dahal",
-    designation: "Senior Research Officer",
-    email: "kshitiz.dahal@sawtee.org",
-    image: "",
-  },
-];
-
-const MenuLink = styled(FrontityLink)`
+const MenuLink = styled(link)`
   position: relative;
   text-decoration: none;
-  font-weight: bold;
   font-family: var(--chakra-fonts-heading)
 
   &:after {
@@ -83,13 +44,70 @@ const MenuLink = styled(FrontityLink)`
   }
 `;
 
+const MegaMenuWrapperVariants = {
+  open: { opacity: 1, y: 0 },
+  closed: { opacity: 0, y: "-100%" },
+};
+
+const ListVariants = {
+  open: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      y: { stiffness: 1000, velocity: -100 },
+    },
+  },
+  closed: {
+    y: 50,
+    opacity: 0,
+    transition: {
+      y: { stiffness: 1000 },
+    },
+  },
+};
+
+const ListContainerVariants = {
+  open: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+  },
+  closed: {
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
+  },
+};
+
+const MenuItem = ({ children, ...rest }) => {
+  const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
+  return (
+    <Button
+      as={motion.button}
+      variant="ghost"
+      mx={1}
+      py={[1, 2, 2]}
+      px={4}
+      borderRadius={5}
+      color={li}
+      _hover={{
+        color: "white",
+      }}
+      _focus={{
+        boxShadow: "none",
+      }}
+      alignItems="center"
+      fontSize="md"
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
+};
+
 const ExpertCard = ({ expert }) => {
   return (
     <Flex p={3} w="full" alignItems="center" justifyContent="center">
       <Flex
         shadow="lg"
         rounded="lg"
-        bg={"accent.100"}
+        bg={"#7FC4FD"}
         _dark={{
           bg: "accent.600",
         }}
@@ -125,6 +143,7 @@ const ExpertCard = ({ expert }) => {
         >
           <Text
             fontSize="xs"
+            noOfLines={1}
             fontWeight="bold"
             color="gray.800"
             _dark={{
@@ -136,6 +155,7 @@ const ExpertCard = ({ expert }) => {
 
           <Text
             fontSize="xs"
+            noOfLines={1}
             fontWeight="normal"
             color="gray.800"
             _dark={{
@@ -163,7 +183,7 @@ export const SiteMenu = (props) => (
   />
 );
 
-const AboutMegaMenu = ({ item, ...rest }) => {
+const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
   return (
     <Box bg={"rgb(8, 126, 164,0.9)"}>
       <Grid
@@ -178,7 +198,9 @@ const AboutMegaMenu = ({ item, ...rest }) => {
       >
         <GridItem colSpan={1}>
           <Box
-            as="ul"
+            as={motion.ul}
+            variants={ListContainerVariants}
+            animate={isOpen ? "open" : "closed"}
             display="flex"
             flexDirection="column"
             alignItems={"start"}
@@ -188,7 +210,8 @@ const AboutMegaMenu = ({ item, ...rest }) => {
               return (
                 <Box
                   key={child.title}
-                  as="li"
+                  as={motion.li}
+                  variants={ListVariants}
                   m="0"
                   color={"white"}
                   fontSize={"md"}
@@ -253,7 +276,7 @@ const AboutMegaMenu = ({ item, ...rest }) => {
             templateRows={"repeat(2, auto)"}
             rowGap={8}
           >
-            {Experts.map((expert) => {
+            {experts.map((expert) => {
               return (
                 <GridItem key={expert.name}>
                   <ExpertCard expert={expert} />
@@ -267,7 +290,7 @@ const AboutMegaMenu = ({ item, ...rest }) => {
   );
 };
 
-const OurWorkMegaMenu = ({ item, ...rest }) => {
+const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
   return (
     <Box
       bg={"rgb(8, 126, 164,0.9)"}
@@ -282,10 +305,22 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
         <Text fontSize="2xl" fontWeight="bold">
           {item.child_items[0].title}
         </Text>
-        <SimpleGrid columns={3} spacing={6} placeItems="center">
+        <SimpleGrid
+          as={motion.ul}
+          columns={3}
+          spacing={6}
+          placeItems="center"
+          variants={ListContainerVariants}
+          animate={isOpen ? "open" : "closed"}
+        >
           {item.child_items[0].child_items.map((grandChild) => {
             return (
-              <Text key={grandChild.title} noOfLines={1}>
+              <Text
+                key={grandChild.title}
+                noOfLines={1}
+                as={motion.li}
+                variants={ListVariants}
+              >
                 <MenuLink link={grandChild.url} textAlign="center">
                   {grandChild.title}
                 </MenuLink>
@@ -310,18 +345,41 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
             <Text fontSize="2xl" fontWeight="bold">
               {item.child_items[1].title}
             </Text>
-            <SimpleGrid columns={2} spacing={6}>
+            <SimpleGrid
+              columns={2}
+              spacing={6}
+              as={motion.ul}
+              variants={ListContainerVariants}
+              animate={isOpen ? "open" : "closed"}
+            >
               {item.child_items[1].child_items.map((grandChild) => {
                 return (
-                  <MenuLink key={grandChild.title} link={grandChild.url}>
-                    {grandChild.title}
-                  </MenuLink>
+                  <Text
+                    key={grandChild.title}
+                    noOfLines={1}
+                    as={motion.li}
+                    variants={ListVariants}
+                  >
+                    <MenuLink
+                      key={grandChild.title}
+                      link={grandChild.url}
+                      textAlign="center"
+                    >
+                      {grandChild.title}
+                    </MenuLink>
+                  </Text>
                 );
               })}
             </SimpleGrid>
           </VStack>
         </GridItem>
-        <GridItem colSpan={3} rowSpan={1}>
+        <GridItem
+          colSpan={3}
+          rowSpan={1}
+          as={motion.ul}
+          variants={ListContainerVariants}
+          animate={isOpen ? "open" : "closed"}
+        >
           <VStack spacing={10}>
             <Text fontSize="2xl" fontWeight="bold">
               {item.child_items[2].title}
@@ -329,9 +387,20 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
             <SimpleGrid columns={5} spacing={6}>
               {item.child_items[2].child_items.map((grandChild) => {
                 return (
-                  <MenuLink key={grandChild.title} link={grandChild.url}>
-                    {grandChild.title}
-                  </MenuLink>
+                  <Text
+                    key={grandChild.title}
+                    noOfLines={1}
+                    as={motion.li}
+                    variants={ListVariants}
+                  >
+                    <MenuLink
+                      key={grandChild.title}
+                      link={grandChild.url}
+                      textAlign="center"
+                    >
+                      {grandChild.title}
+                    </MenuLink>
+                  </Text>
                 );
               })}
             </SimpleGrid>
@@ -342,48 +411,37 @@ const OurWorkMegaMenu = ({ item, ...rest }) => {
   );
 };
 
-const MegaMenu = ({ item }) => {
+const MegaMenu = ({ item, experts, isOpen }) => {
   // const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
 
   if (item.title === "Know Us") {
-    return <AboutMegaMenu item={item} />;
+    return <AboutMegaMenu item={item} experts={experts} isOpen={isOpen} />;
   } else if (item.title === "Our Work") {
-    return <OurWorkMegaMenu item={item} />;
+    return <OurWorkMegaMenu item={item} isOpen={isOpen} />;
   }
 };
 
-const SiteMenuItem = ({ item, ...props }) => {
-  const cl = useColorModeValue("gray.800", "white");
-  const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
-
+const SiteMenuItem = ({ item, experts, ...props }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   if (item.child_items !== undefined) {
     return (
       <Box as="li" role="group" {...props}>
-        <MenuLink textDecoration={"none"} link={item.url}>
-          <Button
-            variant="ghost"
-            mx={1}
-            py={[1, 2, 2]}
-            px={4}
-            borderRadius={5}
-            color={li}
-            _hover={{
-              color: cl,
-            }}
-            aria-label={item.title}
-            onMouseEnter={onOpen}
-            onMouseLeave={onClose}
-            alignItems="center"
-            fontSize="md"
-            rightIcon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
-          >
+        <MenuItem
+          aria-label={item.title}
+          onMouseEnter={onOpen}
+          onMouseLeave={onClose}
+          whileHover={{ backgroundColor: "#006181", color: "#fff" }}
+          transition="0.4s linear"
+          rightIcon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
+        >
+          <MenuLink textDecoration={"none"} link={item.url}>
             {item.title}
-          </Button>
-        </MenuLink>
+          </MenuLink>
+        </MenuItem>
 
         <Box
+          as={motion.div}
           pos="absolute"
           left={0}
           w="full"
@@ -394,58 +452,54 @@ const SiteMenuItem = ({ item, ...props }) => {
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
           pt={"20px"}
+          animate={isOpen ? "open" : "closed"}
+          variants={MegaMenuWrapperVariants}
+          transition={{
+            type: "spring",
+            stiffness: 50,
+            durations: 0.6,
+            delay: 0.4,
+          }}
         >
-          <MegaMenu item={item} />
+          <MegaMenu item={item} experts={experts} isOpen={isOpen} />
         </Box>
       </Box>
     );
   } else {
     return (
       <Box as="li" role="group" {...props}>
-        <MenuLink textDecoration={"none"} link={item.url}>
-          <Button
-            variant="ghost"
-            mx={1}
-            py={[1, 2, 2]}
-            px={4}
-            borderRadius={5}
-            color={li}
-            _hover={{
-              color: cl,
-            }}
-            aria-label={item.title}
-            onMouseEnter={onOpen}
-            onMouseLeave={onClose}
-            alignItems="center"
-            fontSize="md"
-            _focus={{
-              boxShadow: "none",
-            }}
-            display="inline-flex"
-          >
-            {item.title}
-          </Button>
-        </MenuLink>
+        <MenuItem
+          aria-label={item.title}
+          onMouseEnter={onOpen}
+          onMouseLeave={onClose}
+          whileHover={{ backgroundColor: "#006181", color: "#fff" }}
+          transition="0.4s linear"
+          display="inline-flex"
+        >
+          <MenuLink link={item.url}>{item.title}</MenuLink>
+        </MenuItem>
       </Box>
     );
   }
 };
 
 const Navigation = ({ state, menu, ...props }) => {
-  const menuItems = state.source.get("/menus/primary/").items;
-
+  const data = state.source.get("/menu/primary/");
 
   return (
     <Box
       as="nav"
       width="100%"
       display={{ base: "none", lg: "flex" }}
+      zIndex={"999"}
       {...props}
     >
       <SiteMenu ml="20px">
-        {menuItems &&
-          Object.entries(menuItems).map(([key, item]) => {
-            return <SiteMenuItem key={key} item={item} />;
+        {data.isReady &&
+          Object.entries(data.items).map(([key, item]) => {
+            return (
+              <SiteMenuItem key={key} item={item} experts={data.experts} />
+            );
           })}
       </SiteMenu>
     </Box>
