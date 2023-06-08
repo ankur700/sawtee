@@ -15,14 +15,6 @@ const settings = {
   packages: [
     "@aamodtgroup/frontity-contact-form-7",
     {
-      name: "frontity-menu",
-      state: {
-        frontityMenu: {
-          menuSlugs: ["primary", "footer"],
-        },
-      },
-    },
-    {
       name: "custom-theme",
       state: {
         theme: {
