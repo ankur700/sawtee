@@ -1,38 +1,36 @@
 import {
   Box,
   Grid,
-  GridItem,
   useColorModeValue,
   Image,
   Heading,
   Divider,
   Button,
   useBreakpointValue,
+  GridItem,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import Publication1 from "../../assets/publications-1-resized.jpg";
-import EventsList from "./eventsList";
+import CoverImage from "../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
-import React, { useState, useEffect } from "react";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
+import React from "react";
 import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
-import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
+import CovidList from "./covidList";
 
-const EventsArchive = ({ state, actions, categories }) => {
-  // Get the data of the current list.
+const Covid = ({ state, categories }) => {
   const postData = state.source.get(state.router.link);
-  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
-  const [news, setNews] = useState([]);
-  const linkColor = state.theme.colors.linkColor;
   const { pages, isLimit, isFetching, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 3 });
+    useArchiveInfiniteScroll();
+  const [news, setNews] = React.useState([]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
@@ -40,8 +38,7 @@ const EventsArchive = ({ state, actions, categories }) => {
   );
 
   const newsData = state.source.get("/news");
-
-  useEffect(() => {
+  React.useEffect(() => {
     let newsArray = [];
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
@@ -50,19 +47,20 @@ const EventsArchive = ({ state, actions, categories }) => {
       });
     }
     if (newsArray.length > 0) {
-      setNews(newsArray);
+      setNews([...newsArray]);
     }
-  }, [newsData]);
+  }, [newsData.isReady]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
+
   return (
     <LightPatternBox
       bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       pt="0"
     >
-      <Box pos="relative">
+      <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
         <Box
           as="figure"
           mt={4}
@@ -80,13 +78,14 @@ const EventsArchive = ({ state, actions, categories }) => {
             right: 0,
           }}
         >
-          <Box as={Image} boxSize="100%" objectFit="cover" src={Publication1} />
+          <Box as={Image} boxSize="100%" objectFit="cover" src={CoverImage} />
         </Box>
 
         <Box
           textAlign="center"
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "0" }}
+          color={"whiteAlpha.900"}
           position="absolute"
           bottom="15%"
           left="15%"
@@ -94,7 +93,6 @@ const EventsArchive = ({ state, actions, categories }) => {
           <Heading
             fontWeight="bold"
             size={"2xl"}
-            color={"whiteAlpha.900"}
             fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
@@ -104,12 +102,13 @@ const EventsArchive = ({ state, actions, categories }) => {
           </Heading>
         </Box>
       </Box>
-      <Section
+
+      <Box
+        as={Section}
+        pb="80px"
+        size={size ? size : "lg"}
         px={"32px"}
-        w="full"
-        size={size === undefined ? "lg" : size}
         pt="50px"
-        pb={"80px"}
         fontSize={["md", "lg", "xl"]}
         color={contentColor}
       >
@@ -118,14 +117,10 @@ const EventsArchive = ({ state, actions, categories }) => {
           gap={6}
           pos={"relative"}
         >
-          <GridItem colSpan={3} px={[6, 10]}>
+          <GridItem colSpan={3}>
             {pages.map(({ key, link, isLast, Wrapper }) => (
               <Wrapper key={key}>
-                <EventsList
-                  link={link}
-                  linkColor={linkColor}
-                  categories={categories}
-                />
+                <CovidList link={link} categories={categories} />
                 {isLast && <Divider h="10px" mt="10" />}
                 <Box w="full" mb="40px" textAlign={"center"}>
                   {isFetching && <Loading />}
@@ -179,10 +174,9 @@ const EventsArchive = ({ state, actions, categories }) => {
             </Sidebar>
           </GridItem>
         </Grid>
-        {/* <Pagination mt="56px" /> */}
-      </Section>
+      </Box>
     </LightPatternBox>
   );
 };
 
-export default connect(EventsArchive);
+export default connect(Covid);

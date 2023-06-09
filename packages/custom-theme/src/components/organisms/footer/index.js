@@ -69,20 +69,21 @@ const Widget = ({ item, libraries }) => {
     <>
       <Stack align="flex-start" id={item.title}>
         <ListHeader>{item.title}</ListHeader>
-        {item.child_items &&
-          item.child_items.map((item, i) => {
-            const { url, title } = item;
-            const link = libraries.source.normalize(url);
-            return (
-              <Link
-                key={i}
-                href={title === "Map" ? null : link}
-                onClick={title === "Map" ? onOpen : null}
-              >
-                {title}
-              </Link>
-            );
-          })}
+        {item.child_items
+          ? item.child_items.map((item) => {
+              const { url, title } = item;
+              const link = libraries.source.normalize(url);
+              return (
+                <Link
+                  key={item.title}
+                  href={title === "Map" ? null : link}
+                  onClick={title === "Map" ? onOpen : null}
+                >
+                  {title}
+                </Link>
+              );
+            })
+          : null}
       </Stack>
 
       <Modal
@@ -133,7 +134,7 @@ const Widget = ({ item, libraries }) => {
 };
 
 const Footer = ({ state, libraries }) => {
-  const { items } = state.source.get("/menus/footer/");
+  const { items, isReady } = state.source.get("/menu/footer/");
   return (
     <FooterSection alignSelf="flex-end">
       <FooterSectionGroup
@@ -156,7 +157,7 @@ const Footer = ({ state, libraries }) => {
             </Stack>
           </Stack>
         </FooterSectionItem>
-        {items &&
+        {isReady &&
           Object.entries(items).map(([key, item]) => {
             return (
               <FooterSectionItem key={key}>

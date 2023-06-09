@@ -10,23 +10,25 @@ import SawteeInMedia from "../../../pages/sawteeInMedia";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
+import Covid from "../../../pages/covid";
 
 const Archive = ({ state, categories }) => {
+  const archiveWrapperColor = useColorModeValue("whiteAlpha.300", "gray.800");
+  const gridWrapperColor = useColorModeValue("whiteAlpha.700", "gray.700");
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
-
   if (data.isFeaturedEventsArchive) return <Events categories={categories} />;
-
-  // if (data.isPublicationsArchive)
-  //   return <Publications categories={categories} />;
+  if (data.isPublicationsArchive)
+    return <Publications categories={categories} />;
   if (data.isSawteeInMediaArchive)
     return <SawteeInMedia categories={categories} />;
   if (data.isProgrammeArchive) return <Programme categories={categories} />;
   if (data.isNewslettersArchive) return <Newsletters />;
   if (data.isResearchArchive) return <Research categories={categories} />;
+  if (data.isCovidArchive) return <Covid categories={categories} />;
 
   return (
-    <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">
+    <Box bg={archiveWrapperColor} as="section">
       {/* If the list is a taxonomy, we render a title. */}
       {data.isTaxonomy && (
         <ArchiveHeader
@@ -47,7 +49,7 @@ const Archive = ({ state, categories }) => {
 
       <Box
         padding={{ base: "24px", lg: "40px" }}
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
+        bg={gridWrapperColor}
         width={{ lg: "80%" }}
         maxWidth="1200px"
         mx="auto"

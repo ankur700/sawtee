@@ -107,9 +107,9 @@ const ExpertCard = ({ expert }) => {
       <Flex
         shadow="lg"
         rounded="lg"
-        bg={"#7FC4FD"}
+        bg={"accent.300"}
         _dark={{
-          bg: "accent.600",
+          bg: "accent.500",
         }}
         direction="column"
         justifyContent="center"
@@ -185,7 +185,7 @@ export const SiteMenu = (props) => (
 
 const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
   return (
-    <Box bg={"rgb(8, 126, 164,0.9)"}>
+    <Box bg={"rgb(8, 126, 164,0.9)"} backdropFilter="blur(5px) saturate(150%)">
       <Grid
         templateColumns="repeat(6, 1fr)"
         pos="relative"
@@ -298,6 +298,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
       gap="16"
       p={10}
       display="flex"
+      backdropFilter="blur(5px) saturate(150%)"
       flexDirection={"column"}
       {...rest}
     >
@@ -431,8 +432,8 @@ const SiteMenuItem = ({ item, experts, ...props }) => {
           aria-label={item.title}
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
-          whileHover={{ backgroundColor: "#006181", color: "#fff" }}
-          transition="0.4s linear"
+          _groupHover={{ backgroundColor: "#006181", color: "#fff" }}
+          transition="background 0.2s linear"
           rightIcon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
         >
           <MenuLink textDecoration={"none"} link={item.url}>
@@ -456,9 +457,11 @@ const SiteMenuItem = ({ item, experts, ...props }) => {
           variants={MegaMenuWrapperVariants}
           transition={{
             type: "spring",
-            stiffness: 50,
-            durations: 0.6,
-            delay: 0.4,
+            bounce: 500,
+            stiffness: 1000,
+            velocity: -100,
+            durations: 1,
+            delay: 0.2,
           }}
         >
           <MegaMenu item={item} experts={experts} isOpen={isOpen} />
@@ -472,8 +475,8 @@ const SiteMenuItem = ({ item, experts, ...props }) => {
           aria-label={item.title}
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
-          whileHover={{ backgroundColor: "#006181", color: "#fff" }}
-          transition="0.4s linear"
+          _groupHover={{ backgroundColor: "#006181", color: "#fff" }}
+          transition="background 0.2s linear"
           display="inline-flex"
         >
           <MenuLink link={item.url}>{item.title}</MenuLink>

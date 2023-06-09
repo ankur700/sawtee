@@ -43,9 +43,8 @@ const Theme = ({ state, actions }) => {
   });
 
   useEffect(() => {
-    actions.source.fetch("/");
     actions.source.fetch("all-categories");
-  }, [actions.source]);
+  }, []);
 
   return (
     <ChakraProvider resetCSS theme={{ config, ...overrides }}>
@@ -81,10 +80,6 @@ const Theme = ({ state, actions }) => {
             <OurWork when={data.route === "/our-work/"} />
             <Contact when={data.route === "/contact/"} />
             <Career when={data.route === "/career/"} />
-            <Publications
-              when={data.route === "/publications/"}
-              categories={categories}
-            />
             <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />
             <HomeArchive when={data.route === "/blog"} />
