@@ -5,6 +5,10 @@ import { formatCPTData } from "../../components/helpers";
 
 const CovidList = ({ state, link, categories }) => {
   const [covidPosts, setCovidPosts] = useState([]);
+  console.log(
+    "🚀 ~ file: covidList.js:8 ~ CovidList ~ covidPosts:",
+    covidPosts
+  );
   const data = state.source.get(link);
   useEffect(() => {
     data.isReady &&
@@ -21,6 +25,7 @@ const CovidList = ({ state, link, categories }) => {
     <SimpleGrid columns={2} spacing={6}>
       {covidPosts.length > 0 &&
         covidPosts.map((post) => {
+          console.log(post.acf.authors);
           return (
             <Box
               w="full"
@@ -82,15 +87,16 @@ const CovidList = ({ state, link, categories }) => {
                   _dark={{
                     color: "gray.200",
                   }}
+                  fontSize={"sm"}
                 >
-                  <span>Author/s</span>
-                  {post.acf.authors?.map((author) => {
-                    return (
-                      <Text key={author} as="span" ml={3}>
-                        {author}
-                      </Text>
-                    );
-                  })}
+                  {post.acf.authors &&
+                    post.acf.authors?.map((author) => {
+                      return (
+                        <Text key={author} as="span" ml={3}>
+                          {author}
+                        </Text>
+                      );
+                    })}
                 </Flex>
               </Box>
             </Box>
