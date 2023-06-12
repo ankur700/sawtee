@@ -14,7 +14,9 @@ import ProgramPost from "./ProgramPost";
 const Post = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const postHeaderColor = useColorModeValue("gray.600", "whiteAlpha.600");
+  const sectionBg = useColorModeValue("whiteAlpha.700", "gray.700");
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
@@ -35,7 +37,7 @@ const Post = ({ state, actions, libraries }) => {
 
   return (
     <LightPatternBox
-      bg={useColorModeValue("whiteAlpha.300", "gray.800")}
+      bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       ref={ref}
       pb={"40px"}
@@ -44,7 +46,7 @@ const Post = ({ state, actions, libraries }) => {
         <PostHeader
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "3rem" }}
-          color={useColorModeValue("gray.600", "whiteAlpha.600")}
+          color={postHeaderColor}
           categories={post.categories}
           heading={post.title}
           author={post.author}
@@ -56,11 +58,7 @@ const Post = ({ state, actions, libraries }) => {
       {!postData.isPage && <PostProgressBar value={scroll} />}
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section
-        bg={useColorModeValue("whiteAlpha.700", "gray.700")}
-        pb="80px"
-        size="lg"
-      >
+      <Section bg={sectionBg} pb="80px" size="lg">
         {post.featured_media != null && (
           <FeaturedMedia id={post.featured_media.id} />
         )}
@@ -72,7 +70,6 @@ const Post = ({ state, actions, libraries }) => {
           px={{ base: "32px", md: "0" }}
           size="md"
           pt="50px"
-          color={useColorModeValue("rgba(12, 17, 43, 0.8)", "whiteAlpha.800")}
         >
           <Html2React html={post.content} />
         </Content>

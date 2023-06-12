@@ -40,11 +40,7 @@ const PageSection = ({ section, libraries }) => {
           <TabList borderBottom={"none"}>
             {content_repeater.map(({ tab_title }) => (
               <Tab key={tab_title}>
-                <Text
-                  fontSize={["md", "lg", "xl"]}
-                  fontWeight="semibold"
-                  fontFamily={"heading"}
-                >
+                <Text fontWeight="semibold" fontFamily={"heading"}>
                   {tab_title}
                 </Text>
               </Tab>

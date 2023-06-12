@@ -5,18 +5,15 @@ import {
   useColorModeValue,
   Image,
   Heading,
-  Divider,
-  Button,
   useBreakpointValue,
+  VStack,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
-import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1-resized.jpg";
-import EventsList from "./eventsList";
-import { useArchiveInfiniteScroll } from "@frontity/hooks";
+import EventItem from "./eventItem";
 import React, { useState, useEffect } from "react";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
@@ -24,6 +21,7 @@ import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
+import Pagination from "../../components/organisms/archive/pagination";
 
 const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
@@ -31,8 +29,7 @@ const EventsArchive = ({ state, actions, categories }) => {
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const [news, setNews] = useState([]);
   const linkColor = state.theme.colors.linkColor;
-  const { pages, isLimit, isFetching, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 3 });
+
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
@@ -42,16 +39,13 @@ const EventsArchive = ({ state, actions, categories }) => {
   const newsData = state.source.get("/news");
 
   useEffect(() => {
-    let newsArray = [];
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
+        setNews((prev) => [...prev, (formatCPTData(state, post, categories))]);
       });
     }
-    if (newsArray.length > 0) {
-      setNews(newsArray);
-    }
+
   }, [newsData]);
 
   // Load the post, but only if the data is ready.
@@ -119,27 +113,22 @@ const EventsArchive = ({ state, actions, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={3} px={[6, 10]}>
-            {pages.map(({ key, link, isLast, Wrapper }) => (
-              <Wrapper key={key}>
-                <EventsList
-                  link={link}
-                  linkColor={linkColor}
-                  categories={categories}
-                />
-                {isLast && <Divider h="10px" mt="10" />}
-                <Box w="full" mb="40px" textAlign={"center"}>
-                  {isFetching && <Loading />}
-                  {isLimit && (
-                    <Button onClick={fetchNext}>Load Next Page</Button>
-                  )}
-                  {isError && (
-                    <Button onClick={fetchNext}>
-                      Something failed - Retry
-                    </Button>
-                  )}
-                </Box>
-              </Wrapper>
-            ))}
+            <VStack spacing={8} w={{ base: "auto", md: "full" }} maxW={"3xl"}>
+              {postData.isReady ? (
+                postData.items.map(({ type, id }) => {
+                  const event = formatCPTData(
+                    state,
+                    state.source[type][id],
+                    categories
+                  );
+                  return <EventItem key={event.id} event={event} />;
+                })
+              ) : (
+                <PulseLoadingCards />
+              )}
+            </VStack>
+
+            <Pagination mt="56px" />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>

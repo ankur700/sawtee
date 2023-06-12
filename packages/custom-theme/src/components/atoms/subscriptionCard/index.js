@@ -28,7 +28,7 @@ const SubscriptionCard = ({ state, libraries }) => {
       pos={"relative"}
       rounded="xl"
       textAlign="center"
-      p={["4", "8"]}
+      p={4}
       color={useColorModeValue("gray.600", "whiteAlpha.600")}
     >
       <Box display={"flex"} justifyContent="center">

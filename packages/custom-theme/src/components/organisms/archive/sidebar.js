@@ -4,7 +4,7 @@ import React from "react";
 
 export const Sidebar = ({ children }) => {
   return (
-    <Stack spacing={16} w="full" maxW={"lg"}>
+    <Stack spacing={12} w="full" maxW={"lg"}>
       {children}
     </Stack>
   );

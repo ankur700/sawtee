@@ -7,10 +7,10 @@ export const PostCategory = (props) => (
   <Box
     px={3}
     py={1}
-    className="primary-link category"
+    className="category"
     bg={useColorModeValue("rgb(230 247 255/1)", "rgb(88,175,223,.1)")}
     fontSize="sm"
-    fontWeight="700"
+    fontWeight="600"
     rounded="md"
     zIndex={50}
     cursor="pointer"
@@ -24,13 +24,12 @@ export const PostCategories = ({
   color = "white",
   ...props
 }) => {
-
-          const limitCategories =
-            categories.length > limit
-              ? categories.filter((cat, idx) => {
-                  idx < limit && cat.parent !== 0;
-                })
-              : categories.filter((cat) => cat.parent !== 0);
+  const limitCategories =
+    categories.length > limit
+      ? categories.filter((cat, idx) => {
+          idx < limit && cat.parent !== 0;
+        })
+      : categories.filter((cat) => cat.parent !== 0);
 
   return (
     <Flex flexWrap="wrap" w="full" mt="12px" {...props}>

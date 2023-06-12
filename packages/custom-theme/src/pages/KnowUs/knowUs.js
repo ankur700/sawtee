@@ -18,10 +18,6 @@ const KnowUs = ({ state, actions, libraries }) => {
   const sections = post.acf.sections;
   const memberInstitutions = post.acf.memberInstitutions;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
-  );
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
@@ -84,8 +80,7 @@ const KnowUs = ({ state, actions, libraries }) => {
             px={{ base: "32px", md: "0" }}
             size="md"
             paddingBlock="50px"
-            fontSize={["sm", "md"]}
-            color={contentColor}
+            fontSize={"1.0625rem"}
           >
             {sections.map((section) => (
               <PageSection

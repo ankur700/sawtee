@@ -8,26 +8,25 @@ import {
   Button,
   useBreakpointValue,
   GridItem,
+  VStack,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
-import ProgrammesList from "./programmesList";
 import Publication1 from "../../assets/publications-1-resized.jpg";
-import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import React from "react";
 import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
+import NumberedPagination from "../../components/atoms/NumberedPagination";
+import ProgrammeItem from "./programmeItem";
 
 const Programmes = ({ state, actions, categories }) => {
   const postData = state.source.get(state.router.link);
-  const { pages, isLimit, isFetching, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 2 });
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const linkColor = state.theme.colors.linkColor;
@@ -37,26 +36,18 @@ const Programmes = ({ state, actions, categories }) => {
     "whiteAlpha.800"
   );
 
-  React.useEffect(() => {
-    actions.source.fetch("/news");
-  }, []);
-
   const newsData = state.source.get("/news");
   React.useEffect(() => {
-    let newsArray = [];
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
+        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
       });
     }
-    if (newsArray.length > 0) {
-      setNews([...newsArray]);
-    }
-  }, [newsData.isReady]);
+  }, [newsData]);
 
   // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
+  // if (!postData.isReady) return null;
 
   return (
     <LightPatternBox
@@ -122,23 +113,28 @@ const Programmes = ({ state, actions, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={3}>
-            {pages.map(({ key, link, isLast, Wrapper }) => (
-              <Wrapper key={key}>
-                <ProgrammesList link={link} categories={categories} />
-                {isLast && <Divider h="10px" mt="10" />}
-                <Box w="full" mb="40px" textAlign={"center"}>
-                  {isFetching && <Loading />}
-                  {isLimit && (
-                    <Button onClick={fetchNext}>Load Next Page</Button>
-                  )}
-                  {isError && (
-                    <Button onClick={fetchNext}>
-                      Something failed - Retry
-                    </Button>
-                  )}
-                </Box>
-              </Wrapper>
-            ))}
+            <VStack spacing={8} w={{ base: "auto", md: "full" }}>
+              {postData.isReady ? (
+                postData.items.map(({ type, id }) => {
+                  const program = formatCPTData(
+                    state,
+                    state.source[type][id],
+                    categories
+                  );
+
+                  return (
+                    <ProgrammeItem
+                      key={id}
+                      program={program}
+                      linkColor={linkColor}
+                    />
+                  );
+                })
+              ) : (
+                <Loading />
+              )}
+            </VStack>
+            <NumberedPagination />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>

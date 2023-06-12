@@ -62,34 +62,35 @@ const BlogSection = ({ events, media, linkColor }) => {
         templateColumns={{ base: "1fr", lg: "repeat(3, 1fr)" }}
         templateRows={{ base: "auto", lg: "repeat(3, 1fr)" }}
       >
-        {events &&
-          events.map((article, i) => {
-            return (
-              <GridItem key={article.id} id={"item-" + (i + 1)}>
-                {i === 0 ? (
-                  <TopImageCard
-                    title={article.title}
-                    categories={article.categories}
-                    featured_media={media}
-                    excerpt={article.excerpt}
-                    target={article.link}
-                    date={article.publishDate}
-                    linkColor={linkColor}
-                  />
-                ) : (
-                  <NoImageCard
-                    title={article.title}
-                    categories={article.categories}
-                    excerpt={article.excerpt}
-                    target={article.link}
-                    date={article.publishDate}
-                    // author={article.author}
-                    linkColor={linkColor}
-                  />
-                )}
-              </GridItem>
-            );
-          })}
+        {events
+          ? events.map((article, i) => {
+              return (
+                <GridItem key={article.id} id={"item-" + (i + 1)}>
+                  {i === 0 ? (
+                    <TopImageCard
+                      title={article.title}
+                      categories={article.categories}
+                      featured_media={media}
+                      excerpt={article.excerpt}
+                      target={article.link}
+                      date={article.publishDate}
+                      linkColor={linkColor}
+                    />
+                  ) : (
+                    <NoImageCard
+                      title={article.title}
+                      categories={article.categories}
+                      excerpt={article.excerpt}
+                      target={article.link}
+                      date={article.publishDate}
+                      // author={article.author}
+                      linkColor={linkColor}
+                    />
+                  )}
+                </GridItem>
+              );
+            })
+          : null}
       </CustomGrid>
       <Show below="lg">
         <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />

@@ -56,7 +56,8 @@ body::-webkit-scrollbar-thumb {
 
   body {
     box-sizing: border-box;
-    color: #000;
+    background-color: #ffffff;
+    color: #121212;
     font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Source Sans Pro", sans-serif;
       Helvetica, sans-serif;
     letter-spacing: -0.015em;
@@ -85,13 +86,16 @@ body::-webkit-scrollbar-thumb {
 
   .primary-link {
     color: rgb(8 126 164/1);
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: #666;
   }
 
   .primary-link:hover,
   .primary-link:focus {
     text-decoration: underline;
     text-underline-offset: 3px;
+    text-decoration-color: rgb(8 126 164/1);
   }
 
   .chakra-ui-dark .primary-link {

@@ -8,6 +8,7 @@ import {
   Button,
   useBreakpointValue,
   GridItem,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -15,45 +16,33 @@ import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
 import CoverImage from "../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
-import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import React from "react";
 import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
-import CovidList from "./covidList";
+import CovidItemCard from "./covidItemCard";
+import Pagination from "../../components/organisms/archive/pagination";
 
 const Covid = ({ state, categories }) => {
-  const postData = state.source.get(state.router.link);
-  const { pages, isLimit, isFetching, isError, fetchNext } =
-    useArchiveInfiniteScroll();
+  const data = state.source.get(state.router.link);
   const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
-  );
-
   const newsData = state.source.get("/news");
   React.useEffect(() => {
-    let newsArray = [];
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
+        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
       });
     }
-    if (newsArray.length > 0) {
-      setNews([...newsArray]);
-    }
-  }, [newsData.isReady]);
+  }, [newsData]);
 
   // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
-
+  if (!data.isReady) return <Loading />;
   return (
     <LightPatternBox
       bg={patternBoxColor}
@@ -98,7 +87,7 @@ const Covid = ({ state, categories }) => {
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"
           >
-            {postData.type}
+            {data.type}
           </Heading>
         </Box>
       </Box>
@@ -107,34 +96,30 @@ const Covid = ({ state, categories }) => {
         as={Section}
         pb="80px"
         size={size ? size : "lg"}
-        // px={"32px"}
+        px={"32px"}
         pt="50px"
-        fontSize={["md", "lg", "xl"]}
-        color={contentColor}
       >
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
           gap={6}
           pos={"relative"}
         >
-          <GridItem colSpan={3}>
-            {pages.map(({ key, link, isLast, Wrapper }) => (
-              <Wrapper key={key}>
-                <CovidList link={link} categories={categories} />
-                {isLast && <Divider h="10px" mt="10" />}
-                <Box w="full" mb="40px" textAlign={"center"}>
-                  {isFetching && <Loading />}
-                  {isLimit && (
-                    <Button onClick={fetchNext}>Load Next Page</Button>
-                  )}
-                  {isError && (
-                    <Button onClick={fetchNext}>
-                      Something failed - Retry
-                    </Button>
-                  )}
-                </Box>
-              </Wrapper>
-            ))}
+          <GridItem colSpan={3} display="flex" flexDirection="column" gap={12}>
+            {/* <SimpleGrid columns={2} spacing={6} rowGap={12}> */}
+            {data.isReady ? (
+              data.items.map(({ type, id }) => {
+                const post = formatCPTData(
+                  state,
+                  state.source[type][id],
+                  categories
+                );
+                return <CovidItemCard key={post.id} post={post} />;
+              })
+            ) : (
+              <Loading />
+            )}
+            {/* </SimpleGrid> */}
+            <Pagination mt="56px" />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
@@ -162,8 +147,7 @@ const Covid = ({ state, categories }) => {
                 />
               </GlassBox>
               <GlassBox
-                py="4"
-                px="8"
+                p="4"
                 rounded="2xl"
                 height="max-content"
                 position={"sticky"}
