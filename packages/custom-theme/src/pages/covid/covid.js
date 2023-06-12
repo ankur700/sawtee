@@ -107,7 +107,7 @@ const Covid = ({ state, categories }) => {
         as={Section}
         pb="80px"
         size={size ? size : "lg"}
-        px={"32px"}
+        // px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
         color={contentColor}

@@ -39,7 +39,6 @@ const EventsList = ({ state, link, libraries, linkColor, categories }) => {
   );
   const data = state.source.get(link);
   const [events, setEvents] = useState([]);
-  console.log("🚀 ~ file: eventsList.js:42 ~ EventsList ~ events:", events);
   useEffect(() => {
     data.isReady &&
       data.items.map((item) => {

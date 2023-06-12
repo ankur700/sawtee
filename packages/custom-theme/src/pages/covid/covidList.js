@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Box, Text, SimpleGrid, chakra } from "@chakra-ui/react";
+import { Flex, Box, Text, SimpleGrid, chakra, VStack } from "@chakra-ui/react";
 import { connect } from "frontity";
-import { formatCPTData } from "../../components/helpers";
+import { formatCPTData, formatDateWithMoment } from "../../components/helpers";
+import Link from "@frontity/components/link";
 
 const CovidList = ({ state, link, categories }) => {
   const [covidPosts, setCovidPosts] = useState([]);
-  console.log(
-    "🚀 ~ file: covidList.js:8 ~ CovidList ~ covidPosts:",
-    covidPosts
-  );
+
   const data = state.source.get(link);
   useEffect(() => {
     data.isReady &&
@@ -22,17 +20,19 @@ const CovidList = ({ state, link, categories }) => {
   }, [data]);
 
   return (
-    <SimpleGrid columns={2} spacing={6}>
+    <SimpleGrid columns={2} spacing={6} rowGap={12}>
       {covidPosts.length > 0 &&
         covidPosts.map((post) => {
-          console.log(post.acf.authors);
           return (
-            <Box
+            <VStack
+              key={post.id}
+              spacing={4}
+              justifyContent="space-evenly"
+              alignItems={"inherit"}
               w="full"
-              maxW="sm"
               mx="auto"
-              px={4}
-              py={3}
+              px={6}
+              py={4}
               bg="white"
               _dark={{
                 bg: "gray.800",
@@ -51,17 +51,18 @@ const CovidList = ({ state, link, categories }) => {
                   {post.acf.genre}
                 </chakra.span>
                 <chakra.span
-                  color="brand.800"
+                  color="gray.800"
                   _dark={{
-                    color: "brand.900",
+                    color: "gray.400",
                   }}
+                  as="time"
                   px={3}
                   py={1}
                   rounded="full"
                   textTransform="uppercase"
                   fontSize="xs"
                 >
-                  {post.publishDate}
+                  {formatDateWithMoment(post.publishDate, "MMMM YYYY")}
                 </chakra.span>
               </Flex>
 
@@ -74,8 +75,10 @@ const CovidList = ({ state, link, categories }) => {
                   _dark={{
                     color: "white",
                   }}
+                  noOfLines={2}
+                  title={post.title}
                 >
-                  {post.title}
+                  <Link link={post.link}>{post.title}</Link>
                 </chakra.h1>
               </Box>
 
@@ -88,18 +91,21 @@ const CovidList = ({ state, link, categories }) => {
                     color: "gray.200",
                   }}
                   fontSize={"sm"}
+                  flexWrap={"wrap"}
+                  columnGap={3}
                 >
-                  {post.acf.authors &&
-                    post.acf.authors?.map((author) => {
-                      return (
-                        <Text key={author} as="span" ml={3}>
-                          {author}
-                        </Text>
-                      );
-                    })}
+                  {post.acf.authors
+                    ? post.acf.authors?.map(({ author }) => {
+                        return (
+                          <Text key={author} as="span">
+                            {author}
+                          </Text>
+                        );
+                      })
+                    : null}
                 </Flex>
               </Box>
-            </Box>
+            </VStack>
           );
         })}
     </SimpleGrid>
