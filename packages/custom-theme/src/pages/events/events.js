@@ -21,7 +21,7 @@ import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
-import Pagination from "../../components/organisms/archive/pagination";
+import NumberedPagination from "../../components/atoms/NumberedPagination";
 
 const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
@@ -42,10 +42,9 @@ const EventsArchive = ({ state, actions, categories }) => {
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
-        setNews((prev) => [...prev, (formatCPTData(state, post, categories))]);
+        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
       });
     }
-
   }, [newsData]);
 
   // Load the post, but only if the data is ready.
@@ -113,7 +112,12 @@ const EventsArchive = ({ state, actions, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={3} px={[6, 10]}>
-            <VStack spacing={8} w={{ base: "auto", md: "full" }} maxW={"3xl"}>
+            <VStack
+              spacing={8}
+              mb="56px"
+              w={{ base: "auto", md: "full" }}
+              maxW={"3xl"}
+            >
               {postData.isReady ? (
                 postData.items.map(({ type, id }) => {
                   const event = formatCPTData(
@@ -128,7 +132,7 @@ const EventsArchive = ({ state, actions, categories }) => {
               )}
             </VStack>
 
-            <Pagination mt="56px" />
+            <NumberedPagination />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>

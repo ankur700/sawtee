@@ -35,7 +35,7 @@ const Programmes = ({ state, actions, categories }) => {
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-
+const { next } = state.source.get(state.router.link);
   const newsData = state.source.get("/news");
   React.useEffect(() => {
     if (newsData.isReady) {
@@ -113,7 +113,7 @@ const Programmes = ({ state, actions, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={3}>
-            <VStack spacing={8} w={{ base: "auto", md: "full" }}>
+            <VStack spacing={8} w={{ base: "auto", md: "full" }} mb="56px">
               {postData.isReady ? (
                 postData.items.map(({ type, id }) => {
                   const program = formatCPTData(
@@ -134,7 +134,7 @@ const Programmes = ({ state, actions, categories }) => {
                 <Loading />
               )}
             </VStack>
-            <NumberedPagination />
+            <NumberedPagination mt="56px" />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
@@ -145,22 +145,24 @@ const Programmes = ({ state, actions, categories }) => {
                   linkColor={linkColor}
                 />
               </GlassBox>
-              <GlassBox
-                rounded="2xl"
-                height="max-content"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                id="twitter-wrapper"
-              >
-                <TwitterTimeline
-                  handle="sawteenp"
-                  width={"100%"}
-                  height="700px"
-                  maxH={"700px"}
-                  rounded="xl"
-                />
-              </GlassBox>
+              {next && (
+                <GlassBox
+                  rounded="2xl"
+                  height="max-content"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  id="twitter-wrapper"
+                >
+                  <TwitterTimeline
+                    handle="sawteenp"
+                    width={"100%"}
+                    height="700px"
+                    maxH={"700px"}
+                    rounded="xl"
+                  />
+                </GlassBox>
+              )}
               <GlassBox
                 py="4"
                 px="8"

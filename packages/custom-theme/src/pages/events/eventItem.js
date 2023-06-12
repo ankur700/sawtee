@@ -18,7 +18,6 @@ import PostCategories from "../../components/organisms/post/post-categories";
 
 const EventItem = ({ state, libraries, event }) => {
   const format = "MMMM YYYY";
-  const Html2React = libraries.html2react.Component;
   const StackBackground = useColorModeValue(
     "rgba(255, 255, 255, 0.1)",
     "rgba(0, 0, 0, 0.4)"
@@ -45,8 +44,8 @@ const EventItem = ({ state, libraries, event }) => {
       boxShadow={"lg"}
       // shadow="lg"
       _hover={{
-        border: "1px solid",
-        borderColor: "primary.700",
+        border: "2px solid",
+        borderColor: "gray.700",
         boxShadow: "xl",
       }}
     >
@@ -67,8 +66,8 @@ const EventItem = ({ state, libraries, event }) => {
         )}
       </Box>
       <Box py={4} px={8}>
-        <HStack spacing={2} mb={1}>
-          {event.categories && (
+        {event.categories && (
+          <HStack spacing={2} mb={1}>
             <Flex justifyContent="space-between" alignItems="center">
               <PostCategories
                 justify="flex-start"
@@ -76,8 +75,8 @@ const EventItem = ({ state, libraries, event }) => {
                 color={categoriesColor}
               />
             </Flex>
-          )}
-        </HStack>
+          </HStack>
+        )}
         <Box textAlign="left">
           <Heading
             as="h3"

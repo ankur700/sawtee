@@ -1,120 +1,160 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
+import { connect, styled, css } from "frontity";
+import link from "../link";
 import {
+  Button,
   Container,
-  Flex,
-  FlexProps,
+  Box,
+  Stack,
   useColorModeValue,
-  Link,
 } from "@chakra-ui/react";
-import { connect } from "frontity";
+// Here we have used react-icons package for the icons
+import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 
-const PaginationContainer = ({ children }) => {
-  return (
-    <Container
-      d="flex"
-      maxWidth="7xl"
-      w="full"
-      h="218px"
-      alignItems="center"
-      p={{ base: 5, sm: 10 }}
-    >
-      {children}
-    </Container>
-  );
+const paginate = (totalPages, currentPage) => {
+  const delta = 1;
+  const pagination = [];
+
+  // Push items from "current - 1" (if available) to current + 1 (if available)
+  for (
+    let i = Math.max(2, currentPage - delta);
+    i <= Math.min(totalPages - 1, currentPage + delta);
+    i++
+  ) {
+    // if current = 1, total = 7, pagination[] => [2]
+    // if current = 5, total = 7, pagination[] => [4, 5, 6];
+    // current = 7, total = 7, pagination[] => [6];
+    pagination.push(i);
+  }
+
+  // if 3 or more pages exist before current page
+  //  items from 2 to current - 2 will be "..."
+  if (currentPage - delta > 2) {
+    // add "..." to the beginning
+    pagination.unshift("...");
+  }
+
+  // if 3 or more exists after current page
+  // items from current + 2 to lastPage(totalPage) - 1 will be "..."
+  if (currentPage + delta < totalPages - 1) {
+    // add "..." to the end
+    pagination.push("...");
+  }
+
+  // Always add 1 (first page) to the beginning
+  pagination.unshift(1);
+  // Always add totalPage (last page) to the end
+  pagination.push(totalPages);
+
+  return pagination;
 };
 
-const PaginationButton = ({ children, isDisabled, isActive, ...props }) => {
-  const activeStyle = {
-    bg: useColorModeValue("gray.300", "gray.700"),
-  };
-
-  return (
-    <Flex
-      p={3}
-      px={4}
-      fontSize="md"
-      fontWeight="500"
-      lineHeight={0.8}
-      opacity={isDisabled && 0.7}
-      _hover={!isDisabled && activeStyle}
-      cursor={isDisabled ? "not-allowed" : "pointer"}
-      border="1px solid"
-      mr="-1px"
-      borderColor={useColorModeValue("gray.300", "gray.700")}
-      {...(isActive && activeStyle)}
-      {...props}
-    >
-      {children}
-    </Flex>
+const NumberedPagination = ({ state, actions, libraries }) => {
+  const { route, query, totalPages, next, previous, page } = state.source.get(
+    state.router.link
   );
-};
 
-// Ideally, only the Pagination component should be used. The PaginationContainer component is used to style the preview.
-const NumberedPagination = ({ state, actions, libraries, ...props }) => {
-  const { totalPages } = state.source.get(state.router.link);
-  const { path, page, query } = libraries.source.parse(state.router.link);
+  // get page link with page number
+  const getPageLink = (page) =>
+    libraries.source.stringify({ route, query, page });
 
-  const isThereNextPage = page > 1;
-  const isTherePreviousPage = page < totalPages;
-  const nextPageLink = libraries.source.stringify({
-    path,
-    page: page + 1,
-    query,
-  });
+  // Pagination - array of numbers/dots for pages
+  const paginationArray = paginate(totalPages, page);
 
-  const prevPageLink = libraries.source.stringify({
-    path,
-    page: page - 1,
-    query,
-  });
-
-  const currentPageLink = libraries.source.stringify({
-    path,
-    page: page,
-    query,
-  });
-  // Fetch the next page if it hasn't been fetched yet.
-  React.useEffect(() => {
-    if (isThereNextPage) actions.source.fetch(nextPageLink);
+  // Prefetch next page if it hasn't been fetched yet.
+  useEffect(() => {
+    if (next) actions.source.fetch(next);
   }, []);
 
   return (
-    <PaginationContainer>
-      <Flex
-        as="nav"
-        aria-label="Pagination"
-        w="full"
-        justify="center"
-        alignItems="center"
-        mt={{ base: 3, md: 0 }}
-      >
-        <PaginationButton
-          isDisabled={!isTherePreviousPage}
-          borderTopLeftRadius="md"
-          borderBottomLeftRadius="md"
-        >
-          <Link href={prevPageLink}>Previous</Link>
-        </PaginationButton>
-        {Array.from(Array(totalPages).keys()).map((id) => {
+    <Stack
+      direction={{ base: "column", sm: "row" }}
+      as="nav"
+      aria-label="Pagination"
+      // spacing={2}
+      w="full"
+      justify="center"
+      alignItems="center"
+      mt={{ base: 3, md: 0 }}
+    >
+      <Box>
+        <StyledLink link={previous}>
+          <PaginationButton isDisabled={!previous} leftIcon={<FaChevronLeft />}>
+            Newer Posts
+          </PaginationButton>
+        </StyledLink>
+      </Box>
+      <Stack direction="row">
+        {paginationArray.map((item, index) => {
+          // if item is dots, "..."
+          if (item === "...") {
+            return <PaginationButton key={index}>{`...`}</PaginationButton>;
+          }
+
+          // if item is current page
+          if (item === page) {
+            return (
+              <PaginationButton key={index} isActive={true}>
+                {item}
+              </PaginationButton>
+            );
+          }
+
           return (
-            <PaginationButton
-              key={"1" + id.toString()}
-              isActive={id + 1 === page}
-            >
-              <Link href={currentPageLink}>{id + 1}</Link>
-            </PaginationButton>
+            <StyledLink key={index} link={getPageLink(item)}>
+              <PaginationButton>{item}</PaginationButton>
+            </StyledLink>
           );
         })}
-        <PaginationButton
-          isDisabled={!isThereNextPage}
-          borderTopRightRadius="md"
-          borderBottomRightRadius="md"
-        >
-          <Link href={nextPageLink}></Link>Next
-        </PaginationButton>
-      </Flex>
-    </PaginationContainer>
+      </Stack>
+      <Box>
+        <StyledLink link={next}>
+          <PaginationButton isDisabled={!next} rightIcon={<FaChevronRight />}>
+            Older Posts
+          </PaginationButton>
+        </StyledLink>
+      </Box>
+    </Stack>
   );
 };
+
+const PaginationButton = ({ children, isDisabled, isActive, ...rest }) => {
+  const activeStyle = {
+    bg: useColorModeValue("primary.500", "primary.700"),
+    color: "white",
+  };
+
+  const hoverStyle = {
+    bg: useColorModeValue("primary.900", "whiteAlpha.900"),
+    color: "white",
+  };
+
+  return (
+    <Button
+      py={1}
+      px={3}
+      border="1px solid"
+      colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+      size="md"
+      variant="outline"
+      rounded="md"
+      color={isDisabled ? "gray.300" : "gray.800"}
+      _hover={!isDisabled && hoverStyle}
+      cursor={isDisabled && "not-allowed"}
+      {...(isActive && activeStyle)}
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
+};
+
+const StyledLink = styled(link)`
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 export default connect(NumberedPagination);

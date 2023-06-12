@@ -70,7 +70,7 @@ const ResearchList = ({ state, link, categories }) => {
           ? tagsArray.map((tagitem) => {
               postsSortedByTags(tagitem);
               return (
-                <Box zIndex={5} key={tagitem.id}>
+                <Box zIndex={5} w="full" key={tagitem.id}>
                   <Heading
                     fontSize="2xl"
                     fontWeight="bold"
