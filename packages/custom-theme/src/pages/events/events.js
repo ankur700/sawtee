@@ -22,12 +22,14 @@ import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
+import { FeaturedPostSection } from "../../components/molecules/featured-post/featured-post";
 
 const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const [news, setNews] = useState([]);
+  const [events, setEvents] = useState([]);
   const linkColor = state.theme.colors.linkColor;
 
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
@@ -46,6 +48,15 @@ const EventsArchive = ({ state, actions, categories }) => {
       });
     }
   }, [newsData]);
+
+  useEffect(() => {
+    if (postData.isReady) {
+      postData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        setEvents((prev) => [...prev, formatCPTData(state, post, categories)]);
+      });
+    }
+  }, [postData]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -118,7 +129,7 @@ const EventsArchive = ({ state, actions, categories }) => {
               w={{ base: "auto", md: "full" }}
               maxW={"3xl"}
             >
-              {postData.isReady ? (
+              {/* {postData.isReady ? (
                 postData.items.map(({ type, id }) => {
                   const event = formatCPTData(
                     state,
@@ -127,6 +138,15 @@ const EventsArchive = ({ state, actions, categories }) => {
                   );
                   return <EventItem key={event.id} event={event} />;
                 })
+              ) : (
+                <PulseLoadingCards />
+              )} */}
+              {events.length > 9 ? (
+                <FeaturedPostSection
+                  data={events}
+                  flexWrap="wrap"
+                  rounded="lg"
+                />
               ) : (
                 <PulseLoadingCards />
               )}

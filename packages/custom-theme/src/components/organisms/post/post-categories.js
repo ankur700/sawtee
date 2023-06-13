@@ -31,19 +31,29 @@ export const PostCategories = ({
         })
       : categories.filter((cat) => cat.parent !== 0);
 
-  return (
-    <Flex flexWrap="wrap" w="full" mt="12px" {...props}>
-      {limitCategories.map((category) => (
-        <PostCategory key={category.id} mr="6px" mb="6px">
-          <Link
-            link={category.link}
-            _hover={{ textDecor: "none !important" }}
-            dangerouslySetInnerHTML={{ __html: decode(category.name) }}
-          />
-        </PostCategory>
-      ))}
-    </Flex>
-  );
+  if (limitCategories.length > 0) {
+    return (
+      <Flex
+        className="post-categories"
+        flexWrap="wrap"
+        w="full"
+        mt="12px"
+        {...props}
+      >
+        {limitCategories.map((category) => (
+          <PostCategory key={category.id} mr="6px" mb="6px">
+            <Link
+              link={category.link}
+              _hover={{ textDecor: "none !important" }}
+            >
+              {decode(category.name)}
+            </Link>
+          </PostCategory>
+        ))}
+      </Flex>
+    );
+  }
+  return null;
 };
 
 export default PostCategories;

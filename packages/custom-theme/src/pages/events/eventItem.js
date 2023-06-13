@@ -18,14 +18,6 @@ import PostCategories from "../../components/organisms/post/post-categories";
 
 const EventItem = ({ state, libraries, event }) => {
   const format = "MMMM YYYY";
-  const StackBackground = useColorModeValue(
-    "rgba(255, 255, 255, 0.1)",
-    "rgba(0, 0, 0, 0.4)"
-  );
-  const StackBoxShadow = useColorModeValue(
-    "0 4px 6px rgba(160, 174, 192, 0.6)",
-    "0 4px 6px rgba(9, 17, 28, 0.9)"
-  );
   const linkColor = state.theme.colors.linkColor;
   const categoriesColor = useColorModeValue("gray.700", "whiteAlpha.700");
   const headingColor = useColorModeValue("gray.700", "whiteAlpha.800");
@@ -40,12 +32,10 @@ const EventItem = ({ state, libraries, event }) => {
       w="full"
       overflow={"hidden"}
       rounded="xl"
-      bg={StackBackground}
       boxShadow={"lg"}
       // shadow="lg"
       _hover={{
         border: "2px solid",
-        borderColor: "gray.700",
         boxShadow: "xl",
       }}
     >

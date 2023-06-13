@@ -19,10 +19,11 @@ export const PostContent = (props) => (
     p="40px"
     width="100%"
     display="flex"
+    alignItems="center"
     flexDirection="column"
     textTransform="uppercase"
     mt="auto"
-    textAlign="center"
+    textAlign="left"
     color="white"
     zIndex="2"
     {...props}
@@ -58,7 +59,7 @@ export const PostOverlay = (props) => (
 );
 
 export const PostImageWithOverlay = ({ src, alt, srcSet, ...props }) => (
-  <Box cursor="pointer" height="260px" width="100%" pos="relative" {...props}>
+  <Box cursor="pointer" height="300px" width="100%" pos="relative" {...props}>
     <PostOverlay />
     <PostImage src={src} alt={alt} srcSet={srcSet} />
   </Box>
@@ -88,7 +89,7 @@ export const SecondaryPostArticle = (props) => (
     flexGrow="1"
     cursor="pointer"
     height="100%"
-    minHeight={{ base: "unset", lg: "240px" }}
+    minHeight={{ base: "unset", lg: "300px" }}
     {...props}
   />
 );
