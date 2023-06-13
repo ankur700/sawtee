@@ -81,7 +81,7 @@ export const FeaturedPostSection = ({ data, ...props }) =>
       direction={{ base: "column", lg: "row" }}
       gap="2"
       rowGap={8}
-      bg="white"
+      bg="transparent"
       {...props}
     >
       <Box width={{ base: "100%", lg: "65%" }} flexGrow="1">

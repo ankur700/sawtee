@@ -137,30 +137,34 @@ const PaginationButton = ({ children, isDisabled, isActive, ...rest }) => {
   const activeStyle = {
     bg: useColorModeValue("primary.500", "primary.700"),
     color: "white",
+    outline: "none",
+    border: "none",
   };
 
   const hoverStyle = {
-    bg: useColorModeValue("primary.900", "whiteAlpha.900"),
+    bg: "gray.900",
     color: "white",
+    border: "none",
   };
   const size = useBreakpointValue(["sm", "md", "lg"]);
+  const ButtonColor = useColorModeValue("gray.700", "whiteAlpha.700");
 
   return (
     <Button
       py={1}
       px={3}
-      colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
+      colorScheme={useColorModeValue("whiteAlpha", "BlackAlpha")}
       size={size}
       variant="outline"
       rounded="md"
-      border="none"
-      color={isDisabled ? "gray.400" : "gray.800"}
+      color={isDisabled ? "gray.400" : ButtonColor}
       _hover={!isDisabled && hoverStyle}
       cursor={isDisabled && "not-allowed"}
       {...(isActive && activeStyle)}
       {...rest}
       _focus={{
         outline: "none",
+        border: "none",
       }}
     >
       {children}

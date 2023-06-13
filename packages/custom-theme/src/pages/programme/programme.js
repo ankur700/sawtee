@@ -159,10 +159,7 @@ const Programmes = ({ state, actions, categories }) => {
                 <GlassBox
                   rounded="2xl"
                   height="max-content"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  id="twitter-wrapper"
+
                 >
                   <TwitterTimeline
                     handle="sawteenp"

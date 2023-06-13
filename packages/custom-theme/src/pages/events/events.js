@@ -141,7 +141,7 @@ const EventsArchive = ({ state, actions, categories }) => {
               ) : (
                 <PulseLoadingCards />
               )} */}
-              {events.length > 9 ? (
+              {events.length > 0 ? (
                 <FeaturedPostSection
                   data={events}
                   flexWrap="wrap"
@@ -166,10 +166,10 @@ const EventsArchive = ({ state, actions, categories }) => {
               <GlassBox
                 rounded="2xl"
                 height="max-content"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                id="twitter-wrapper"
+                // display="flex"
+                // justifyContent="center"
+                // alignItems="center"
+                // id="twitter-wrapper"
               >
                 <TwitterTimeline
                   handle="sawteenp"

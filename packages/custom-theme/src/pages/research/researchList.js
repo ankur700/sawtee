@@ -19,24 +19,24 @@ const ResearchList = ({ state, link, categories }) => {
   const color = state.theme.colors.linkColor;
   const data = state.source.get(link);
   const [researches, setResearches] = useState([]);
+  const [tagsArray, setTagsArray] = useState([]);
   const HeadingColor = useColorModeValue("gray.800", "whiteAlpha.800");
   const WrapperBackground = useColorModeValue("white", "gray.800");
   const WrapperBorderColor = useColorModeValue("gray.100", "gray.700");
   const TextColor = useColorModeValue("gray.800", "whiteAlpha.800");
   useEffect(() => {
-    let array = [];
     if (data.isReady) {
       data.items.map(({ type, id }) => {
         const post = state.source[type][id];
-        array.push(formatCPTData(state, post, categories));
+        setResearches((prev) => [
+          ...prev,
+          formatCPTData(state, post, categories),
+        ]);
       });
-    }
-    if (array.length > 0) {
-      setResearches([...array]);
     }
   }, [data]);
 
-  const tagsArray = useMemo(() => {
+  useEffect(() => {
     let array = [];
     researches.forEach(({ tags }, id) => {
       tags.map((tag) => {
@@ -50,7 +50,7 @@ const ResearchList = ({ state, link, categories }) => {
       });
     });
     if (array.length > 0) {
-      return [...array.sort((a, b) => a.id - b.id)];
+      return setTagsArray([...array.sort((a, b) => a.id - b.id)]);
     }
   }, [researches]);
 
