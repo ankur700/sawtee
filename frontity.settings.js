@@ -9,7 +9,7 @@ const settings = {
       title: "SAWTEE",
       description: "South Asia Watch on Trade, Economics and Environment",
       year: "1994",
-      logo: "/assets/webp/logo-sawtee.webp",
+      logo: "/assets/logo-sawtee.webp",
     },
   },
   packages: [

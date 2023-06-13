@@ -1,14 +1,10 @@
-import moment from "moment/moment";
+import * as dayjs from "dayjs";
 import { categoriesWidgetsHome } from "./config";
 import { useBreakpointValue } from "@chakra-ui/react";
-const MAXIMUM_POSTS = 5;
 
-export const formatedDate = (date) => moment(date, "YYYYMMDD").fromNow();
-export function formatDateWithMoment(date, format) {
-  const f = format ? format : "MMMM DD YYYY";
-  const formatedDate = moment(date).format(f);
-  return formatedDate;
-}
+const MAXIMUM_POSTS = 5;
+const relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
 
 export const slugToCamelCase = (string, type, separators) => {
   if (!separators || typeof separators != "string") {
@@ -218,6 +214,12 @@ export function omitConnectProps(props) {
   return out;
 }
 
+export const formatedDate = (date) => dayjs(date).fromNow();
+
+export function formatDateWithMoment(date, format) {
+  return dayjs(date).format(format ? format : "MMM DD, YYYY");
+}
+
 const monthNames = [
   "January",
   "February",
@@ -251,8 +253,9 @@ export function formatDate(date) {
 }
 
 export function isUrl(str) {
-  let regexp =
-    /(ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!-/]))?/;
+  // let regexp =
+  //   /(ftp|http|https):\/\/(\w+:?\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!-/]))?/;
+  let regexp = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w.-]+)*\/?$/;
   return regexp.test(str);
 }
 
