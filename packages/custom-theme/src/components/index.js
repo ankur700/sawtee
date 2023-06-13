@@ -19,8 +19,14 @@ import FontFace from "./styles/font-face";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Contact from "../pages/contact";
-import Publications from "../pages/publication/publications";
+import Publications from "../pages/publication";
 import Career from "../pages/career";
+import Events from "../pages/events";
+import Newsletters from "../pages/newsletters";
+import Programme from "../pages/programme";
+import Research from "../pages/research";
+import SawteeInMedia from "../pages/sawteeInMedia";
+import Covid from "../pages/covid";
 
 const config = {
   initialColorMode: "light",
@@ -83,8 +89,24 @@ const Theme = ({ state, actions }) => {
             <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />
             <HomeArchive when={data.route === "/blog"} />
+            <Events
+              when={data.isFeaturedEventsArchive}
+              categories={categories}
+            />
+            <Publications
+              when={data.isPublicationsArchive}
+              categories={categories}
+            />
+            <SawteeInMedia
+              when={data.isSawteeInMediaArchive}
+              categories={categories}
+            />
+            <Programme when={data.isProgrammeArchive} categories={categories} />
+            <Newsletters when={data.isNewslettersArchive} />
+            <Research when={data.isResearchArchive} categories={categories} />
+            <Covid when={data.isCovidArchive} categories={categories} />;
             <Archive when={data.isArchive} categories={categories} />
-            <Page404 when={data.is404} />k
+            <Page404 when={data.is404} />
           </Switch>
         </Box>
       </ScaleFade>
