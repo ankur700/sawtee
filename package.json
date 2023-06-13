@@ -23,9 +23,9 @@
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
     "custom-theme": "file:packages/custom-theme",
+    "dayjs": "^1.11.8",
     "focus-visible": "^5.2.0",
     "frontity": "^1.17.2",
-    "moment": "^2.29.4",
     "react-icons": "^4.3.1",
     "react-twitter-embed": "^4.0.4",
     "recharts": "^2.1.10"
