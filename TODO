@@ -2,11 +2,7 @@
 Sawtee Website:
 ✔ Fix footer grid problem @done(23-04-17 15:01) @critical
 ✔ Add newsletter archive page design @done(23-04-18 15:46)
-☐ Single newletter page design @high
-☐ Add Opinion in lead single page and archive page for newsletters OIL. @low
-☐ Infocus Section for Homepage @low
 ✔ Covid-19 Page @today @done(23-04-27 17:11)
-☐ Customize Contact Form of Contact page @high
 ✔ LDC's Trade Interest Page @low @done(23-06-09 11:01)
 ✔ Mega menu Expert section Image loading problem @done(23-06-09 10:50)
 ✔ Contact Page @high @done(23-06-02 16:01)
@@ -15,4 +11,8 @@ Sawtee Website:
 ✔ Location Map Model window @today @done(23-04-17 16:58)
 ✔ Fix about page pageSection component key issue @done(23-06-01 17:13)
 ✔ Fix contact & career page loading progress bar not showing issue @done(23-06-02 16:01)
-
+☐ Customize Contact Form of Contact page @high
+☐ Single newletter page design @high
+☐ Add Opinion in lead single page and archive page for newsletters OIL. @low
+☐ Infocus Section for Homepage @low
+☐ Fix every re-render causing post duplication in the tags array in Research page
