@@ -1,7 +1,6 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React, { useEffect } from "react";
-import List from "../../components/organisms/archive";
 import {
   LightPatternBox,
 } from "../../components/styles/pattern-box";
@@ -21,10 +20,7 @@ const KnowUs = ({ state, actions, libraries }) => {
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
-  useEffect(() => {
-    actions.source.fetch("/");
-    List.preload();
-  }, []);
+
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;

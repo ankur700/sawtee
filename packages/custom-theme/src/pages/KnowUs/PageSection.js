@@ -13,6 +13,7 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Heading,
 } from "@chakra-ui/react";
 
 const PageSection = ({ section, libraries }) => {
@@ -24,25 +25,28 @@ const PageSection = ({ section, libraries }) => {
 
   return (
     <Box>
-      <Text
+      <Heading
         as="h3"
-        id={title}
         fontSize={["lg", "xl", "2xl"]}
-        fontFamily="heading"
         py={"4"}
         mb="4"
+        fontFamily="heading"
       >
         {title}
-      </Text>
+      </Heading>
 
       {tab_or_accordian && title !== "Strategies" && (
         <Tabs variant="enclosed" size="md" isFitted colorScheme="ghost">
           <TabList borderBottom={"none"}>
             {content_repeater.map(({ tab_title }) => (
               <Tab key={tab_title}>
-                <Text fontWeight="semibold" fontFamily={"heading"}>
+                <Heading
+                  as="h4"
+                  fontSize={"lg"}
+                  fontFamily={"heading"}
+                >
                   {tab_title}
-                </Text>
+                </Heading>
               </Tab>
             ))}
           </TabList>
@@ -55,7 +59,6 @@ const PageSection = ({ section, libraries }) => {
                 borderColor={tabBorderColor}
                 display="flex"
                 py={["2", "4"]}
-                minH="250px"
                 justifyContent="center"
                 alignItems="center"
               >
@@ -80,9 +83,9 @@ const PageSection = ({ section, libraries }) => {
                     ),
                   }}
                 >
-                  <Text as="h4" flex="1" fontSize={"lg"} textAlign="left">
+                  <Heading as="h4" flex="1" fontSize={"lg"} textAlign="left">
                     {tab_title}
-                  </Text>
+                  </Heading>
                   <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel px={["5", "10"]}>

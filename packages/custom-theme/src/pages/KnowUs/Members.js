@@ -1,12 +1,11 @@
-import { Box, Text, Heading, SlideFade, Link } from "@chakra-ui/react";
+import { Box, Text, Heading, SlideFade } from "@chakra-ui/react";
 // import Link from "@frontity/components/link";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import React from "react";
+import Link from "../../components/atoms/link";
 
 const Members = ({ memberInstitutions, linkColor }) => {
   const [hovered, setHovered] = React.useState([]);
-
-  console.log("🚀 ~ file: Members.js:8 ~ Members ~ hovered:", hovered);
 
   React.useEffect(() => {
     memberInstitutions.map(({ country, institutes }) => {
@@ -16,8 +15,14 @@ const Members = ({ memberInstitutions, linkColor }) => {
   }, [memberInstitutions]);
 
   return (
-    <>
-      <Heading as="h3" fontSize={["lg", "xl", "2xl"]} py={"4"} mb="4">
+    <Box>
+      <Heading
+        as="h3"
+        fontSize={["lg", "xl", "2xl"]}
+        py={"4"}
+        mb="4"
+        fontFamily="heading"
+      >
         {"Member Institutions"}
       </Heading>
       {memberInstitutions?.map(({ country, institutes }, id) => {
@@ -25,9 +30,15 @@ const Members = ({ memberInstitutions, linkColor }) => {
 
         return (
           <Box key={country} mb="6">
-            <Text as="h4" fontSize={["md", "lg", "xl"]} mb="4">
+            <Heading
+              as="h4"
+              fontSize={["md", "lg", "xl"]}
+              fontWeight="bold"
+              mb="4"
+              fontFamily="heading"
+            >
               {country}
-            </Text>
+            </Heading>
             {institutes.map(({ member_name, member_website_link }, idx) => {
               return (
                 <Box
@@ -38,8 +49,8 @@ const Members = ({ memberInstitutions, linkColor }) => {
                   fontSize={{ base: "sm", md: "md" }}
                 >
                   <Link
-                    href={member_website_link}
-                    target={"_blank"}
+                    link={member_website_link}
+                    // target={"_blank"}
                     onMouseEnter={() => {
                       array[id][country][idx] = true;
                       setHovered([...array]);
@@ -48,7 +59,15 @@ const Members = ({ memberInstitutions, linkColor }) => {
                       array[id][country][idx] = false;
                       setHovered([...array]);
                     }}
-                    _hover={{ color: linkColor }}
+                    _hover={{
+                      color: linkColor,
+                      textDecoration: "underline",
+                      textDecorationColor: linkColor,
+                      textUnderlineOffset: "3px",
+                    }}
+                    textDecoration="underline"
+                    textUnderlineOffset="3px"
+                    textDecorationColor="gray.500"
                   >
                     {member_name}
                   </Link>
@@ -67,7 +86,7 @@ const Members = ({ memberInstitutions, linkColor }) => {
           </Box>
         );
       })}
-    </>
+    </Box>
   );
 };
 
