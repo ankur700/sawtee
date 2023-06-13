@@ -1,15 +1,14 @@
-import React, { ReactNode, useEffect } from "react";
-import { connect, styled, css } from "frontity";
+import React, { useEffect } from "react";
+import { connect, styled } from "frontity";
 import link from "../link";
-import {
-  Button,
-  Container,
-  Box,
-  Stack,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Button, Box, Stack, useColorModeValue, useBreakpointValue } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import {
+  HiChevronRight,
+  HiChevronLeft,
+  HiArrowLeft,
+  HiArrowRight,
+} from "react-icons/hi";
 
 const paginate = (totalPages, currentPage) => {
   const delta = 1;
@@ -54,6 +53,8 @@ const NumberedPagination = ({ state, actions, libraries }) => {
     state.router.link
   );
 
+  const [hover, setHover] = React.useState([false, false]);
+
   // get page link with page number
   const getPageLink = (page) =>
     libraries.source.stringify({ route, query, page });
@@ -77,9 +78,15 @@ const NumberedPagination = ({ state, actions, libraries }) => {
       alignItems="center"
       mt={{ base: 3, md: 0 }}
     >
-      <Box>
+      <Box
+        onMouseEnter={() => setHover([!hover[0], hover[1]])}
+        onMouseLeave={() => setHover([!hover[0], hover[1]])}
+      >
         <StyledLink link={previous}>
-          <PaginationButton isDisabled={!previous} leftIcon={<FaChevronLeft />}>
+          <PaginationButton
+            isDisabled={!previous}
+            leftIcon={!hover[0] ? <HiChevronLeft /> : <HiArrowLeft />}
+          >
             Newer Posts
           </PaginationButton>
         </StyledLink>
@@ -88,28 +95,36 @@ const NumberedPagination = ({ state, actions, libraries }) => {
         {paginationArray.map((item, index) => {
           // if item is dots, "..."
           if (item === "...") {
-            return <PaginationButton key={index}>{`...`}</PaginationButton>;
+            return (
+              <PaginationButton key={eval(item + 1)}>{`...`}</PaginationButton>
+            );
           }
 
           // if item is current page
           if (item === page) {
             return (
-              <PaginationButton key={index} isActive={true}>
+              <PaginationButton key={eval(item + 1)} isActive={true}>
                 {item}
               </PaginationButton>
             );
           }
 
           return (
-            <StyledLink key={index} link={getPageLink(item)}>
+            <StyledLink key={eval(item + 1)} link={getPageLink(item)}>
               <PaginationButton>{item}</PaginationButton>
             </StyledLink>
           );
         })}
       </Stack>
-      <Box>
+      <Box
+        onMouseEnter={() => setHover([hover[0], !hover[1]])}
+        onMouseLeave={() => setHover([hover[0], !hover[1]])}
+      >
         <StyledLink link={next}>
-          <PaginationButton isDisabled={!next} rightIcon={<FaChevronRight />}>
+          <PaginationButton
+            isDisabled={!next}
+            rightIcon={!hover[1] ? <HiChevronRight /> : <HiArrowRight />}
+          >
             Older Posts
           </PaginationButton>
         </StyledLink>
@@ -128,21 +143,25 @@ const PaginationButton = ({ children, isDisabled, isActive, ...rest }) => {
     bg: useColorModeValue("primary.900", "whiteAlpha.900"),
     color: "white",
   };
+  const size = useBreakpointValue(["sm", "md", "lg"]);
 
   return (
     <Button
       py={1}
       px={3}
-      border="1px solid"
       colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
-      size="md"
+      size={size}
       variant="outline"
       rounded="md"
-      color={isDisabled ? "gray.300" : "gray.800"}
+      border="none"
+      color={isDisabled ? "gray.400" : "gray.800"}
       _hover={!isDisabled && hoverStyle}
       cursor={isDisabled && "not-allowed"}
       {...(isActive && activeStyle)}
       {...rest}
+      _focus={{
+        outline: "none",
+      }}
     >
       {children}
     </Button>
