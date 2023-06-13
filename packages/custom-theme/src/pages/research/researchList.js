@@ -12,7 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { formatCPTData } from "../../components/helpers";
-import { HiOutlineNewspaper } from "react-icons/hi";
+// import { FaFilePdf } from "react-icons/hi";
+import { FaFilePdf } from "react-icons/fa";
 
 const ResearchList = ({ state, link, categories }) => {
   const color = state.theme.colors.linkColor;
@@ -98,7 +99,7 @@ const ResearchList = ({ state, link, categories }) => {
                     {tagitem.posts.map((researchItem, idx) => (
                       <ReasearchItem
                         key={researchItem.id}
-                        icon={HiOutlineNewspaper}
+                        icon={FaFilePdf}
                         skipTrail={
                           idx !== tagitem.posts.length - 1 ? true : false
                         }
