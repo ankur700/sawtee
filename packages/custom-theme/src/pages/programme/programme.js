@@ -24,10 +24,13 @@ import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
 import ProgrammeItem from "./programmeItem";
+import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
 
 const Programmes = ({ state, actions, categories }) => {
   const postData = state.source.get(state.router.link);
   const [news, setNews] = React.useState([]);
+  const [programs, setPrograms] = React.useState([]);
+
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
@@ -35,7 +38,20 @@ const Programmes = ({ state, actions, categories }) => {
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-const { next } = state.source.get(state.router.link);
+  const { next } = state.source.get(state.router.link);
+
+  React.useEffect(() => {
+    if (postData.isReady) {
+      postData.items.forEach((item) => {
+        const post = state.source[item.type][item.id];
+        setPrograms((prev) => [
+          ...prev,
+          formatCPTData(state, post, categories),
+        ]);
+      });
+    }
+  }, [postData]);
+
   const newsData = state.source.get("/news");
   React.useEffect(() => {
     if (newsData.isReady) {
@@ -47,7 +63,7 @@ const { next } = state.source.get(state.router.link);
   }, [newsData]);
 
   // Load the post, but only if the data is ready.
-  // if (!postData.isReady) return null;
+  if (!postData.isReady) return null;
 
   return (
     <LightPatternBox
@@ -113,28 +129,22 @@ const { next } = state.source.get(state.router.link);
           pos={"relative"}
         >
           <GridItem colSpan={3}>
-            <VStack spacing={8} w={{ base: "auto", md: "full" }} mb="56px">
-              {postData.isReady ? (
-                postData.items.map(({ type, id }) => {
-                  const program = formatCPTData(
-                    state,
-                    state.source[type][id],
-                    categories
-                  );
-
+            <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
+              {programs.length > 9 ? (
+                programs.map((program) => {
                   return (
                     <ProgrammeItem
-                      key={id}
+                      key={program.id}
                       program={program}
                       linkColor={linkColor}
                     />
                   );
                 })
               ) : (
-                <Loading />
+                <PulseLoadingCards />
               )}
             </VStack>
-            <NumberedPagination mt="56px" />
+            <NumberedPagination />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>

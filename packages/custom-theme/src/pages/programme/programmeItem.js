@@ -7,7 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { decode } from "frontity";
-import { formatedDate } from "../../components/helpers";
+import { formatDateWithMoment } from "../../components/helpers";
 import PostCategories from "../../components/organisms/post/post-categories";
 
 const ProgrammeItem = ({ program, linkColor }) => {
@@ -33,12 +33,14 @@ const ProgrammeItem = ({ program, linkColor }) => {
           <Text
             as="span"
             fontSize="sm"
+            fontWeight="bold"
+            textTransform="uppercase"
             color="gray.600"
             _dark={{
               color: "gray.400",
             }}
           >
-            {formatedDate(program.publishDate)}
+            {formatDateWithMoment(program.publishDate, "MMMM YYYY")}
           </Text>
         </Flex>
 
@@ -54,7 +56,7 @@ const ProgrammeItem = ({ program, linkColor }) => {
           </Heading>
           <Text
             // isTruncated
-            mt={2}
+            my={4}
             fontSize="md"
             color="gray.600"
             _dark={{
