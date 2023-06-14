@@ -51,13 +51,9 @@ const documentSetup = (colors) => css`
     border: 3px solid var(--scrollbarBG);
   }
 
-  // .chakra-ui-light {
-  //   background: ${colors.bodyBg.light};
-  // }
-
-  // .chakra-ui-dark {
-  //   background: ${colors.bodyBg.dark};
-  // }
+  .chakra-ui-dark {
+    color: var(--chakra-colors-whiteAlpha-800);
+  }
 
   *,
   *::before,

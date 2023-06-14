@@ -1,3 +1,4 @@
+import { useMemo, useState, useEffect } from "react";
 import {
   Box,
   useColorModeValue,
@@ -17,41 +18,58 @@ import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1-resized.jpg";
 import ResearchList from "./researchList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
-import React from "react";
 import { formatCPTData } from "../../components/helpers";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
-const ResearchArchive = ({ state, categories }) => {
+const Research = ({ state, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
+  console.log("🚀 ~ file: research.js:30 ~ Research ~ postData:", postData);
   const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
-  );
-  const { pages, isFetching, isLimit, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 3 });
-  const [news, setNews] = React.useState([]);
-  const newsData = state.source.get("/news");
-
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
-
-  React.useEffect(() => {
-    let newsArray = [];
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
+  const [researches, setResearches] = useState([]);
+  const [tagsArray, setTagsArray] = useState([]);
+  const [latestResearch, setLatestResearch] = useState([]);
+  useEffect(() => {
+    let array = [];
+    if (postData.isReady) {
+      postData.items.map(({ type, id }) => {
+        const post = state.source[type][id];
+        setResearches((prev) => [
+          ...prev,
+          formatCPTData(state, post, categories),
+        ]);
+        if (postData.page === 1) {
+          setLatestResearch((prev) => [
+            ...prev,
+            formatCPTData(state, post, categories),
+          ]);
+        }
       });
     }
-    if (newsArray.length > 0) {
-      setNews(newsArray);
+  }, [postData]);
+
+  useEffect(() => {
+    let array = [];
+    researches.forEach(({ tags }, id) => {
+      tags.map((tag) => {
+        if (array.length <= 1) {
+          array.push({ id: tag.id, name: tag.name, posts: [] });
+        } else {
+          if (array[id - 1].id !== tag.id) {
+            array.push({ id: tag.id, name: tag.name, posts: [] });
+          }
+        }
+      });
+    });
+    if (array.length > 0) {
+      return setTagsArray([...array.sort((a, b) => b.id - a.id)]);
     }
-  }, [newsData]);
+  }, [researches.length]);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -113,7 +131,6 @@ const ResearchArchive = ({ state, categories }) => {
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
-        color={contentColor}
       >
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
@@ -121,30 +138,18 @@ const ResearchArchive = ({ state, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={3}>
-            {pages.map(({ key, link, isLast, Wrapper }) => (
-              <Wrapper key={key}>
-                <ResearchList link={link} />
-                {isLast && <Divider h="10px" mt="10" />}
-                <Box w="full" mb="40px" textAlign={"center"}>
-                  {isFetching && <Loading />}
-                  {isLimit && (
-                    <Button onClick={fetchNext}>Load Next Page</Button>
-                  )}
-                  {isError && (
-                    <Button onClick={fetchNext}>
-                      Something failed - Retry
-                    </Button>
-                  )}
-                </Box>
-              </Wrapper>
-            ))}
+            <ResearchList
+              researches={researches}
+              tags={tagsArray}
+              linkColor={linkColor}
+            />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
               <GlassBox py="4" px="8" rounded="2xl">
                 <SidebarWidget
-                  array={news}
-                  title={"Sawtee in Media"}
+                  array={latestResearch}
+                  title={"Latest Research Papers"}
                   linkColor={linkColor}
                 />
               </GlassBox>
@@ -183,4 +188,4 @@ const ResearchArchive = ({ state, categories }) => {
   );
 };
 
-export default connect(ResearchArchive);
+export default connect(Research);

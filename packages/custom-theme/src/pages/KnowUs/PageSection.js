@@ -18,7 +18,7 @@ import {
 
 const PageSection = ({ section, libraries }) => {
   const { content_repeater, title, content, tab_or_accordian } = section;
-  const tabBorderColor = useColorModeValue("gray.200", "whiteAlpha.300");
+  const tabColor = useColorModeValue("blackAlpha", "whiteAlpha");
 
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
@@ -36,38 +36,40 @@ const PageSection = ({ section, libraries }) => {
       </Heading>
 
       {tab_or_accordian && title !== "Strategies" && (
-        <Tabs variant="enclosed" size="md" isFitted colorScheme="ghost">
-          <TabList borderBottom={"none"}>
-            {content_repeater.map(({ tab_title }) => (
-              <Tab key={tab_title}>
-                <Heading
-                  as="h4"
-                  fontSize={"lg"}
-                  fontFamily={"heading"}
+        <Box rounded="xl" p={6} border="1px solid">
+          <Tabs variant="enclosed" size="md" isFitted colorScheme={tabColor}>
+            <TabList>
+              {content_repeater.map(({ tab_title }) => (
+                <Tab
+                  key={tab_title}
+                  transition="all 0.4s ease-in"
                 >
-                  {tab_title}
-                </Heading>
-              </Tab>
-            ))}
-          </TabList>
-          <TabPanels>
-            {content_repeater.map(({ tab_content, tab_title }) => (
-              <TabPanel
-                px={["5", "10"]}
-                key={tab_title}
-                border={"1px solid"}
-                borderColor={tabBorderColor}
-                display="flex"
-                py={["2", "4"]}
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Html2React html={tab_content} />
-              </TabPanel>
-            ))}
-          </TabPanels>
-        </Tabs>
+                  <Heading as="h4" fontSize={"lg"} fontFamily={"heading"}>
+                    {tab_title}
+                  </Heading>
+                </Tab>
+              ))}
+            </TabList>
+            <TabPanels mt={4}>
+              {content_repeater.map(({ tab_content, tab_title }) => (
+                <TabPanel
+                  bg={tabColor}
+                  px={["5", "10"]}
+                  key={tab_title}
+                  display="flex"
+                  py={["2", "4"]}
+                  justifyContent="center"
+                  alignItems="center"
+                  transition="all 0.4s ease-in"
+                >
+                  <Html2React html={tab_content} />
+                </TabPanel>
+              ))}
+            </TabPanels>
+          </Tabs>
+        </Box>
       )}
+
       {tab_or_accordian && title === "Strategies" && (
         <Accordion allowToggle>
           {content_repeater.map(({ tab_title, tab_content }) => {
@@ -83,7 +85,13 @@ const PageSection = ({ section, libraries }) => {
                     ),
                   }}
                 >
-                  <Heading as="h4" flex="1" fontSize={"lg"} textAlign="left">
+                  <Heading
+                    as="h4"
+                    flex="1"
+                    fontSize={"lg"}
+                    fontFamily={"heading"}
+                    textAlign="left"
+                  >
                     {tab_title}
                   </Heading>
                   <AccordionIcon />
@@ -96,6 +104,7 @@ const PageSection = ({ section, libraries }) => {
           })}
         </Accordion>
       )}
+
       {!tab_or_accordian && (
         <Box>
           <Html2React html={content} />

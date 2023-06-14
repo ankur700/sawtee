@@ -28,7 +28,6 @@ import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
 
 const Programmes = ({ state, actions, categories }) => {
   const postData = state.source.get(state.router.link);
-  const [news, setNews] = React.useState([]);
   const [programs, setPrograms] = React.useState([]);
 
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
@@ -38,7 +37,6 @@ const Programmes = ({ state, actions, categories }) => {
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-  const { next } = state.source.get(state.router.link);
 
   React.useEffect(() => {
     if (postData.isReady) {
@@ -51,16 +49,6 @@ const Programmes = ({ state, actions, categories }) => {
       });
     }
   }, [postData]);
-
-  const newsData = state.source.get("/news");
-  React.useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
-      });
-    }
-  }, [newsData]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -130,7 +118,7 @@ const Programmes = ({ state, actions, categories }) => {
         >
           <GridItem colSpan={3}>
             <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
-              {programs.length > 9 ? (
+              {programs.length > 0 ? (
                 programs.map((program) => {
                   return (
                     <ProgrammeItem
@@ -150,26 +138,22 @@ const Programmes = ({ state, actions, categories }) => {
             <Sidebar>
               <GlassBox py="4" px="8" rounded="2xl">
                 <SidebarWidget
-                  array={news}
-                  title={"Sawtee in Media"}
+                  array={programs}
+                  title={"Recent Programs"}
                   linkColor={linkColor}
                 />
               </GlassBox>
-              {next && (
-                <GlassBox
-                  rounded="2xl"
-                  height="max-content"
 
-                >
-                  <TwitterTimeline
-                    handle="sawteenp"
-                    width={"100%"}
-                    height="700px"
-                    maxH={"700px"}
-                    rounded="xl"
-                  />
-                </GlassBox>
-              )}
+              <GlassBox rounded="2xl" height="max-content">
+                <TwitterTimeline
+                  handle="sawteenp"
+                  width={"100%"}
+                  height="700px"
+                  maxH={"700px"}
+                  rounded="xl"
+                />
+              </GlassBox>
+
               <GlassBox
                 py="4"
                 px="8"

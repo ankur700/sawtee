@@ -34,7 +34,7 @@ const ProgrammeItem = ({ program, linkColor }) => {
             as="span"
             fontSize="sm"
             fontWeight="bold"
-            textTransform="uppercase"
+            // textTransform="uppercase"
             color="gray.600"
             _dark={{
               color: "gray.400",

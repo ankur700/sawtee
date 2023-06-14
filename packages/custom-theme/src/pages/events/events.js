@@ -38,17 +38,6 @@ const EventsArchive = ({ state, actions, categories }) => {
     "whiteAlpha.800"
   );
 
-  const newsData = state.source.get("/news");
-
-  useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
-      });
-    }
-  }, [newsData]);
-
   useEffect(() => {
     if (postData.isReady) {
       postData.items.forEach((item) => {
@@ -122,26 +111,27 @@ const EventsArchive = ({ state, actions, categories }) => {
           gap={6}
           pos={"relative"}
         >
-          <GridItem colSpan={3} px={[6, 10]}>
+          <GridItem
+            colSpan={3}
+            px={[6, 10]}
+            display="flex"
+            flexDirection="column"
+            align-items="center"
+          >
             <VStack
               spacing={8}
               mb="56px"
               w={{ base: "auto", md: "full" }}
               maxW={"3xl"}
             >
-              {/* {postData.isReady ? (
-                postData.items.map(({ type, id }) => {
-                  const event = formatCPTData(
-                    state,
-                    state.source[type][id],
-                    categories
-                  );
-                  return <EventItem key={event.id} event={event} />;
-                })
+              {postData.isReady ? (
+                events.map((event) => (
+                  <EventItem key={event.id} event={event} />
+                ))
               ) : (
                 <PulseLoadingCards />
-              )} */}
-              {events.length > 0 ? (
+              )}
+              {/* {events.length > 0 ? (
                 <FeaturedPostSection
                   data={events}
                   flexWrap="wrap"
@@ -149,7 +139,7 @@ const EventsArchive = ({ state, actions, categories }) => {
                 />
               ) : (
                 <PulseLoadingCards />
-              )}
+              )} */}
             </VStack>
 
             <NumberedPagination />
@@ -158,19 +148,12 @@ const EventsArchive = ({ state, actions, categories }) => {
             <Sidebar>
               <GlassBox py="4" px="8" rounded="2xl">
                 <SidebarWidget
-                  array={news}
-                  title={"Sawtee in Media"}
+                  array={events}
+                  title={"Events"}
                   linkColor={linkColor}
                 />
               </GlassBox>
-              <GlassBox
-                rounded="2xl"
-                height="max-content"
-                // display="flex"
-                // justifyContent="center"
-                // alignItems="center"
-                // id="twitter-wrapper"
-              >
+              <GlassBox rounded="2xl" height="max-content">
                 <TwitterTimeline
                   handle="sawteenp"
                   width={"100%"}

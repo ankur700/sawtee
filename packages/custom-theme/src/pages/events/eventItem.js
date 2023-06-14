@@ -25,6 +25,7 @@ const EventItem = ({ state, libraries, event }) => {
 
   return (
     <Stack
+      bg={useColorModeValue("whiteAlpha.800", "gray.800")}
       direction="column"
       spacing={4}
       role="group"

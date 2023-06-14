@@ -1,4 +1,3 @@
-import { useMemo, useState, useEffect } from "react";
 import {
   VStack,
   Heading,
@@ -11,48 +10,14 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import { formatCPTData } from "../../components/helpers";
 // import { FaFilePdf } from "react-icons/hi";
 import { FaFilePdf } from "react-icons/fa";
 
-const ResearchList = ({ state, link, categories }) => {
-  const color = state.theme.colors.linkColor;
-  const data = state.source.get(link);
-  const [researches, setResearches] = useState([]);
-  const [tagsArray, setTagsArray] = useState([]);
+const ResearchList = ({ researches, tags, linkColor }) => {
   const HeadingColor = useColorModeValue("gray.800", "whiteAlpha.800");
   const WrapperBackground = useColorModeValue("white", "gray.800");
   const WrapperBorderColor = useColorModeValue("gray.100", "gray.700");
   const TextColor = useColorModeValue("gray.800", "whiteAlpha.800");
-  useEffect(() => {
-    if (data.isReady) {
-      data.items.map(({ type, id }) => {
-        const post = state.source[type][id];
-        setResearches((prev) => [
-          ...prev,
-          formatCPTData(state, post, categories),
-        ]);
-      });
-    }
-  }, [data]);
-
-  useEffect(() => {
-    let array = [];
-    researches.forEach(({ tags }, id) => {
-      tags.map((tag) => {
-        if (array.length <= 1) {
-          array.push({ id: tag.id, name: tag.name, posts: [] });
-        } else {
-          if (array[id - 1].id !== tag.id) {
-            array.push({ id: tag.id, name: tag.name, posts: [] });
-          }
-        }
-      });
-    });
-    if (array.length > 0) {
-      return setTagsArray([...array.sort((a, b) => a.id - b.id)]);
-    }
-  }, [researches]);
 
   const postsSortedByTags = (tag) => {
     researches.map((r) =>
@@ -65,10 +30,10 @@ const ResearchList = ({ state, link, categories }) => {
   };
 
   return (
-    <Container maxW="5xl" p={{ base: 2, sm: 10 }}>
+    <Container maxW="5xl" p={2}>
       <VStack textAlign="start" align="start" mb={5} spacing={10}>
-        {tagsArray
-          ? tagsArray.map((tagitem) => {
+        {tags
+          ? tags.map((tagitem) => {
               postsSortedByTags(tagitem);
               return (
                 <Box zIndex={5} w="full" key={tagitem.id}>
@@ -111,7 +76,7 @@ const ResearchList = ({ state, link, categories }) => {
                           lineHeight={1.2}
                           fontWeight="bold"
                           _hover={{
-                            color: color,
+                            color: linkColor,
                             textDecoration: "underline",
                           }}
                         >

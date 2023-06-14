@@ -45,8 +45,14 @@ const MenuLink = styled(link)`
 `;
 
 const MegaMenuWrapperVariants = {
-  open: { opacity: 1, y: 0 },
-  closed: { opacity: 0, y: "-100%" },
+  open: {
+    opacity: 1,
+    // y: 0
+  },
+  closed: {
+    opacity: 0,
+    // y: "-100%"
+  },
 };
 
 const ListVariants = {
@@ -94,6 +100,8 @@ const MenuItem = ({ children, ...rest }) => {
       }}
       alignItems="center"
       fontSize="md"
+      _groupHover={{ backgroundColor: "#006181", color: "#fff" }}
+      transition="background 0.2s linear"
       {...rest}
     >
       {children}
@@ -107,9 +115,9 @@ const ExpertCard = ({ expert }) => {
       <Flex
         shadow="lg"
         rounded="lg"
-        bg={"accent.300"}
+        bg={"whiteAlpha.500"}
         _dark={{
-          bg: "accent.500",
+          bg: "blackAlpha.500",
         }}
         direction="column"
         justifyContent="center"
@@ -143,7 +151,6 @@ const ExpertCard = ({ expert }) => {
         >
           <Text
             fontSize="xs"
-            noOfLines={1}
             fontWeight="bold"
             color="gray.800"
             _dark={{
@@ -155,7 +162,6 @@ const ExpertCard = ({ expert }) => {
 
           <Text
             fontSize="xs"
-            noOfLines={1}
             fontWeight="normal"
             color="gray.800"
             _dark={{
@@ -185,18 +191,23 @@ export const SiteMenu = (props) => (
 
 const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
   return (
-    <Box bg={"rgb(8, 126, 164,0.9)"} backdropFilter="blur(5px) saturate(150%)">
+    <Box
+      bg={"rgb(8, 126, 164,0.9)"}
+      backdropFilter="blur(5px) saturate(180%)"
+      px={8}
+      py={10}
+      h="100vh"
+    >
       <Grid
         templateColumns="repeat(6, 1fr)"
         pos="relative"
-        gap={8}
-        px={5}
-        py={16}
-        maxW={"92%"}
+        gap={6}
+        px={6}
         m="0 auto"
+        placeItems="center"
         {...rest}
       >
-        <GridItem colSpan={1}>
+        <GridItem colSpan={1} placeSelf="center">
           <Box
             as={motion.ul}
             variants={ListContainerVariants}
@@ -204,7 +215,7 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
             display="flex"
             flexDirection="column"
             alignItems={"start"}
-            gap={12}
+            gap={8}
           >
             {item.child_items.map((child) => {
               return (
@@ -225,30 +236,30 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
             })}
           </Box>
         </GridItem>
-        <GridItem colSpan={3}>
+        <GridItem colSpan={3} width="full" placeSelf="center">
           <Box
-            w="full"
             position="relative"
             width="100%"
+            minH="450px"
             display="flex"
             justifyContent="center"
             alignItems="center"
             overflow="hidden"
+            rounded="xl"
             backgroundImage={`url(${MapImage})`}
-            // backgroundColor="rgba(0,0,0,0.6)"
-            // backgroundBlendMode="multiply"
+            backgroundColor="rgba(0,0,0,0.6)"
+            backgroundBlendMode="blend"
             backgroundSize="cover"
-            h={"100%"}
-            px={"2rem"}
+            px={6}
           >
             <Text
               fontSize={"lg"}
-              color={"whiteAlpha.800"}
+              color={"white"}
               m="0"
               alignSelf={"center"}
               zIndex={10}
               px={6}
-              lineHeight={2.8}
+              lineHeight="taller"
             >
               South Asia Watch on Trade, Economics and Environment (SAWTEE) was
               launched in 1994 as a loose regional network of non-governmental
@@ -266,7 +277,7 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
           display="flex"
           flexDirection="column"
           justifyContent="center"
-          gap={10}
+          gap={4}
         >
           <Text fontSize="xl" fontWeight={"semibold"}>
             Our Experts
@@ -274,11 +285,12 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
           <Grid
             templateColumns={"repeat(3, 1fr)"}
             templateRows={"repeat(2, auto)"}
-            rowGap={8}
+            rowGap={2}
+            placeItems="center"
           >
             {experts.map((expert) => {
               return (
-                <GridItem key={expert.name}>
+                <GridItem key={expert.name} display="flex" w="full">
                   <ExpertCard expert={expert} />
                 </GridItem>
               );
@@ -432,8 +444,7 @@ const SiteMenuItem = ({ item, experts, ...props }) => {
           aria-label={item.title}
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
-          _groupHover={{ backgroundColor: "#006181", color: "#fff" }}
-          transition="background 0.2s linear"
+
           rightIcon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
         >
           <MenuLink textDecoration={"none"} link={item.url}>
@@ -456,12 +467,7 @@ const SiteMenuItem = ({ item, experts, ...props }) => {
           animate={isOpen ? "open" : "closed"}
           variants={MegaMenuWrapperVariants}
           transition={{
-            type: "spring",
-            bounce: 500,
-            stiffness: 1000,
-            velocity: -100,
-            durations: 1,
-            delay: 0.2,
+            durations: 0.6,
           }}
         >
           <MegaMenu item={item} experts={experts} isOpen={isOpen} />
@@ -475,8 +481,6 @@ const SiteMenuItem = ({ item, experts, ...props }) => {
           aria-label={item.title}
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
-          _groupHover={{ backgroundColor: "#006181", color: "#fff" }}
-          transition="background 0.2s linear"
           display="inline-flex"
         >
           <MenuLink link={item.url}>{item.title}</MenuLink>
