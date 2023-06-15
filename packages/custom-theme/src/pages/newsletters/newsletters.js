@@ -145,15 +145,13 @@ const NewsletterArchive = ({ state, actions, categories }) => {
 
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl">
-                <SidebarWidget
-                  array={news}
-                  title={"Sawtee in Media"}
-                  linkColor={linkColor}
-                />
-              </GlassBox>
+              <SidebarWidget
+                array={news}
+                title={"Sawtee in Media"}
+                linkColor={linkColor}
+              />
               <GlassBox
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 display="flex"
                 justifyContent="center"
@@ -171,7 +169,7 @@ const NewsletterArchive = ({ state, actions, categories }) => {
               <GlassBox
                 py="4"
                 px="8"
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 position={"sticky"}
                 top={"8.5rem"}

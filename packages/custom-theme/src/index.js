@@ -98,7 +98,6 @@ const customTheme = {
         await actions.source.fetch("/programmes");
         await actions.source.fetch("/publications");
         await actions.source.fetch("/featured-events");
-        await actions.source.fetch("/news");
         await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("all-categories");
         await actions.source.fetch("/subscription-page");

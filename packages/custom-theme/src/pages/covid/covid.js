@@ -9,6 +9,7 @@ import {
   useBreakpointValue,
   GridItem,
   SimpleGrid,
+  VStack,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -23,7 +24,7 @@ import React from "react";
 import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import CovidItemCard from "./covidItemCard";
-import Pagination from "../../components/organisms/archive/pagination";
+import NumberedPagination from "../../components/atoms/NumberedPagination";
 
 const Covid = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
@@ -31,7 +32,7 @@ const Covid = ({ state, categories }) => {
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const newsData = state.source.get("/news");
+  const newsData = state.source.get("/sawtee-in-media/");
   React.useEffect(() => {
     if (newsData.isReady) {
       newsData.items.forEach((item) => {
@@ -95,43 +96,42 @@ const Covid = ({ state, categories }) => {
       <Box
         as={Section}
         pb="80px"
-        size={size ? size : "lg"}
-        px={"32px"}
+        size={size ? size : "huge"}
         pt="50px"
       >
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-          gap={6}
+          gap={10}
           pos={"relative"}
         >
-          <GridItem colSpan={3} display="flex" flexDirection="column" gap={12}>
-            {/* <SimpleGrid columns={2} spacing={6} rowGap={12}> */}
-            {data.isReady ? (
-              data.items.map(({ type, id }) => {
-                const post = formatCPTData(
-                  state,
-                  state.source[type][id],
-                  categories
-                );
-                return <CovidItemCard key={post.id} post={post} />;
-              })
-            ) : (
-              <Loading />
-            )}
-            {/* </SimpleGrid> */}
-            <Pagination mt="56px" />
+          <GridItem colSpan={3} display="flex" w="full" flexDirection="column">
+            {/* <VStack spacing={12} mb="56px"> */}
+            <SimpleGrid columns={2} spacing={6} rowGap={12} mb="56px">
+              {data.isReady ? (
+                data.items.map(({ type, id }) => {
+                  const post = formatCPTData(
+                    state,
+                    state.source[type][id],
+                    categories
+                  );
+                  return <CovidItemCard key={post.id} post={post} />;
+                })
+              ) : (
+                <Loading />
+              )}
+            </SimpleGrid>
+            {/* </VStack> */}
+            <NumberedPagination />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl">
-                <SidebarWidget
-                  array={news}
-                  title={"Sawtee in Media"}
-                  linkColor={linkColor}
-                />
-              </GlassBox>
-              <GlassBox
-                rounded="2xl"
+              <SidebarWidget
+                array={news}
+                title={"Sawtee in Media"}
+                linkColor={linkColor}
+              />
+              {/* <GlassBox
+                rounded="xl"
                 height="max-content"
                 display="flex"
                 justifyContent="center"
@@ -141,14 +141,14 @@ const Covid = ({ state, categories }) => {
                 <TwitterTimeline
                   handle="sawteenp"
                   width={"100%"}
-                  height="700px"
+                  height="500px"
                   maxH={"700px"}
                   rounded="xl"
                 />
-              </GlassBox>
+              </GlassBox> */}
               <GlassBox
                 p="4"
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 position={"sticky"}
                 top={"8.5rem"}

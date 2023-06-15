@@ -96,21 +96,21 @@ const NumberedPagination = ({ state, actions, libraries }) => {
           // if item is dots, "..."
           if (item === "...") {
             return (
-              <PaginationButton key={eval(item + 1)}>{`...`}</PaginationButton>
+              <PaginationButton key={`${item} + 1`}>{`...`}</PaginationButton>
             );
           }
 
           // if item is current page
           if (item === page) {
             return (
-              <PaginationButton key={eval(item + 1)} isActive={true}>
+              <PaginationButton key={`${item} + 1`} isActive={true}>
                 {item}
               </PaginationButton>
             );
           }
 
           return (
-            <StyledLink key={eval(item + 1)} link={getPageLink(item)}>
+            <StyledLink key={`${item} + 1`} link={getPageLink(item)}>
               <PaginationButton>{item}</PaginationButton>
             </StyledLink>
           );

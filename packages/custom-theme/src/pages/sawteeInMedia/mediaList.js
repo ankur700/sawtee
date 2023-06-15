@@ -1,18 +1,30 @@
+import React from "react";
 import MediaArticle from "./MediaArticle";
 import { VStack } from "@chakra-ui/react";
+import { connect } from "frontity";
+import Loading from "../../components/atoms/loading";
+import { formatCPTData } from "../../components/helpers";
 
-const SawteeInMedia = ({ news, linkColor }) => {
+const SawteeInMedia = ({ state, link, categories, linkColor }) => {
+  const data = state.source.get(state.router.link);
   return (
     <VStack spacing={8}>
-      {news.map((newsItem) => (
-        <MediaArticle
-          key={newsItem.id}
-          newsItem={newsItem}
-          linkColor={linkColor}
-        />
-      ))}
+      {data.items.map(({ type, id }) => {
+        const newsItem = formatCPTData(
+          state,
+          state.source[type][id],
+          categories
+        );
+        return (
+          <MediaArticle
+            key={newsItem.id}
+            newsItem={newsItem}
+            linkColor={linkColor}
+          />
+        );
+      })}
     </VStack>
   );
 };
 
-export default SawteeInMedia;
+export default connect(SawteeInMedia);

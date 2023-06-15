@@ -1,25 +1,47 @@
 import {
   Box,
+  Flex,
+  Container,
   Divider,
   Heading,
   Skeleton,
   Stack,
   Text,
+  Spacer,
+  Link,
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import Link from "../../atoms/link";
-import Title from "../../atoms/title";
 import { formatedDate } from "../../helpers";
 import { decode } from "frontity";
+import GlassBox from "../glassBox";
 
-const SidebarWidget = ({ array, linkColor, title }) => {
-  const HeadingColor = useColorModeValue("gray.700", "whiteAlpha.700");
+const ListHeading = ({ title, link }) => {
+  return (
+    <Box borderBottom="1px solid #E2E4E6">
+      <Flex align="center" p="3">
+        <Heading fontSize="1.25rem">{title}</Heading>
+        <Spacer />
+        <Link
+          href={link ? link : "#"}
+          fontSize="14px"
+          color={useColorModeValue("primary.700", "primary.100")}
+          fontWeight="medium"
+        >
+          See all
+        </Link>
+      </Flex>
+    </Box>
+  );
+};
+
+const SidebarWidget = ({ array, linkColor, title, link }) => {
+  const HeadingColor = useColorModeValue("gray.700", "whiteAlpha.800");
   const TextColor = useColorModeValue("gray.600", "whiteAlpha.600");
 
   return (
-    <>
-      <Title text={title} textAlign="center" mb={8} />
+    <GlassBox rounded="xl" border="1px solid #E2E4E6" px={8} py={6}>
+      <ListHeading title={title} link={link} />
       {array.length > 0 ? (
         array.map((item, index) => {
           return (
@@ -101,7 +123,7 @@ const SidebarWidget = ({ array, linkColor, title }) => {
           </Box>
         </Stack>
       )}
-    </>
+    </GlassBox>
   );
 };
 

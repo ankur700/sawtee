@@ -28,7 +28,8 @@ const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
-  const [news, setNews] = useState([]);
+  const newsData = state.source.get("/sawtee-in-media/");
+  const [news, setNews] = React.useState([]);
   const [events, setEvents] = useState([]);
   const linkColor = state.theme.colors.linkColor;
 
@@ -40,12 +41,26 @@ const EventsArchive = ({ state, actions, categories }) => {
 
   useEffect(() => {
     if (postData.isReady) {
-      postData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        setEvents((prev) => [...prev, formatCPTData(state, post, categories)]);
+      postData.items.forEach(({ type, id }, idx) => {
+        if (idx <= 2) {
+          const post = state.source[type][id];
+          setEvents((prev) => [
+            ...prev,
+            formatCPTData(state, post, categories),
+          ]);
+        }
       });
     }
-  }, [postData]);
+  }, [postData.page === 1]);
+
+  useEffect(() => {
+    if (newsData.isReady) {
+      newsData.items.forEach(({ type, id }) => {
+        const post = state.source[type][id];
+        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
+      });
+    }
+  }, [newsData]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -125,34 +140,35 @@ const EventsArchive = ({ state, actions, categories }) => {
               maxW={"3xl"}
             >
               {postData.isReady ? (
-                events.map((event) => (
-                  <EventItem key={event.id} event={event} />
-                ))
+                postData.items.map(({ type, id }) => {
+                  const event = formatCPTData(
+                    state,
+                    state.source[type][id],
+                    categories
+                  );
+                  return <EventItem key={event.id} event={event} />;
+                })
               ) : (
                 <PulseLoadingCards />
               )}
-              {/* {events.length > 0 ? (
-                <FeaturedPostSection
-                  data={events}
-                  flexWrap="wrap"
-                  rounded="lg"
-                />
-              ) : (
-                <PulseLoadingCards />
-              )} */}
             </VStack>
 
             <NumberedPagination />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl">
-                <SidebarWidget
-                  array={events}
-                  title={"Events"}
-                  linkColor={linkColor}
-                />
-              </GlassBox>
+              <SidebarWidget
+                array={events}
+                title={"Latest Events"}
+                linkColor={linkColor}
+                link={postData.link}
+              />
+              <SidebarWidget
+                array={news}
+                title={"Sawtee in Media"}
+                linkColor={linkColor}
+                link={postData.link}
+              />
               <GlassBox rounded="2xl" height="max-content">
                 <TwitterTimeline
                   handle="sawteenp"
@@ -165,7 +181,7 @@ const EventsArchive = ({ state, actions, categories }) => {
               <GlassBox
                 py="4"
                 px="8"
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 position={"sticky"}
                 top={"8.5rem"}

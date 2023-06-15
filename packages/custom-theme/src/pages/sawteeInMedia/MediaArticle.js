@@ -10,18 +10,23 @@ import {
 import { decode } from "frontity";
 import { formatDateWithMoment } from "../../components/helpers";
 import Link from "../../components/atoms/link";
+import { motion } from "framer-motion";
 
 const MediaArticle = ({ newsItem, linkColor }) => {
-  const { id, title, excerpt, publishDate, link, acf } = newsItem;
-
+  const { title, excerpt, publishDate, link, acf } = newsItem;
+  const publisherColor = useColorModeValue("gray.800", "gray.100");
   return (
     <Box
-      p={8}
-      // _hover={{ bg: useColorModeValue("gray.50", "gray.800") }}
+      as={motion.div}
+      px={8}
+      pt={8}
+      pb={4}
+      bg={useColorModeValue("gray.50", "gray.800")}
       rounded="md"
-      border={"1px solid"}
       w="full"
-      borderColor={useColorModeValue("gray.800", "whiteAlpha.800")}
+      boxShadow="md"
+      whileHover={{ y: -5 }}
+      _hover={{ boxShadow: "xl" }}
     >
       <VStack spacing={2} mb={5} alignItems={"start"}>
         <Heading
@@ -38,7 +43,7 @@ const MediaArticle = ({ newsItem, linkColor }) => {
         </Heading>
 
         <Text
-          fontSize="md"
+          fontSize="sm"
           noOfLines={3}
           color={useColorModeValue("gray.600", "gray.200")}
           dangerouslySetInnerHTML={{ __html: excerpt }}
@@ -46,32 +51,26 @@ const MediaArticle = ({ newsItem, linkColor }) => {
       </VStack>
       <HStack
         fontSize="sm"
-        fontWeight="bold"
         spacing={2}
         justifyContent="space-between"
         alignItems="center"
       >
-        {acf.publishers &&
-          acf.publishers.map((publisher, idx) => {
-            return (
-              <Tag
-                key={idx}
-                borderRadius="full"
-                bg={useColorModeValue(
-                  "rgb(230 247 255/1)",
-                  "rgb(88,175,223,.1)"
-                )}
-                px="4"
-                py={2}
-                as="a"
-                color={useColorModeValue("gray.800", "gray.100")}
-                href={publisher.publisher_website}
-                _hover={{ textDecor: "underline" }}
-              >
-                {publisher.publisher}
-              </Tag>
-            );
-          })}
+        {acf.publishers.map(({ publisher, publisher_website }) => {
+          return (
+            <Tag
+              key={publisher}
+              px="4"
+              py={2}
+              as="a"
+              color={publisherColor}
+              href={publisher_website}
+              _hover={{ textDecor: "underline" }}
+            >
+              {publisher}
+            </Tag>
+          );
+        })}
+
         <Text color={useColorModeValue("gray.600", "gray.200")}>
           {formatDateWithMoment(publishDate)}
         </Text>

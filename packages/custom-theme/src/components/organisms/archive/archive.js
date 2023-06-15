@@ -4,14 +4,43 @@ import React from "react";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
+import HomeArchive from "./home-archive";
+import Publications from "../../../pages/publication";
+import Events from "../../../pages/events";
+import Newsletters from "../../../pages/newsletters";
+import Programme from "../../../pages/programme";
+import Research from "../../../pages/research";
+import SawteeInMedia from "../../../pages/sawteeInMedia";
+import Covid from "../../../pages/covid";
+import Switch from "@frontity/components/switch";
 
 const Archive = ({ state, categories }) => {
-  const archiveWrapperColor = useColorModeValue("whiteAlpha.300", "gray.800");
-  const gridWrapperColor = useColorModeValue("whiteAlpha.700", "gray.700");
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
 
+  return (
+    <Switch>
+      <HomeArchive when={data.route === "/blog"} />
+      <Events when={data.isFeaturedEventsArchive} categories={categories} />
+      <Publications when={data.isPublicationsArchive} categories={categories} />
+      <SawteeInMedia
+        when={data.isSawteeInMediaArchive}
+        categories={categories}
+      />
+      <Programme when={data.isProgrammeArchive} categories={categories} />
+      <Newsletters when={data.isNewslettersArchive} />
+      <Research when={data.isResearchArchive} categories={categories} />
+      <Covid when={data.isCovidArchive} categories={categories} />;
+      <DefaultArchive data={data} state={state} />
+    </Switch>
+  );
+};
 
+export default connect(Archive);
+
+const DefaultArchive = ({ data, state }) => {
+  const archiveWrapperColor = useColorModeValue("whiteAlpha.300", "gray.800");
+  const gridWrapperColor = useColorModeValue("whiteAlpha.700", "gray.700");
   return (
     <Box bg={archiveWrapperColor} as="section">
       {/* If the list is a taxonomy, we render a title. */}
@@ -52,5 +81,3 @@ const Archive = ({ state, categories }) => {
     </Box>
   );
 };
-
-export default connect(Archive);

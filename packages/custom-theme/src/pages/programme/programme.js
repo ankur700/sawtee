@@ -28,7 +28,9 @@ import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
 
 const Programmes = ({ state, actions, categories }) => {
   const postData = state.source.get(state.router.link);
+  const newsData = state.source.get("/sawtee-in-media/");
   const [programs, setPrograms] = React.useState([]);
+  const [news, setNews] = React.useState([]);
 
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const linkColor = state.theme.colors.linkColor;
@@ -40,15 +42,26 @@ const Programmes = ({ state, actions, categories }) => {
 
   React.useEffect(() => {
     if (postData.isReady) {
-      postData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        setPrograms((prev) => [
-          ...prev,
-          formatCPTData(state, post, categories),
-        ]);
+      postData.items.forEach(({ type, id }, idx) => {
+        if (idx <= 2) {
+          const post = state.source[type][id];
+          setPrograms((prev) => [
+            ...prev,
+            formatCPTData(state, post, categories),
+          ]);
+        }
       });
     }
-  }, [postData]);
+  }, [postData.page === 1]);
+
+  React.useEffect(() => {
+    if (newsData.isReady) {
+      newsData.items.forEach(({ type, id }) => {
+        const post = state.source[type][id];
+        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
+      });
+    }
+  }, [newsData]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -105,7 +118,7 @@ const Programmes = ({ state, actions, categories }) => {
       <Box
         as={Section}
         pb="80px"
-        size={size ? size : "lg"}
+        size={size}
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
@@ -118,37 +131,44 @@ const Programmes = ({ state, actions, categories }) => {
         >
           <GridItem colSpan={3}>
             <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
-              {programs.length > 0 ? (
-                programs.map((program) => {
-                  return (
-                    <ProgrammeItem
-                      key={program.id}
-                      program={program}
-                      linkColor={linkColor}
-                    />
-                  );
-                })
-              ) : (
-                <PulseLoadingCards />
-              )}
+              {postData.items.map(({ type, id }) => {
+                const program = formatCPTData(
+                  state,
+                  state.source[type][id],
+                  categories
+                );
+                return (
+                  <ProgrammeItem
+                    key={program.id}
+                    program={program}
+                    linkColor={linkColor}
+                  />
+                );
+              })}
             </VStack>
             <NumberedPagination />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl">
-                <SidebarWidget
-                  array={programs}
-                  title={"Recent Programs"}
-                  linkColor={linkColor}
-                />
-              </GlassBox>
+              <SidebarWidget
+                array={programs}
+                title={"Featured/Recent Programs"}
+                linkColor={linkColor}
+                link={postData.link}
+              />
 
-              <GlassBox rounded="2xl" height="max-content">
+              <SidebarWidget
+                array={news}
+                title={"Sawtee in Media"}
+                linkColor={linkColor}
+                link={postData.link}
+              />
+
+              <GlassBox height="max-content">
                 <TwitterTimeline
                   handle="sawteenp"
                   width={"100%"}
-                  height="700px"
+                  height="400px"
                   maxH={"700px"}
                   rounded="xl"
                 />
@@ -157,7 +177,7 @@ const Programmes = ({ state, actions, categories }) => {
               <GlassBox
                 py="4"
                 px="8"
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 position={"sticky"}
                 top={"8.5rem"}

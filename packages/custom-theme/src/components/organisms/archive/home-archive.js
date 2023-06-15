@@ -18,7 +18,7 @@ import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
 import Link from "../../atoms/link";
 
-const Blog = ({ state, libraries }) => {
+const HomeArchive = ({ state, libraries }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
   const [firstThreePosts, othersPosts] = splitPosts(state, data.items);
@@ -103,4 +103,4 @@ const Blog = ({ state, libraries }) => {
   );
 };
 
-export default connect(Blog);
+export default connect(HomeArchive);

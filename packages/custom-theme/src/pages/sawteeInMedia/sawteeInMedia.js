@@ -2,7 +2,7 @@ import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import { connect } from "frontity";
 import React from "react";
 import Loading from "../../components/atoms/loading";
-import MediaList from "./mediaList";
+import MediaArticle from "./MediaArticle";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Publication1 from "../../assets/publications-1-resized.jpg";
 import {
@@ -15,57 +15,53 @@ import {
   useBreakpointValue,
   Grid,
   GridItem,
+  VStack,
 } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
 import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import { formatCPTData } from "../../components/helpers";
 import SidebarWidget from "../../components/atoms/sidebarWidget.js";
+import { formatCPTData } from "../../components/helpers";
+import NumberedPagination from "../../components/atoms/NumberedPagination";
 
 const SawteeInMedia = ({ state, actions, categories }) => {
-  const data = state.source.get(state.router.link);
+  const postData = state.source.get(state.router.link);
   const programeData = state.source.get("/programmes");
-  const { pages, isLimit, isFetching, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 3 });
   const linkColor = state.theme.colors.linkColor;
-  const [news, setNews] = React.useState([]);
   const [programs, setPrograms] = React.useState([]);
+  const [mediaNews, setMediaNews] = React.useState([]);
+
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const sectionSize = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   React.useEffect(() => {
-    let programesArray = [];
+    if (postData.isReady && postData.page === 1 && mediaNews.length === 0) {
+      postData.items.forEach(({ type, id }, idx) => {
+        if (idx <= 2) {
+          const post = state.source[type][id];
+          setMediaNews((prev) => [
+            ...prev,
+            formatCPTData(state, post, categories),
+          ]);
+        }
+      });
+    }
+  }, [postData]);
 
+  React.useEffect(() => {
     if (programeData.isReady) {
       programeData.items.forEach((item) => {
         const post = state.source[item.type][item.id];
-        programesArray.push(formatCPTData(state, post, categories));
+        setPrograms((prev) => [
+          ...prev,
+          formatCPTData(state, post, categories),
+        ]);
       });
-    }
-
-    if (programesArray.length > 0) {
-      setPrograms(programesArray);
     }
   }, [programeData]);
 
-  React.useEffect(() => {
-    let newsArray = [];
-
-    if (data.isReady) {
-      data.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
-      });
-    }
-
-    if (newsArray.length > 0) {
-      setNews(newsArray);
-    }
-  }, [data]);
-
-  if (!data.isReady) return null;
   return (
     <LightPatternBox
       bg={patternBoxColor}
@@ -110,7 +106,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"
           >
-            {data.type}
+            {postData.type}
           </Heading>
         </Box>
       </Box>
@@ -128,25 +124,24 @@ const SawteeInMedia = ({ state, actions, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={{ base: 1, lg: 3 }}>
-            <Box>
-              {pages.map(({ key, link, isLast, Wrapper }) => (
-                <Wrapper key={key}>
-                  <MediaList news={news} link={link} linkColor={linkColor} />
-                  {isLast && <Divider h="10px" mt="10" />}
-                  <Box w="full" mb="40px" textAlign={"center"}>
-                    {isFetching && <Loading />}
-                    {isLimit && (
-                      <Button onClick={fetchNext}>Load Next Page</Button>
-                    )}
-                    {isError && (
-                      <Button onClick={fetchNext}>
-                        Something failed - Retry
-                      </Button>
-                    )}
-                  </Box>
-                </Wrapper>
-              ))}
-            </Box>
+            <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
+              {postData.isReady &&
+                postData.items.map(({ type, id }) => {
+                  const newsItem = formatCPTData(
+                    state,
+                    state.source[type][id],
+                    categories
+                  );
+                  return (
+                    <MediaArticle
+                      key={newsItem.id}
+                      newsItem={newsItem}
+                      linkColor={linkColor}
+                    />
+                  );
+                })}
+            </VStack>
+            <NumberedPagination />
           </GridItem>
           <GridItem
             colSpan={{ base: 1, lg: 2 }}
@@ -154,15 +149,20 @@ const SawteeInMedia = ({ state, actions, categories }) => {
             justifyContent={"center"}
           >
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl" height="max-content">
-                <SidebarWidget
-                  array={programs}
-                  title={"Programme"}
-                  linkColor={linkColor}
-                />
-              </GlassBox>
+              <SidebarWidget
+                array={mediaNews}
+                title={"Recent News"}
+                linkColor={linkColor}
+                link={postData.link}
+              />
+              <SidebarWidget
+                array={programs}
+                title={"Programme"}
+                linkColor={linkColor}
+                link={programeData.link}
+              />
               <GlassBox
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 display="flex"
                 justifyContent="center"
@@ -172,7 +172,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
                 <TwitterTimeline
                   handle="sawteenp"
                   width={"100%"}
-                  height="700px"
+                  height="500px"
                   maxH={"700px"}
                   rounded="xl"
                 />
@@ -180,7 +180,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
               <GlassBox
                 py="4"
                 px="8"
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 position={"sticky"}
                 top={"8.5rem"}
@@ -190,7 +190,6 @@ const SawteeInMedia = ({ state, actions, categories }) => {
             </Sidebar>
           </GridItem>
         </Grid>
-        {/* <Pagination mt="56px" /> */}
       </Section>
     </LightPatternBox>
   );

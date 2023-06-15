@@ -3,7 +3,6 @@ import Switch from "@frontity/components/switch";
 import "focus-visible/dist/focus-visible";
 import { Global, Head, connect } from "frontity";
 import { useEffect } from "react";
-import HomeArchive from "../components/organisms/archive/home-archive";
 import Post from "../components/organisms/post/post";
 import KnowUs from "../pages/KnowUs";
 import OurWork from "../pages/OurWork";
@@ -19,14 +18,7 @@ import FontFace from "./styles/font-face";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Contact from "../pages/contact";
-import Publications from "../pages/publication";
 import Career from "../pages/career";
-import Events from "../pages/events";
-import Newsletters from "../pages/newsletters";
-import Programme from "../pages/programme";
-import Research from "../pages/research";
-import SawteeInMedia from "../pages/sawteeInMedia";
-import Covid from "../pages/covid";
 
 const config = {
   initialColorMode: "light",
@@ -77,8 +69,8 @@ const Theme = ({ state, actions }) => {
       <Header />
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
-      <ScaleFade key={state.router.link} initialScale={0.9} in="true">
-        <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
+      <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
+        {/* <ScaleFade key={state.router.link} initialScale={0.9} in="true"> */}
           <Switch>
             <Loading when={data.isFetching} />
             <Home when={data.isHome} categories={categories} />
@@ -88,28 +80,11 @@ const Theme = ({ state, actions }) => {
             <Career when={data.route === "/career/"} />
             <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />
-            <HomeArchive when={data.route === "/blog"} />
-            <Events
-              when={data.isFeaturedEventsArchive}
-              categories={categories}
-            />
-            <Publications
-              when={data.isPublicationsArchive}
-              categories={categories}
-            />
-            <SawteeInMedia
-              when={data.isSawteeInMediaArchive}
-              categories={categories}
-            />
-            <Programme when={data.isProgrammeArchive} categories={categories} />
-            <Newsletters when={data.isNewslettersArchive} />
-            <Research when={data.isResearchArchive} categories={categories} />
-            <Covid when={data.isCovidArchive} categories={categories} />;
             <Archive when={data.isArchive} categories={categories} />
             <Page404 when={data.is404} />
           </Switch>
-        </Box>
-      </ScaleFade>
+        {/* </ScaleFade> */}
+      </Box>
       <Footer />
     </ChakraProvider>
   );

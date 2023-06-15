@@ -146,15 +146,14 @@ const Research = ({ state, categories }) => {
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar>
-              <GlassBox py="4" px="8" rounded="2xl">
-                <SidebarWidget
-                  array={latestResearch}
-                  title={"Latest Research Papers"}
-                  linkColor={linkColor}
-                />
-              </GlassBox>
+              <SidebarWidget
+                array={latestResearch}
+                title={"Latest Research Papers"}
+                linkColor={linkColor}
+                link={postData.link}
+              />
               <GlassBox
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 display="flex"
                 justifyContent="center"
@@ -164,7 +163,7 @@ const Research = ({ state, categories }) => {
                 <TwitterTimeline
                   handle="sawteenp"
                   width={"100%"}
-                  height="700px"
+                  height="500px"
                   maxH={"700px"}
                   rounded="xl"
                 />
@@ -172,7 +171,7 @@ const Research = ({ state, categories }) => {
               <GlassBox
                 py="4"
                 px="8"
-                rounded="2xl"
+                rounded="xl"
                 height="max-content"
                 position={"sticky"}
                 top={"8.5rem"}
