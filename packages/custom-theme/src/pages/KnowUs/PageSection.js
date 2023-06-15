@@ -1,7 +1,6 @@
 import {
   Box,
   Divider,
-  Text,
   useColorModeValue,
   Tabs,
   Tab,
@@ -37,13 +36,18 @@ const PageSection = ({ section, libraries }) => {
 
       {tab_or_accordian && title !== "Strategies" && (
         <Box rounded="xl" p={6} border="1px solid">
-          <Tabs variant="enclosed" size="md" isFitted colorScheme={tabColor}>
+          <Tabs
+            variant="enclosed"
+            size="md"
+            isFitted
+            colorScheme={"primary"}
+            appearance="none"
+            outline="none"
+            _focus={{ outline: "none", boxShadow: "none" }}
+          >
             <TabList>
               {content_repeater.map(({ tab_title }) => (
-                <Tab
-                  key={tab_title}
-                  transition="all 0.4s ease-in"
-                >
+                <Tab key={tab_title} transition="all 0.4s ease-in">
                   <Heading as="h4" fontSize={"lg"} fontFamily={"heading"}>
                     {tab_title}
                   </Heading>

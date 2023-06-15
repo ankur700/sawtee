@@ -1,11 +1,9 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   useColorModeValue,
   Image,
   Heading,
-  Divider,
-  Button,
   GridItem,
   Grid,
   useBreakpointValue,
@@ -14,10 +12,8 @@ import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
-import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1-resized.jpg";
 import ResearchList from "./researchList";
-import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import { formatCPTData } from "../../components/helpers";
 import GlassBox from "../../components/atoms/glassBox";
 import TwitterTimeline from "../../components/atoms/twitterTimeline";
@@ -27,7 +23,6 @@ import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 const Research = ({ state, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-  console.log("🚀 ~ file: research.js:30 ~ Research ~ postData:", postData);
   const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
@@ -127,7 +122,7 @@ const Research = ({ state, categories }) => {
       </Box>
       <Section
         pb="80px"
-        size={size ? size : "lg"}
+        size={size ? size : "full"}
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}

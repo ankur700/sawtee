@@ -7,6 +7,7 @@ const sizes = {
   lg: "1150px",
   huge: "1550px",
   max: "2560px",
+  full: "100%",
 };
 
 /**

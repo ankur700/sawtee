@@ -115,7 +115,7 @@ const EventsArchive = ({ state, actions, categories }) => {
       <Section
         px={"32px"}
         w="full"
-        size={size === undefined ? "lg" : size}
+        size={size ? size : "full"}
         pt="50px"
         pb={"80px"}
         fontSize={["md", "lg", "xl"]}

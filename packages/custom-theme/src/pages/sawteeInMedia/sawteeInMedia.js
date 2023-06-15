@@ -113,7 +113,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
       <Section
         // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
-        size={sectionSize}
+        size={sectionSize ? sectionSize : "full"}
         px={{ base: "32px", md: "0" }}
         pt="50px"
         fontSize={["md", "lg", "xl"]}

@@ -78,7 +78,7 @@ const CovidItemCard = ({ post }) => {
           </Link>
           <BsArrowUpRight />
         </Flex>
-        <Flex
+        {/* <Flex
           p={4}
           alignItems="center"
           justifyContent={"space-between"}
@@ -92,7 +92,7 @@ const CovidItemCard = ({ post }) => {
           ) : (
             <BsHeart fontSize={"24px"} />
           )}
-        </Flex>
+        </Flex> */}
       </HStack>
     </Box>
   );

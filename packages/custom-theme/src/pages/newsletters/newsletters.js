@@ -112,7 +112,7 @@ const NewsletterArchive = ({ state, actions, categories }) => {
       <Box
         as={Section}
         pb="80px"
-        size={size ? size : "lg"}
+        size={size ? size : "full"}
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}

@@ -118,7 +118,7 @@ const Programmes = ({ state, actions, categories }) => {
       <Box
         as={Section}
         pb="80px"
-        size={size}
+        size={size ? size : "full"}
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
