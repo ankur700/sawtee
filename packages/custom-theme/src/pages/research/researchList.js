@@ -13,7 +13,7 @@ import { connect } from "frontity";
 // import { FaFilePdf } from "react-icons/hi";
 import { FaFilePdf } from "react-icons/fa";
 
-const ResearchList = ({ researches, tags, linkColor }) => {
+const ResearchList = ({ state, researches, tags, linkColor }) => {
   const HeadingColor = useColorModeValue("gray.800", "whiteAlpha.800");
   const WrapperBackground = useColorModeValue("white", "gray.800");
   const WrapperBorderColor = useColorModeValue("gray.100", "gray.700");
@@ -34,7 +34,7 @@ const ResearchList = ({ researches, tags, linkColor }) => {
       <VStack textAlign="start" align="start" mb={5} spacing={10}>
         {tags
           ? tags.map((tagitem) => {
-              postsSortedByTags(tagitem);
+              tagitem.posts.length <= 0 && postsSortedByTags(tagitem);
               return (
                 <Box zIndex={5} w="full" key={tagitem.id}>
                   <Heading
@@ -57,7 +57,7 @@ const ResearchList = ({ researches, tags, linkColor }) => {
                     display={"flex"}
                     boxShadow={"lg"}
                     flexDirection={"column"}
-                    alignItems="center"
+                    alignItems="start"
                     cursor="pointer"
                     _hover={{ shadow: "md" }}
                   >
