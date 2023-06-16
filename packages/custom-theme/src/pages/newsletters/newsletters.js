@@ -17,12 +17,9 @@ import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1-resized.jpg";
 import NewsletterList from "./newslettersList";
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
-import GlassBox from "../../components/atoms/glassBox";
-import TwitterTimeline from "../../components/atoms/twitterTimeline";
-import SubscriptionCard from "../../components/atoms/subscriptionCard";
+
 import React from "react";
 import { formatCPTData } from "../../components/helpers";
-import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const NewsletterArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
@@ -38,21 +35,15 @@ const NewsletterArchive = ({ state, actions, categories }) => {
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-  const newsData = state.source.get("/news");
-  React.useEffect(() => {
-    let newsArray = [];
+  const newsData = state.source.get("/sawtee-in-media");
+  useEffect(() => {
     if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        newsArray.push(formatCPTData(state, post, categories));
+      newsData.items.forEach(({ type, id }) => {
+        const post = state.source[type][id];
+        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
       });
     }
-    if (newsArray.length > 0) {
-      setNews([...newsArray]);
-    }
-  }, [newsData.isReady]);
-
-  console.log(postData);
+  }, [newsData]);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -144,39 +135,13 @@ const NewsletterArchive = ({ state, actions, categories }) => {
           </GridItem>
 
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-            <Sidebar>
-              <SidebarWidget
-                array={news}
-                title={"Sawtee in Media"}
-                linkColor={linkColor}
-              />
-              <GlassBox
-                rounded="xl"
-                height="max-content"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                id="twitter-wrapper"
-              >
-                <TwitterTimeline
-                  handle="sawteenp"
-                  width={"100%"}
-                  height="700px"
-                  maxH={"700px"}
-                  rounded="xl"
-                />
-              </GlassBox>
-              <GlassBox
-                py="4"
-                px="8"
-                rounded="xl"
-                height="max-content"
-                position={"sticky"}
-                top={"8.5rem"}
-              >
-                <SubscriptionCard />
-              </GlassBox>
-            </Sidebar>
+            <Sidebar
+              news={news}
+              linkColor={linkColor}
+              newsLink={newsData.link}
+              showTwitterTimeline={true}
+              showSubscriptionBox={true}
+            />
           </GridItem>
         </Grid>
         {/* <Pagination mt="56px" /> */}

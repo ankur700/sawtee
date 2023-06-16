@@ -45,6 +45,7 @@ const EventItem = ({ state, libraries, event }) => {
           <Link link={event.link}>
             <PostImageWithOverlay
               {...event.featured_media}
+              height="200px"
               borderRadius="0.75rem 0.75rem 0 0"
               overflow="hidden"
               _groupHover={{
@@ -57,7 +58,7 @@ const EventItem = ({ state, libraries, event }) => {
         )}
       </Box>
       <Box py={4} px={8}>
-        {event.categories && (
+        {event.categories.length > 1 && (
           <HStack spacing={2} mb={1}>
             <Flex justifyContent="space-between" alignItems="center">
               <PostCategories
@@ -72,7 +73,7 @@ const EventItem = ({ state, libraries, event }) => {
           <Heading
             as="h3"
             color={headingColor}
-            fontSize={{ base: "md", md: "lg", lg: "xl" }}
+            fontSize={{ base: "md", md: "lg" }}
             fontWeight="bold"
             _hover={{ color: linkColor, textDecoration: "underline" }}
             mb={4}
@@ -91,7 +92,7 @@ const EventItem = ({ state, libraries, event }) => {
             {event.excerpt}
           </Text>
         </Box>
-        <Box mt="2">
+        <Box mt="4">
           <Stack
             justify="space-between"
             direction={{ base: "column", sm: "row" }}

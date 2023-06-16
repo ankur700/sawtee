@@ -10,8 +10,6 @@ import {
   Image,
   Heading,
   useColorModeValue,
-  Divider,
-  Button,
   useBreakpointValue,
   Grid,
   GridItem,
@@ -19,10 +17,6 @@ import {
 } from "@chakra-ui/react";
 import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
-import GlassBox from "../../components/atoms/glassBox";
-import TwitterTimeline from "../../components/atoms/twitterTimeline";
-import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import { formatCPTData } from "../../components/helpers";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
 
@@ -37,7 +31,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
   const sectionSize = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
   React.useEffect(() => {
-    if (postData.isReady && postData.page === 1 && mediaNews.length === 0) {
+    if (postData.isReady && postData.page === 1) {
       postData.items.forEach(({ type, id }, idx) => {
         if (idx <= 2) {
           const post = state.source[type][id];
@@ -148,46 +142,16 @@ const SawteeInMedia = ({ state, actions, categories }) => {
             display={"flex"}
             justifyContent={"center"}
           >
-            <Sidebar>
-              <SidebarWidget
-                array={mediaNews}
-                title={"Recent News"}
-                linkColor={linkColor}
-                link={postData.link}
-              />
-              <SidebarWidget
-                array={programs}
-                title={"Programme"}
-                linkColor={linkColor}
-                link={programeData.link}
-              />
-              <GlassBox
-                rounded="xl"
-                height="max-content"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                id="twitter-wrapper"
-              >
-                <TwitterTimeline
-                  handle="sawteenp"
-                  width={"100%"}
-                  height="500px"
-                  maxH={"700px"}
-                  rounded="xl"
-                />
-              </GlassBox>
-              <GlassBox
-                py="4"
-                px="8"
-                rounded="xl"
-                height="max-content"
-                position={"sticky"}
-                top={"8.5rem"}
-              >
-                <SubscriptionCard />
-              </GlassBox>
-            </Sidebar>
+            <Sidebar
+              posts={programs}
+              news={mediaNews}
+              postType={"Programmes"}
+              linkColor={linkColor}
+              postsLink={postData.link}
+              newsLink={programeData.link}
+              showTwitterTimeline={true}
+              showSubscriptionBox={true}
+            />
           </GridItem>
         </Grid>
       </Section>

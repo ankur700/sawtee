@@ -4,8 +4,6 @@ import {
   useColorModeValue,
   Image,
   Heading,
-  Divider,
-  Button,
   useBreakpointValue,
   GridItem,
   VStack,
@@ -16,15 +14,11 @@ import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1-resized.jpg";
-import GlassBox from "../../components/atoms/glassBox";
-import TwitterTimeline from "../../components/atoms/twitterTimeline";
-import SubscriptionCard from "../../components/atoms/subscriptionCard";
+
 import React from "react";
 import { formatCPTData } from "../../components/helpers";
-import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
 import ProgrammeItem from "./programmeItem";
-import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
 
 const Programmes = ({ state, actions, categories }) => {
   const postData = state.source.get(state.router.link);
@@ -41,7 +35,7 @@ const Programmes = ({ state, actions, categories }) => {
   );
 
   React.useEffect(() => {
-    if (postData.isReady) {
+    if (postData.isReady && postData.page === 1) {
       postData.items.forEach(({ type, id }, idx) => {
         if (idx <= 2) {
           const post = state.source[type][id];
@@ -64,7 +58,7 @@ const Programmes = ({ state, actions, categories }) => {
   }, [newsData]);
 
   // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
+  if (!postData.isReady) return <Loading />;
 
   return (
     <LightPatternBox
@@ -149,42 +143,16 @@ const Programmes = ({ state, actions, categories }) => {
             <NumberedPagination />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-            <Sidebar>
-              <SidebarWidget
-                array={programs}
-                title={"Featured/Recent Programs"}
-                linkColor={linkColor}
-                link={postData.link}
-              />
-
-              <SidebarWidget
-                array={news}
-                title={"Sawtee in Media"}
-                linkColor={linkColor}
-                link={postData.link}
-              />
-
-              <GlassBox height="max-content">
-                <TwitterTimeline
-                  handle="sawteenp"
-                  width={"100%"}
-                  height="400px"
-                  maxH={"700px"}
-                  rounded="xl"
-                />
-              </GlassBox>
-
-              <GlassBox
-                py="4"
-                px="8"
-                rounded="xl"
-                height="max-content"
-                position={"sticky"}
-                top={"8.5rem"}
-              >
-                <SubscriptionCard />
-              </GlassBox>
-            </Sidebar>
+            <Sidebar
+              posts={programs}
+              news={news}
+              postType={"Programs"}
+              linkColor={linkColor}
+              postsLink={postData.link}
+              newsLink={newsData.link}
+              showTwitterTimeline={true}
+              showSubscriptionBox={true}
+            />
           </GridItem>
         </Grid>
         {/* <Pagination mt="56px" /> */}

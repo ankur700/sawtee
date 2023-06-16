@@ -3,20 +3,16 @@ import {
   Flex,
   Box,
   Text,
-  chakra,
   useColorModeValue,
   Heading,
-  Img,
-  Center,
   HStack,
   VStack,
 } from "@chakra-ui/react";
 import { formatDateWithMoment } from "../../components/helpers";
 import Link from "@frontity/components/link";
-import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
+import { BsArrowUpRight } from "react-icons/bs";
 
 const CovidItemCard = ({ post }) => {
-  const [liked, setLiked] = useState(false);
   return (
     <Box
       w="full"
@@ -33,18 +29,24 @@ const CovidItemCard = ({ post }) => {
       justifyContent="space-between"
     >
       <VStack p={4} align="stretch" justify="space-between" spacing={4}>
-        <Box
-          bg="black"
-          w="max-content"
-          display={"inline-block"}
-          px={2}
-          py={1}
-          color="white"
-        >
-          <Text fontSize={"xs"} fontWeight="medium">
-            {post.acf.genre}
+        <HStack justify="space-between">
+          <Box
+            bg="black"
+            w="max-content"
+            display={"inline-block"}
+            px={2}
+            py={1}
+            color="white"
+          >
+            <Text fontSize={"xs"} fontWeight="medium">
+              {post.acf.genre}
+            </Text>
+          </Box>
+
+          <Text as="time" fontSize={"xs"} fontWeight="medium">
+            {formatDateWithMoment(post.publishDate, "MMM YYYY")}
           </Text>
-        </Box>
+        </HStack>
         <Heading color={"black"} fontSize={"lg"}>
           {post.title}
         </Heading>

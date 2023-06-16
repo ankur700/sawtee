@@ -15,14 +15,10 @@ import Sidebar from "../../components/organisms/archive/sidebar";
 import Publication1 from "../../assets/publications-1-resized.jpg";
 import EventItem from "./eventItem";
 import React, { useState, useEffect } from "react";
-import GlassBox from "../../components/atoms/glassBox";
-import TwitterTimeline from "../../components/atoms/twitterTimeline";
-import SubscriptionCard from "../../components/atoms/subscriptionCard";
+
 import { formatCPTData } from "../../components/helpers";
-import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
-import { FeaturedPostSection } from "../../components/molecules/featured-post/featured-post";
 
 const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
@@ -40,7 +36,7 @@ const EventsArchive = ({ state, actions, categories }) => {
   );
 
   useEffect(() => {
-    if (postData.isReady) {
+    if (postData.isReady && postData.page === 1) {
       postData.items.forEach(({ type, id }, idx) => {
         if (idx <= 2) {
           const post = state.source[type][id];
@@ -132,6 +128,7 @@ const EventsArchive = ({ state, actions, categories }) => {
             display="flex"
             flexDirection="column"
             align-items="center"
+            w="full"
           >
             <VStack
               spacing={8}
@@ -155,40 +152,22 @@ const EventsArchive = ({ state, actions, categories }) => {
 
             <NumberedPagination />
           </GridItem>
-          <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-            <Sidebar>
-              <SidebarWidget
-                array={events}
-                title={"Latest Events"}
-                linkColor={linkColor}
-                link={postData.link}
-              />
-              <SidebarWidget
-                array={news}
-                title={"Sawtee in Media"}
-                linkColor={linkColor}
-                link={postData.link}
-              />
-              <GlassBox rounded="2xl" height="max-content">
-                <TwitterTimeline
-                  handle="sawteenp"
-                  width={"100%"}
-                  height="700px"
-                  maxH={"700px"}
-                  rounded="xl"
-                />
-              </GlassBox>
-              <GlassBox
-                py="4"
-                px="8"
-                rounded="xl"
-                height="max-content"
-                position={"sticky"}
-                top={"8.5rem"}
-              >
-                <SubscriptionCard />
-              </GlassBox>
-            </Sidebar>
+          <GridItem
+            colSpan={2}
+            display={"flex"}
+            justifyContent={"center"}
+            w="full"
+          >
+            <Sidebar
+              posts={events}
+              news={news}
+              postType={"Events"}
+              linkColor={linkColor}
+              postsLink={postData.link}
+              newsLink={newsData.link}
+              showTwitterTimeline={true}
+              showSubscriptionBox={true}
+            />
           </GridItem>
         </Grid>
         {/* <Pagination mt="56px" /> */}

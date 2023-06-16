@@ -4,12 +4,9 @@ import {
   useColorModeValue,
   Image,
   Heading,
-  Divider,
-  Button,
   useBreakpointValue,
   GridItem,
   SimpleGrid,
-  VStack,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -17,12 +14,9 @@ import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
 import CoverImage from "../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
-import GlassBox from "../../components/atoms/glassBox";
-import TwitterTimeline from "../../components/atoms/twitterTimeline";
-import SubscriptionCard from "../../components/atoms/subscriptionCard";
+
 import React from "react";
 import { formatCPTData } from "../../components/helpers";
-import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 import CovidItemCard from "./covidItemCard";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
 
@@ -93,16 +87,12 @@ const Covid = ({ state, categories }) => {
         </Box>
       </Box>
 
-      <Box
-        as={Section}
-        pb="80px"
-        size={size ? size : "huge"}
-        pt="50px"
-      >
+      <Box as={Section} pb="80px" size={size ? size : "huge"} pt="50px">
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
           gap={10}
           pos={"relative"}
+          w="full"
         >
           <GridItem colSpan={3} display="flex" w="full" flexDirection="column">
             {/* <VStack spacing={12} mb="56px"> */}
@@ -124,38 +114,13 @@ const Covid = ({ state, categories }) => {
             <NumberedPagination />
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-            <Sidebar>
-              <SidebarWidget
-                array={news}
-                title={"Sawtee in Media"}
-                linkColor={linkColor}
-              />
-              {/* <GlassBox
-                rounded="xl"
-                height="max-content"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                id="twitter-wrapper"
-              >
-                <TwitterTimeline
-                  handle="sawteenp"
-                  width={"100%"}
-                  height="500px"
-                  maxH={"700px"}
-                  rounded="xl"
-                />
-              </GlassBox> */}
-              <GlassBox
-                p="4"
-                rounded="xl"
-                height="max-content"
-                position={"sticky"}
-                top={"8.5rem"}
-              >
-                <SubscriptionCard />
-              </GlassBox>
-            </Sidebar>
+            <Sidebar
+              news={news}
+              linkColor={linkColor}
+              newsLink={newsData.link}
+              showTwitterTimeline={true}
+              showSubscriptionBox={true}
+            />
           </GridItem>
         </Grid>
       </Box>
