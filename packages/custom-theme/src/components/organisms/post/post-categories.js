@@ -25,9 +25,9 @@ export const PostCategories = ({
   ...props
 }) => {
   const limitCategories =
-    categories.length > limit
+    categories.length >= limit
       ? categories.filter((cat, idx) => {
-          idx < limit && cat.parent !== 0;
+          if (idx <= limit && cat.parent !== 0) return cat;
         })
       : categories.filter((cat) => cat.parent !== 0);
 

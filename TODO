@@ -15,5 +15,5 @@ Sawtee Website:
 ☐ Single newletter page design @high
 ☐ Add Opinion in lead single page and archive page for newsletters OIL. @low
 ☐ Infocus Section for Homepage @low
-☐ Fix every re-render causing post duplication in the tags array in Research page
-☐ Abstract siderbar into a saperate component
+✔ Fix every re-render causing post duplication in the tags array in Research page @done(23-06-16 17:31)
+✔ Abstract siderbar into a saperate component @done(23-06-16 15:36)
