@@ -21,14 +21,13 @@ export const Sidebar = ({
     return array.length === 0;
   }
 
-  const PostType = postType ? postType : posts[0].categories[0].name;
 
   return (
     <Stack spacing={12} w="full" maxW={"lg"}>
       {posts && !EmptyArray(posts) && (
         <SidebarWidget
           array={posts}
-          title={`Latest  ${PostType}`}
+          title={`Latest  ${postType}`}
           linkColor={linkColor}
           link={postsLink ? postsLink : "#"}
         />

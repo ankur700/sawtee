@@ -73,7 +73,7 @@ const EventItem = ({ state, libraries, event }) => {
           <Heading
             as="h3"
             color={headingColor}
-            fontSize={{ base: "md", md: "lg" }}
+            fontSize={{ base: "md", "2xl": "lg" }}
             fontWeight="bold"
             _hover={{ color: linkColor, textDecoration: "underline" }}
             mb={4}

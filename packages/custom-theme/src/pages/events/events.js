@@ -17,7 +17,7 @@ import EventItem from "./eventItem";
 import React, { useState, useEffect } from "react";
 
 import { formatCPTData } from "../../components/helpers";
-import PulseLoadingCards from "../../components/atoms/pulseLoadingCards";
+import Loading from "../../components/atoms/loading";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
 
 const EventsArchive = ({ state, actions, categories }) => {
@@ -30,10 +30,7 @@ const EventsArchive = ({ state, actions, categories }) => {
   const linkColor = state.theme.colors.linkColor;
 
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
-  );
+  const contentColor = useColorModeValue("#121212", "whiteAlpha.800");
 
   useEffect(() => {
     if (postData.isReady && postData.page === 1) {
@@ -59,7 +56,7 @@ const EventsArchive = ({ state, actions, categories }) => {
   }, [newsData]);
 
   // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
+  if (!postData.isReady) return <Loading />;
   return (
     <LightPatternBox
       bg={patternBoxColor}
@@ -110,8 +107,7 @@ const EventsArchive = ({ state, actions, categories }) => {
       </Box>
       <Section
         px={"32px"}
-        w="full"
-        size={size ? size : "full"}
+        size={size}
         pt="50px"
         pb={"80px"}
         fontSize={["md", "lg", "xl"]}
@@ -121,6 +117,7 @@ const EventsArchive = ({ state, actions, categories }) => {
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
           gap={6}
           pos={"relative"}
+          w="full"
         >
           <GridItem
             colSpan={3}
@@ -130,12 +127,7 @@ const EventsArchive = ({ state, actions, categories }) => {
             align-items="center"
             w="full"
           >
-            <VStack
-              spacing={8}
-              mb="56px"
-              w={{ base: "auto", md: "full" }}
-              maxW={"3xl"}
-            >
+            <VStack spacing={8} mb="56px" w={"full"}>
               {postData.isReady ? (
                 postData.items.map(({ type, id }) => {
                   const event = formatCPTData(
@@ -146,7 +138,7 @@ const EventsArchive = ({ state, actions, categories }) => {
                   return <EventItem key={event.id} event={event} />;
                 })
               ) : (
-                <PulseLoadingCards />
+                <Loading />
               )}
             </VStack>
 

@@ -5,7 +5,19 @@ import {
   VStack,
   Text,
   useColorModeValue,
-  Container,
+  Flex,
+  IconButton,
+  Button,
+  HStack,
+  Link,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";
@@ -13,9 +25,16 @@ import { formatPostData, getPostData } from "../../components/helpers";
 import FeaturedMedia from "../../components/organisms/post/featured-media";
 import PostHeader from "../../components/organisms/post/post-header";
 import { LightPatternBox } from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
 import GlassBox from "../../components/atoms/glassBox";
 import Iframe from "@frontity/components/iframe";
+import { MdPhone, MdEmail, MdLocationOn } from "react-icons/md";
+import {
+  FaFax,
+  FaFacebook,
+  FaTwitter,
+  FaLinkedin,
+  FaYoutube,
+} from "react-icons/fa";
 
 const Contact = ({ state, libraries }) => {
   const postData = getPostData(state);
@@ -23,10 +42,15 @@ const Contact = ({ state, libraries }) => {
   const CONTACT_FORM = post.acf.cf7_form;
   const Html2React = libraries.html2react.Component;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
+  const contentColor = useColorModeValue("#121212", "whiteAlpha.800");
+  const modalContentColor = useColorModeValue(
+    "rgba(255, 255, 255, 0.7)",
+    "rgba(0, 0, 0, 0.7)"
   );
+  const modelHeaderColor = useColorModeValue("gray.700", "whiteAlpha.900");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const socialMenus = state.theme.socialLinks;
+
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
@@ -72,98 +96,214 @@ const Contact = ({ state, libraries }) => {
         />
       </Box>
       {/* Look at the settings to see if we should include the featured image */}
-      <GlassBox
-        as={Section}
-        border="none"
-        size={"lg"}
-        px={{ base: "32px", md: "16px" }}
-        paddingBlock="50px"
-        mt="50px"
+      {/* Render the content using the Html2React component so the HTML is processed
+       by the processors we included in the libraries.html2react.processors array. */}
+      <Content
+        as={GlassBox}
+        maxW={"7xl"}
+        padding="50px"
+        mx="auto"
+        my="50px"
         color={contentColor}
       >
-        {/* Render the content using the Html2React component so the HTML is processed
-       by the processors we included in the libraries.html2react.processors array. */}
-        <Content px={{ base: "32px", md: "16px" }}>
-          <SimpleGrid columns={2} spacing={6}>
-            <Box bg={"#000"} p={6}>
-              {CONTACT_FORM && <Html2React html={CONTACT_FORM} />}
+        <Flex>
+          <Box
+            bg="#02054B"
+            color="white"
+            borderRadius="lg"
+            m={{ sm: 4, md: 16, lg: 10 }}
+            p={{ sm: 5, md: 5, lg: 16 }}
+          >
+            <Box p={4}>
+              <SimpleGrid
+                columns={[1, 2]}
+                spacing={{ base: 20, sm: 3, md: 5, lg: 20 }}
+              >
+                <Box>
+                  <Heading
+                    as="h4"
+                    fontSize={{ base: "xl", md: "2xl" }}
+                    color={"whiteAlpha.800"}
+                    textTransform={"uppercase"}
+                    pb="10px"
+                  >
+                    Contact
+                  </Heading>
+                  <Text
+                    color="gray.500"
+                    fontSize={{ base: "md", md: "lg" }}
+                    pb="0.5em"
+                  >
+                    {post.acf.opening_hours}
+                  </Text>
+                  <Box py={{ base: 5, sm: 5, md: 8, lg: 10 }}>
+                    <VStack pl={0} spacing={3} alignItems="flex-start">
+                      {post.acf.phone_numbers.map(({ number }) => {
+                        return (
+                          <Button
+                            key={number}
+                            size="md"
+                            height="48px"
+                            variant="ghost"
+                            color="#DCE2FF"
+                            _hover={{ border: "2px solid #1C6FEB" }}
+                            leftIcon={<MdPhone color="#1970F1" size="20px" />}
+                          >
+                            <Link as="a" href={`tel:${number}`}>
+                              {number}
+                            </Link>
+                          </Button>
+                        );
+                      })}
+                      <Button
+                        size="md"
+                        height="48px"
+                        variant="ghost"
+                        color="#DCE2FF"
+                        _hover={{ border: "2px solid #1C6FEB" }}
+                        leftIcon={<FaFax color="#1970F1" size="20px" />}
+                      >
+                        <Link href={`fax:${post.acf.fax}`}>{post.acf.fax}</Link>
+                      </Button>
+                      <Button
+                        size="md"
+                        height="48px"
+                        variant="ghost"
+                        color="#DCE2FF"
+                        _hover={{ border: "2px solid #1C6FEB" }}
+                        leftIcon={<MdEmail color="#1970F1" size="20px" />}
+                      >
+                        <Link href={`mailto:${post.acf.email}`}>
+                          {post.acf.email}
+                        </Link>
+                      </Button>
+                      <Button
+                        size="md"
+                        height="48px"
+                        variant="ghost"
+                        color="#DCE2FF"
+                        _hover={{ border: "2px solid #1C6FEB" }}
+                        leftIcon={<MdLocationOn color="#1970F1" size="20px" />}
+                        onClick={onOpen}
+                      >
+                        {post.acf.address}
+                      </Button>
+                    </VStack>
+                  </Box>
+                  <HStack
+                    mt={{ lg: 10, md: 10 }}
+                    spacing={5}
+                    px={5}
+                    alignItems="flex-start"
+                  >
+                    {socialMenus.map(([name, link]) => {
+                      if (name === "facebook") {
+                        return (
+                          <IconButton
+                            key={name}
+                            aria-label={name}
+                            variant="ghost"
+                            size="lg"
+                            isRound={true}
+                            _hover={{ bg: "#0D74FF" }}
+                            icon={<FaFacebook size="28px" />}
+                          />
+                        );
+                      } else if (name === "twitter") {
+                        return (
+                          <IconButton
+                            key={name}
+                            aria-label={name}
+                            variant="ghost"
+                            size="lg"
+                            isRound={true}
+                            _hover={{ bg: "#0D74FF" }}
+                            icon={<FaTwitter size="28px" />}
+                          />
+                        );
+                      } else if (name === "linkedin") {
+                        return (
+                          <IconButton
+                            key={name}
+                            aria-label={name}
+                            variant="ghost"
+                            size="lg"
+                            isRound={true}
+                            _hover={{ bg: "#0D74FF" }}
+                            icon={<FaLinkedin size="28px" />}
+                          />
+                        );
+                      } else {
+                        return (
+                          <IconButton
+                            key={name}
+                            aria-label={name}
+                            variant="ghost"
+                            size="lg"
+                            isRound={true}
+                            _hover={{ bg: "#0D74FF" }}
+                            icon={<FaYoutube size="28px" />}
+                          />
+                        );
+                      }
+                    })}
+                  </HStack>
+                </Box>
+                <Box
+                  bg="white"
+                  borderRadius="lg"
+                  className="contact_form"
+                  m={8}
+                  color="#0B0E3F"
+                >
+                  {CONTACT_FORM && <Html2React html={CONTACT_FORM} />}
+                </Box>
+              </SimpleGrid>
             </Box>
-            <VStack
-              alignItems={"start"}
-              justifyContent={"center"}
-              pl={10}
-              spacing={6}
-            >
-              <Box>
-                <InfoHeading>Opening Hours</InfoHeading>
-                <InfoText>Monday-Friday 9:00 AM – 5:30 PM</InfoText>
-              </Box>
-              <Box>
-                <InfoHeading>Address</InfoHeading>
-                <InfoText as="address">
-                  Tukucha Marg, Baluwatar, Kathmandu, Nepal
-                </InfoText>
-              </Box>
-              <Box>
-                <InfoHeading>General Information</InfoHeading>
-                <InfoText pb={6}>No Current Job Openings</InfoText>
-              </Box>
-              <Box>
-                <InfoHeading>Queries</InfoHeading>
-                <InfoText className="info-text">
-                  <a href="mailto:sawtee@sawtee.org">sawtee@sawtee.org</a>
-                </InfoText>
-              </Box>
-            </VStack>
-          </SimpleGrid>
-
-          <Box w="full" p="4" mt="16">
-            <Iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.8576860518533!2d85.32674871047516!3d27.721679976074906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1913dfb0b0b3%3A0x4d5d3519d24d3c38!2sSouth%20Asia%20Watch%20on%20Trade%2C%20Economics%20and%20Environment%20(SAWTEE)!5e0!3m2!1sne!2snp!4v1681725594330!5m2!1sne!2snp"
-              title="SAWTEE's Location"
-              height="450"
-              width="100%"
-              loading="lazy"
-              // rootMargin="0 auto"
-            />
           </Box>
-        </Content>
-      </GlassBox>
-      ;
+        </Flex>
+
+        <Modal
+          isCentered
+          onClose={onClose}
+          isOpen={isOpen}
+          motionPreset="slideInBottom"
+          closeOnOverlayClick={true}
+          blockScrollOnMount={false}
+        >
+          <ModalOverlay />
+          <ModalContent bg={modalContentColor} maxW={"2xl"}>
+            <ModalHeader color={modelHeaderColor}>Our Location</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody margin={"0 auto"}>
+              <Iframe
+                src={post.acf.map_link}
+                title="SAWTEE's Location"
+                height="450"
+                width="600"
+                loading="lazy"
+                // rootMargin="0 auto"
+              />
+            </ModalBody>
+
+            <ModalFooter>
+              <Button variant="ghost">
+                <Link
+                  href="https://goo.gl/maps/fwZuwNSbjN5jwZia7"
+                  target="_blank"
+                >
+                  View Map
+                </Link>
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Content>
     </LightPatternBox>
   );
 };
 
 export default connect(Contact);
-
-const InfoHeading = ({ children, props }) => {
-  return (
-    <Heading
-      as="h4"
-      fontSize={{ base: "xl", md: "2xl" }}
-      color={"gray.700"}
-      textTransform={"uppercase"}
-      pb="10px"
-      {...props}
-    >
-      {children}
-    </Heading>
-  );
-};
-
-const InfoText = ({ children, props }) => {
-  return (
-    <Text
-      fontSize={{ base: "md", md: "lg" }}
-      color={"gray.500"}
-      pb="0.5em"
-      ml={"10px"}
-      {...props}
-    >
-      {children}
-    </Text>
-  );
-};
 
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.
@@ -183,7 +323,8 @@ const Content = styled(Box)`
     object-fit: cover;
     object-position: center;
   }
-  form {
+
+  & .wpcf7 form {
     padding: 24px;
 
     & p {
@@ -191,7 +332,7 @@ const Content = styled(Box)`
     }
 
     & label {
-      color: #fff;
+      color: #121212;
     }
   }
 
@@ -208,14 +349,14 @@ const Content = styled(Box)`
 
   /* Input fields styles */
 
-  input[type="text"],
-  input[type="email"],
-  input[type="url"],
-  input[type="tel"],
-  input[type="number"],
-  input[type="date"],
-  textarea,
-  select {
+  & .wpcf7 input[type="text"],
+  & .wpcf7 input[type="email"],
+  & .wpcf7 input[type="url"],
+  & .wpcf7 input[type="tel"],
+  & .wpcf7 input[type="number"],
+  & .wpcf7 input[type="date"],
+  & .wpcf7 textarea,
+  & .wpcf7 select {
     display: block;
     padding: 6px 12px;
     font-size: 16px;
@@ -235,7 +376,7 @@ const Content = styled(Box)`
     }
   }
 
-  input[type="submit"] {
+  & .wpcf7 input[type="submit"] {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 400;
@@ -281,7 +422,6 @@ const Content = styled(Box)`
     }
   }
   a {
-    color: #006181;
     text-decoration: none;
 
     &:hover,
