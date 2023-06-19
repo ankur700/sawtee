@@ -30,15 +30,12 @@ const documentSetup = (colors) => css`
     line-height: 1.5;
     text-align: left;
     font-weight: normal;
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
   }
 
   body::-webkit-scrollbar {
     width: 11px;
-  }
-
-  body {
-    scrollbar-width: thin;
-    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
   }
 
   body::-webkit-scrollbar-track {
@@ -49,6 +46,15 @@ const documentSetup = (colors) => css`
     background-color: var(--thumbBG);
     border-radius: 6px;
     border: 3px solid var(--scrollbarBG);
+  }
+
+  .glassbox::-webkit-scrollbar {
+    display: none;
+  }
+
+  .glassbox {
+    -ms-overflow-styles: none;
+    scrollbar-width: none;
   }
 
   .chakra-ui-dark {
