@@ -22,11 +22,10 @@ const MediaArticle = ({ newsItem, linkColor }) => {
       pt={8}
       pb={4}
       bg={useColorModeValue("gray.50", "gray.800")}
-      // rounded="md"
       w="full"
       boxShadow="md"
-      borderLeft={"2px outset"}
-      borderBottom={"2px outset"}
+      borderLeft={"2px solid"}
+      borderBottom={"2px solid"}
       borderColor="primary.300"
       whileHover={{ y: -5 }}
       _hover={{ boxShadow: "xl" }}

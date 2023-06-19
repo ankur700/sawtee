@@ -20,7 +20,7 @@ import { formatCPTData } from "../../components/helpers";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
 import ProgrammeItem from "./programmeItem";
 
-const Programmes = ({ state, actions, categories }) => {
+const Programmes = ({ state, categories }) => {
   const postData = state.source.get(state.router.link);
   const newsData = state.source.get("/sawtee-in-media/");
   const [programs, setPrograms] = React.useState([]);

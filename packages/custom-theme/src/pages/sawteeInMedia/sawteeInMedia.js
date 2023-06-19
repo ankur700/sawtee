@@ -20,13 +20,12 @@ import Sidebar from "../../components/organisms/archive/sidebar";
 import { formatCPTData } from "../../components/helpers";
 import NumberedPagination from "../../components/atoms/NumberedPagination";
 
-const SawteeInMedia = ({ state, actions, categories }) => {
+const SawteeInMedia = ({ state, categories }) => {
   const postData = state.source.get(state.router.link);
-  const programeData = state.source.get("/programmes");
+  const programeData = state.source.get("/programme/");
   const linkColor = state.theme.colors.linkColor;
   const [programs, setPrograms] = React.useState([]);
   const [mediaNews, setMediaNews] = React.useState([]);
-
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const sectionSize = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
@@ -117,7 +116,7 @@ const SawteeInMedia = ({ state, actions, categories }) => {
           gap="10"
           pos={"relative"}
         >
-          <GridItem colSpan={{ base: 1, lg: 3 }}>
+          <GridItem colSpan={{ base: 1, lg: 3 }} w="full">
             <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
               {postData.isReady &&
                 postData.items.map(({ type, id }) => {
@@ -143,9 +142,9 @@ const SawteeInMedia = ({ state, actions, categories }) => {
             justifyContent={"center"}
           >
             <Sidebar
-              posts={programs}
-              news={mediaNews}
-              postType={"Programmes"}
+              posts={mediaNews}
+              news={programs}
+              postType={"Media Mentions"}
               linkColor={linkColor}
               postsLink={postData.link}
               newsLink={programeData.link}

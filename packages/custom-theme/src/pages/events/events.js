@@ -110,7 +110,6 @@ const EventsArchive = ({ state, actions, categories }) => {
         size={size}
         pt="50px"
         pb={"80px"}
-        fontSize={["md", "lg", "xl"]}
         color={contentColor}
       >
         <Grid
@@ -121,11 +120,12 @@ const EventsArchive = ({ state, actions, categories }) => {
         >
           <GridItem
             colSpan={3}
-            px={[6, 10]}
             display="flex"
+            p="2"
             flexDirection="column"
             align-items="center"
-            w="full"
+            w="95%"
+            mx="auto"
           >
             <VStack spacing={8} mb="56px" w={"full"}>
               {postData.isReady ? (

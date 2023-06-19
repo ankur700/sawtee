@@ -10,7 +10,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-// import { FaFilePdf } from "react-icons/hi";
 import { FaFilePdf } from "react-icons/fa";
 
 const ResearchList = ({ state, researches, tags, linkColor }) => {

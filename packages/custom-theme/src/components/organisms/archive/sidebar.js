@@ -35,7 +35,7 @@ export const Sidebar = ({
       {news && !EmptyArray(news) && (
         <SidebarWidget
           array={news}
-          title={"Sawtee in Media"}
+          title={news[0].categories[0].name}
           linkColor={linkColor}
           link={newsLink}
         />

@@ -7,7 +7,7 @@ const ProgramsHandler = {
 
     // 1. fetch the data you want from the endpoint page
     const response = await api.get({
-      endpoint: "featured-events",
+      endpoint: "programme",
       params: {
         _embed: true,
         orderBy: "id",

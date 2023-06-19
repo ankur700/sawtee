@@ -11,9 +11,10 @@ Sawtee Website:
 ✔ Location Map Model window @today @done(23-04-17 16:58)
 ✔ Fix about page pageSection component key issue @done(23-06-01 17:13)
 ✔ Fix contact & career page loading progress bar not showing issue @done(23-06-02 16:01)
-☐ Customize Contact Form of Contact page @high
+✔ Customize Contact Form of Contact page @high @done(23-06-19 15:27)
+✔ Fix every re-render causing post duplication in the tags array in Research page @done(23-06-16 17:31)
+✔ Abstract siderbar into a saperate component @done(23-06-16 15:36)
 ☐ Single newletter page design @high
 ☐ Add Opinion in lead single page and archive page for newsletters OIL. @low
 ☐ Infocus Section for Homepage @low
-✔ Fix every re-render causing post duplication in the tags array in Research page @done(23-06-16 17:31)
-✔ Abstract siderbar into a saperate component @done(23-06-16 15:36)
+☐ Home page redesign a little and fix image size

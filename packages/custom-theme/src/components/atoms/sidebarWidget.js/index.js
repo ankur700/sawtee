@@ -20,7 +20,12 @@ const ListHeading = ({ title, link }) => {
   return (
     <Box borderBottom="1px solid #E2E4E6">
       <Flex align="center" p="3">
-        <Heading fontSize="1.25rem">{title}</Heading>
+        <Heading
+          color={useColorModeValue("gray.800", "whiteAlpha.900")}
+          fontSize="xl"
+        >
+          {title}
+        </Heading>
         <Spacer />
         <Link
           href={link ? link : "#"}
@@ -35,12 +40,21 @@ const ListHeading = ({ title, link }) => {
   );
 };
 
-const SidebarWidget = ({ array, linkColor, title, link }) => {
+const SidebarWidget = ({ array, linkColor, title, link, ...rest }) => {
   const HeadingColor = useColorModeValue("gray.700", "whiteAlpha.800");
   const TextColor = useColorModeValue("gray.600", "whiteAlpha.600");
 
   return (
-    <GlassBox rounded="xl" border="1px solid #E2E4E6" px={8} py={6}>
+    <GlassBox
+      className="glassbox"
+      rounded="xl"
+      border="1px solid #E2E4E6"
+      px={8}
+      py={6}
+      maxH="620px"
+      overflowY="scroll"
+      {...rest}
+    >
       <ListHeading title={title} link={link} />
       {array.length > 0 ? (
         array.map((item, index) => {
@@ -48,7 +62,7 @@ const SidebarWidget = ({ array, linkColor, title, link }) => {
             <Stack spacing={2} mt="6" key={item.id}>
               <Heading
                 className="title"
-                fontSize={["sm", "md"]}
+                fontSize="sm"
                 mb="2"
                 color={HeadingColor}
                 lineHeight={1.2}
@@ -78,6 +92,7 @@ const SidebarWidget = ({ array, linkColor, title, link }) => {
                             _hover={{ textDecor: "underline" }}
                             maxW="180px"
                             noOfLines={1}
+                            fontSize="xs"
                           >
                             {publisher}
                           </Text>
@@ -87,12 +102,14 @@ const SidebarWidget = ({ array, linkColor, title, link }) => {
                   : null}
                 <Box
                   as="time"
+                  fontSize="xs"
                   dateTime={new Date(item.publishDate).toLocaleDateString()}
                 >
                   {formatedDate(item.publishDate)}
                 </Box>
               </Box>
               <Divider
+                mb="10px"
                 display={index === array.length - 1 ? "none" : "block"}
               />
             </Stack>
