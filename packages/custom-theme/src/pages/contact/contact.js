@@ -280,7 +280,7 @@ const Contact = ({ state, libraries }) => {
             blockScrollOnMount={false}
           >
             <ModalOverlay />
-            <ModalContent bg={modalContentColor} maxW={"5xl"}>
+            <ModalContent bg={modalContentColor} maxW={"3xl"}>
               <ModalHeader color={modelHeaderColor}>Our Location</ModalHeader>
               <ModalCloseButton />
               <ModalBody margin={"0 auto"}>

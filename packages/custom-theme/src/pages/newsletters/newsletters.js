@@ -3,8 +3,6 @@ import {
   useColorModeValue,
   Image,
   Heading,
-  Divider,
-  Button,
   Grid,
   GridItem,
   useBreakpointValue,
@@ -15,20 +13,16 @@ import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1-resized.jpg";
-import NewsletterList from "./newslettersList";
-import { useArchiveInfiniteScroll } from "@frontity/hooks";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { formatCPTData } from "../../components/helpers";
+import NewsletterCard from "./newsletterCard";
 
 const NewsletterArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-
   const linkColor = state.theme.colors.linkColor;
-  const { pages, isFetching, isLimit, isError, fetchNext } =
-    useArchiveInfiniteScroll({ limit: 3 });
-  const [news, setNews] = React.useState([]);
+  const [news, setNews] = useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
@@ -115,23 +109,21 @@ const NewsletterArchive = ({ state, actions, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={3}>
-            {pages.map(({ key, link, isLast, Wrapper }) => (
-              <Wrapper key={key}>
-                <NewsletterList link={link} linkColor={linkColor} />
-                {isLast && <Divider h="10px" mt="10" />}
-                <Box w="full" mb="40px" textAlign={"center"}>
-                  {isFetching && <Loading />}
-                  {isLimit && (
-                    <Button onClick={fetchNext}>Load Next Page</Button>
-                  )}
-                  {isError && (
-                    <Button onClick={fetchNext}>
-                      Something failed - Retry
-                    </Button>
-                  )}
-                </Box>
-              </Wrapper>
-            ))}
+            {postData.items.map((item) => {
+              const post = formatCPTData(
+                state,
+                state.source[item.type][item.id],
+                categories
+              );
+              console.log(post);
+              return (
+                <NewsletterCard
+                  key={item.id}
+                  post={post}
+                  linkColor={linkColor}
+                />
+              );
+            })}
           </GridItem>
 
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
