@@ -24,7 +24,7 @@ const settings = {
           // show social links
           showSocialLinks: true,
           socialLinks: [
-            ["facebook", "https://www.instagram.com/sawteenp/"],
+            ["facebook", "https://www.facebook.com/sawteenp/"],
             ["twitter", "https://www.twitter.com/SAWTEENP/"],
             ["linkedin", "https://www.linkedin.com/sawteenp/"],
             ["youtube", "https://www.youtube.com/@sawteenp/"],
