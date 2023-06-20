@@ -6,6 +6,7 @@ import {
   Grid,
   GridItem,
   useBreakpointValue,
+  VStack,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { LightPatternBox } from "../../components/styles/pattern-box";
@@ -13,12 +14,12 @@ import Section from "../../components/styles/section";
 import Sidebar from "../../components/organisms/archive/sidebar";
 import Loading from "../../components/atoms/loading";
 import Publication1 from "../../assets/publications-1-resized.jpg";
-
 import React, { useState, useEffect } from "react";
 import { formatCPTData } from "../../components/helpers";
 import NewsletterCard from "./newsletterCard";
+import Pagination from "../../components/organisms/archive/pagination";
 
-const NewsletterArchive = ({ state, actions, categories }) => {
+const NewsletterArchive = ({ state, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
@@ -44,7 +45,7 @@ const NewsletterArchive = ({ state, actions, categories }) => {
   // the home page, everything is ready and it loads instantly.
 
   // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
+  if (!postData.isReady) return <Loading />;
   return (
     <LightPatternBox
       bg={patternBoxColor}
@@ -109,21 +110,27 @@ const NewsletterArchive = ({ state, actions, categories }) => {
           pos={"relative"}
         >
           <GridItem colSpan={3}>
-            {postData.items.map((item) => {
-              const post = formatCPTData(
-                state,
-                state.source[item.type][item.id],
-                categories
-              );
-              console.log(post);
-              return (
-                <NewsletterCard
-                  key={item.id}
-                  post={post}
-                  linkColor={linkColor}
-                />
-              );
-            })}
+            <VStack spacing={8}>
+              {postData.isReady ? (
+                postData.items.map((item) => {
+                  const post = formatCPTData(
+                    state,
+                    state.source[item.type][item.id],
+                    categories
+                  );
+                  return (
+                    <NewsletterCard
+                      key={item.id}
+                      post={post}
+                      linkColor={linkColor}
+                    />
+                  );
+                })
+              ) : (
+                <Loading />
+              )}
+            </VStack>
+            <Pagination mt="56px" />
           </GridItem>
 
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
@@ -136,7 +143,6 @@ const NewsletterArchive = ({ state, actions, categories }) => {
             />
           </GridItem>
         </Grid>
-        {/* <Pagination mt="56px" /> */}
       </Box>
     </LightPatternBox>
   );

@@ -4,15 +4,13 @@ import {
   HStack,
   Stack,
   useColorModeValue,
-  Icon,
+  Image,
 } from "@chakra-ui/react";
-import { FaRegNewspaper } from "react-icons/fa";
 import { formatDateWithMoment } from "../../components/helpers";
 import Link from "../../components/atoms/link";
 
 const NewsletterCard = ({ post, linkColor }) => {
-  const { title, publishDate, link, tags } = post;
-  console.log(title);
+  const { title, publishDate, link, featured_media } = post;
   // For even id show card on left side
   // For odd id show card on right side
 
@@ -24,33 +22,37 @@ const NewsletterCard = ({ post, linkColor }) => {
       spacing={5}
       rounded="lg"
       alignItems="center"
+      justifyContent="space-between"
       pos="relative"
+      w="full"
     >
-      <Icon as={FaRegNewspaper} w={8} h={8} color={linkColor} />
+      {/* <Icon as={FaRegNewspaper} w={8} h={8} color={linkColor} /> */}
+      <Image
+        boxSize="150px"
+        objectFit="cover"
+        src={featured_media.src}
+        alt={"Cover image"}
+        fallbackSrc="https://via.placeholder.com/120x150"
+      />
       <Box w="full">
-        {/* <HStack spacing={2} mb={1}>
-          {tags.map((tag) => (
-            <Text fontSize="sm" key={tag.id}>
-              {tag.name}
-            </Text>
-          ))}
-        </HStack> */}
         <Stack
           spacing={2}
-          direction={{ base: "column", md: "row" }}
-          mb={3}
+          direction={"column"}
           justifyContent={"space-between"}
+          alignItems="center"
         >
           <Text
             color={useColorModeValue("gray.700", "whiteAlpha.700")}
             _hover={{ color: linkColor }}
-            fontSize="xl"
+            fontSize="2xl"
             lineHeight={1.2}
             fontWeight="bold"
           >
             <Link link={link}>{title}</Link>
           </Text>
-          <Text fontSize="sm">{formatDateWithMoment(publishDate)}</Text>
+          <Text fontSize="lg" fontWeight="semibold">
+            {formatDateWithMoment(publishDate, "MMM YYYY")}
+          </Text>
         </Stack>
       </Box>
     </HStack>

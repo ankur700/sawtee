@@ -19,6 +19,8 @@ import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Contact from "../pages/contact";
 import Career from "../pages/career";
+import NewsletterPost from "./organisms/post/newsletterPost";
+import OpinionPost from "./organisms/post/OpinionPost";
 
 const config = {
   initialColorMode: "light",
@@ -71,18 +73,22 @@ const Theme = ({ state, actions }) => {
       on the type of URL we are in. */}
       <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
         {/* <ScaleFade key={state.router.link} initialScale={0.9} in="true"> */}
-          <Switch>
-            <Loading when={data.isFetching} />
-            <Home when={data.isHome} categories={categories} />
-            <KnowUs when={data.route === "/about/"} />
-            <OurWork when={data.route === "/our-work/"} />
-            <Contact when={data.route === "/contact/"} />
-            <Career when={data.route === "/career/"} />
-            <Post when={data.isPostType} />
-            <SearchResults when={data.isSearch} />
-            <Archive when={data.isArchive} categories={categories} />
-            <Page404 when={data.is404} />
-          </Switch>
+        <Switch>
+          <Loading when={data.isFetching} />
+          <Home when={data.isHome} categories={categories} />
+          <KnowUs when={data.route === "/about/"} />
+          <OurWork when={data.route === "/our-work/"} />
+          <Contact when={data.route === "/contact/"} />
+          <Career when={data.route === "/career/"} />
+          <NewsletterPost
+            when={data.isPostType && data.type === "newsletters"}
+          />
+          <OpinionPost when={data.isPostType && data.type === "opinions"} />
+          <Post when={data.isPostType} />
+          <SearchResults when={data.isSearch} />
+          <Archive when={data.isArchive} categories={categories} />
+          <Page404 when={data.is404} />
+        </Switch>
         {/* </ScaleFade> */}
       </Box>
       <Footer />
