@@ -2,6 +2,7 @@ import { useColorModeValue, Box } from "@chakra-ui/react";
 import React from "react";
 import { TwitterTimelineEmbed } from "react-twitter-embed";
 import { styled } from "frontity";
+import Script from "@frontity/components/script";
 
 const TwitterTimeline = ({ height, width, handle }) => {
   const theme = useColorModeValue("light", "dark");
@@ -20,6 +21,7 @@ const TwitterTimeline = ({ height, width, handle }) => {
 
   return (
     <TwitterWrapper id="twitter-wrapper" padding={6}>
+      <Script src="https://platform.twitter.com/widgets.js" />
       <TwitterTimelineEmbed
         sourceType="timeline"
         screenName={handle || "sawteenp"}

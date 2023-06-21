@@ -1,46 +1,28 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
-import React, { useState, useEffect } from "react";
-import {
-  formatDateWithMoment,
-  formatPostData,
-  getPostData,
-} from "../../helpers";
+import React, { useEffect } from "react";
+import { formatPostData, getPostData } from "../../helpers";
 import useScrollProgress from "../../hooks/useScrollProgress";
 import { LightPatternBox } from "../../styles/pattern-box";
 import Section from "../../styles/section";
-import List from "../archive";
-import FeaturedMedia from "./featured-media";
-import PostHeader from "./post-header";
 import PostProgressBar from "./post-progressbar";
-import ProgramPost from "./ProgramPost";
 import Script from "@frontity/components/script";
 
-const NewsletterPost = ({ state, actions, libraries }) => {
+const NewsletterPost = ({ state }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const postHeaderColor = useColorModeValue("gray.800", "whiteAlpha.800");
   const sectionBg = useColorModeValue("whiteAlpha.700", "gray.700");
   // Get the html2react component.
-  const Html2React = libraries.html2react.Component;
-
-  // const [ready, setReady] = useState(false);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
-  useEffect(() => {
-    actions.source.fetch("/");
-    List.preload();
-  }, []);
 
   const [ref, scroll] = useScrollProgress();
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
-
-  if (postData.type === "programme") return <ProgramPost />;
 
   return (
     <LightPatternBox
@@ -48,51 +30,15 @@ const NewsletterPost = ({ state, actions, libraries }) => {
       bg={patternBoxColor}
       showPattern={state.theme.showBackgroundPattern}
       ref={ref}
+      pt="0"
       pb={"40px"}
     >
-      <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
-        <PostHeader
-          mt={{ base: "20px", lg: "4rem" }}
-          px={{ base: "32px", md: "3rem" }}
-          color={postHeaderColor}
-          categories={post.categories}
-          heading={post.title}
-          // author={post.author}
-          // date={post.publishDate}
-          isPage={postData.isPage}
-        />
-      </Box>
-
+      <Script src="https://documentcloud.adobe.com/view-sdk/main.js" async />
       {!postData.isPage && <PostProgressBar value={scroll} />}
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section bg={sectionBg} pb="80px" size="lg">
-        {/* {post.featured_media != null && (
-          <FeaturedMedia id={post.featured_media.id} />
-        )} */}
-
-        {/* Render the content using the Html2React component so the HTML is processed
-       by the processors we included in the libraries.html2react.processors array. */}
-        <Content
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          pt="0px"
-          size={"lg"}
-        >
-          {/* <Html2React id="adobe-dc-view" html={post.content} /> */}
-          <PDFEMBED url="https://sawtee.org/backend/wp-content/uploads/2023/06/vol.7_issue_1_2010.pdf" />
-        </Content>
-
-        {/* <Divider borderBottom="1px solid" my="80px" />
-
-        <Section px={{ base: "32px", md: "0" }}>
-          <AuthorBio
-            image={post.author.avatar_urls["96"]}
-            name={post.author.name}
-            description={post.author.description}
-            link={post.author.link}
-          />
-        </Section> */}
+      <Section bg={sectionBg} pt="0px" size="lg">
+        <PDFEMBED url={post.acf.resource_link} title={post.title} />
       </Section>
     </LightPatternBox>
   );
@@ -100,43 +46,19 @@ const NewsletterPost = ({ state, actions, libraries }) => {
 
 export default connect(NewsletterPost);
 
-const PDFEMBED = ({ url }) => {
+const PDFEMBED = ({ url, title }) => {
   const viewerConfig = {
-    defaultViewMode: "",
-    embedMode: "SIZED_CONTAINER",
+    embedMode: "IN_LINE",
     showDownloadPDF: true,
-    showAnnotationTools: true,
-  };
-
-  const profile = {
-    userProfile: {
-      name: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-    },
   };
 
   useEffect(() => {
     document.addEventListener("adobe_dc_view_sdk.ready", function () {
       /* Initialize the AdobeDC View object */
       var adobeDCView = new AdobeDC.View({
-        clientId: "3c9b6a559a354e509672441d52609d28",
+        clientId: "a0b938dc0dda4ceba3ce648ec3caeb6a",
         divId: "adobe-dc-view",
       });
-
-      adobeDCView.registerCallback(
-        AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
-        function () {
-          return new Promise((resolve, reject) => {
-            resolve({
-              code: AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
-              data: profile,
-            });
-          });
-        }
-      );
-
       adobeDCView.previewFile(
         {
           content: {
@@ -145,7 +67,7 @@ const PDFEMBED = ({ url }) => {
             },
           },
           metaData: {
-            fileName: "Volume 7, Issue 1, January 2010",
+            fileName: title,
           },
         },
         viewerConfig
@@ -155,15 +77,16 @@ const PDFEMBED = ({ url }) => {
 
   return (
     <div>
-      <Script src="https://documentcloud.adobe.com/view-sdk/main.js" />
+      {/* <Script src="https://documentcloud.adobe.com/view-sdk/main.js" async /> */}
       <Box
         id="adobe-dc-view"
         className="full-window-div"
-        style={{ width: "900px", height: "100vh" }}
+        style={{ width: "100%", height: "100vh", margin: "0 auto" }}
       ></Box>
     </div>
   );
 };
+
 
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.

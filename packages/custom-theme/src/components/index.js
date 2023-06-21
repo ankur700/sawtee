@@ -61,7 +61,7 @@ const Theme = ({ state, actions }) => {
           href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <script async src="https://platform.twitter.com/widgets.js"></script>
+        {/* <script async src="https://platform.twitter.com/widgets.js"></script> */}
       </Head>
       {/* Accessibility: Provides ability to skip to main content */}
       <SkipLink as="a" href="#main">
@@ -80,10 +80,7 @@ const Theme = ({ state, actions }) => {
           <OurWork when={data.route === "/our-work/"} />
           <Contact when={data.route === "/contact/"} />
           <Career when={data.route === "/career/"} />
-          <NewsletterPost
-            when={data.isPostType && data.type === "newsletters"}
-          />
-          <OpinionPost when={data.isPostType && data.type === "opinions"} />
+
           <Post when={data.isPostType} />
           <SearchResults when={data.isSearch} />
           <Archive when={data.isArchive} categories={categories} />

@@ -10,6 +10,9 @@ import FeaturedMedia from "./featured-media";
 import PostHeader from "./post-header";
 import PostProgressBar from "./post-progressbar";
 import ProgramPost from "./ProgramPost";
+import { Newsletter } from "../../atoms/newsletter";
+import OpinionPost from "./OpinionPost";
+import NewsletterPost from "./newsletterPost";
 
 const Post = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
@@ -32,49 +35,53 @@ const Post = ({ state, actions, libraries }) => {
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
+  if (postData.type === "programme") {
+    return <ProgramPost />;
+  } else if (postData.type === "newsletters") {
+    return <NewsletterPost />;
+  } else if (postData.type === "opinion") {
+    return <OpinionPost />;
+  } else {
+    return (
+      <LightPatternBox
+        bg={patternBoxColor}
+        showPattern={state.theme.showBackgroundPattern}
+        ref={ref}
+        pb={"40px"}
+      >
+        <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
+          <PostHeader
+            mt={{ base: "20px", lg: "4rem" }}
+            px={{ base: "32px", md: "3rem" }}
+            color={postHeaderColor}
+            categories={post.categories}
+            heading={post.title}
+            author={post.author}
+            date={post.publishDate}
+            isPage={postData.isPage}
+          />
+        </Box>
 
-  if (postData.type === "programme") return <ProgramPost />;
+        {!postData.isPage && <PostProgressBar value={scroll} />}
 
-  return (
-    <LightPatternBox
-      bg={patternBoxColor}
-      showPattern={state.theme.showBackgroundPattern}
-      ref={ref}
-      pb={"40px"}
-    >
-      <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
-        <PostHeader
-          mt={{ base: "20px", lg: "4rem" }}
-          px={{ base: "32px", md: "3rem" }}
-          color={postHeaderColor}
-          categories={post.categories}
-          heading={post.title}
-          author={post.author}
-          date={post.publishDate}
-          isPage={postData.isPage}
-        />
-      </Box>
+        {/* Look at the settings to see if we should include the featured image */}
+        <Section bg={sectionBg} pb="80px" size="lg">
+          {post.featured_media != null && (
+            <FeaturedMedia id={post.featured_media.id} />
+          )}
 
-      {!postData.isPage && <PostProgressBar value={scroll} />}
-
-      {/* Look at the settings to see if we should include the featured image */}
-      <Section bg={sectionBg} pb="80px" size="lg">
-        {post.featured_media != null && (
-          <FeaturedMedia id={post.featured_media.id} />
-        )}
-
-        {/* Render the content using the Html2React component so the HTML is processed
+          {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
-        <Content
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="md"
-          pt="50px"
-        >
-          <Html2React html={post.content} />
-        </Content>
+          <Content
+            as={Section}
+            px={{ base: "32px", md: "0" }}
+            size="md"
+            pt="50px"
+          >
+            <Html2React html={post.content} />
+          </Content>
 
-        {/* <Divider borderBottom="1px solid" my="80px" />
+          {/* <Divider borderBottom="1px solid" my="80px" />
 
         <Section px={{ base: "32px", md: "0" }}>
           <AuthorBio
@@ -84,9 +91,10 @@ const Post = ({ state, actions, libraries }) => {
             link={post.author.link}
           />
         </Section> */}
-      </Section>
-    </LightPatternBox>
-  );
+        </Section>
+      </LightPatternBox>
+    );
+  }
 };
 
 export default connect(Post);

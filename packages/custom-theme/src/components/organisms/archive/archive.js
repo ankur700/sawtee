@@ -12,28 +12,32 @@ import Programme from "../../../pages/programme";
 import Research from "../../../pages/research";
 import SawteeInMedia from "../../../pages/sawteeInMedia";
 import Covid from "../../../pages/covid";
-import Switch from "@frontity/components/switch";
 
 const Archive = ({ state, categories }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
 
-  return (
-    <Switch>
-      <HomeArchive when={data.route === "/blog"} />
+  if (data.isFeaturedEventsArchive) {
+    return (
       <Events when={data.isFeaturedEventsArchive} categories={categories} />
-      <Publications when={data.isPublicationsArchive} categories={categories} />
-      <SawteeInMedia
-        when={data.isSawteeInMediaArchive}
-        categories={categories}
-      />
-      <Programme when={data.isProgrammeArchive} categories={categories} />
-      <Newsletters when={data.isNewslettersArchive} />
-      <Research when={data.isResearchArchive} categories={categories} />
-      <Covid when={data.isCovidArchive} categories={categories} />;
-      <DefaultArchive data={data} state={state} />
-    </Switch>
-  );
+    );
+  } else if (data.isPublicationsArchive) {
+    return <Publications categories={categories} />;
+  } else if (data.isSawteeInMediaArchive) {
+    return <SawteeInMedia categories={categories} />;
+  } else if (data.isProgrammeArchive) {
+    return <Programme categories={categories} />;
+  } else if (data.isNewslettersArchive) {
+    return <Newsletters />;
+  } else if (data.isResearchArchive) {
+    return <Research categories={categories} />;
+  } else if (data.isCovidArchive) {
+    return <Covid categories={categories} />;
+  } else if (data.route === "/blog") {
+    return <HomeArchive />;
+  } else {
+    return <DefaultArchive data={data} state={state} />;
+  }
 };
 
 export default connect(Archive);

@@ -34,27 +34,23 @@ const NewsletterCard = ({ post, linkColor }) => {
         alt={"Cover image"}
         fallbackSrc="https://via.placeholder.com/120x150"
       />
-      <Box w="full">
-        <Stack
-          spacing={2}
-          direction={"column"}
-          justifyContent={"space-between"}
-          alignItems="center"
+      <Stack
+        spacing={2}
+        direction={"column"}
+        justifyContent={"space-between"}
+        alignItems="center"
+        w="full"
+      >
+        <Text
+          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          _hover={{ color: linkColor }}
+          fontSize="2xl"
+          lineHeight={1.2}
+          fontWeight="bold"
         >
-          <Text
-            color={useColorModeValue("gray.700", "whiteAlpha.700")}
-            _hover={{ color: linkColor }}
-            fontSize="2xl"
-            lineHeight={1.2}
-            fontWeight="bold"
-          >
-            <Link link={link}>{title}</Link>
-          </Text>
-          <Text fontSize="lg" fontWeight="semibold">
-            {formatDateWithMoment(publishDate, "MMM YYYY")}
-          </Text>
-        </Stack>
-      </Box>
+          <Link link={link}>{title}</Link>
+        </Text>
+      </Stack>
     </HStack>
   );
 };
