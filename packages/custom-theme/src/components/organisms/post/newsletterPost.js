@@ -1,6 +1,6 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   formatDateWithMoment,
   formatPostData,
@@ -14,6 +14,7 @@ import FeaturedMedia from "./featured-media";
 import PostHeader from "./post-header";
 import PostProgressBar from "./post-progressbar";
 import ProgramPost from "./ProgramPost";
+import Script from "@frontity/components/script";
 
 const NewsletterPost = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
@@ -23,6 +24,8 @@ const NewsletterPost = ({ state, actions, libraries }) => {
   const sectionBg = useColorModeValue("whiteAlpha.700", "gray.700");
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
+
+  // const [ready, setReady] = useState(false);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -55,7 +58,7 @@ const NewsletterPost = ({ state, actions, libraries }) => {
           categories={post.categories}
           heading={post.title}
           // author={post.author}
-          date={post.publishDate}
+          // date={post.publishDate}
           isPage={postData.isPage}
         />
       </Box>
@@ -70,8 +73,14 @@ const NewsletterPost = ({ state, actions, libraries }) => {
 
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
-        <Content px={{ base: "32px", md: "0" }} pt="50px" w="max-content">
-          <Html2React html={post.content} />
+        <Content
+          as={Section}
+          px={{ base: "32px", md: "0" }}
+          pt="0px"
+          size={"lg"}
+        >
+          {/* <Html2React id="adobe-dc-view" html={post.content} /> */}
+          <PDFEMBED url="https://sawtee.org/backend/wp-content/uploads/2023/06/vol.7_issue_1_2010.pdf" />
         </Content>
 
         {/* <Divider borderBottom="1px solid" my="80px" />
@@ -91,13 +100,79 @@ const NewsletterPost = ({ state, actions, libraries }) => {
 
 export default connect(NewsletterPost);
 
+const PDFEMBED = ({ url }) => {
+  const viewerConfig = {
+    defaultViewMode: "",
+    embedMode: "SIZED_CONTAINER",
+    showDownloadPDF: true,
+    showAnnotationTools: true,
+  };
+
+  const profile = {
+    userProfile: {
+      name: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+    },
+  };
+
+  useEffect(() => {
+    document.addEventListener("adobe_dc_view_sdk.ready", function () {
+      /* Initialize the AdobeDC View object */
+      var adobeDCView = new AdobeDC.View({
+        clientId: "3c9b6a559a354e509672441d52609d28",
+        divId: "adobe-dc-view",
+      });
+
+      adobeDCView.registerCallback(
+        AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
+        function () {
+          return new Promise((resolve, reject) => {
+            resolve({
+              code: AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
+              data: profile,
+            });
+          });
+        }
+      );
+
+      adobeDCView.previewFile(
+        {
+          content: {
+            location: {
+              url: url,
+            },
+          },
+          metaData: {
+            fileName: "Volume 7, Issue 1, January 2010",
+          },
+        },
+        viewerConfig
+      );
+    });
+  }, []);
+
+  return (
+    <div>
+      <Script src="https://documentcloud.adobe.com/view-sdk/main.js" />
+      <Box
+        id="adobe-dc-view"
+        className="full-window-div"
+        style={{ width: "900px", height: "100vh" }}
+      ></Box>
+    </div>
+  );
+};
+
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.
 const Content = styled.div`
   word-break: break-word;
 
-  * {
-    max-width: 100%;
+  p {
+    margin-inline: auto;
+    width: max-content;
   }
 
   ul {
