@@ -71,23 +71,23 @@ const Theme = ({ state, actions }) => {
       <Header />
       {/* Add the main section. It renders a different component depending
       on the type of URL we are in. */}
-      <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
-        {/* <ScaleFade key={state.router.link} initialScale={0.9} in="true"> */}
-        <Switch>
-          <Loading when={data.isFetching} />
-          <Home when={data.isHome} categories={categories} />
-          <KnowUs when={data.route === "/about/"} />
-          <OurWork when={data.route === "/our-work/"} />
-          <Contact when={data.route === "/contact/"} />
-          <Career when={data.route === "/career/"} />
+      <ScaleFade key={state.router.link} initialScale={0.9} in="true">
+        <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
+          <Switch>
+            <Loading when={data.isFetching} />
+            <Home when={data.isHome} categories={categories} />
+            <KnowUs when={data.route === "/about/"} />
+            <OurWork when={data.route === "/our-work/"} />
+            <Contact when={data.route === "/contact/"} />
+            <Career when={data.route === "/career/"} />
 
-          <Post when={data.isPostType} />
-          <SearchResults when={data.isSearch} />
-          <Archive when={data.isArchive} categories={categories} />
-          <Page404 when={data.is404} />
-        </Switch>
-        {/* </ScaleFade> */}
-      </Box>
+            <Post when={data.isPostType} />
+            <SearchResults when={data.isSearch} />
+            <Archive when={data.isArchive} categories={categories} />
+            <Page404 when={data.is404} />
+          </Switch>
+        </Box>
+      </ScaleFade>
       <Footer />
     </ChakraProvider>
   );

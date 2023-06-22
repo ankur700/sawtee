@@ -13,6 +13,7 @@ import ProgramPost from "./ProgramPost";
 import { Newsletter } from "../../atoms/newsletter";
 import OpinionPost from "./OpinionPost";
 import NewsletterPost from "./newsletterPost";
+import FeaturedEventPost from "./featuredEventPost";
 
 const Post = ({ state, actions, libraries }) => {
   const postData = getPostData(state);
@@ -41,6 +42,8 @@ const Post = ({ state, actions, libraries }) => {
     return <NewsletterPost />;
   } else if (postData.type === "opinion") {
     return <OpinionPost />;
+  } else if (postData.type === "featured-events") {
+    return <FeaturedEventPost />;
   } else {
     return (
       <LightPatternBox

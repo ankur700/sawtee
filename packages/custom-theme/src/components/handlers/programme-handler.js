@@ -1,7 +1,7 @@
 const ProgramsHandler = {
-  name: "events",
+  name: "programs",
   priority: 10,
-  pattern: "/programmes",
+  pattern: "/programme",
   func: async ({ route, params, state, libraries }) => {
     const { api } = libraries.source;
 

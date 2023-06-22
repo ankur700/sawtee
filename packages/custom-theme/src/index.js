@@ -6,7 +6,6 @@ import EventsHandler from "./components/handlers/events-handler";
 import NewsHandler from "./components/handlers/news-handler";
 import PublicationsHandler from "./components/handlers/publications-handler";
 import PublicationArchiveHandler from "./components/handlers/publication-archive-handler";
-import ProgramsHandler from "./components/handlers/programme-handler";
 import MenuHandler from "./components/handlers/menu-handler";
 
 const customTheme = {

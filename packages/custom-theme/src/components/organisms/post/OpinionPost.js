@@ -42,7 +42,7 @@ const OpinionPost = ({ state, actions, libraries }) => {
       ref={ref}
       pb={"40px"}
     >
-      <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
+      <Box pb={{ base: "2rem", lg: "50px" }} maxW="9xl" mx="auto">
         <PostHeader
           mt={{ base: "20px", lg: "4rem" }}
           px={{ base: "32px", md: "3rem" }}
@@ -68,17 +68,6 @@ const OpinionPost = ({ state, actions, libraries }) => {
         <Content px={{ base: "32px", md: "0" }} pt="50px" w="max-content">
           <Html2React html={post.content} />
         </Content>
-
-        {/* <Divider borderBottom="1px solid" my="80px" />
-
-        <Section px={{ base: "32px", md: "0" }}>
-          <AuthorBio
-            image={post.author.avatar_urls["96"]}
-            name={post.author.name}
-            description={post.author.description}
-            link={post.author.link}
-          />
-        </Section> */}
       </Section>
     </LightPatternBox>
   );

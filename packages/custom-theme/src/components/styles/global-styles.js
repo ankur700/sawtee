@@ -85,7 +85,7 @@ const documentSetup = (colors) => css`
   .primary-link:focus {
     text-decoration: underline;
     text-underline-offset: 3px;
-    text-decoration-color: rgb(8 126 164/1);
+    text-decoration-color: #121212;
   }
 
   .chakra-ui-dark .primary-link {
