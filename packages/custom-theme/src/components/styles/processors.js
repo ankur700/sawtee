@@ -26,6 +26,7 @@ const blockquote = makeProcessor("blockquote", {
     variant: "left-accent",
     status: "warning",
     marginY: "20px",
+    // colorScheme: "accent",
   }),
   component: Alert,
 });
@@ -35,7 +36,7 @@ const paragraph = makeProcessor("p", {
     // we don't want to add marginTop if the paragraph is nested in another component
     const hasParent = Boolean(node.parent);
     return {
-      marginTop: hasParent ? "0" : "10px",
+      marginTop: hasParent ? "0" : "1em",
       fontSize: { base: "md", md: "lg" },
       lineHeight: "tall",
     };
@@ -70,9 +71,14 @@ const PostLink = ({ children, href, rel, ...props }) => (
   <Box
     as="span"
     fontWeight="medium"
-    color="accent.400"
+    color="linkColor"
+    textDecoration="underline"
+    // textUnderlineOffset="3px"
     _hover={{
       textDecoration: "underline",
+      textUnderlineOffset: "3px",
+      color: "gray.700",
+      transition: "all 0.25s linear",
     }}
     {...props}
   >

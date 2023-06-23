@@ -19,8 +19,6 @@ import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Contact from "../pages/contact";
 import Career from "../pages/career";
-import NewsletterPost from "./organisms/post/newsletterPost";
-import OpinionPost from "./organisms/post/OpinionPost";
 
 const config = {
   initialColorMode: "light",
@@ -36,8 +34,8 @@ const Theme = ({ state, actions }) => {
 
   const overrides = extendTheme({
     fonts: {
-      heading: "Inter, system-ui, Helvetica, sans-serif",
-      body: "Open Sans, system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,Liberation Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji ,sans-serif",
+      heading: "'Nunito', system-ui, 'Helvetica', sans-serif",
+      body: "'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Helvetica Neue','Helvetica', sans-serif",
     },
     colors: { ...state.theme.colors },
   });
@@ -55,13 +53,6 @@ const Theme = ({ state, actions }) => {
       <Head>
         <meta name="description" content={state.frontity.description} />
         <html lang="en" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
-        {/* <script async src="https://platform.twitter.com/widgets.js"></script> */}
       </Head>
       {/* Accessibility: Provides ability to skip to main content */}
       <SkipLink as="a" href="#main">

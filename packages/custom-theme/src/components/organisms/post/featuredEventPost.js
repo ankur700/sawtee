@@ -51,7 +51,7 @@ const FeaturedEventPost = ({ state, actions, libraries }) => {
       {/* Look at the settings to see if we should include the featured image */}
       <Section bg={sectionBg} pb="80px" size="lg">
         {post.featured_media != null && (
-          <FeaturedMedia id={post.featured_media.id} />
+          <FeaturedMedia height="auto" id={post.featured_media.id} />
         )}
 
         {/* Render the content using the Html2React component so the HTML is processed
@@ -101,6 +101,10 @@ const Content = styled.div`
     font-size: 1.125rem;
   }
 
+  // p {
+  //   margin-bottom: 1rem;
+  // }
+
   img {
     width: 100%;
     object-fit: cover;
@@ -118,17 +122,13 @@ const Content = styled.div`
     margin: auto;
   }
 
-  a {
-    color: var(--chakra-colors-primary-700);
-    text-decoration: underline;
-    text-underline-offset: 3px;
+  // a {
+  //   color: var(--chakra-colors-primary-700);
 
-    &:hover {
-      color: var(--chakra-colors-gray-700);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-  }
+  //   &:hover {
+  //     color: var(--chakra-colors-gray-700);
+  //   }
+  // }
 
   /* Input fields styles */
 

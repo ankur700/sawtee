@@ -26,7 +26,7 @@ const MenuLink = styled(link)`
   font-family: var(--chakra-fonts-heading)
 
   &:after {
-    transition: bottom ease 0.25s, background-color ease 0.25s;
+    transition: all ease 0.25s,
     content: "";
     width: 100%;
     height: 2px;
@@ -39,7 +39,7 @@ const MenuLink = styled(link)`
   &:hover {
     &:after {
       bottom: -5px;
-      background-color: ${(p) => p.theme.colors.accent[400]};
+      background-color: #FFF;
     }
   }
 `;
@@ -230,7 +230,18 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
                   position="relative"
                   cursor="pointer"
                 >
-                  <MenuLink link={child.url}>{child.title}</MenuLink>
+                  <MenuLink
+                    link={child.url}
+                    // _after={{
+                    //   content: '',
+                    //   width: "100%",
+                    //   height: "2px",
+                    //   position: "absolute",
+                    //   inset: "0"
+                    // }}
+                  >
+                    {child.title}
+                  </MenuLink>
                 </Box>
               );
             })}

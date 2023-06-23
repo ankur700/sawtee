@@ -74,7 +74,6 @@ const EventItem = ({ state, libraries, event }) => {
             as="h3"
             color={headingColor}
             fontSize={{ base: "md", "2xl": "lg" }}
-            fontWeight="bold"
             _hover={{ color: linkColor, textDecoration: "underline" }}
             mb={4}
           >
@@ -82,13 +81,7 @@ const EventItem = ({ state, libraries, event }) => {
               {decode(event.title)}
             </Link>
           </Heading>
-          <Text
-            fontSize={"sm"}
-            fontWeight={500}
-            color={textColor}
-            noOfLines={2}
-            lineHeight="normal"
-          >
+          <Text fontSize={"sm"} color={textColor} noOfLines={2}>
             {event.excerpt}
           </Text>
         </Box>
@@ -98,13 +91,14 @@ const EventItem = ({ state, libraries, event }) => {
             direction={{ base: "column", sm: "row" }}
             alignItems={"center"}
           >
-            <Text fontSize="sm" fontWeight="semibold" color={textColor}>
+            <Text fontSize="sm" color={textColor}>
               {formatDateWithMoment(event.publishDate, format)}
             </Text>
             <Button
               size="sm"
               colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
               aria-label={"Read More"}
+              fontWeight="normal"
               color={useColorModeValue("gray.700", "whiteAlpha.800")}
               variant="outline"
               rounded="md"
