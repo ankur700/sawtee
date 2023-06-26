@@ -29,7 +29,7 @@ const ProgrammeItem = ({ program, linkColor }) => {
         }}
         maxW="5xl"
       >
-        <Flex justifyContent="space-between" alignItems="center">
+        {/* <Flex justifyContent="space-between" alignItems="center">
           <Text
             as="span"
             fontSize="sm"
@@ -42,7 +42,7 @@ const ProgrammeItem = ({ program, linkColor }) => {
           >
             {formatDateWithMoment(program.publishDate, "MMMM YYYY")}
           </Text>
-        </Flex>
+        </Flex> */}
 
         <Box mt={2}>
           <Heading fontSize={"lg"} color={HeaderColor} lineHeight={"tall"}>

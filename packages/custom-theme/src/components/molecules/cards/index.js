@@ -1,7 +1,6 @@
 import {
   Box,
   Image,
-  Link,
   Text,
   LinkOverlay,
   LinkBox,
@@ -9,6 +8,7 @@ import {
   Button,
   Flex,
   Show,
+  Heading,
 } from "@chakra-ui/react";
 
 import { decode } from "frontity";
@@ -40,9 +40,8 @@ export const TopImageCard = (props) => {
     title,
     target,
     excerpt,
-    author,
-    date,
     featured_media,
+    date,
     linkColor,
   } = props;
 
@@ -62,6 +61,7 @@ export const TopImageCard = (props) => {
         bgImage={defaultValues.imageUrl}
         pos="relative"
         rounded="lg"
+        overflow="hidden"
       >
         {featured_media && (
           <Image
@@ -89,21 +89,23 @@ export const TopImageCard = (props) => {
             width="max-content"
           />
 
-          <Box
-            as="time"
-            mx={1}
-            fontSize="sm"
-            color={useColorModeValue("gray.700", "whiteAlpha.700")}
-          >
-            {date
-              ? formatDateWithMoment(date)
-              : formatDateWithMoment(defaultValues.date)}
-          </Box>
+          {date && (
+            <Box
+              as="time"
+              mx={1}
+              fontSize="sm"
+              color={useColorModeValue("gray.700", "whiteAlpha.700")}
+            >
+              {date
+                ? formatDateWithMoment(date)
+                : formatDateWithMoment(defaultValues.date)}
+            </Box>
+          )}
         </Box>
-        <Text
+        <Heading
+          as="h3"
           display="block"
           color={useColorModeValue("gray.800", "whiteAlpha.900")}
-          fontWeight="bold"
           fontSize={{ base: "sm", md: "md", lg: "lg" }}
           mt={2}
           _hover={{
@@ -114,7 +116,7 @@ export const TopImageCard = (props) => {
           <LinkOverlay href={target ? target : "#"}>
             {title ? decode(title) : defaultValues.title}
           </LinkOverlay>
-        </Text>
+        </Heading>
         <Text
           mt={2}
           fontSize={{ base: "sm", lg: "md" }}
@@ -142,8 +144,8 @@ export const NoImageCard = (props) => {
       shadow="lg"
       bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       maxW="3xl"
-      minH={"15rem"}
-      height={"15rem"}
+      minH={"12rem"}
+      height="auto"
       display="flex"
       flexDir={"column"}
       justifyContent={"center"}
@@ -155,21 +157,22 @@ export const NoImageCard = (props) => {
           width="max-content"
         />
 
-        <Box
-          as="time"
-          fontSize="xs"
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
-        >
-          {date ? formatDateWithMoment(date) : defaultValues.date}
-        </Box>
+        {date && (
+          <Box
+            as="time"
+            fontSize="xs"
+            color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          >
+            {date ? formatDateWithMoment(date) : defaultValues.date}
+          </Box>
+        )}
       </Flex>
 
       <Box>
-        <Text
+        <Heading
+          as="h3"
           fontSize={{ base: "sm", md: "md", lg: "lg" }}
           color={useColorModeValue("gray.800", "whiteAlpha.900")}
-          fontWeight="bold"
-          lineHeight={"normal"}
           noOfLines={2}
           _hover={{
             color: linkColor,
@@ -179,7 +182,7 @@ export const NoImageCard = (props) => {
           <LinkOverlay href={target ? target : defaultValues.target}>
             {title ? decode(title) : defaultValues.title}
           </LinkOverlay>
-        </Text>
+        </Heading>
         <Text
           mt={3}
           color="gray.700"
@@ -212,13 +215,6 @@ export const NoImageCard = (props) => {
             </Flex>
           </Show>
         )}
-        {/* <Box
-          as="time"
-          fontSize="sm"
-          color={useColorModeValue("gray.600", "whiteAlpha.600")}
-        >
-          {date ? formatDateWithMoment(date) : defaultValues.date}
-        </Box> */}
       </Flex>
     </LinkBox>
   );

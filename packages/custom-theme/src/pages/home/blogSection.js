@@ -73,7 +73,7 @@ const BlogSection = ({ events, media, linkColor }) => {
                       featured_media={media}
                       excerpt={article.excerpt}
                       target={article.link}
-                      date={article.publishDate}
+                      // date={article.publishDate}
                       linkColor={linkColor}
                     />
                   ) : (
@@ -82,7 +82,7 @@ const BlogSection = ({ events, media, linkColor }) => {
                       categories={article.categories}
                       excerpt={article.excerpt}
                       target={article.link}
-                      date={article.publishDate}
+                      // date={article.publishDate}
                       // author={article.author}
                       linkColor={linkColor}
                     />

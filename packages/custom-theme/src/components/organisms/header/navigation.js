@@ -12,6 +12,7 @@ import {
   SimpleGrid,
   VStack,
   Divider,
+  Link,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";
@@ -23,23 +24,31 @@ import { motion } from "framer-motion";
 const MenuLink = styled(link)`
   position: relative;
   text-decoration: none;
-  font-family: var(--chakra-fonts-heading)
+  font-family: var(--chakra-fonts-heading);
+`;
+
+const FancyLink = styled(link)`
+  position: relative;
+  text-decoration: none;
+  font-family: var(--chakra-fonts-heading);
 
   &:after {
-    transition: all ease 0.25s,
     content: "";
-    width: 100%;
+    width: 0%;
     height: 2px;
     position: absolute;
-    bottom: 0;
+    bottom: -5px;
     left: 0;
-    background: transparent;
+    background: #fff;
+    opacity: 0;
+    transition: all 0.5s ease;
   }
 
   &:hover {
+    text-decoration: none;
     &:after {
-      bottom: -5px;
-      background-color: #FFF;
+      width: 100%;
+      opacity: 1;
     }
   }
 `;
@@ -230,18 +239,7 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
                   position="relative"
                   cursor="pointer"
                 >
-                  <MenuLink
-                    link={child.url}
-                    // _after={{
-                    //   content: '',
-                    //   width: "100%",
-                    //   height: "2px",
-                    //   position: "absolute",
-                    //   inset: "0"
-                    // }}
-                  >
-                    {child.title}
-                  </MenuLink>
+                  <FancyLink link={child.url}>{child.title}</FancyLink>
                 </Box>
               );
             })}
@@ -345,9 +343,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                 as={motion.li}
                 variants={ListVariants}
               >
-                <MenuLink link={grandChild.url} textAlign="center">
+                <FancyLink link={grandChild.url} textAlign="center">
                   {grandChild.title}
-                </MenuLink>
+                </FancyLink>
               </Text>
             );
           })}
@@ -384,13 +382,13 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     as={motion.li}
                     variants={ListVariants}
                   >
-                    <MenuLink
+                    <FancyLink
                       key={grandChild.title}
                       link={grandChild.url}
                       textAlign="center"
                     >
                       {grandChild.title}
-                    </MenuLink>
+                    </FancyLink>
                   </Text>
                 );
               })}
@@ -417,13 +415,13 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     as={motion.li}
                     variants={ListVariants}
                   >
-                    <MenuLink
+                    <FancyLink
                       key={grandChild.title}
                       link={grandChild.url}
                       textAlign="center"
                     >
                       {grandChild.title}
-                    </MenuLink>
+                    </FancyLink>
                   </Text>
                 );
               })}

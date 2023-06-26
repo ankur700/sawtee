@@ -1,6 +1,5 @@
 import {
   Box,
-  SimpleGrid,
   Stack,
   Link,
   Text,
@@ -18,10 +17,34 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { SocialMenu } from "../header/social-menu";
-import { connect } from "frontity";
-import Subscription from "./subscription";
+import { connect, styled } from "frontity";
 import Iframe from "@frontity/components/iframe";
-import FooterSubscription from "./footer-subscription";
+
+const FancyLink = styled(Link)`
+  position: relative;
+  text-decoration: none;
+  font-family: var(--chakra-fonts-heading);
+
+  &:after {
+    content: "";
+    width: 0%;
+    height: 2px;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    background: #fff;
+    opacity: 0;
+    transition: all 0.5s ease;
+  }
+
+  &:hover {
+    text-decoration: none;
+    &:after {
+      width: 100%;
+      opacity: 1;
+    }
+  }
+`;
 
 const FooterSection = (props) => (
   <Box
@@ -74,13 +97,13 @@ const Widget = ({ item, libraries }) => {
               const { url, title } = item;
               const link = libraries.source.normalize(url);
               return (
-                <Link
+                <FancyLink
                   key={item.title}
                   href={title === "Map" ? null : link}
                   onClick={title === "Map" ? onOpen : null}
                 >
                   {title}
-                </Link>
+                </FancyLink>
               );
             })
           : null}
@@ -135,6 +158,8 @@ const Widget = ({ item, libraries }) => {
 
 const Footer = ({ state, libraries }) => {
   const { items, isReady } = state.source.get("/menu/footer/");
+  const FancyLinkColor = useColorModeValue("gary.800", "whiteAlpha.800");
+
   return (
     <FooterSection alignSelf="flex-end">
       <FooterSectionGroup
@@ -147,13 +172,19 @@ const Footer = ({ state, libraries }) => {
               {"Contact Us"}
             </ListHeader>
             <Stack as="ul" alignItems={"start"} listStyleType="none">
-              <Link href="tel:+977-1-4444438">Phone: +977-1-4444438</Link>
-              <Link href="tel:+977 1 4444570">Fax: +977-1-4444570</Link>
-              <Link href="mailto:sawtee@sawtee.org">
+              <FancyLink href="tel:+977-1-4444438">
+                Phone: +977-1-4444438
+              </FancyLink>
+              <FancyLink href="tel:+977 1 4444570">
+                Fax: +977-1-4444570
+              </FancyLink>
+              <FancyLink href="mailto:sawtee@sawtee.org">
                 Email: sawtee@sawtee.org
-              </Link>
+              </FancyLink>
 
-              <Link href="#">Address: Tukucha Marg, Baluwatar, Kathmandu</Link>
+              <FancyLink href="#">
+                Address: Tukucha Marg, Baluwatar, Kathmandu
+              </FancyLink>
             </Stack>
           </Stack>
         </FooterSectionItem>
@@ -193,7 +224,10 @@ const Footer = ({ state, libraries }) => {
           fontFamily="heading"
           textTransform="uppercase"
         >
-          Made with ❤ by <Link href="https://ankursingh.com.np/">Ankur</Link>
+          Made with ❤ by{" "}
+          <FancyLink href="https://ankursingh.com.np/">
+            Ankur
+          </FancyLink>
         </FooterSectionItem>
       </FooterSectionGroup>
     </FooterSection>

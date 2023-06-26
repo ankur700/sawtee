@@ -30,8 +30,7 @@ const ProgramPost = ({ state, libraries, actions }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
   const linkColor = state.theme.colors.linkColor;
-  // Get the html2react component.
-  const [programs, setPrograms] = React.useState([]);
+  // const [programs, setPrograms] = React.useState([]);
   const Html2React = libraries.html2react.Component;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
@@ -43,30 +42,27 @@ const ProgramPost = ({ state, libraries, actions }) => {
   // const EndDate = post.acf.program_ending_date;
   const { program_starting_date, program_ending_date, program_partner } =
     post.acf;
-  console.log(
-    "🚀 ~ file: ProgramPost.js:45 ~ ProgramPost ~ program_starting_date:",
-    program_starting_date
-  );
+
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
   // the home page, everything is ready and it loads instantly.
 
-  const data = state.source.get("/programmes/");
-  console.log("🚀 ~ file: ProgramPost.js:58 ~ ProgramPost ~ data:", data);
-  useEffect(() => {
-    let array = [];
-    if (data.isReady) {
-      data.items.map((item) => {
-        if (item.id !== post.id) {
-          const post = state.source[item.type][item.id];
-          array.push(post);
-        }
-      });
-    }
-    if (array.length > 0) {
-      setPrograms([...array]);
-    }
-  }, [data.isReady]);
+  // const data = state.source.get("/programmes/");
+  // console.log("🚀 ~ file: ProgramPost.js:58 ~ ProgramPost ~ data:", data);
+  // useEffect(() => {
+  //   let array = [];
+  //   if (data.isReady) {
+  //     data.items.map((item) => {
+  //       if (item.id !== post.id) {
+  //         const post = state.source[item.type][item.id];
+  //         array.push(post);
+  //       }
+  //     });
+  //   }
+  //   if (array.length > 0) {
+  //     setPrograms([...array]);
+  //   }
+  // }, [data.isReady]);
 
   const [ref, scroll] = useScrollProgress();
 
@@ -95,6 +91,7 @@ const ProgramPost = ({ state, libraries, actions }) => {
             mt="30px"
             mb={{ base: "20px", lg: "32px" }}
             textTransform="uppercase"
+            textAlign="center"
             dangerouslySetInnerHTML={{ __html: post.title }}
           />
           {program_partner && (
@@ -126,6 +123,7 @@ const ProgramPost = ({ state, libraries, actions }) => {
         pb="80px"
         w="full"
         size={"lg"}
+        px={{ base: "20px", xl: 0 }}
       >
         {post.featured_media != null && (
           <FeaturedMedia id={post.featured_media.id} />
@@ -135,14 +133,19 @@ const ProgramPost = ({ state, libraries, actions }) => {
        by the processors we included in the libraries.html2react.processors array. */}
 
         <Grid
-          templateColumns={"repeat(5,1fr)"}
+          templateColumns={{ base: "1fr", lg: "repeat(5,1fr)" }}
           gap={6}
           placeItems={"center"}
           pt="50px"
         >
-          <GridItem colSpan={3} placeSelf={"start"} display={"flex"}>
+          <GridItem
+            colSpan={{ base: 1, lg: 3 }}
+            placeSelf={"center"}
+            display={"flex"}
+          >
             <Content
               as={Section}
+              className="content"
               px={{ base: "20px", md: "0" }}
               size="sm"
               // w="full"
@@ -155,14 +158,16 @@ const ProgramPost = ({ state, libraries, actions }) => {
           <GridItem
             display="flex"
             flexDir="column"
-            colSpan={2}
+            colSpan={{ base: 1, lg: 2 }}
             gap={16}
             minW="md"
             w="full"
             maxW={"full"}
+            alignItems="center"
+            p="6"
           >
             <Sidebar>
-              <GlassBox
+              {/* <GlassBox
                 py="4"
                 px="8"
                 rounded="2xl"
@@ -173,7 +178,7 @@ const ProgramPost = ({ state, libraries, actions }) => {
                   data={programs}
                   linkColor={linkColor}
                 />
-              </GlassBox>
+              </GlassBox> */}
 
               <GlassBox
                 py="4"

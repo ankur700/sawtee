@@ -11,6 +11,7 @@ import {
   Image,
   useColorModeValue,
   useBreakpointValue,
+  Alert,
 } from "@chakra-ui/react";
 import Carousel from "../../components/molecules/Carousel";
 import Link from "../../components/atoms/link";
@@ -27,27 +28,31 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
           width="100%"
           display="flex"
           justifyContent="center"
+          alignItems="center"
           overflow="hidden"
           backgroundImage={`url(${image})`}
           backgroundColor="rgba(0,0,0,0.6)"
           backgroundBlendMode="multiply"
           backgroundSize="cover"
+          minH="500px"
         >
           {intro && (
             <Text
               as="blockquote"
-              fontSize={["xl", "2xl", "3xl"]}
+              fontSize={["xl", "2xl", "3xl", "4xl"]}
               color={"whiteAlpha.800"}
               m="0"
               alignSelf={"center"}
               zIndex={10}
               px={{ base: "2rem", md: "4rem" }}
               margin={{ base: "1rem 20px", lg: "1rem auto" }}
-              fontFamily="Open Sans"
-              _before={{ content: '"“"', marginLeft: "-1rem" }}
+              fontFamily="body"
+              _before={{
+                content: '"“"',
+                marginLeft: "-1rem",
+              }}
               _after={{
                 content: '"”"',
-                marginRight: "-1rem",
               }}
             >
               {intro}
@@ -81,7 +86,7 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
                               ? slide.featured_media.alt
                               : ""
                           }
-                          height={"auto"}
+                          maxHeight={"250px"}
                           link={slide.acf.pub_link}
                           pos={"relative"}
                           w={`calc(100% / ${show} - 30px )`}
@@ -120,7 +125,7 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
                               "whiteAlpha.900"
                             )}
                             objectFit="cover"
-                            style={{ width: "100%", height: "auto" }}
+                            style={{ width: "190px", height: "250px" }}
                           />
                         </Link>
                       );
