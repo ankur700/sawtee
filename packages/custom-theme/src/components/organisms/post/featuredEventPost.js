@@ -51,13 +51,14 @@ const FeaturedEventPost = ({ state, actions, libraries }) => {
       {/* Look at the settings to see if we should include the featured image */}
       <Section bg={sectionBg} pb="80px" size="lg">
         {post.featured_media != null && (
-          <FeaturedMedia height="auto" id={post.featured_media.id} />
+          <FeaturedMedia id={post.featured_media.id} />
         )}
 
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
         <Content
           as={Section}
+          className="content"
           px={{ base: "32px", md: "0" }}
           size="md"
           pt="50px"
@@ -84,26 +85,8 @@ const Content = styled.div`
     padding: 1rem;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: bold;
-  }
 
-  h4 {
-    font-size: 1.225rem;
-  }
-
-  h5 {
-    font-size: 1.125rem;
-  }
-
-  // p {
-  //   margin-bottom: 1rem;
-  // }
+ 
 
   img {
     width: 100%;
