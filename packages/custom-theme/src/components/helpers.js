@@ -236,10 +236,12 @@ const monthNames = [
 ];
 
 const formatDay = (day) => {
-  const lastLetter = day[day.length - 1];
-  if (lastLetter) return `${day}nd`;
-  if (lastLetter) return `${day}st`;
-  if (lastLetter) return `${day}rd`;
+  let dayString = day.toString();
+  const lastLetter = dayString[dayString.length - 1];
+
+  if (lastLetter === "1") return `${day}st`;
+  if (lastLetter === "2") return `${day}nd`;
+  if (lastLetter === "3") return `${day}rd`;
   return `${day}th`;
 };
 
