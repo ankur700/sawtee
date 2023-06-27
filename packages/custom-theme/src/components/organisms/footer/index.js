@@ -19,27 +19,30 @@ import React from "react";
 import { SocialMenu } from "../header/social-menu";
 import { connect, styled } from "frontity";
 import Iframe from "@frontity/components/iframe";
+import link from "../../atoms/link";
 
-const FancyLink = styled(Link)`
+const FancyLink = styled(link)`
   position: relative;
   text-decoration: none;
-  font-family: var(--chakra-fonts-heading);
+  // font-family: var(--chakra-fonts-heading);
+  color: ${(props) => (props.color ? props.color : "inherit")};
 
-  &:after {
+  &::after {
     content: "";
     width: 0%;
     height: 2px;
     position: absolute;
     bottom: -5px;
     left: 0;
-    background: #fff;
+
+    background: ${(props) => (props.color ? props.color : "#fff")};
     opacity: 0;
     transition: all 0.5s ease;
   }
 
   &:hover {
     text-decoration: none;
-    &:after {
+    &::after {
       width: 100%;
       opacity: 1;
     }
@@ -51,7 +54,6 @@ const FooterSection = (props) => (
     as="footer"
     pos="relative"
     bg={useColorModeValue("#e8f3ff", "primary.900")}
-    color={useColorModeValue("gray.800", "whiteAlpha.800")}
     py={{ base: "32px", lg: "40px" }}
     {...props}
   />
@@ -59,7 +61,6 @@ const FooterSection = (props) => (
 
 const FooterSectionGroup = (props) => (
   <Grid
-    // columns={{ base: 1, sm: 2, md: 4 }}
     templateColumns={{ sm: "1fr", md: "1fr 2fr 1fr" }}
     maxWidth="7xl"
     mx="auto"
@@ -85,7 +86,7 @@ const ListHeader = ({ children }) => {
   );
 };
 
-const Widget = ({ item, libraries }) => {
+const Widget = ({ item, libraries, linkcolor }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -99,8 +100,9 @@ const Widget = ({ item, libraries }) => {
               return (
                 <FancyLink
                   key={item.title}
-                  href={title === "Map" ? null : link}
+                  link={title === "Map" ? null : link}
                   onClick={title === "Map" ? onOpen : null}
+                  color={linkcolor}
                 >
                   {title}
                 </FancyLink>
@@ -158,7 +160,7 @@ const Widget = ({ item, libraries }) => {
 
 const Footer = ({ state, libraries }) => {
   const { items, isReady } = state.source.get("/menu/footer/");
-  const FancyLinkColor = useColorModeValue("gary.800", "whiteAlpha.800");
+  const FancyLinkColor = useColorModeValue("#222", "#FFF");
 
   return (
     <FooterSection alignSelf="flex-end">
@@ -172,17 +174,17 @@ const Footer = ({ state, libraries }) => {
               {"Contact Us"}
             </ListHeader>
             <Stack as="ul" alignItems={"start"} listStyleType="none">
-              <FancyLink href="tel:+977-1-4444438">
+              <FancyLink color={FancyLinkColor} link="tel:+977-1-4444438">
                 Phone: +977-1-4444438
               </FancyLink>
-              <FancyLink href="tel:+977 1 4444570">
+              <FancyLink color={FancyLinkColor} link="tel:+977 1 4444570">
                 Fax: +977-1-4444570
               </FancyLink>
-              <FancyLink href="mailto:sawtee@sawtee.org">
+              <FancyLink color={FancyLinkColor} link="mailto:sawtee@sawtee.org">
                 Email: sawtee@sawtee.org
               </FancyLink>
 
-              <FancyLink href="#">
+              <FancyLink color={FancyLinkColor} link="#">
                 Address: Tukucha Marg, Baluwatar, Kathmandu
               </FancyLink>
             </Stack>
@@ -192,7 +194,12 @@ const Footer = ({ state, libraries }) => {
           Object.entries(items).map(([key, item]) => {
             return (
               <FooterSectionItem key={key}>
-                <Widget colSpan={1} item={item} libraries={libraries} />
+                <Widget
+                  colSpan={1}
+                  item={item}
+                  libraries={libraries}
+                  linkcolor={FancyLinkColor}
+                />
               </FooterSectionItem>
             );
           })}
@@ -225,7 +232,7 @@ const Footer = ({ state, libraries }) => {
           textTransform="uppercase"
         >
           Made with ❤ by{" "}
-          <FancyLink href="https://ankursingh.com.np/">
+          <FancyLink color={FancyLinkColor} href="https://ankursingh.com.np/">
             Ankur
           </FancyLink>
         </FooterSectionItem>

@@ -32,7 +32,7 @@ const FancyLink = styled(link)`
   text-decoration: none;
   font-family: var(--chakra-fonts-heading);
 
-  &:after {
+  &::after {
     content: "";
     width: 0%;
     height: 2px;
@@ -46,7 +46,7 @@ const FancyLink = styled(link)`
 
   &:hover {
     text-decoration: none;
-    &:after {
+    &::after {
       width: 100%;
       opacity: 1;
     }
@@ -343,9 +343,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                 as={motion.li}
                 variants={ListVariants}
               >
-                <FancyLink link={grandChild.url} textAlign="center">
+                <MenuLink link={grandChild.url} textAlign="center">
                   {grandChild.title}
-                </FancyLink>
+                </MenuLink>
               </Text>
             );
           })}
@@ -382,13 +382,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     as={motion.li}
                     variants={ListVariants}
                   >
-                    <FancyLink
-                      key={grandChild.title}
-                      link={grandChild.url}
-                      textAlign="center"
-                    >
+                    <MenuLink link={grandChild.url} textAlign="center">
                       {grandChild.title}
-                    </FancyLink>
+                    </MenuLink>
                   </Text>
                 );
               })}
@@ -415,13 +411,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     as={motion.li}
                     variants={ListVariants}
                   >
-                    <FancyLink
-                      key={grandChild.title}
-                      link={grandChild.url}
-                      textAlign="center"
-                    >
+                    <MenuLink link={grandChild.url} textAlign="center">
                       {grandChild.title}
-                    </FancyLink>
+                    </MenuLink>
                   </Text>
                 );
               })}
