@@ -22,6 +22,7 @@ const EventItem = ({ state, libraries, event }) => {
   const categoriesColor = useColorModeValue("gray.700", "whiteAlpha.700");
   const headingColor = useColorModeValue("gray.700", "whiteAlpha.800");
   const textColor = useColorModeValue("gray.600", "gray.300");
+  const Html2React = libraries.html2react.Component;
 
   return (
     <Stack
@@ -82,7 +83,7 @@ const EventItem = ({ state, libraries, event }) => {
             </Link>
           </Heading>
           <Text fontSize={"sm"} color={textColor} noOfLines={2}>
-            {event.excerpt}
+            <Html2React html={event.excerpt} />
           </Text>
         </Box>
         <Box mt="4">
