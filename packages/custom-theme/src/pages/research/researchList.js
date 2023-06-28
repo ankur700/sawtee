@@ -33,61 +33,61 @@ const ResearchList = ({ state, researches, tags, linkColor }) => {
       <VStack textAlign="start" align="start" mb={5} spacing={10}>
         {tags
           ? tags.map((tagitem) => {
-              tagitem.posts.length <= 0 && postsSortedByTags(tagitem);
-              return (
-                <Box zIndex={5} w="full" key={tagitem.id}>
-                  <Heading
-                    fontSize="2xl"
-                    fontWeight="bold"
-                    my={5}
-                    color={HeadingColor}
-                  >
-                    {tagitem.name}
-                  </Heading>
-                  <Box
-                    p={4}
-                    bg={WrapperBackground}
-                    rounded="xl"
-                    borderWidth="1px"
-                    borderColor={WrapperBorderColor}
-                    w="100%"
-                    h="100%"
-                    textAlign="left"
-                    display={"flex"}
-                    boxShadow={"lg"}
-                    flexDirection={"column"}
-                    alignItems="start"
-                    cursor="pointer"
-                    _hover={{ shadow: "md" }}
-                  >
-                    {tagitem.posts.map((researchItem, idx) => (
-                      <ReasearchItem
-                        key={researchItem.id}
-                        icon={FaFilePdf}
-                        skipTrail={
-                          idx !== tagitem.posts.length - 1 ? true : false
-                        }
-                        minH={idx !== tagitem.posts.length - 1 ? 20 : "auto"}
+            tagitem.posts.length <= 0 && postsSortedByTags(tagitem);
+            return (
+              <Box zIndex={5} w="full" key={tagitem.id}>
+                <Heading
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  my={5}
+                  color={HeadingColor}
+                >
+                  {tagitem.name}
+                </Heading>
+                <Box
+                  p={4}
+                  bg={WrapperBackground}
+                  rounded="xl"
+                  borderWidth="1px"
+                  borderColor={WrapperBorderColor}
+                  w="100%"
+                  h="100%"
+                  textAlign="left"
+                  display={"flex"}
+                  boxShadow={"lg"}
+                  flexDirection={"column"}
+                  alignItems="start"
+                  cursor="pointer"
+                  _hover={{ shadow: "md" }}
+                >
+                  {tagitem.posts.map((researchItem, idx) => (
+                    <ReasearchItem
+                      key={researchItem.id}
+                      icon={FaFilePdf}
+                      skipTrail={
+                        idx !== tagitem.posts.length - 1 ? true : false
+                      }
+                      minH={idx !== tagitem.posts.length - 1 ? 20 : "auto"}
+                    >
+                      <Text
+                        color={TextColor}
+                        fontSize="lg"
+                        lineHeight={1.2}
+                        fontWeight="bold"
+                        _hover={{
+                          color: linkColor,
+                          textDecoration: "underline",
+                        }}
                       >
-                        <Text
-                          color={TextColor}
-                          fontSize="lg"
-                          lineHeight={1.2}
-                          fontWeight="bold"
-                          _hover={{
-                            color: linkColor,
-                            textDecoration: "underline",
-                          }}
-                        >
-                          <Link href={researchItem.link}>
-                            {researchItem.title}
-                          </Link>
-                        </Text>
-                      </ReasearchItem>
-                    ))}
-                  </Box>
+                        <Link href={researchItem.acf.link}>
+                          {researchItem.title}
+                        </Link>
+                      </Text>
+                    </ReasearchItem>
+                  ))}
                 </Box>
-              );
+              </Box>
+            );
             })
           : null}
       </VStack>

@@ -100,6 +100,17 @@ const customTheme = {
         await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("all-categories");
         await actions.source.fetch("/subscription-page");
+        await actions.source.fetch("/publications/trade-insight");
+        await actions.source.fetch("/publications/books");
+        await actions.source.fetch("/publications/discussion-paper");
+        await actions.source.fetch("/publications/policy-brief");
+        await actions.source.fetch("/publications/briefing-paper");
+        await actions.source.fetch("/publications/issue-paper");
+        await actions.source.fetch("/publications/working-paper");
+        await actions.source.fetch("/publications/research-brief");
+        await actions.source.fetch("/publications/others");
+        await actions.source.fetch("/publications/publications-in-nepali");
+        await actions.source.fetch("/publications/book-chapters");
       },
     },
   },
