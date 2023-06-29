@@ -16,18 +16,12 @@ import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
 import GlassBox from "../../components/atoms/glassBox";
 import React, { useState, useEffect } from "react";
-import TwitterTimeline from "../../components/atoms/twitterTimeline";
-import SubscriptionCard from "../../components/atoms/subscriptionCard";
-import {
-  formatCPTData,
-  formatPostData,
-} from "../../components/helpers";
+import { formatCPTData, formatPostData } from "../../components/helpers";
 import Loading from "../../components/atoms/loading";
-import SidebarWidget from "../../components/atoms/sidebarWidget.js";
 
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
-  const newsData = state.source.get("/news");
+  const newsData = state.source.get("/sawtee-in-media");
   const [publicationCategories, setPublicationCategories] = useState([]);
   const [categoryPosts, setCategoryPosts] = useState([]);
   const [sliderData, setSliderData] = useState([]);
@@ -68,6 +62,19 @@ const Publications = ({ state, actions, categories }) => {
         setPublicationCategories((prev) => [...prev, item]);
       });
   }, []);
+
+  useEffect(() => {
+    if (newsData.isReady) {
+      newsData.items.forEach((item) => {
+        const post = formatPostData(
+          state,
+          state.source[item.type][item.id],
+          categories
+        );
+        setNews((prevValue) => [...prevValue, post]);
+      });
+    }
+  }, [newsData]);
 
   useEffect(() => {
     if (tradeInsight.isReady) {
@@ -169,18 +176,6 @@ const Publications = ({ state, actions, categories }) => {
   }, [bookChapters.isReady]);
 
   useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        setNews((prevValue) => [
-          ...prevValue,
-          formatPostData(state, post, categories),
-        ]);
-      });
-    }
-  }, [newsData]);
-
-  useEffect(() => {
     if (categoryPosts.length == publicationCategories.length) {
       let result = categoryPosts.sort((a, b) => a.id - b.id);
       publicationCategories.forEach((cat, idx) => {
@@ -207,7 +202,6 @@ const Publications = ({ state, actions, categories }) => {
       });
     }
   }, [publicationCategories, categoryPosts]);
-
 
   useEffect(() => {
     publicationCategories.map((_, idx) => {
@@ -303,7 +297,7 @@ const Publications = ({ state, actions, categories }) => {
             gap={6}
             pos={"relative"}
           >
-            <GridItem colSpan={3} px={4}>
+            <GridItem colSpan={{ base: 1, xl: 3 }} px={4}>
               <PublicationSliders
                 linkColor={linkColor}
                 sliderData={sliderData}
@@ -311,42 +305,18 @@ const Publications = ({ state, actions, categories }) => {
                 checkedItems={checkedItems}
               />
             </GridItem>
-            <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-              <Sidebar>
-                <GlassBox py="4" px="8" rounded="2xl">
-                  <SidebarWidget
-                    array={news}
-                    title={"Sawtee in Media"}
-                    linkColor={linkColor}
-                  />
-                </GlassBox>
-                <GlassBox
-                  rounded="2xl"
-                  height="max-content"
-                  display="flex"
-                  justifyContent="center"
-                  alignItems="center"
-                  id="twitter-wrapper"
-                >
-                  <TwitterTimeline
-                    handle="sawteenp"
-                    width={"100%"}
-                    height="700px"
-                    maxH={"700px"}
-                    rounded="xl"
-                  />
-                </GlassBox>
-                <GlassBox
-                  py="4"
-                  px="8"
-                  rounded="2xl"
-                  height="max-content"
-                  position={"sticky"}
-                  top={"8.5rem"}
-                >
-                  <SubscriptionCard />
-                </GlassBox>
-              </Sidebar>
+            <GridItem
+              colSpan={{ base: 1, xl: 2 }}
+              display={"flex"}
+              justifyContent={"center"}
+            >
+              <Sidebar
+                news={news}
+                linkColor={linkColor}
+                newsLink={newsData.link}
+                showTwitterTimeline={true}
+                showSubscriptionBox={true}
+              />
             </GridItem>
           </Grid>
         </Box>
