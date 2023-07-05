@@ -24,6 +24,7 @@ node_modules_old/
 jspm_packages/
 .vscode/
 packages/sawtee-theme
+package-lock.json
 
 # TypeScript cache
 *.tsbuildinfo
