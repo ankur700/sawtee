@@ -85,8 +85,75 @@ const Content = styled.div`
     padding: 1rem;
   }
 
+  h2,
+  .heading-size-2 {
+    font-size: 3.2rem;
+  }
+  h3,
+  .heading-size-3 {
+    font-size: 2.8rem;
+  }
+  h4,
+  .heading-size-4 {
+    font-size: 2.4rem;
+  }
+  h5,
+  .heading-size-5 {
+    font-size: 2.1rem;
+  }
+  h6,
+  .heading-size-6 {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+  }
+  p {
+    margin: 0 0 1em 0;
+  }
 
- 
+  @media (min-width: 700px) {
+    h2,
+    .heading-size-2,
+    h3,
+    .heading-size-3 {
+      margin: 4rem auto 2rem;
+    }
+    h4,
+    .heading-size-4,
+    h5,
+    .heading-size-5,
+    h6,
+    .heading-size-6 {
+      margin: 2.5rem auto 1rem;
+    }
+
+    h2,
+    .heading-size-2 {
+      font-size: 2.4rem;
+    }
+    h3,
+    .heading-size-3 {
+      font-size: 2rem;
+    }
+    h4,
+    .heading-size-4 {
+      font-size: 1.35rem;
+    }
+    h5,
+    .heading-size-5 {
+      font-size: 1.2rem;
+    }
+    h6,
+    .heading-size-6 {
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (min-width: 1220px) {
+    h1,
+    .heading-size-1 {
+      font-size: 4rem;
+    }
+  }
 
   img {
     width: 100%;
