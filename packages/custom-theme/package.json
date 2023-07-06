@@ -9,11 +9,16 @@
   "license": "Apache-2.0",
   "dependencies": {
     "frontity": "^1.17.2",
+    "@frontity/components": "^1.8.2",
+    "@frontity/hooks": "^2.2.2",
+    "@frontity/html2react": "^1.7.0",
+    "focus-visible": "^5.2.0",
     "@chakra-ui/react": "^1.3.3",
-    "react-icons": "^4.2.0",
     "framer-motion": "^3.9.2",
-    "@frontity/components": "^1.7.1",
-    "@frontity/hooks": "^2.2.0",
-    "@frontity/html2react": "^1.6.1"
+    "react-icons": "^4.10.1",
+    "react-twitter-embed": "^4.0.4",
+    "recharts": "^2.7.2",
+    "dayjs": "^1.11.9",
+    "@aamodtgroup/frontity-contact-form-7": "^1.0.1"
   }
 }

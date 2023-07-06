@@ -22,8 +22,7 @@ lib-cov
 node_modules/
 node_modules_old/
 jspm_packages/
-packages/sawtee-theme/node_modules
-package-lock.json
+
 
 # TypeScript cache
 *.tsbuildinfo
@@ -43,8 +42,7 @@ package-lock.json
 # dotenv environment variables file
 .env
 .env.test
-.vscode
-.safurai
+
 
 macOS .DS_Store files
 .DS_Store
@@ -62,3 +60,8 @@ macOS .DS_Store files
 # Frontity
 build
 .vercel
+.vscode
+.safurai
+packages/sawtee-theme/node_modules
+packages/sawtee-theme/package-lock.json
+package-lock.json
