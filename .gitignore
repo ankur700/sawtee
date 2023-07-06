@@ -1,7 +1,7 @@
 logs
 *.log
-node_modules/
-node_modules_old/
+node_modules
+node_modules_old
 .npm
 .env
 .DS_Store
@@ -15,6 +15,7 @@ build
 .vercel
 .vscode
 .safurai
+.git
 packages/sawtee-theme/node_modules
 packages/sawtee-theme/package-lock.json
 package-lock.json
