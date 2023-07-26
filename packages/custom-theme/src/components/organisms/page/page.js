@@ -1,18 +1,15 @@
-import { styled, connect } from "frontity";
-import { useEffect } from "react";
-import FeaturedMedia from "./featured-media";
-import {
-  EntryContent,
-  Post as _Post,
-  PostHeader,
-  PostInner,
-  PostTitle,
-  PostCaption,
-  SectionContainer,
-} from "./post-item";
-import PostCategories from "./post-categories";
-import PostMeta from "./post-meta";
-import PostTags from "./post-tags";
+import { connect } from "frontity";
+import { getPostData, formatPostData } from "../../helpers";
+import DefaultPage from "./defaultPage";
+import KnowUs from "./KnowUs";
+import Home from "./home";
+import OurWork from "./OurWork";
+
+import Switch from "@frontity/components/switch";
+import { LightPatternBox } from "../../styles/pattern-box";
+import FeaturedMedia from "../post/featured-media";
+import PostHeader from "../post/post-header";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 
 /**
  * The Post component that the TwentyTwenty theme uses for rendering any kind of
@@ -33,128 +30,76 @@ import PostTags from "./post-tags";
  *
  * @returns The {@link Post} element rendered.
  */
-const Page = ({ state, actions, libraries }) => {
-  // Get information about the current URL.
-  const data = state.source.get(state.router.link);
-  // Get the data of the post.
-  const post = state.source[data.type][data.id];
+const Page = ({ state }) => {
+  const postData = getPostData(state);
+  const linkColor = state.theme.colors.linkColor;
+  const post = formatPostData(state, postData);
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
 
-  // Get the html2react component.
-  const Html2React = libraries.html2react.Component;
-
-  // Get all categories
-  const allCategories = state.source.category;
-
-  /**
-   * The item's categories is an array of each category id. So, we'll look up
-   * the details of each category in allCategories.
-   */
-  const categories =
-    post.categories && post.categories.map((catId) => allCategories[catId]);
-
-  // Get all tags
-  const allTags = state.source.tag;
-
-  /**
-   * The item's categories is an array of each tag id. So, we'll look up the
-   * details of each tag in allTags.
-   */
-  const tags = post.tags && post.tags.map((tagId) => allTags[tagId]);
-
-  /**
-   * Once the post has loaded in the DOM, prefetch both the
-   * home posts and the list component so if the user visits
-   * the home page, everything is ready and it loads instantly.
-   */
-  useEffect(() => {
-    actions.source.fetch("/");
-  }, [actions.source]);
+  // Once the post has loaded in the DOM, prefetch both the
+  // home posts and the list component so if the user visits
+  // the home page, everything is ready and it loads instantly.
 
   // Load the post, but only if the data is ready.
-  return data.isReady ? (
-    <PostArticle>
-      <Header>
-        <SectionContainer>
-          {/* If the post has categories, render the categories */}
-          {post.categories && <PostCategories categories={categories} />}
-          <PostTitle
-            as="h1"
-            className="heading-size-1"
-            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-          />
-          {/* If the post has a caption (like attachments), render it */}
-          {post.caption && (
-            <PostCaption
-              dangerouslySetInnerHTML={{ __html: post.caption.rendered }}
+  if (!postData.isReady) return null;
+
+  return (
+    <LightPatternBox
+      bg={patternBoxColor}
+      showPattern={state.theme.showBackgroundPattern}
+      pt="0"
+    >
+      <Switch>
+        <Box pos="relative">
+          {post.featured_media != null && (
+            <FeaturedMedia
+              mt="0"
+              height={"350px"}
+              id={post.featured_media.id}
+              _after={{
+                display: "block",
+                content: '""',
+                width: "100%",
+                height: "350px",
+                background: "rgba(0,0,0,0.4)",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0,
+              }}
             />
           )}
-          {/* The post's metadata like author, publish date, and comments */}
-          {/* <PostMeta item={post} /> */}
-        </SectionContainer>
-      </Header>
-
-      {/*
-       * If the want to show featured media in the
-       * list of featured posts, we render the media.
-       */}
-      {state.theme.featuredMedia.showOnPost && (
-        <FeaturedImage id={post.featured_media} isSinglePost={true} />
-      )}
-
-      {/* If the post has a description (like attachments), we render it */}
-      {post.description && (
-        <PostInner size="thin">
-          <EntryContent
-            dangerouslySetInnerHTML={{ __html: post.description.rendered }}
+          <PostHeader
+            mt={{ base: "20px", lg: "4rem" }}
+            px={{ base: "32px", md: "0" }}
+            color={"whiteAlpha.900"}
+            categories={post.categories}
+            heading={post.title}
+            author={post.author}
+            date={post.publishDate}
+            isPage={postData.isPage}
+            position="absolute"
+            bottom="15%"
+            left="15%"
           />
-        </PostInner>
-      )}
-
-      {/* If the post has content, we render it */}
-      {post.content && (
-        <PostInner size="thin">
-          <EntryContent>
-            <Html2React html={post.content.rendered} />
-          </EntryContent>
-          {/* If the post has tags, render it */}
-          {post.tags && <PostTags tags={tags} />}
-        </PostInner>
-      )}
-    </PostArticle>
-  ) : null;
+        </Box>
+        <Home when={postData.route === "/"} post={post} postData={postData} />
+        <OurWork
+          when={postData.route === "/our-work/"}
+          post={post}
+          postData={postData}
+        />
+        <KnowUs
+          when={postData.route === "/about/"}
+          post={post}
+          postData={postData}
+          linkColor={linkColor}
+        />
+        {/* <DefaultPage when={data.isPage} /> */}
+      </Switch>
+    </LightPatternBox>
+  );
 };
 
 export default connect(Page);
-
-const Header = styled(PostHeader)`
-  background-color: #fff;
-  margin: 0;
-  padding: 4rem 0;
-  @media (min-width: 700px) {
-    padding: 8rem 0;
-  }
-`;
-
-const PostArticle = styled(_Post)`
-  padding-top: 0 !important;
-`;
-
-const FeaturedImage = styled(FeaturedMedia)`
-  margin-top: 0 !important;
-  position: relative;
-
-  > div {
-    position: relative;
-  }
-
-  &:before {
-    background: #fff;
-    content: "";
-    display: block;
-    position: absolute;
-    bottom: 50%;
-    left: 0;
-    right: 0;
-    top: 0;
-  }
-`;

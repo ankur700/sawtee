@@ -9,14 +9,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "@frontity/components/link";
-import { connect, decode, styled } from "frontity";
-import React from "react";
-import { formatPostData, getPostData } from "../../components/helpers";
-import FeaturedMedia from "../../components/organisms/post/featured-media";
-import PostHeader from "../../components/organisms/post/post-header";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
-import GlassBox from "../../components/atoms/glassBox";
+import { decode, styled } from "frontity";
+import Section from "../../../styles/section";
+import GlassBox from "../../../atoms/glassBox";
 
 const OurThemes = [
   {
@@ -45,13 +40,10 @@ const OurThemes = [
   },
 ];
 
-const OurWork = ({ state, libraries }) => {
-  const postData = getPostData(state);
-  const post = formatPostData(state, postData);
+const OurWork = ({ postData, post, libraries }) => {
   const sectors = post.acf.sectors;
   const intro = post.acf.intro;
   const Html2React = libraries.html2react.Component;
-  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
@@ -62,45 +54,7 @@ const OurWork = ({ state, libraries }) => {
   if (!postData.isReady) return null;
 
   return (
-    <LightPatternBox
-      bg={patternBoxColor}
-      showPattern={state.theme.showBackgroundPattern}
-      pt="0"
-    >
-      <Box pos="relative">
-        {post.featured_media != null && (
-          <FeaturedMedia
-            mt="0"
-            height={"350px"}
-            id={post.featured_media.id}
-            _after={{
-              display: "block",
-              content: '""',
-              width: "100%",
-              height: "350px",
-              background: "rgba(0,0,0,0.4)",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-            }}
-          />
-        )}
-        <PostHeader
-          mt={{ base: "20px", lg: "4rem" }}
-          px={{ base: "32px", md: "0" }}
-          color={"whiteAlpha.900"}
-          categories={post.categories}
-          heading={post.title}
-          author={post.author}
-          date={post.publishDate}
-          isPage={postData.isPage}
-          position="absolute"
-          bottom="15%"
-          left="15%"
-        />
-      </Box>
+    <>
       <Section size="lg" marginBlock={6}>
         <GlassBox
           h="auto"
@@ -135,7 +89,7 @@ const OurWork = ({ state, libraries }) => {
           })}
         </GlassBox>
       </Section>
-      ;
+
       {/* Look at the settings to see if we should include the featured image */}
       <GlassBox as={Section} mb="50px" border="none" size={"lg"}>
         {/* Render the content using the Html2React component so the HTML is processed
@@ -219,12 +173,11 @@ const OurWork = ({ state, libraries }) => {
           </Box>
         </Content>
       </GlassBox>
-      ;
-    </LightPatternBox>
+    </>
   );
 };
 
-export default connect(OurWork);
+export default OurWork;
 
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.

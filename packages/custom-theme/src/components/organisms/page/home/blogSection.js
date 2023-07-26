@@ -1,10 +1,10 @@
 import { Stack, Show } from "@chakra-ui/react";
-import Section from "../../components/atoms/section";
-import ViewAllBtn from "../../components/atoms/ViewAllBtn";
-import Title from "../../components/atoms/title";
+import Section from "../../../atoms/section";
+import ViewAllBtn from "../../../atoms/ViewAllBtn";
+import Title from "../../../atoms/title";
 import { styled } from "frontity";
 import { Grid, GridItem } from "@chakra-ui/react";
-import { TopImageCard, NoImageCard } from "../../components/molecules/cards";
+import { TopImageCard, NoImageCard } from "../../../molecules/cards";
 
 const CustomGrid = styled(Grid)`
   margin: 0 auto;

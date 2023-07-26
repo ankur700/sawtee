@@ -1,6 +1,6 @@
 // import HeroImage from "../../assets/hero-image.jpg";
-import Title from "../../components/atoms/title";
-import Section from "../../components/atoms/section";
+import Title from "../../../atoms/title";
+import Section from "../../../atoms/section";
 import {
   Text,
   Box,
@@ -13,8 +13,8 @@ import {
   useBreakpointValue,
   Alert,
 } from "@chakra-ui/react";
-import Carousel from "../../components/molecules/Carousel";
-import Link from "../../components/atoms/link";
+import Carousel from "../../../molecules/Carousel";
+import Link from "../../../atoms/link";
 
 const AboutSection = ({ intro, image, PublicationSlider }) => {
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });

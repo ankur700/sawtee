@@ -1,12 +1,15 @@
 import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
-import AllCategoriesHandler from "./components/handlers/all-categories-handler";
-import EventsHandler from "./components/handlers/events-handler";
-import NewsHandler from "./components/handlers/news-handler";
-import PublicationsHandler from "./components/handlers/publications-handler";
-import PublicationArchiveHandler from "./components/handlers/publication-archive-handler";
-import MenuHandler from "./components/handlers/menu-handler";
+import {
+  AllCategoriesHandler,
+  EventsHandler,
+  NewsHandler,
+  PublicationArchiveHandler,
+  PublicationsHandler,
+  MenuHandler,
+} from "./components/handlers";
+
 
 const customTheme = {
   name: "custom-theme",

@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/react";
-import Chart from "../../components/molecules/chart";
-import Section from "../../components/atoms/section";
-import TwitterTimeline from "../../components/atoms/twitterTimeline";
-import GlassBox from "../../components/atoms/glassBox";
+import Chart from "../../../molecules/chart";
+import Section from "../../../atoms/section";
+import TwitterTimeline from "../../../atoms/twitterTimeline";
+import GlassBox from "../../../atoms/glassBox";
 
 const InfoSection = () => {
   return (

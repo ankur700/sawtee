@@ -1,5 +1,5 @@
-import Section from "../../components/atoms/section";
-import FullWidthCarousel from "../../components/molecules/fullWIdthCarousel";
+import Section from "../../../atoms/section";
+import FullWidthCarousel from "../../../molecules/fullWIdthCarousel";
 
 const CarouselSection = ({ data }) => {
   return (

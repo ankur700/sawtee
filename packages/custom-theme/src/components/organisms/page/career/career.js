@@ -1,27 +1,22 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
-import React, { useEffect } from "react";
-import {
-  LightPatternBox,
-} from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
-import FeaturedMedia from "../../components/organisms/post/featured-media";
-import PostHeader from "../../components/organisms/post/post-header";
-import { getPostData, formatPostData } from "../../components/helpers";
-import PageSection from "./PageSection";
-import Members from "./Members";
-import GlassBox from "../../components/atoms/glassBox";
-const KnowUs = ({ state, actions, libraries }) => {
+import React from "react";
+import { formatPostData, getPostData } from "../../../helpers";
+import FeaturedMedia from "../../post/featured-media";
+import PostHeader from "../../post/post-header";
+import { LightPatternBox } from "../../../styles/pattern-box";
+import Section from "../../../styles/section";
+import GlassBox from "../../../atoms/glassBox";
+
+const Career = ({ state, libraries }) => {
   const postData = getPostData(state);
   const post = formatPostData(state, postData);
-  const sections = post.acf.sections;
-  const memberInstitutions = post.acf.memberInstitutions;
+  const Html2React = libraries.html2react.Component;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  // Once the post has loaded in the DOM, prefetch both the
-  // home posts and the list component so if the user visits
-  // the home page, everything is ready and it loads instantly.
-
-
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
@@ -37,6 +32,7 @@ const KnowUs = ({ state, actions, libraries }) => {
             mt="0"
             height={"350px"}
             id={post.featured_media.id}
+            objectFit={"contain"}
             _after={{
               display: "block",
               content: '""',
@@ -65,38 +61,37 @@ const KnowUs = ({ state, actions, libraries }) => {
           left="15%"
         />
       </Box>
-
       {/* Look at the settings to see if we should include the featured image */}
-      <Section className="content" paddingBlock={10} size={"lg"}>
+      <Section
+        px={"32px"}
+        w="full"
+        size={"lg"}
+        pt="50px"
+        pb={"80px"}
+        fontSize={["md", "lg", "xl"]}
+        color={contentColor}
+      >
         <GlassBox border="none">
           {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
           <Content
             as={Section}
             px={{ base: "32px", md: "0" }}
-            size="md"
+            size="sm"
             paddingBlock="50px"
-            fontSize={"1.0625rem"}
+            fontSize={["sm", "md"]}
+            color={contentColor}
           >
-            {sections.map((section) => (
-              <PageSection
-                key={section.title}
-                libraries={libraries}
-                section={section}
-              />
-            ))}
-            <Members
-              memberInstitutions={memberInstitutions}
-              linkColor={state.theme.colors.linkColor}
-            />
+            <Html2React html={post.content} />
           </Content>
         </GlassBox>
       </Section>
+      ;
     </LightPatternBox>
   );
 };
 
-export default connect(KnowUs);
+export default connect(Career);
 
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.
@@ -107,22 +102,40 @@ const Content = styled(Box)`
     max-width: 100%;
   }
 
-  & ul,
-  li {
-    font-size: inherit;
-  }
-
   ul {
     padding: 1rem;
-  }
-  p {
-    font-size: inherit;
   }
 
   img {
     width: 100%;
     object-fit: cover;
     object-position: center;
+  }
+  form {
+    padding: 24px;
+
+    & p {
+      padding-bottom: 1em;
+    }
+
+    & label {
+      color: #fff;
+    }
+
+    & h4,
+    .info-heading {
+      font-size: 36px;
+      color: #000;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+    }
+
+    & .info-text {
+      font-size: 20px;
+      color: #ccc;
+      text-transform: uppercase;
+      padding-bottom: 1em;
+    }
   }
 
   figure {
@@ -208,6 +221,19 @@ const Content = styled(Box)`
     .alignleft {
       float: left;
       margin-right: 24px;
+    }
+  }
+  a {
+    color: #006181;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
     }
   }
 `;

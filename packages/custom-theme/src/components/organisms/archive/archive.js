@@ -17,6 +17,8 @@ const Archive = ({ state, categories }) => {
   // Get the data of the current list.
   const data = state.source.get(state.router.link);
 
+  console.log(data);
+
   if (data.isFeaturedEventsArchive) {
     return (
       <Events when={data.isFeaturedEventsArchive} categories={categories} />
@@ -33,10 +35,10 @@ const Archive = ({ state, categories }) => {
     return <Research categories={categories} />;
   } else if (data.isCovidArchive) {
     return <Covid categories={categories} />;
-  } else if (data.route === "/blog") {
-    return <HomeArchive />;
-  } else {
+  } else if (data.isPostArchive) {
     return <DefaultArchive data={data} state={state} />;
+  } else {
+    return <HomeArchive />;
   }
 };
 

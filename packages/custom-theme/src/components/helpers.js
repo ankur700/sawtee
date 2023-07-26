@@ -141,7 +141,12 @@ export function getPostTags(state, post) {
 export function getPostData(state) {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
-  return { ...post, isReady: data.isReady, isPage: data.isPage };
+  return {
+    ...post,
+    isReady: data.isReady,
+    isPage: data.isPage,
+    route: data.route,
+  };
 }
 
 export function truthy(value) {
