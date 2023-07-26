@@ -7,7 +7,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { decode } from "frontity";
-import { formatDateWithMoment } from "../../components/helpers";
 import PostCategories from "../../components/organisms/post/post-categories";
 
 const ProgrammeItem = ({ program, linkColor }) => {

@@ -5,9 +5,6 @@ import { Global, Head, connect } from "frontity";
 import { useEffect } from "react";
 import Post from "../components/organisms/post/post";
 import Page from "../components/organisms/page/page";
-// import KnowUs from "../pages/KnowUs";
-// import OurWork from "../pages/OurWork";
-// import Home from "../pages/home";
 import Loading from "./atoms/loading";
 import Page404 from "./atoms/page404";
 import PageTitle from "./atoms/pageTitle";
@@ -18,8 +15,6 @@ import Header from "./organisms/header";
 import FontFace from "./styles/font-face";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
-// import Contact from "../pages/contact";
-// import Career from "../pages/career";
 
 const config = {
   initialColorMode: "light",
@@ -69,11 +64,6 @@ const Theme = ({ state, actions }) => {
         <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
           <Switch>
             <Loading when={data.isFetching} />
-            {/* <Home when={data.isHome} categories={categories} />
-            <KnowUs when={data.route === "/about/"} />
-            <OurWork when={data.route === "/our-work/"} />
-            <Contact when={data.route === "/contact/"} />
-            <Career when={data.route === "/career/"} /> */}
             <Page when={data.isPage} />
             <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />
