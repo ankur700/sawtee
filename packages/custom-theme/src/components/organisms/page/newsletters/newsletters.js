@@ -9,15 +9,15 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
-import Sidebar from "../../components/organisms/archive/sidebar";
-import Loading from "../../components/atoms/loading";
-import Publication1 from "../../assets/publications-1-resized.jpg";
+import { LightPatternBox } from "../../../styles/pattern-box";
+import Section from "../../../styles/section";
+import Sidebar from "../../../organisms/archive/sidebar";
+import Loading from "../../../atoms/loading";
+import Publication1 from "../../../../assets/publications-1-resized.jpg";
 import React, { useState, useEffect } from "react";
-import { formatCPTData } from "../../components/helpers";
+import { formatCPTData } from "../../../helpers";
 import NewsletterCard from "./newsletterCard";
-import Pagination from "../../components/organisms/archive/pagination";
+import Pagination from "../../../organisms/archive/pagination";
 
 const NewsletterArchive = ({ state, categories }) => {
   // Get the data of the current list.

@@ -7,19 +7,21 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import Section from "../../components/styles/section";
-import Sidebar from "../../components/organisms/archive/sidebar";
-import Loading from "../../components/atoms/loading";
+import Section from "../../../styles/section";
+import Sidebar from "../../../organisms/archive/sidebar";
+import Loading from "../../../atoms/loading";
 
 import { useState, useEffect } from "react";
-import { formatCPTData } from "../../components/helpers";
-import NumberedPagination from "../../components/atoms/NumberedPagination";
+import { formatCPTData } from "../../../helpers";
+import NumberedPagination from "../../../atoms/NumberedPagination";
 import ProgrammeItem from "./programmeItem";
 
-const Programmes = ({ postData, posts, categories, linkColor }) => {
+const Programmes = ({ state, categories, linkColor }) => {
   const newsData = state.source.get("/sawtee-in-media/");
-
+  const postData = state.source.get('/category/programme/');
   const [news, setNews] = useState([]);
+
+  console.log(postData);
 
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const contentColor = useColorModeValue(
@@ -91,4 +93,4 @@ const Programmes = ({ postData, posts, categories, linkColor }) => {
   );
 };
 
-export default Programmes;
+export default connect(Programmes);

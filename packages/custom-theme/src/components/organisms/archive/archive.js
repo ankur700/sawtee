@@ -5,13 +5,13 @@ import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
 import HomeArchive from "./home-archive";
-import Publications from "../../../pages/publication";
-import Events from "../../../pages/events";
-import Newsletters from "../../../pages/newsletters";
-import Programme from "../../../pages/programme";
-import Research from "../../../pages/research";
-import SawteeInMedia from "../../../pages/sawteeInMedia";
-import Covid from "../../../pages/covid";
+import Publications from "../page/publication";
+import Events from "../page/events";
+import Newsletters from "../page/newsletters";
+import Programme from "../page/programme";
+import Research from "../page/research";
+import SawteeInMedia from "../page/sawteeInMedia";
+import Covid from "../page/covid";
 
 const Archive = ({ state, categories }) => {
   // Get the data of the current list.

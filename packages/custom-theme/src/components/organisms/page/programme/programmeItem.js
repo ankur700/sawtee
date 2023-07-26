@@ -7,7 +7,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { decode } from "frontity";
-import PostCategories from "../../components/organisms/post/post-categories";
+import PostCategories from "../../../organisms/post/post-categories";
 
 const ProgrammeItem = ({ program, linkColor }) => {
   const HeaderColor = useColorModeValue("gray.800", "whiteAlpha.800");

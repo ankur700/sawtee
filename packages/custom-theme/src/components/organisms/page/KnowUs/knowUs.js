@@ -262,6 +262,7 @@ const Members = ({ memberInstitutions, linkColor }) => {
 
 const PageSection = ({ section, libraries }) => {
   const { content_repeater, title, content, tab_or_accordian } = section;
+
   const tabColor = useColorModeValue("blackAlpha", "whiteAlpha");
 
   // Get the html2react component.

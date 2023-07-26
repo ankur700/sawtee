@@ -9,16 +9,16 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
-import Sidebar from "../../components/organisms/archive/sidebar";
-import Publication1 from "../../assets/publications-1-resized.jpg";
+import { LightPatternBox } from "../../../styles/pattern-box";
+import Section from "../../../styles/section";
+import Sidebar from "../../../organisms/archive/sidebar";
+import Publication1 from "../../../../assets/publications-1-resized.jpg";
 import EventItem from "./eventItem";
 import React, { useState, useEffect } from "react";
 
-import { formatCPTData } from "../../components/helpers";
-import Loading from "../../components/atoms/loading";
-import NumberedPagination from "../../components/atoms/NumberedPagination";
+import { formatCPTData } from "../../../helpers";
+import Loading from "../../../atoms/loading";
+import NumberedPagination from "../../../atoms/NumberedPagination";
 
 const EventsArchive = ({ state, actions, categories }) => {
   // Get the data of the current list.

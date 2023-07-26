@@ -6,8 +6,8 @@ import {
   useColorModeValue,
   Image,
 } from "@chakra-ui/react";
-import { formatDateWithMoment } from "../../components/helpers";
-import Link from "../../components/atoms/link";
+import { formatDateWithMoment } from "../../../helpers";
+import Link from "../../../atoms/link";
 
 const NewsletterCard = ({ post, linkColor }) => {
   const { title, publishDate, link, featured_media } = post;

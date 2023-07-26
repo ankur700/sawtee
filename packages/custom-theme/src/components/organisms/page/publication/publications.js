@@ -8,16 +8,16 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import Publication1 from "../../assets/publications-1-resized.jpg";
-import Sidebar from "../../components/organisms/archive/sidebar";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
+import Publication1 from "../../../../assets/publications-1-resized.jpg";
+import Sidebar from "../../../organisms/archive/sidebar";
+import { LightPatternBox } from "../../../styles/pattern-box";
+import Section from "../../../styles/section";
 import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
-import GlassBox from "../../components/atoms/glassBox";
+import GlassBox from "../../../atoms/glassBox";
 import React, { useState, useEffect } from "react";
-import { formatCPTData, formatPostData } from "../../components/helpers";
-import Loading from "../../components/atoms/loading";
+import { formatCPTData, formatPostData } from "../../../helpers";
+import Loading from "../../../atoms/loading";
 
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
@@ -268,8 +268,8 @@ const Publications = ({ state, actions, categories }) => {
           px={{ base: "32px", md: "16px" }}
           py="6"
           display="flex"
-          // pos={"sticky"}
-          // top={"8rem"}
+        // pos={"sticky"}
+        // top={"8rem"}
         >
           <PublicationFilter
             categories={publicationCategories}

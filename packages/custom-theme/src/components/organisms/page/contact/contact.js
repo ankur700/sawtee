@@ -21,11 +21,11 @@ import {
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";
-import { formatPostData, getPostData } from "../../components/helpers";
-import FeaturedMedia from "../../components/organisms/post/featured-media";
-import PostHeader from "../../components/organisms/post/post-header";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import GlassBox from "../../components/atoms/glassBox";
+import { formatPostData, getPostData } from "../../../helpers";
+import FeaturedMedia from "../../../organisms/post/featured-media";
+import PostHeader from "../../../organisms/post/post-header";
+import { LightPatternBox } from "../../styles/pattern-box";
+import GlassBox from "../../../atoms/glassBox";
 import Iframe from "@frontity/components/iframe";
 import { MdPhone, MdEmail, MdLocationOn } from "react-icons/md";
 import {
@@ -106,8 +106,8 @@ const Contact = ({ state, libraries }) => {
         mt="50px"
         bg="transparent"
         boxShadow="none"
-        // display="flex"
-        // justifyContent="center"
+      // display="flex"
+      // justifyContent="center"
       >
         <Box
           p={{ sm: 5, md: 5, lg: 10 }}

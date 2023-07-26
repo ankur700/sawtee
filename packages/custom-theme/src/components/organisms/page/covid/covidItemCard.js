@@ -8,7 +8,7 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { formatDateWithMoment } from "../../components/helpers";
+import { formatDateWithMoment } from "../../../helpers";
 import Link from "@frontity/components/link";
 import { BsArrowUpRight } from "react-icons/bs";
 
@@ -57,12 +57,12 @@ const CovidItemCard = ({ post }) => {
         >
           {post.acf.authors
             ? post.acf.authors?.map(({ author }, idx) => {
-                return (
-                  <Text key={author} color={"gray.600"} fontSize="sm">
-                    {idx === post.acf.authors.length ? author + " | " : author}
-                  </Text>
-                );
-              })
+              return (
+                <Text key={author} color={"gray.600"} fontSize="sm">
+                  {idx === post.acf.authors.length ? author + " | " : author}
+                </Text>
+              );
+            })
             : null}
         </HStack>
       </VStack>

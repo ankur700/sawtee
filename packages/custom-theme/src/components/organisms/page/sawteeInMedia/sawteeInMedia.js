@@ -1,10 +1,10 @@
 import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import { connect } from "frontity";
 import React from "react";
-import Loading from "../../components/atoms/loading";
+import Loading from "../../../atoms/loading";
 import MediaArticle from "./MediaArticle";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import Publication1 from "../../assets/publications-1-resized.jpg";
+import { LightPatternBox } from "../../../styles/pattern-box";
+import Publication1 from "../../../../assets/publications-1-resized.jpg";
 import {
   Box,
   Image,
@@ -15,10 +15,10 @@ import {
   GridItem,
   VStack,
 } from "@chakra-ui/react";
-import Section from "../../components/styles/section";
-import Sidebar from "../../components/organisms/archive/sidebar";
-import { formatCPTData } from "../../components/helpers";
-import NumberedPagination from "../../components/atoms/NumberedPagination";
+import Section from "../../../styles/section";
+import Sidebar from "../../../organisms/archive/sidebar";
+import { formatCPTData } from "../../../helpers";
+import NumberedPagination from "../../../atoms/NumberedPagination";
 
 const SawteeInMedia = ({ state, categories }) => {
   const postData = state.source.get(state.router.link);

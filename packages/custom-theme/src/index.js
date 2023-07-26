@@ -8,6 +8,7 @@ import {
   PublicationArchiveHandler,
   PublicationsHandler,
   MenuHandler,
+  CategoriesHandler
 } from "./components/handlers";
 
 
@@ -97,7 +98,7 @@ const customTheme = {
         await actions.source.fetch("/events");
         await actions.source.fetch("/menu/primary/");
         await actions.source.fetch("/menu/footer/");
-        await actions.source.fetch("/programme");
+        await actions.source.fetch("/category/programme");
         await actions.source.fetch("/publications");
         await actions.source.fetch("/featured-events");
         await actions.source.fetch("/sawtee-in-media");
@@ -131,6 +132,7 @@ const customTheme = {
         PublicationsHandler,
         PublicationArchiveHandler,
         MenuHandler,
+        CategoriesHandler
       ],
     },
   },

@@ -9,16 +9,16 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
-import { LightPatternBox } from "../../components/styles/pattern-box";
-import Section from "../../components/styles/section";
-import Sidebar from "../../components/organisms/archive/sidebar";
-import Loading from "../../components/atoms/loading";
-import CoverImage from "../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
+import { LightPatternBox } from "../../../styles/pattern-box";
+import Section from "../../../styles/section";
+import Sidebar from "../../../organisms/archive/sidebar";
+import Loading from "../../../atoms/loading";
+import CoverImage from "../../../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
 
 import React from "react";
-import { formatCPTData } from "../../components/helpers";
+import { formatCPTData } from "../../../helpers";
 import CovidItemCard from "./covidItemCard";
-import NumberedPagination from "../../components/atoms/NumberedPagination";
+import NumberedPagination from "../../../atoms/NumberedPagination";
 
 const Covid = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
