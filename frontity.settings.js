@@ -129,6 +129,11 @@ const settings = {
               archive: "/publications",
             },
             {
+              type: "programme",
+              endpoint: "programme",
+              archive: "/programme",
+            },
+            {
               type: "sawtee-in-media",
               endpoint: "sawtee-in-media",
               archive: "/sawtee-in-media",

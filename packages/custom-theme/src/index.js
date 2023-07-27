@@ -94,27 +94,14 @@ const customTheme = {
         state.theme.isSearchModalOpen = false;
       },
 
-      beforeSSR: async ({ state, actions }) => {
-        await actions.source.fetch("/events");
+      beforeSSR: async ({ actions }) => {
         await actions.source.fetch("/menu/primary/");
         await actions.source.fetch("/menu/footer/");
-        await actions.source.fetch("/category/programme");
-        await actions.source.fetch("/publications");
-        await actions.source.fetch("/featured-events");
-        await actions.source.fetch("/sawtee-in-media");
         await actions.source.fetch("all-categories");
         await actions.source.fetch("/subscription-page");
+        await actions.source.fetch("/featured-events");
         await actions.source.fetch("/publications/trade-insight");
         await actions.source.fetch("/publications/books");
-        await actions.source.fetch("/publications/discussion-paper");
-        await actions.source.fetch("/publications/policy-brief");
-        await actions.source.fetch("/publications/briefing-paper");
-        await actions.source.fetch("/publications/issue-paper");
-        await actions.source.fetch("/publications/working-paper");
-        await actions.source.fetch("/publications/research-brief");
-        await actions.source.fetch("/publications/others");
-        await actions.source.fetch("/publications/publications-in-nepali");
-        await actions.source.fetch("/publications/book-chapters");
       },
     },
   },
@@ -127,12 +114,10 @@ const customTheme = {
     source: {
       handlers: [
         AllCategoriesHandler,
-        EventsHandler,
-        NewsHandler,
-        PublicationsHandler,
-        PublicationArchiveHandler,
         MenuHandler,
-        CategoriesHandler
+        CategoriesHandler,
+        PublicationArchiveHandler,
+        PublicationsHandler,
       ],
     },
   },

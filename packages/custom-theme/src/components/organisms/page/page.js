@@ -1,8 +1,6 @@
 import { connect } from "frontity";
 import { getPostData, formatPostData } from "../../helpers";
-import DefaultPage from "./defaultPage";
 import KnowUs from "./KnowUs";
-import Home from "./home";
 import OurWork from "./OurWork";
 
 import Switch from "@frontity/components/switch";
@@ -10,7 +8,6 @@ import { LightPatternBox } from "../../styles/pattern-box";
 import FeaturedMedia from "../post/featured-media";
 import PostHeader from "../post/post-header";
 import { Box, useColorModeValue } from "@chakra-ui/react";
-import Programme from "./programme/programme";
 
 const Page = ({ state, libraries, categories }) => {
   const postData = getPostData(state);
@@ -18,8 +15,6 @@ const Page = ({ state, libraries, categories }) => {
   const post = formatPostData(state, postData);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
 
-  console.log(postData);
-  // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
   return (
@@ -63,7 +58,6 @@ const Page = ({ state, libraries, categories }) => {
         />
       </Box>
       <Switch>
-
         <OurWork
           when={postData.route === "/our-work/"}
           post={post}
@@ -77,16 +71,8 @@ const Page = ({ state, libraries, categories }) => {
           linkColor={linkColor}
           libraries={libraries}
         />
-        <Programme
-          when={postData.route === "/programme"}
-          categories={categories}
-          postData={postData}
-          linkColor={linkColor}
-          libraries={libraries}
-        />
       </Switch>
     </LightPatternBox>
-
   );
 };
 

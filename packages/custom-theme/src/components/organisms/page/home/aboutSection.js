@@ -1,6 +1,7 @@
 // import HeroImage from "../../assets/hero-image.jpg";
 import Title from "../../../atoms/title";
 import Section from "../../../atoms/section";
+import { connect } from "frontity";
 import {
   Text,
   Box,
@@ -16,7 +17,7 @@ import {
 import Carousel from "../../../molecules/Carousel";
 import Link from "../../../atoms/link";
 
-const AboutSection = ({ intro, image, PublicationSlider }) => {
+const AboutSection = ({ state, intro, image, PublicationSlider }) => {
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
   return (
@@ -78,56 +79,55 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
                   />
                   <Carousel show={show} gap={"30px"}>
                     {item.slider.map((slide) => {
+                      const post = state.source[slide.type][slide.id];
                       return (
-                        <Link
-                          key={slide.id}
-                          title={
-                            slide.featured_media.alt
-                              ? slide.featured_media.alt
-                              : ""
-                          }
-                          maxHeight={"250px"}
-                          link={slide.acf.pub_link}
-                          pos={"relative"}
-                          w={`calc(100% / ${show} - 30px )`}
-                          _before={{
-                            content: `''`,
-                            position: "absolute",
-                            top: 0,
-                            left: "unset",
-                            width: `100%`,
-                            height: "auto",
-                            borderRadius: "15px",
-                            background: "rgba(0,0,0,0.3)",
-                            backgroundBlendMode: "overlay",
-                          }}
-                          _hover={{
-                            _before: {
-                              background: "transparent",
-                            },
-                          }}
-                        >
-                          <Image
-                            src={
-                              slide.src ? slide.src : slide.featured_media.src
-                            }
-                            srcSet={
-                              slide.srcSet
-                                ? slide.srcSet
-                                : slide.featured_media.srcSet
-                            }
-                            alt={slide.alt}
-                            title={slide.alt}
-                            rounded="xl"
-                            border={`1px solid`}
-                            borderColor={useColorModeValue(
-                              "gray.900",
-                              "whiteAlpha.900"
-                            )}
-                            objectFit="cover"
-                            style={{ width: "190px", height: "250px" }}
-                          />
-                        </Link>
+                        post && (
+                          <Link
+                            key={post.id}
+                            title={post.title}
+                            maxHeight={"250px"}
+                            link={post.acf.pub_link}
+                            pos={"relative"}
+                            w={`calc(100% / ${show} - 30px )`}
+                            _before={{
+                              content: `''`,
+                              position: "absolute",
+                              top: 0,
+                              left: "unset",
+                              width: `100%`,
+                              height: "auto",
+                              borderRadius: "15px",
+                              background: "rgba(0,0,0,0.3)",
+                              backgroundBlendMode: "overlay",
+                            }}
+                            _hover={{
+                              _before: {
+                                background: "transparent",
+                              },
+                            }}
+                          >
+                            <Image
+                              src={
+                                post.src ? post.src : post.featured_media.src
+                              }
+                              srcSet={
+                                post.srcSet
+                                  ? post.srcSet
+                                  : post.featured_media.srcSet
+                              }
+                              alt={post.title}
+                              title={post.title}
+                              rounded="xl"
+                              border={`1px solid`}
+                              borderColor={useColorModeValue(
+                                "gray.900",
+                                "whiteAlpha.900"
+                              )}
+                              objectFit="cover"
+                              style={{ width: "190px", height: "250px" }}
+                            />
+                          </Link>
+                        )
                       );
                     })}
                   </Carousel>
@@ -210,4 +210,4 @@ const AboutSection = ({ intro, image, PublicationSlider }) => {
   );
 };
 
-export default AboutSection;
+export default connect(AboutSection);

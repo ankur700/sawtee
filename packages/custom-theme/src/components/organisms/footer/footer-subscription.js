@@ -1,13 +1,7 @@
-import { useState } from "react";
 import { Stack, Heading, Text, Container, Box } from "@chakra-ui/react";
-import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { styled } from "frontity";
 
 const FooterSubscription = ({ post, Html2React }) => {
-  const [email, setEmail] = useState("");
-  const [state, setState] = useState("initial");
-  const [error, setError] = useState(false);
-
   return (
     <Container
       maxW={"lg"}

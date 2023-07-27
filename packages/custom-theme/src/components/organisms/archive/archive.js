@@ -7,39 +7,35 @@ import Pagination from "./pagination";
 import HomeArchive from "./home-archive";
 import Publications from "../page/publication";
 import Events from "../page/events";
-import Newsletters from "../page/newsletters";
 import Programme from "../page/programme";
+import Newsletters from "../page/newsletters";
 import Research from "../page/research";
 import SawteeInMedia from "../page/sawteeInMedia";
 import Covid from "../page/covid";
+import Switch from "@frontity/components/switch";
 
 const Archive = ({ state, categories }) => {
-  // Get the data of the current list.
   const data = state.source.get(state.router.link);
-
-  console.log(data);
-
-  if (data.isFeaturedEventsArchive) {
-    return (
+  return (
+    <Switch>
       <Events when={data.isFeaturedEventsArchive} categories={categories} />
-    );
-  } else if (data.isPublicationsArchive) {
-    return <Publications categories={categories} />;
-  } else if (data.isSawteeInMediaArchive) {
-    return <SawteeInMedia categories={categories} />;
-  } else if (data.isProgrammeArchive) {
-    return <Programme categories={categories} />;
-  } else if (data.isNewslettersArchive) {
-    return <Newsletters />;
-  } else if (data.isResearchArchive) {
-    return <Research categories={categories} />;
-  } else if (data.isCovidArchive) {
-    return <Covid categories={categories} />;
-  } else if (data.isPostArchive) {
-    return <DefaultArchive data={data} state={state} />;
-  } else {
-    return <HomeArchive />;
-  }
+      <Publications when={data.isPublicationsArchive} categories={categories} />
+      <SawteeInMedia
+        when={data.isSawteeInMediaArchive}
+        categories={categories}
+      />
+      <Newsletters when={data.isNewslettersArchive} />
+      <Research when={data.isResearchArchive} categories={categories} />
+      <Covid when={data.isCovidArchive} categories={categories} />
+      <HomeArchive when={data.route === "/blog/"} />
+      <Programme when={data.isProgrammeArchive} categories={categories} />
+      <DefaultArchive
+        when={data.isArchive && data.isCategory}
+        data={data}
+        state={state}
+      />
+    </Switch>
+  );
 };
 
 export default connect(Archive);
@@ -49,7 +45,6 @@ const DefaultArchive = ({ data, state }) => {
   const gridWrapperColor = useColorModeValue("whiteAlpha.700", "gray.700");
   return (
     <Box bg={archiveWrapperColor} as="section">
-      {/* If the list is a taxonomy, we render a title. */}
       {data.isTaxonomy && (
         <ArchiveHeader
           showPattern={state.theme.showBackgroundPattern}
@@ -58,7 +53,6 @@ const DefaultArchive = ({ data, state }) => {
         />
       )}
 
-      {/* If the list is an author, we render a title. */}
       {data.isAuthor && (
         <ArchiveHeader
           showPattern={state.theme.showBackgroundPattern}
@@ -74,7 +68,6 @@ const DefaultArchive = ({ data, state }) => {
         maxWidth="1200px"
         mx="auto"
       >
-        {/* Iterate over the items of the list. */}
         <SimpleGrid columns={{ base: 1, md: 2 }} spacing="40px">
           {data.items.map(({ type, id }) => {
             const item = state.source[type][id];

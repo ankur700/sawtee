@@ -1,3 +1,3 @@
 import { loadable } from "frontity";
 
-export default loadable(() => import("./programme"));
+export default loadable(() => import("./programmes"));

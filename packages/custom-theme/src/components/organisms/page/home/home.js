@@ -3,7 +3,7 @@ import CarouselSection from "./carouselSection";
 import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
-import { formatCPTData, getPublicationSliders } from "../../../helpers";
+import { formatCPTData } from "../../../helpers";
 import React, { useEffect, useState } from "react";
 
 const Home = ({ state, actions, categories }) => {
@@ -13,38 +13,45 @@ const Home = ({ state, actions, categories }) => {
   const linkColor = state.theme.colors.linkColor;
   const introText = post.acf?.about_section_intro;
   const introImage = post.acf?.about_section_image;
-  const Publication_categories = post.acf?.publication_slider;
   const [PublicationSlider, setPublicationSlider] = useState([]);
-  const [CategoryOnePosts, setCategoryOnePosts] = useState([]);
-  const [CategoryTwoPosts, setCategoryTwoPosts] = useState([]);
 
-  const eventsData = state.source.get("/events");
+  const eventsData = state.source.get("/featured-events");
   const [eventsList, setEvetnsList] = useState([]);
   const [media, setMedia] = useState(null);
 
-  const CategoryOne = state.source.get(
-    `/publications/${Publication_categories[0].category_slug}/`
-  );
-  const CategoryTwo = state.source.get(
-    `/publications/${Publication_categories[1].category_slug}/`
-  );
+  const tradeInsight = state.source.get("/publications/trade-insight");
+  const books = state.source.get("/publications/books");
 
   useEffect(() => {
-    Publication_categories.map((cat) => {
-      actions.source.fetch(`/publications/${cat.category_slug}`);
-    });
-  }, [Publication_categories]);
+    actions.source.fetch("/publications/trade-insight");
+    actions.source.fetch("/publications/books");
+  }, []);
 
   useEffect(() => {
-    if (eventsData.isReady) {
-      eventsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        setEvetnsList((prev) => [
-          ...prev,
-          formatCPTData(state, post, categories),
-        ]);
-      });
+    if (tradeInsight.isReady && books.isReady) {
+      setPublicationSlider([
+        {
+          slider_title: post.acf.publication_slider[0].category_name,
+          slider: [...tradeInsight.items],
+        },
+        {
+          slider_title: post.acf.publication_slider[1].category_name,
+          slider: [...books.items],
+        },
+      ]);
     }
+  }, [tradeInsight, books]);
+
+  useEffect(() => {
+    eventsData.isReady &&
+      eventsData.items.forEach((item, idx) => {
+        const post = state.source[item.type][item.id];
+        idx < 6 &&
+          setEvetnsList((prev) => [
+            ...prev,
+            formatCPTData(state, post, categories),
+          ]);
+      });
   }, [eventsData]);
 
   useEffect(() => {
@@ -56,44 +63,6 @@ const Home = ({ state, actions, categories }) => {
       });
     }
   }, [eventsList]);
-
-  useEffect(() => {
-    if (CategoryOne.isReady) {
-      CategoryOne.items.map((item) => {
-        let post = state.source["publications"][item.id];
-        setCategoryOnePosts((prev) => [
-          ...prev,
-          getPublicationSliders(state, post, categories),
-        ]);
-      });
-    }
-  }, [CategoryOne.isReady]);
-
-  useEffect(() => {
-    if (CategoryTwo.isReady) {
-      CategoryTwo.items.map((item) => {
-        let post = state.source["publications"][item.id];
-        setCategoryTwoPosts((prev) => [
-          ...prev,
-          getPublicationSliders(state, post, categories),
-        ]);
-      });
-    }
-  }, [CategoryTwo.isReady]);
-
-  useEffect(() => {
-    if (CategoryOnePosts.length > 0 && CategoryTwoPosts.length > 0) {
-      Publication_categories.map((cat, idx) => {
-        setPublicationSlider((prev) => [
-          ...prev,
-          {
-            slider_title: cat.category_name,
-            slider: idx === 0 ? CategoryOnePosts : CategoryTwoPosts,
-          },
-        ]);
-      });
-    }
-  }, [CategoryOnePosts, CategoryTwoPosts]);
 
   /*
 
