@@ -3,8 +3,6 @@ import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
 import {
   AllCategoriesHandler,
-  EventsHandler,
-  NewsHandler,
   PublicationArchiveHandler,
   PublicationsHandler,
   MenuHandler,

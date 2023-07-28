@@ -5,6 +5,7 @@ import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
 import { formatCPTData } from "../../../helpers";
 import React, { useEffect, useState } from "react";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 const Home = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
@@ -15,28 +16,24 @@ const Home = ({ state, actions, categories }) => {
   const introImage = post.acf?.about_section_image;
   const [PublicationSlider, setPublicationSlider] = useState([]);
 
-  const eventsData = state.source.get("/featured-events");
   const [eventsList, setEvetnsList] = useState([]);
   const [media, setMedia] = useState(null);
 
-  const tradeInsight = state.source.get("/publications/trade-insight");
-  const books = state.source.get("/publications/books");
-
-  useEffect(() => {
-    actions.source.fetch("/publications/trade-insight");
-    actions.source.fetch("/publications/books");
-  }, []);
+  const eventsData = state.source.get("/featured-events/");
+  const tradeInsight = state.source.get("/publications/trade-insight/");
+  const books = state.source.get("/publications/books/");
+  const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
   useEffect(() => {
     if (tradeInsight.isReady && books.isReady) {
       setPublicationSlider([
         {
           slider_title: post.acf.publication_slider[0].category_name,
-          slider: [...tradeInsight.items],
+          slider: tradeInsight.items,
         },
         {
           slider_title: post.acf.publication_slider[1].category_name,
-          slider: [...books.items],
+          slider: books.items,
         },
       ]);
     }
@@ -64,6 +61,7 @@ const Home = ({ state, actions, categories }) => {
     }
   }, [eventsList]);
 
+
   /*
 
     ? Question
@@ -73,11 +71,15 @@ const Home = ({ state, actions, categories }) => {
   return (
     <>
       <CarouselSection data={slides} />
-      <AboutSection
-        intro={introText}
-        image={introImage.sizes.medium_large}
-        PublicationSlider={PublicationSlider}
-      />
+      {PublicationSlider && (
+        <AboutSection
+          intro={introText}
+          image={introImage.sizes.medium_large}
+          PublicationSlider={PublicationSlider}
+          show={show}
+          categories={categories}
+        />
+      )}
       <InfoSection />
       <BlogSection linkColor={linkColor} media={media} events={eventsList} />
       {/* <Newsletter /> */}

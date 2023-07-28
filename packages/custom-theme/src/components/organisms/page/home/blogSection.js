@@ -1,9 +1,8 @@
-import { Stack, Show } from "@chakra-ui/react";
+import { Stack, Show, Grid, GridItem } from "@chakra-ui/react";
 import Section from "../../../atoms/section";
 import ViewAllBtn from "../../../atoms/ViewAllBtn";
 import Title from "../../../atoms/title";
 import { styled } from "frontity";
-import { Grid, GridItem } from "@chakra-ui/react";
 import { TopImageCard, NoImageCard } from "../../../molecules/cards";
 
 const CustomGrid = styled(Grid)`

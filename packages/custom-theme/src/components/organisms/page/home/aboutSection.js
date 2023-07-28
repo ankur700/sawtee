@@ -11,14 +11,20 @@ import {
   VStack,
   Image,
   useColorModeValue,
-  useBreakpointValue,
-  Alert,
 } from "@chakra-ui/react";
 import Carousel from "../../../molecules/Carousel";
 import Link from "../../../atoms/link";
+import { formatCPTData } from "../../../helpers";
 
-const AboutSection = ({ state, intro, image, PublicationSlider }) => {
-  const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
+const AboutSection = ({
+  state,
+  intro,
+  image,
+  PublicationSlider,
+  show,
+  categories,
+}) => {
+  const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
 
   return (
     <Section width="full" overflow="hidden" id="about-section">
@@ -40,7 +46,7 @@ const AboutSection = ({ state, intro, image, PublicationSlider }) => {
           {intro && (
             <Text
               as="blockquote"
-              fontSize={["xl", "2xl", "3xl", "4xl"]}
+              fontSize={["xl", "2xl", "3xl"]}
               color={"whiteAlpha.800"}
               m="0"
               alignSelf={"center"}
@@ -78,56 +84,55 @@ const AboutSection = ({ state, intro, image, PublicationSlider }) => {
                     color="whiteAlpha.900"
                   />
                   <Carousel show={show} gap={"30px"}>
-                    {item.slider.map((slide) => {
-                      const post = state.source[slide.type][slide.id];
+                    {item.slider.map(({ type, id }) => {
+                      const slide = formatCPTData(
+                        state,
+                        state.source[type][id],
+                        categories
+                      );
+
+                      console.log(slide);
                       return (
-                        post && (
-                          <Link
-                            key={post.id}
-                            title={post.title}
-                            maxHeight={"250px"}
-                            link={post.acf.pub_link}
-                            pos={"relative"}
-                            w={`calc(100% / ${show} - 30px )`}
-                            _before={{
-                              content: `''`,
-                              position: "absolute",
-                              top: 0,
-                              left: "unset",
-                              width: `100%`,
-                              height: "auto",
-                              borderRadius: "15px",
-                              background: "rgba(0,0,0,0.3)",
-                              backgroundBlendMode: "overlay",
-                            }}
-                            _hover={{
-                              _before: {
-                                background: "transparent",
-                              },
-                            }}
-                          >
-                            <Image
-                              src={
-                                post.src ? post.src : post.featured_media.src
-                              }
-                              srcSet={
-                                post.srcSet
-                                  ? post.srcSet
-                                  : post.featured_media.srcSet
-                              }
-                              alt={post.title}
-                              title={post.title}
-                              rounded="xl"
-                              border={`1px solid`}
-                              borderColor={useColorModeValue(
-                                "gray.900",
-                                "whiteAlpha.900"
-                              )}
-                              objectFit="cover"
-                              style={{ width: "190px", height: "250px" }}
-                            />
-                          </Link>
-                        )
+                        <Link
+                          key={slide.id}
+                          title={slide.title}
+                          maxHeight={"250px"}
+                          link={slide.acf.pub_link}
+                          pos={"relative"}
+                          w={`calc(100% / ${show} - 30px )`}
+                          _before={{
+                            content: `''`,
+                            position: "absolute",
+                            top: 0,
+                            left: "unset",
+                            width: `100%`,
+                            height: "auto",
+                            borderRadius: "15px",
+                            background: "rgba(0,0,0,0.3)",
+                            backgroundBlendMode: "overlay",
+                          }}
+                          _hover={{
+                            _before: {
+                              background: "transparent",
+                            },
+                          }}
+                        >
+                          <Image
+                            src={slide.featured_media.src}
+                            srcSet={
+                              slide.srcSet
+                                ? slide.srcSet
+                                : slide.featured_media.srcSet
+                            }
+                            alt={slide.title}
+                            title={slide.title}
+                            rounded="xl"
+                            border={`1px solid`}
+                            borderColor={ImageBorderColor}
+                            objectFit="cover"
+                            style={{ width: "190px", height: "250px" }}
+                          />
+                        </Link>
                       );
                     })}
                   </Carousel>

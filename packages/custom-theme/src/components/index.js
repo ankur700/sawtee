@@ -26,11 +26,7 @@ const config = {
 // in roots.
 const Theme = ({ state, actions }) => {
   const data = state.source.get(state.router.link);
-
-  console.log(data);
-
   const categories = state.source.data["all-categories/"].items;
-
   const overrides = extendTheme({
     fonts: {
       heading: "'Nunito', system-ui, 'Helvetica', sans-serif",
