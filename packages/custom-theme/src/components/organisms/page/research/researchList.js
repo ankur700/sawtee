@@ -31,7 +31,7 @@ const ResearchList = ({ state, researches, tags, linkColor }) => {
   return (
     <Container maxW="5xl" p={2}>
       <VStack textAlign="start" align="start" mb={5} spacing={10}>
-        {tags
+        {tags.length > 0
           ? tags.map((tagitem) => {
             tagitem.posts.length <= 0 && postsSortedByTags(tagitem);
             return (

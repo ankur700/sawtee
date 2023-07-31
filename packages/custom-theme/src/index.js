@@ -2,7 +2,7 @@ import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
 import {
-  AllCategoriesHandler,
+  GetAllCategoriesHandler,
   PublicationArchiveHandler,
   PublicationsHandler,
   MenuHandler,
@@ -95,7 +95,8 @@ const customTheme = {
       beforeSSR: async ({ actions }) => {
         await actions.source.fetch("/menu/primary/");
         await actions.source.fetch("/menu/footer/");
-        await actions.source.fetch("all-categories");
+        await actions.source.fetch("get-all-categories");
+        await actions.source.fetch("get-publications-categories-posts");
         await actions.source.fetch("/subscription-page");
         await actions.source.fetch("/featured-events");
         await actions.source.fetch("/publications/trade-insight");
@@ -111,7 +112,7 @@ const customTheme = {
     },
     source: {
       handlers: [
-        AllCategoriesHandler,
+        GetAllCategoriesHandler,
         MenuHandler,
         CategoriesHandler,
         PublicationArchiveHandler,

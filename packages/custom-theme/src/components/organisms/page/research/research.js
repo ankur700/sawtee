@@ -56,24 +56,19 @@ const Research = ({ state, categories }) => {
   }, [newsData]);
 
   useEffect(() => {
-    let array = [];
-    researches.forEach(({ tags }, id) => {
-      tags.map((tag) => {
-        if (array.length === 0) {
-          array.push({ id: tag.id, name: tag.name, posts: [] });
-        } else {
-          array.map((item) => {
-            if (item.id !== tag.id) {
-              array.push({ id: tag.id, name: tag.name, posts: [] });
-            }
-          });
-        }
+    let array = new Map();
+    researches.forEach((research) => {
+      research.tags.map((tag) => {
+        array.set(`${tag.name}`, { id: tag.id, name: tag.name, posts: []});
       });
     });
-    if (array.length > 0) {
-      return setTagsArray([...array]);
+    if (array.size > 0) {
+      return setTagsArray(Array.from(array.values()));
     }
   }, [researches]);
+
+
+  // console.log(tagsArray);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits

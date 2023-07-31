@@ -58,7 +58,7 @@ const Publications = ({ state, actions, categories }) => {
     categories
       .filter((cat) => cat.parent === 5)
       .forEach((item) => {
-        // actions.source.fetch(`/publications/${item.slug}`);
+        actions.source.fetch(`/publications/${item.slug}/`);
         setPublicationCategories((prev) => [...prev, item]);
       });
   }, []);

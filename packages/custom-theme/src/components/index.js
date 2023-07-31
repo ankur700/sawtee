@@ -26,7 +26,7 @@ const config = {
 // in roots.
 const Theme = ({ state, actions }) => {
   const data = state.source.get(state.router.link);
-  const categories = state.source.data["all-categories/"].items;
+  const categories = state.source.data["get-all-categories/"].items;
   const overrides = extendTheme({
     fonts: {
       heading: "'Nunito', system-ui, 'Helvetica', sans-serif",
@@ -36,7 +36,7 @@ const Theme = ({ state, actions }) => {
   });
 
   useEffect(() => {
-    actions.source.fetch("all-categories");
+    actions.source.fetch("get-all-categories");
   }, []);
 
   return (

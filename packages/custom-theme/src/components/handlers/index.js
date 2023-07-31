@@ -1,7 +1,7 @@
-export const AllCategoriesHandler = {
+export const GetAllCategoriesHandler = {
   name: "allCategories",
   priority: 10,
-  pattern: "all-categories",
+  pattern: "get-all-categories",
   func: async ({ route, params, state, libraries }) => {
     const { api } = libraries.source;
 
@@ -178,33 +178,67 @@ export const PublicationArchiveHandler = {
 
 export const PublicationsHandler = {
   priority: 10,
-  pattern: "get-publications",
+  pattern: "get-publications-categories-posts",
   func: async ({ route, params, state, libraries }) => {
-    const { api } = libraries.source;
+    // Get the page of the current route.
+    const { page } = libraries.source.parse(route);
 
-    // 1. fetch the data you want from the endpoint page
-    const response = await api.get({
+    console.log(page);
+
+    // Get the id of the parent category.
+    const parentCatResponse = await libraries.source.api.get({
+      endpoint: "categories",
+      params: { slug: "publications" },
+    });
+    const [parentCat] = await libraries.source.populate({
+      state,
+      response: parentCatResponse,
+    });
+    const childCatsResponse = await libraries.source.api.get({
+      endpoint: "categories",
+      params: { parent: parentCat.id },
+    });
+    const childCats = await libraries.source.populate({
+      state,
+      response: childCatsResponse,
+    });
+    const ids = childCats.map((cat) => cat.id);
+    let slides = [];
+    // ids.push(parentCat.id);
+
+    const postRes = await libraries.source.api.get({
       endpoint: "publications",
-      params: {
-        _embed: true,
-        orderBy: "menu_order",
-        order: "desc",
-        per_page: 60, // To make sure you get all of them
-      },
+      params: { categories: ids[0], page, _embed: true },
     });
 
-    // 2. get an array with each item in json format
-    const items = await response.json();
+    console.log(postRes);
 
-    // 3. add data to source
-    const currentPageData = state.source.data[route];
+    // Get the posts from those categories.
+    const postsResponse = await libraries.source.api.get({
+      endpoint: "publications",
+      params: { categories: ids.join(","), page, _embed: true },
+    });
+    const items = await libraries.source.populate({
+      state,
+      response: postsResponse,
+    });
+    const total = libraries.source.getTotal(postsResponse);
+    const totalPages = libraries.source.getTotalPages(postsResponse);
 
-    Object.assign(currentPageData, {
+    // Populate state.source.data with the proper info about this URL.
+
+    Object.assign(state.source.data[route], {
+      id: parentCat.id,
+      taxonomy: "category",
       items,
+      total,
+      totalPages,
+      isArchive: true,
+      isTaxonomy: true,
+      isCategory: true,
     });
   },
 };
-
 
 export const CategoriesHandler = {
   pattern: "/category/(.*)?/:slug",
@@ -215,33 +249,33 @@ export const CategoriesHandler = {
     // Get the id of the parent category.
     const parentCatResponse = await libraries.source.api.get({
       endpoint: "categories",
-      params: { slug: params.slug }
+      params: { slug: params.slug },
     });
     const [parentCat] = await libraries.source.populate({
       state,
-      response: parentCatResponse
+      response: parentCatResponse,
     });
 
     // Get the ids of all the child categories.
     const childCatsResponse = await libraries.source.api.get({
       endpoint: "categories",
-      params: { parent: parentCat.id }
+      params: { parent: parentCat.id },
     });
     const childCats = await libraries.source.populate({
       state,
-      response: childCatsResponse
+      response: childCatsResponse,
     });
-    const ids = childCats.map(cat => cat.id);
+    const ids = childCats.map((cat) => cat.id);
     ids.push(parentCat.id);
 
     // Get the posts from those categories.
     const postsResponse = await libraries.source.api.get({
       endpoint: "posts",
-      params: { categories: ids.join(","), page, _embed: true }
+      params: { categories: ids.join(","), page, _embed: true },
     });
     const items = await libraries.source.populate({
       state,
-      response: postsResponse
+      response: postsResponse,
     });
     const total = libraries.source.getTotal(postsResponse);
     const totalPages = libraries.source.getTotalPages(postsResponse);
@@ -255,7 +289,7 @@ export const CategoriesHandler = {
       totalPages,
       isArchive: true,
       isTaxonomy: true,
-      isCategory: true
+      isCategory: true,
     });
-  }
-}
+  },
+};
