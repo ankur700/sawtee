@@ -183,8 +183,6 @@ export const PublicationsHandler = {
     // Get the page of the current route.
     const { page } = libraries.source.parse(route);
 
-    console.log(page);
-
     // Get the id of the parent category.
     const parentCatResponse = await libraries.source.api.get({
       endpoint: "categories",
@@ -196,7 +194,7 @@ export const PublicationsHandler = {
     });
     const childCatsResponse = await libraries.source.api.get({
       endpoint: "categories",
-      params: { parent: parentCat.id },
+      params: { parent: parentCat.id, per_page: 20 },
     });
     const childCats = await libraries.source.populate({
       state,
@@ -206,36 +204,29 @@ export const PublicationsHandler = {
     let slides = [];
     // ids.push(parentCat.id);
 
-    const postRes = await libraries.source.api.get({
-      endpoint: "publications",
-      params: { categories: ids[0], page, _embed: true },
-    });
+    for (const id of ids) {
+      let posts = [];
+      try {
+        const postRes = await libraries.source.api.get({
+          endpoint: "publications",
+          params: { categories: id, page, _embed: true },
+        });
 
-    console.log(postRes);
-
-    // Get the posts from those categories.
-    const postsResponse = await libraries.source.api.get({
-      endpoint: "publications",
-      params: { categories: ids.join(","), page, _embed: true },
-    });
-    const items = await libraries.source.populate({
-      state,
-      response: postsResponse,
-    });
-    const total = libraries.source.getTotal(postsResponse);
-    const totalPages = libraries.source.getTotalPages(postsResponse);
+        posts = await libraries.source.populate({
+          state,
+          response: postRes,
+        });
+      } catch (error) {
+        console.error({ name: error.name, mesg: error.message });
+      }
+      posts.length > 0 && slides.push({ name: id, posts: posts });
+    }
 
     // Populate state.source.data with the proper info about this URL.
 
     Object.assign(state.source.data[route], {
-      id: parentCat.id,
-      taxonomy: "category",
-      items,
-      total,
-      totalPages,
-      isArchive: true,
-      isTaxonomy: true,
-      isCategory: true,
+      isReady: true,
+      slides,
     });
   },
 };

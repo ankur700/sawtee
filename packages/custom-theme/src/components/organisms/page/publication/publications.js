@@ -15,7 +15,7 @@ import Section from "../../../styles/section";
 import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
 import GlassBox from "../../../atoms/glassBox";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { formatCPTData, formatPostData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
 
@@ -23,11 +23,10 @@ const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const newsData = state.source.get("/sawtee-in-media");
   const [publicationCategories, setPublicationCategories] = useState([]);
-  const [categoryPosts, setCategoryPosts] = useState([]);
   const [sliderData, setSliderData] = useState([]);
 
-  const [news, setNews] = React.useState([]);
-  const [checkedItems, setCheckedItems] = React.useState([]);
+  const [news, setNews] = useState([]);
+  const [checkedItems, setCheckedItems] = useState([]);
 
   const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
@@ -39,29 +38,15 @@ const Publications = ({ state, actions, categories }) => {
   const show = useBreakpointValue([1, 2, 3]);
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
-
-  const tradeInsight = state.source.get("/publications/trade-insight/");
-  const books = state.source.get("/publications/books/");
-  const discussionPaper = state.source.get("/publications/discussion-paper/");
-  const policyBrief = state.source.get("/publications/policy-brief/");
-  const briefingPaper = state.source.get("/publications/briefing-paper/");
-  const issuePaper = state.source.get("/publications/issue-paper/");
-  const workingPaper = state.source.get("/publications/working-paper/");
-  const researchBrief = state.source.get("/publications/research-brief/");
-  const others = state.source.get("/publications/others/");
-  const publicationsInNepali = state.source.get(
-    "/publications/publications-in-nepali/"
-  );
-  const bookChapters = state.source.get("/publications/book-chapters/");
+  const slides = state.source.get("get-publications-categories-posts");
 
   useEffect(() => {
     categories
       .filter((cat) => cat.parent === 5)
-      .forEach((item) => {
-        actions.source.fetch(`/publications/${item.slug}/`);
-        setPublicationCategories((prev) => [...prev, item]);
-      });
+      .map((item) => setPublicationCategories((prev) => [...prev, item]));
   }, []);
+
+  console.log(sliderData, slides);
 
   useEffect(() => {
     if (newsData.isReady) {
@@ -77,131 +62,34 @@ const Publications = ({ state, actions, categories }) => {
   }, [newsData]);
 
   useEffect(() => {
-    if (tradeInsight.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: tradeInsight.id, posts: [...tradeInsight.items] },
-      ]);
-    }
-  }, [tradeInsight.isReady]);
+    if (slides.length > 0) {
+      let array = [];
 
-  useEffect(() => {
-    if (books.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: books.id, posts: [...books.items] },
-      ]);
-    }
-  }, [books.isReady]);
-
-  useEffect(() => {
-    if (discussionPaper.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: discussionPaper.id, posts: [...discussionPaper.items] },
-      ]);
-    }
-  }, [discussionPaper.isReady]);
-
-  useEffect(() => {
-    if (policyBrief.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: policyBrief.id, posts: [...policyBrief.items] },
-      ]);
-    }
-  }, [policyBrief.isReady]);
-
-  useEffect(() => {
-    if (briefingPaper.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: briefingPaper.id, posts: [...briefingPaper.items] },
-      ]);
-    }
-  }, [briefingPaper.isReady]);
-
-  useEffect(() => {
-    if (issuePaper.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: issuePaper.id, posts: [...issuePaper.items] },
-      ]);
-    }
-  }, [issuePaper.isReady]);
-
-  useEffect(() => {
-    if (workingPaper.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: workingPaper.id, posts: [...workingPaper.items] },
-      ]);
-    }
-  }, [workingPaper.isReady]);
-
-  useEffect(() => {
-    if (researchBrief.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: researchBrief.id, posts: [...researchBrief.items] },
-      ]);
-    }
-  }, [researchBrief.isReady]);
-
-  useEffect(() => {
-    if (others.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: others.id, posts: [...others.items] },
-      ]);
-    }
-  }, [others.isReady]);
-
-  useEffect(() => {
-    if (publicationsInNepali.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: publicationsInNepali.id, posts: [...publicationsInNepali.items] },
-      ]);
-    }
-  }, [publicationsInNepali.isReady]);
-
-  useEffect(() => {
-    if (bookChapters.isReady) {
-      setCategoryPosts((prev) => [
-        ...prev,
-        { id: bookChapters.id, posts: [...bookChapters.items] },
-      ]);
-    }
-  }, [bookChapters.isReady]);
-
-  useEffect(() => {
-    if (categoryPosts.length == publicationCategories.length) {
-      let result = categoryPosts.sort((a, b) => a.id - b.id);
-      publicationCategories.forEach((cat, idx) => {
-        let slides = [];
-        result[idx].posts.forEach((item) => {
-          let post = state.source[item.type][item.id];
-          post &&
-            slides.push({
-              ...formatCPTData(state, post, categories).featured_media,
-              link: formatCPTData(state, post, categories).acf.pub_link,
+      slides.forEach((slide) => {
+        slide.posts.map((post) => {
+          let postData = state.source[post.type][post.id];
+          postData &&
+            array.push({
+              ...formatCPTData(state, postData, categories).featured_media,
+              link: formatCPTData(state, postData, categories).acf.pub_link,
             });
         });
-        if (slides.length > 0) {
+
+        if (array.length > 0) {
           setSliderData((prev) => [
             ...prev,
             {
-              id: cat.id,
-              name: cat.name,
-              link: cat.link,
-              slides: [...slides],
+              id: slide.id,
+              name: publicationCategories.filter((pc) => pc.id === slide.id)
+                .name,
+              link: slide.link,
+              slides: [...array],
             },
           ]);
         }
       });
     }
-  }, [publicationCategories, categoryPosts]);
+  }, [slides]);
 
   useEffect(() => {
     publicationCategories.map((_, idx) => {
@@ -268,8 +156,8 @@ const Publications = ({ state, actions, categories }) => {
           px={{ base: "32px", md: "16px" }}
           py="6"
           display="flex"
-        // pos={"sticky"}
-        // top={"8rem"}
+          // pos={"sticky"}
+          // top={"8rem"}
         >
           <PublicationFilter
             categories={publicationCategories}
