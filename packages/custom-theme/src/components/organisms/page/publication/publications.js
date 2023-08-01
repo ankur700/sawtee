@@ -22,6 +22,8 @@ import Loading from "../../../atoms/loading";
 const Publications = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const newsData = state.source.get("/sawtee-in-media");
+  const postData = state.source.get("get-publications-categories-posts");
+
   const [publicationCategories, setPublicationCategories] = useState([]);
   const [sliderData, setSliderData] = useState([]);
 
@@ -38,15 +40,12 @@ const Publications = ({ state, actions, categories }) => {
   const show = useBreakpointValue([1, 2, 3]);
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
-  const slides = state.source.get("get-publications-categories-posts");
 
   useEffect(() => {
     categories
       .filter((cat) => cat.parent === 5)
       .map((item) => setPublicationCategories((prev) => [...prev, item]));
   }, []);
-
-  console.log(sliderData, slides);
 
   useEffect(() => {
     if (newsData.isReady) {
@@ -62,16 +61,17 @@ const Publications = ({ state, actions, categories }) => {
   }, [newsData]);
 
   useEffect(() => {
-    if (slides.length > 0) {
-      let array = [];
-
-      slides.forEach((slide) => {
-        slide.posts.map((post) => {
-          let postData = state.source[post.type][post.id];
-          postData &&
+    if (postData.isReady && publicationCategories.length !== 0) {
+      postData.items.forEach((item) => {
+        let category = publicationCategories.filter((pc) => pc.id === item.id);
+        let array = [];
+        item.posts.map((post) => {
+          let slide = state.source[post.type][post.id];
+          let link = formatCPTData(state, slide, categories).acf.pub_link;
+          slide &&
             array.push({
-              ...formatCPTData(state, postData, categories).featured_media,
-              link: formatCPTData(state, postData, categories).acf.pub_link,
+              ...formatCPTData(state, slide, categories).featured_media,
+              link: link,
             });
         });
 
@@ -79,17 +79,16 @@ const Publications = ({ state, actions, categories }) => {
           setSliderData((prev) => [
             ...prev,
             {
-              id: slide.id,
-              name: publicationCategories.filter((pc) => pc.id === slide.id)
-                .name,
-              link: slide.link,
+              id: item.id,
+              name: category[0].name,
+              link: category[0].link,
               slides: [...array],
             },
           ]);
         }
       });
     }
-  }, [slides]);
+  }, [postData, publicationCategories]);
 
   useEffect(() => {
     publicationCategories.map((_, idx) => {
