@@ -1,97 +1,36 @@
 import {
   Box,
-  Button,
   Container,
   Heading,
   LinkBox,
   LinkOverlay,
   Text,
+  SimpleGrid,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Link from "@frontity/components/link";
 import { decode, styled } from "frontity";
 import Section from "../../../styles/section";
 import GlassBox from "../../../atoms/glassBox";
-
-const OurThemes = [
-  {
-    name: "COVID 19",
-    href: "#",
-  },
-  {
-    name: "Trade and Climate Change",
-    href: "#",
-  },
-  {
-    name: "Theme",
-    href: "#",
-  },
-  {
-    name: "Theme",
-    href: "#",
-  },
-  {
-    name: "Financial Mangement",
-    href: "#",
-  },
-  {
-    name: "Remittance and Development",
-    href: "#",
-  },
-];
+import { useState } from "react";
 
 const OurWork = ({ postData, post, libraries }) => {
   const sectors = post.acf.sectors;
   const intro = post.acf.intro;
+  const themes = post.acf.thematic_areas;
   const Html2React = libraries.html2react.Component;
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-  const ButtonColor = useColorModeValue("gray.700", "whiteAlpha.700");
   const linkColor = useColorModeValue("gray.700", "whiteAlpha.700");
+  const cardBackground = useColorModeValue("gray.100", "gray.700");
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
   return (
     <>
-      <Section size="lg" marginBlock={6}>
-        <GlassBox
-          h="auto"
-          px={{ base: "32px", md: "16px" }}
-          size="md"
-          py="6"
-          display="flex"
-          gap="4"
-          flexWrap="wrap"
-          justifyContent="center"
-          alignItems="center"
-          boxShadow={"md"}
-        >
-          {OurThemes.map((theme) => {
-            return (
-              <Link
-                key={theme.name}
-                link={theme.href}
-                _hover={{ textDecoration: "none" }}
-              >
-                <Button
-                  px="10"
-                  size="sm"
-                  colorScheme={"primary"}
-                  color={ButtonColor}
-                  variant="outline"
-                >
-                  {theme.name}
-                </Button>
-              </Link>
-            );
-          })}
-        </GlassBox>
-      </Section>
-
       {/* Look at the settings to see if we should include the featured image */}
-      <GlassBox as={Section} mb="50px" border="none" size={"lg"}>
+      <GlassBox as={Section} m="50px auto" border="none" size={"lg"}>
         {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
         <Content
@@ -104,13 +43,65 @@ const OurWork = ({ postData, post, libraries }) => {
           <Container
             // className="intro"
             pos="relative"
-            mb="20"
-            maxW="2xl"
+            mb="16"
+            maxW="6xl"
+            p={{ base: 5, md: 10 }}
             centerContent
           >
-            <Box textAlign="center">
+            <Heading
+              as={"h3"}
+              fontSize="4xl"
+              fontWeight="bold"
+              mb={12}
+              textAlign="center"
+            >
+              Thematic Areas
+            </Heading>
+
+            <Box textAlign="center" mb={20}>
               <Html2React html={intro} fontSize={["lg", "2xl"]} />
             </Box>
+            <SimpleGrid
+              columns={{ base: 1, sm: 2 }}
+              placeItems="center"
+              spacing={10}
+              mb={4}
+            >
+              {themes.map((theme) => (
+                <Box
+                  key={theme.title}
+                  bg={cardBackground}
+                  p={6}
+                  rounded="lg"
+                  textAlign="center"
+                  pos="relative"
+                  mt={6}
+                  minH={"200px"}
+                >
+                  <Heading as="h3" fontWeight="semibold" fontSize="2xl">
+                    {theme.title}
+                  </Heading>
+
+                  <Text
+                    fontSize="md"
+                    cursor={"pointer"}
+                    mt={4}
+                    sx={{
+                      display: "-webkit-box",
+                      "-webkit-line-clamp": "3",
+                      "-webkit-box-orient": "vertical",
+                      overflow: "hidden",
+                      transition: "all 0.4s ease-in",
+                    }}
+                    _hover={{
+                      display: "block",
+                    }}
+                  >
+                    {theme.content}
+                  </Text>
+                </Box>
+              ))}
+            </SimpleGrid>
           </Container>
           <Box
             display="flex"
