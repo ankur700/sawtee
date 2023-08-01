@@ -201,7 +201,7 @@ export const PublicationsHandler = {
       response: childCatsResponse,
     });
     const ids = childCats.map((cat) => cat.id);
-    let slides = [];
+    let items = [];
     // ids.push(parentCat.id);
 
     for (const id of ids) {
@@ -209,7 +209,7 @@ export const PublicationsHandler = {
       try {
         const postRes = await libraries.source.api.get({
           endpoint: "publications",
-          params: { categories: id, page, _embed: true },
+          params: { categories: id, page, _embed: true, per_page: 6 },
         });
 
         posts = await libraries.source.populate({
@@ -219,14 +219,16 @@ export const PublicationsHandler = {
       } catch (error) {
         console.error({ name: error.name, mesg: error.message });
       }
-      posts.length > 0 && slides.push({ name: id, posts: posts });
+
+      posts.length > 0 && items.push({ id: id, posts: posts });
     }
 
     // Populate state.source.data with the proper info about this URL.
 
+    items = items.sort((a, b) => a.id - b.id);
     Object.assign(state.source.data[route], {
       isReady: true,
-      slides,
+      items,
     });
   },
 };
