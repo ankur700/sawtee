@@ -46,7 +46,7 @@ const EventItem = ({ state, libraries, event }) => {
           <Link link={event.link}>
             <PostImageWithOverlay
               {...event.featured_media}
-              height="200px"
+              height="250px"
               borderRadius="0.75rem 0.75rem 0 0"
               overflow="hidden"
               _groupHover={{
@@ -74,7 +74,7 @@ const EventItem = ({ state, libraries, event }) => {
           <Heading
             as="h3"
             color={headingColor}
-            fontSize={{ base: "md", "2xl": "lg" }}
+            fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
             _hover={{ color: linkColor, textDecoration: "underline" }}
             mb={4}
           >
@@ -82,7 +82,7 @@ const EventItem = ({ state, libraries, event }) => {
               {decode(event.title)}
             </Link>
           </Heading>
-          <Text fontSize={"sm"} color={textColor} noOfLines={2}>
+          <Text fontSize={["sm", "md"]} color={textColor} noOfLines={2}>
             <Html2React html={event.excerpt} />
           </Text>
         </Box>
@@ -92,11 +92,11 @@ const EventItem = ({ state, libraries, event }) => {
             direction={{ base: "column", sm: "row" }}
             alignItems={"center"}
           >
-            <Text fontSize="sm" color={textColor}>
+            <Text fontSize={["sm", "md"]} color={textColor}>
               {formatDateWithMoment(event.publishDate, format)}
             </Text>
             <Button
-              size="sm"
+              size={"md"}
               colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
               aria-label={"Read More"}
               fontWeight="normal"
@@ -105,9 +105,7 @@ const EventItem = ({ state, libraries, event }) => {
               rounded="md"
               rightIcon={<GoChevronRight />}
             >
-              <Link fontSize="xs" link={event.link}>
-                Read more
-              </Link>
+              <Link link={event.link}>Read more</Link>
             </Button>
           </Stack>
         </Box>

@@ -19,39 +19,14 @@ import NumberedPagination from "../../../atoms/NumberedPagination";
 import ProgrammeItem from "./programmeItem";
 import { LightPatternBox } from "../../../styles/pattern-box";
 
-const Programmes = ({ state, categories }) => {
-  const newsData = state.source.get("/sawtee-in-media/");
+const Programmes = ({ state, categories, news }) => {
   const postData = state.source.get(state.router.link);
-  const [news, setNews] = useState([]);
-  const [programs, setPrograms] = useState([]);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-
-  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge", "max"]);
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-
-  useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach(({ type, id }) => {
-        const post = state.source[type][id];
-        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
-      });
-    }
-  }, [newsData]);
-
-  useEffect(() => {
-    if (postData.isReady) {
-      postData.items.forEach(({ type, id }) => {
-        const post = state.source[type][id];
-        setPrograms((prev) => [
-          ...prev,
-          formatCPTData(state, post, categories),
-        ]);
-      });
-    }
-  }, [postData]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return <Loading />;
@@ -108,7 +83,7 @@ const Programmes = ({ state, categories }) => {
         as={Section}
         pb="80px"
         size={size ? size : "full"}
-        px={"32px"}
+        px={["32px", 16]}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
         color={contentColor}
@@ -139,12 +114,13 @@ const Programmes = ({ state, categories }) => {
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
-              posts={programs}
+              posts={postData}
               news={news}
+              categories={categories}
               postType={"Programmes"}
               linkColor={state.theme.colors.linkColor}
               postsLink={postData.link}
-              newsLink={newsData.link}
+              newsLink={news.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}
             />

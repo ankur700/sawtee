@@ -20,40 +20,38 @@ import { formatCPTData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
-const EventsArchive = ({ state, actions, categories }) => {
+const EventsArchive = ({ state, actions, categories, news }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
-  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
-  const newsData = state.source.get("/sawtee-in-media/");
-  const [news, setNews] = React.useState([]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge", "max"]);
   const [events, setEvents] = useState([]);
   const linkColor = state.theme.colors.linkColor;
 
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue("#121212", "whiteAlpha.800");
 
-  useEffect(() => {
-    if (postData.isReady && postData.page === 1) {
-      postData.items.forEach(({ type, id }, idx) => {
-        if (idx <= 2) {
-          const post = state.source[type][id];
-          setEvents((prev) => [
-            ...prev,
-            formatCPTData(state, post, categories),
-          ]);
-        }
-      });
-    }
-  }, [postData.page === 1]);
+  // useEffect(() => {
+  //   if (postData.isReady && postData.page === 1) {
+  //     postData.items.forEach(({ type, id }, idx) => {
+  //       if (idx <= 2) {
+  //         const post = state.source[type][id];
+  //         setEvents((prev) => [
+  //           ...prev,
+  //           formatCPTData(state, post, categories),
+  //         ]);
+  //       }
+  //     });
+  //   }
+  // }, [postData]);
 
-  useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach(({ type, id }) => {
-        const post = state.source[type][id];
-        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
-      });
-    }
-  }, [newsData]);
+  // useEffect(() => {
+  //   if (news.isReady) {
+  //     news.items.forEach(({ type, id }) => {
+  //       const post = state.source[type][id];
+  //       setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
+  //     });
+  //   }
+  // }, [news]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return <Loading />;
@@ -106,7 +104,7 @@ const EventsArchive = ({ state, actions, categories }) => {
         </Box>
       </Box>
       <Section
-        px={"32px"}
+        px={{ base: "32px", md: 16 }}
         size={size}
         pt="50px"
         pb={"80px"}
@@ -127,7 +125,7 @@ const EventsArchive = ({ state, actions, categories }) => {
             w="95%"
             mx="auto"
           >
-            <VStack spacing={8} mb="56px" w={"full"}>
+            <VStack spacing={20} mb="56px" w={"full"}>
               {postData.isReady ? (
                 postData.items.map(({ type, id }) => {
                   const event = formatCPTData(
@@ -151,12 +149,13 @@ const EventsArchive = ({ state, actions, categories }) => {
             w="full"
           >
             <Sidebar
-              posts={events}
+              posts={postData}
               news={news}
               postType={"Events"}
+              categories={categories}
               linkColor={linkColor}
               postsLink={postData.link}
-              newsLink={newsData.link}
+              newsLink={news.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}
             />

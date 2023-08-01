@@ -1,6 +1,6 @@
 import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import { connect, decode } from "frontity";
-import React from "react";
+import { useEffect } from "react";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
@@ -14,21 +14,46 @@ import SawteeInMedia from "../page/sawteeInMedia";
 import Covid from "../page/covid";
 import Switch from "@frontity/components/switch";
 
-const Archive = ({ state, categories }) => {
+const Archive = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
+  const newsData = state.source.get("/sawtee-in-media");
+
+  useEffect(() => {
+    actions.source.fetch("/sawtee-in-media");
+  }, []);
   return (
     <Switch>
-      <Events when={data.isFeaturedEventsArchive} categories={categories} />
-      <Publications when={data.isPublicationsArchive} categories={categories} />
+      <Events
+        when={data.isFeaturedEventsArchive}
+        categories={categories}
+        news={newsData}
+      />
+      <Publications
+        when={data.isPublicationsArchive}
+        categories={categories}
+        news={newsData}
+      />
       <SawteeInMedia
         when={data.isSawteeInMediaArchive}
         categories={categories}
       />
-      <Newsletters when={data.isNewslettersArchive} />
-      <Research when={data.isResearchArchive} categories={categories} />
-      <Covid when={data.isCovidArchive} categories={categories} />
+      <Newsletters when={data.isNewslettersArchive} news={newsData} />
+      <Research
+        when={data.isResearchArchive}
+        categories={categories}
+        news={newsData}
+      />
+      <Covid
+        when={data.isCovidArchive}
+        categories={categories}
+        news={newsData}
+      />
       <HomeArchive when={data.route === "/blog/"} />
-      <Programme when={data.isProgrammeArchive} categories={categories} />
+      <Programme
+        when={data.isProgrammeArchive}
+        categories={categories}
+        news={newsData}
+      />
       <DefaultArchive
         when={data.isArchive && data.isCategory}
         data={data}

@@ -20,7 +20,6 @@ import { styled } from "frontity";
 import Section from "../../../styles/section";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import Link from "../../../atoms/link";
-import GlassBox from "../../../atoms/glassBox";
 const KnowUs = ({ post, postData, linkColor, libraries }) => {
   const sections = post.acf.sections;
   const memberInstitutions = post.acf.memberInstitutions;
@@ -32,29 +31,23 @@ const KnowUs = ({ post, postData, linkColor, libraries }) => {
   if (!postData.isReady) return null;
 
   return (
-    <Section className="content" paddingBlock={10} size={"lg"}>
-      <GlassBox border="none">
-        <Content
-          as={Section}
-          px={{ base: "32px", md: "0" }}
-          size="md"
-          paddingBlock="50px"
-          fontSize={"1.0625rem"}
-        >
-          {sections.map((section) => (
-            <PageSection
-              key={section.title}
-              libraries={libraries}
-              section={section}
-            />
-          ))}
-          <Members
-            memberInstitutions={memberInstitutions}
-            linkColor={linkColor}
-          />
-        </Content>
-      </GlassBox>
-    </Section>
+    <Content
+      className="content"
+      as={Section}
+      px={{ base: "32px", md: "0" }}
+      py={32}
+      size="md"
+      fontSize={"1.0625rem"}
+    >
+      {sections.map((section) => (
+        <PageSection
+          key={section.title}
+          libraries={libraries}
+          section={section}
+        />
+      ))}
+      <Members memberInstitutions={memberInstitutions} linkColor={linkColor} />
+    </Content>
   );
 };
 

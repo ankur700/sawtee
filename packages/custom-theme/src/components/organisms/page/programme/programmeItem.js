@@ -21,10 +21,10 @@ const ProgrammeItem = ({ program, linkColor }) => {
         py={4}
         rounded="lg"
         shadow="lg"
-        fontSize="sm"
-        bg="white"
+        fontSize="md"
+        bg="whiteAlpha.300"
         _dark={{
-          bg: "gray.800",
+          bg: "blackAlpha.300",
         }}
         maxW="5xl"
       >
@@ -44,7 +44,12 @@ const ProgrammeItem = ({ program, linkColor }) => {
         </Flex> */}
 
         <Box mt={2}>
-          <Heading fontSize={"lg"} color={HeaderColor} lineHeight={"tall"}>
+          <Heading
+            as="h3"
+            fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+            color={HeaderColor}
+            lineHeight={"tall"}
+          >
             <Link
               href={program.link}
               textDecoration={"underline"}
@@ -56,7 +61,7 @@ const ProgrammeItem = ({ program, linkColor }) => {
           <Text
             // isTruncated
             my={4}
-            fontSize="md"
+            fontSize={["sm", "md"]}
             color="gray.600"
             _dark={{
               color: "gray.200",

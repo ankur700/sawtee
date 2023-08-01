@@ -12,8 +12,8 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { formatedDate } from "../../helpers";
-import { decode } from "frontity";
+import { formatCPTData, formatedDate } from "../../helpers";
+import { decode, connect } from "frontity";
 import GlassBox from "../glassBox";
 
 const ListHeading = ({ title, link }) => {
@@ -21,8 +21,9 @@ const ListHeading = ({ title, link }) => {
     <Box borderBottom="1px solid #E2E4E6">
       <Flex align="center" p="3">
         <Heading
+          as="h3"
           color={useColorModeValue("gray.800", "whiteAlpha.900")}
-          fontSize="xl"
+          fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
         >
           {title}
         </Heading>
@@ -40,7 +41,15 @@ const ListHeading = ({ title, link }) => {
   );
 };
 
-const SidebarWidget = ({ array, linkColor, title, link, ...rest }) => {
+const SidebarWidget = ({
+  state,
+  array,
+  categories,
+  linkColor,
+  title,
+  link,
+  ...rest
+}) => {
   const HeadingColor = useColorModeValue("gray.700", "whiteAlpha.800");
   const TextColor = useColorModeValue("gray.600", "whiteAlpha.600");
 
@@ -51,97 +60,81 @@ const SidebarWidget = ({ array, linkColor, title, link, ...rest }) => {
       border="1px solid #E2E4E6"
       px={8}
       py={6}
-      maxH="620px"
+      // maxH="620px"
       overflowY="scroll"
       {...rest}
     >
       <ListHeading title={title} link={link} />
-      {array.length > 0 ? (
-        array.map((item, index) => {
-          return (
-            <Stack spacing={2} mt="6" key={item.id}>
-              <Heading
-                className="title"
-                fontSize="sm"
-                mb="2"
-                color={HeadingColor}
-                lineHeight={1.2}
-                fontWeight="bold"
-                _hover={{
-                  color: linkColor ? linkColor : "primary.700",
-                  textDecoration: "underline",
-                }}
-              >
-                <Link link={item.link}>{decode(item.title)}</Link>
-              </Heading>
+
+      {array.map(({ type, id }, index) => {
+        const post = formatCPTData(state, state.source[type][id], categories);
+        if (!post) {
+          <Box display={"flex"} flexDir={"column"} gap={2}>
+            <Skeleton w="full" height="15px" />
+            <Box display={"flex"} justifyContent={"space-between"}>
+              <Skeleton w="80px" height="10px" />
+              <Skeleton w="80px" height="10px" />
+            </Box>
+          </Box>;
+        }
+        return (
+          <Stack spacing={2} mt="6" key={post.id}>
+            <Heading
+              className="title"
+              fontSize={{ base: "lg", md: "xl" }}
+              mb="2"
+              color={HeadingColor}
+              lineHeight={1.2}
+              fontWeight="bold"
+              _hover={{
+                color: linkColor ? linkColor : "primary.700",
+                textDecoration: "underline",
+              }}
+            >
+              <Link link={post.link}>{decode(post.title)}</Link>
+            </Heading>
+            <Box
+              display={"flex"}
+              justifyContent="space-between"
+              fontWeight="semibold"
+              color={TextColor}
+            >
+              {post.acf.publishers
+                ? post.acf.publishers.map(
+                    ({ publisher, publisher_website }) => {
+                      return (
+                        <Text
+                          as="a"
+                          key={publisher}
+                          href={publisher_website}
+                          _hover={{ textDecor: "underline" }}
+                          maxW="180px"
+                          noOfLines={1}
+                          fontSize={["xs", "sm"]}
+                        >
+                          {publisher}
+                        </Text>
+                      );
+                    }
+                  )
+                : null}
               <Box
-                display={"flex"}
-                justifyContent="space-between"
-                fontSize={"sm"}
-                fontWeight="semibold"
-                color={TextColor}
+                as="time"
+                fontSize={["xs", "sm"]}
+                dateTime={new Date(post.publishDate).toLocaleDateString()}
               >
-                {item.acf.publishers
-                  ? item.acf.publishers.map(
-                      ({ publisher, publisher_website }) => {
-                        return (
-                          <Text
-                            as="a"
-                            key={publisher}
-                            href={publisher_website}
-                            _hover={{ textDecor: "underline" }}
-                            maxW="180px"
-                            noOfLines={1}
-                            fontSize="xs"
-                          >
-                            {publisher}
-                          </Text>
-                        );
-                      }
-                    )
-                  : null}
-                <Box
-                  as="time"
-                  fontSize="xs"
-                  dateTime={new Date(item.publishDate).toLocaleDateString()}
-                >
-                  {formatedDate(item.publishDate)}
-                </Box>
+                {formatedDate(post.publishDate)}
               </Box>
-              <Divider
-                mb="10px"
-                display={index === array.length - 1 ? "none" : "block"}
-              />
-            </Stack>
-          );
-        })
-      ) : (
-        <Stack spacing={6} mt="3">
-          <Box display={"flex"} flexDir={"column"} gap={2}>
-            <Skeleton w="full" height="15px" />
-            <Box display={"flex"} justifyContent={"space-between"}>
-              <Skeleton w="80px" height="10px" />
-              <Skeleton w="80px" height="10px" />
             </Box>
-          </Box>
-          <Box display={"flex"} flexDir={"column"} gap={2}>
-            <Skeleton w="full" height="15px" />
-            <Box display={"flex"} justifyContent={"space-between"}>
-              <Skeleton w="80px" height="10px" />
-              <Skeleton w="80px" height="10px" />
-            </Box>
-          </Box>
-          <Box display={"flex"} flexDir={"column"} gap={2}>
-            <Skeleton w="full" height="15px" />
-            <Box display={"flex"} justifyContent={"space-between"}>
-              <Skeleton w="80px" height="10px" />
-              <Skeleton w="80px" height="10px" />
-            </Box>
-          </Box>
-        </Stack>
-      )}
+            <Divider
+              mb="10px"
+              display={index === array.length - 1 ? "none" : "block"}
+            />
+          </Stack>
+        );
+      })}
     </GlassBox>
   );
 };
 
-export default SidebarWidget;
+export default connect(SidebarWidget);

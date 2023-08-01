@@ -96,9 +96,9 @@ const customTheme = {
         await actions.source.fetch("/menu/primary/");
         await actions.source.fetch("/menu/footer/");
         await actions.source.fetch("get-all-categories");
-        await actions.source.fetch("get-publications-categories-posts");
         await actions.source.fetch("/subscription-page");
         await actions.source.fetch("/featured-events");
+        await actions.source.fetch("get-publications-categories-posts");
         await actions.source.fetch("/publications/trade-insight");
         await actions.source.fetch("/publications/books");
       },

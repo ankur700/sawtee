@@ -11,6 +11,7 @@ export const Sidebar = ({
   postType,
   news,
   postsLink,
+  categories,
   newsLink,
   showTwitterTimeline,
   showSubscriptionBox,
@@ -21,21 +22,22 @@ export const Sidebar = ({
     return array.length === 0;
   }
 
-
   return (
-    <Stack spacing={12} w="full" maxW={"lg"}>
-      {posts && !EmptyArray(posts) && (
+    <Stack spacing={12} w="full" maxW={"xl"}>
+      {posts && postType.items !== undefined && (
         <SidebarWidget
-          array={posts}
+          array={posts.items}
+          categories={categories}
           title={`Latest  ${postType}`}
           linkColor={linkColor}
           link={postsLink ? postsLink : "#"}
         />
       )}
-      {news && !EmptyArray(news) && (
+      {news && news.items !== undefined && (
         <SidebarWidget
-          array={news}
-          title={news[0].categories[0].name}
+          array={news.items}
+          categories={categories}
+          title={"Sawtee in Media"}
           linkColor={linkColor}
           link={newsLink}
         />

@@ -19,24 +19,19 @@ import { useState, useEffect } from "react";
 import { formatCPTData, formatPostData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
 
-const Publications = ({ state, actions, categories }) => {
+const Publications = ({ state, categories, news }) => {
   const data = state.source.get(state.router.link);
-  const newsData = state.source.get("/sawtee-in-media");
   const postData = state.source.get("get-publications-categories-posts");
-
   const [publicationCategories, setPublicationCategories] = useState([]);
   const [sliderData, setSliderData] = useState([]);
-
-  const [news, setNews] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
-
   const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge", "max"]);
   const show = useBreakpointValue([1, 2, 3]);
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
@@ -46,19 +41,6 @@ const Publications = ({ state, actions, categories }) => {
       .filter((cat) => cat.parent === 5)
       .map((item) => setPublicationCategories((prev) => [...prev, item]));
   }, []);
-
-  useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = formatPostData(
-          state,
-          state.source[item.type][item.id],
-          categories
-        );
-        setNews((prevValue) => [...prevValue, post]);
-      });
-    }
-  }, [newsData]);
 
   useEffect(() => {
     if (postData.isReady && publicationCategories.length !== 0) {
@@ -171,7 +153,7 @@ const Publications = ({ state, actions, categories }) => {
       {
         <Box
           as={Section}
-          px={"32px"}
+          px={{ base: "32px", md: 16 }}
           w="full"
           size={size}
           pt="50px"
@@ -199,8 +181,9 @@ const Publications = ({ state, actions, categories }) => {
             >
               <Sidebar
                 news={news}
+                categories={categories}
                 linkColor={linkColor}
-                newsLink={newsData.link}
+                newsLink={news.link}
                 showTwitterTimeline={true}
                 showSubscriptionBox={true}
               />
