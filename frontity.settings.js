@@ -147,6 +147,11 @@ const settings = {
               endpoint: "covid",
               archive: "/covid",
             },
+            {
+              type: "in-focus",
+              endpoint: "in-focus",
+              archive: "/in-focus",
+            },
           ],
         },
       },

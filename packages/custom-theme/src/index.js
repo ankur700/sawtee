@@ -101,6 +101,7 @@ const customTheme = {
         await actions.source.fetch("get-publications-categories-posts");
         await actions.source.fetch("/publications/trade-insight");
         await actions.source.fetch("/publications/books");
+        await actions.source.fetch("/in-focus");
       },
     },
   },
