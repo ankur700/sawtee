@@ -16,10 +16,10 @@ import Switch from "@frontity/components/switch";
 
 const Archive = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
-  const newsData = state.source.get("/sawtee-in-media");
+  const newsData = state.source.get("/sawtee-in-media/");
 
   useEffect(() => {
-    actions.source.fetch("/sawtee-in-media");
+    actions.source.fetch("/sawtee-in-media/");
   }, []);
   return (
     <Switch>
@@ -48,7 +48,7 @@ const Archive = ({ state, actions, categories }) => {
         categories={categories}
         news={newsData}
       />
-      <HomeArchive when={data.route === "/blog/"} />
+
       <Programme
         when={data.isProgrammeArchive}
         categories={categories}

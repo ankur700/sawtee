@@ -23,7 +23,6 @@ const HomeArchive = ({ state, libraries }) => {
   const data = state.source.get(state.router.link);
   const [firstThreePosts, othersPosts] = splitPosts(state, data.items);
   const postsPerCategory = getPostsGroupedByCategory(state.source);
-  console.log(state.source);
   const Html2React = libraries.html2react.Component;
   return (
     <Box bg={useColorModeValue("whiteAlpha.300", "gray.800")} as="section">
@@ -61,18 +60,19 @@ const HomeArchive = ({ state, libraries }) => {
                 showImage={true}
                 key={item.id}
                 item={item}
-                color={useColorModeValue("gray.700", "whiteAlpha.700")}
+                color={"gray.700"}
+                _dark={{ color: "whiteAlpha.700" }}
                 rounded="xl"
               />
             );
           })}
         </SimpleGrid>
         <Box as="section" w="full">
-          {postsPerCategory.map(({ posts, category }, index) => (
-            <Box key={index}>
+          {postsPerCategory.map(({ posts, category }) => (
+            <Box key={category.id}>
               <Heading as="h4">{category.name}</Heading>
-              {posts.map((post, index) => (
-                <Box as="article" key={index}>
+              {posts.map((post) => (
+                <Box as="article" key={post.id}>
                   <Box>
                     <Box px={2}>
                       <Link link={post.link}>

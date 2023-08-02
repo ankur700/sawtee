@@ -23,9 +23,6 @@ import Link from "../../../atoms/link";
 const KnowUs = ({ post, postData, linkColor, libraries }) => {
   const sections = post.acf.sections;
   const memberInstitutions = post.acf.memberInstitutions;
-  // Once the post has loaded in the DOM, prefetch both the
-  // home posts and the list component so if the user visits
-  // the home page, everything is ready and it loads instantly.
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
@@ -37,7 +34,7 @@ const KnowUs = ({ post, postData, linkColor, libraries }) => {
       px={{ base: "32px", md: "0" }}
       py={32}
       size="md"
-      fontSize={"1.0625rem"}
+      fontSize={{ base: "md", lg: "lg" }}
     >
       {sections.map((section) => (
         <PageSection
@@ -169,7 +166,8 @@ const Content = styled(Box)`
 
 const Members = ({ memberInstitutions, linkColor }) => {
   const [hovered, setHovered] = useState([]);
-
+  const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
+  const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
   useEffect(() => {
     memberInstitutions.map(({ country, institutes }) => {
       let array = institutes.map((_) => false);
@@ -181,10 +179,11 @@ const Members = ({ memberInstitutions, linkColor }) => {
     <Box>
       <Heading
         as="h3"
-        fontSize={["lg", "xl", "2xl"]}
+        fontSize={["xl", "2xl", "4xl"]}
         py={"4"}
         mb="4"
         fontFamily="heading"
+        color={headingColor}
       >
         {"Member Institutions"}
       </Heading>
@@ -195,10 +194,11 @@ const Members = ({ memberInstitutions, linkColor }) => {
           <Box key={country} mb="6">
             <Heading
               as="h4"
-              fontSize={["md", "lg", "xl"]}
+              fontSize={["lg", "xl", "2xl"]}
               fontWeight="bold"
               mb="4"
               fontFamily="heading"
+              color={headingColor}
             >
               {country}
             </Heading>
@@ -209,7 +209,8 @@ const Members = ({ memberInstitutions, linkColor }) => {
                   display="flex"
                   alignItems={"center"}
                   gap={4}
-                  fontSize={{ base: "sm", md: "md" }}
+                  fontSize={{ base: "md", md: "lg", lg: "xl" }}
+                  color={contentColor}
                 >
                   <Link
                     link={member_website_link}
@@ -255,9 +256,13 @@ const Members = ({ memberInstitutions, linkColor }) => {
 
 const PageSection = ({ section, libraries }) => {
   const { content_repeater, title, content, tab_or_accordian } = section;
-
+  const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
+  const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
   const tabColor = useColorModeValue("blackAlpha", "whiteAlpha");
-
+  const accordianExpandedBackground = useColorModeValue(
+    "rgba(0, 0, 0, 0.1)",
+    "rgba(0,0,0,0.3)"
+  );
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
@@ -265,10 +270,11 @@ const PageSection = ({ section, libraries }) => {
     <Box>
       <Heading
         as="h3"
-        fontSize={["lg", "xl", "2xl"]}
+        fontSize={["xl", "2xl", "4xl"]}
         py={"4"}
         mb="4"
         fontFamily="heading"
+        color={headingColor}
       >
         {title}
       </Heading>
@@ -277,16 +283,13 @@ const PageSection = ({ section, libraries }) => {
         <Box rounded="xl" p={6} border="1px solid">
           <Tabs
             variant="enclosed"
-            size="md"
             isFitted
-            colorScheme={"primary"}
-            appearance="none"
-            outline="none"
-            _focus={{ outline: "none", boxShadow: "none" }}
+            colorScheme={"blue"}
+            _selected={{ borderBottom: "none" }}
           >
             <TabList>
               {content_repeater.map(({ tab_title }) => (
-                <Tab key={tab_title} transition="all 0.4s ease-in">
+                <Tab key={tab_title}>
                   <Heading as="h4" fontSize={"lg"} fontFamily={"heading"}>
                     {tab_title}
                   </Heading>
@@ -304,6 +307,7 @@ const PageSection = ({ section, libraries }) => {
                   justifyContent="center"
                   alignItems="center"
                   transition="all 0.4s ease-in"
+                  color={contentColor}
                 >
                   <Html2React html={tab_content} />
                 </TabPanel>
@@ -321,12 +325,7 @@ const PageSection = ({ section, libraries }) => {
                 <AccordionButton
                   size="md"
                   py="4"
-                  _expanded={{
-                    bg: useColorModeValue(
-                      "rgba(0, 0, 0, 0.1)",
-                      "rgba(0,0,0,0.3)"
-                    ),
-                  }}
+                  _expanded={{ bg: accordianExpandedBackground }}
                 >
                   <Heading
                     as="h4"
@@ -334,12 +333,13 @@ const PageSection = ({ section, libraries }) => {
                     fontSize={"lg"}
                     fontFamily={"heading"}
                     textAlign="left"
+                    color={headingColor}
                   >
                     {tab_title}
                   </Heading>
                   <AccordionIcon />
                 </AccordionButton>
-                <AccordionPanel px={["5", "10"]}>
+                <AccordionPanel px={["5", "10"]} color={contentColor}>
                   <Html2React html={tab_content} />
                 </AccordionPanel>
               </AccordionItem>
@@ -349,7 +349,7 @@ const PageSection = ({ section, libraries }) => {
       )}
 
       {!tab_or_accordian && (
-        <Box>
+        <Box color={contentColor}>
           <Html2React html={content} />
         </Box>
       )}

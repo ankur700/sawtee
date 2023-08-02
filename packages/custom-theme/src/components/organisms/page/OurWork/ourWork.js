@@ -7,6 +7,7 @@ import {
   Text,
   SimpleGrid,
   useColorModeValue,
+  VStack,
 } from "@chakra-ui/react";
 import { decode, styled } from "frontity";
 import Section from "../../../styles/section";
@@ -16,12 +17,10 @@ const OurWork = ({ postData, post, libraries }) => {
   const intro = post.acf.intro;
   const themes = post.acf.thematic_areas;
   const Html2React = libraries.html2react.Component;
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
-  );
+  const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
+  const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
   const linkColor = useColorModeValue("blackAlpha.700", "whiteAlpha.600");
-  const cardBackground = useColorModeValue("gray.100", "gray.700");
+  const cardBackground = useColorModeValue("gray.100", "blackAlpha.300");
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return null;
 
@@ -30,9 +29,8 @@ const OurWork = ({ postData, post, libraries }) => {
       <Content
         as={Section}
         px={{ base: "32px", md: "16px" }}
-        size="lg"
+        size="huge"
         paddingBlock="50px"
-        color={contentColor}
       >
         <Container
           className="intro"
@@ -48,6 +46,7 @@ const OurWork = ({ postData, post, libraries }) => {
             fontWeight="bold"
             mb={12}
             textAlign="center"
+            color={headingColor}
           >
             Thematic Areas
           </Heading>
@@ -62,7 +61,7 @@ const OurWork = ({ postData, post, libraries }) => {
             mb={4}
           >
             {themes.map((theme) => (
-              <Box
+              <VStack
                 key={theme.title}
                 bg={cardBackground}
                 p={6}
@@ -70,16 +69,28 @@ const OurWork = ({ postData, post, libraries }) => {
                 textAlign="center"
                 pos="relative"
                 mt={6}
-                minH={"200px"}
+                justify={"center"}
+                align={"center"}
+                gap={4}
+                minH={"250px"}
+                transition={"all 0.8s ease-out"}
                 role="group"
+                cursor="pointer"
               >
-                <Heading as="h3" fontWeight="semibold" fontSize="2xl">
+                <Heading
+                  as="h3"
+                  fontWeight="semibold"
+                  fontSize="2xl"
+                  color={headingColor}
+                >
                   {theme.title}
                 </Heading>
 
                 <Text
                   fontSize="md"
                   mt={4}
+                  transition={"display 1s ease-in"}
+                  transitionDelay={"0.4s"}
                   sx={{
                     display: "-webkit-box",
                     WebkitLineClamp: "3",
@@ -88,21 +99,23 @@ const OurWork = ({ postData, post, libraries }) => {
                   }}
                   _groupHover={{
                     display: "block",
-                    cursor: "pointer",
-                    transition: "all 0.4s ease-in",
                   }}
+                  color={contentColor}
                 >
                   {theme.content}
                 </Text>
-              </Box>
+              </VStack>
             ))}
           </SimpleGrid>
         </Container>
         <Box
           display="flex"
+          mx="auto"
           flexDir={{ base: "column", md: "row" }}
           justifyContent="center"
+          alignItems={"center"}
           gap="10"
+          maxW="5xl"
         >
           {sectors.map(({ title, content, bg_image, link }) => {
             return (
@@ -132,7 +145,6 @@ const OurWork = ({ postData, post, libraries }) => {
                   as="h4"
                   className="title"
                   textAlign={"center"}
-                  // height="20%"
                   py={{ base: 4, lg: 8 }}
                 >
                   <LinkOverlay color={"whiteAlpha.700"} href={link}>

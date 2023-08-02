@@ -16,6 +16,7 @@ import FontFace from "./styles/font-face";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Home from "./organisms/page/home/home";
+import HomeArchive from "./organisms/archive/home-archive";
 
 const config = {
   initialColorMode: "light",
@@ -64,8 +65,9 @@ const Theme = ({ state, actions }) => {
             <Home when={data.route === "/"} categories={categories} />
             <Page when={data.isPage} categories={categories} />
             <Post when={data.isPostType} />
-            <SearchResults when={data.isSearch} />
+            <HomeArchive when={data.route === "/blog/"} />
             <Archive when={data.isArchive} categories={categories} />
+            <SearchResults when={data.isSearch} />
             <Page404 when={data.is404} />
           </Switch>
         </Box>
