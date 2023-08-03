@@ -1,26 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { HiArrowRight, HiChevronRight } from "react-icons/hi";
-import { Button, useColorModeValue } from "@chakra-ui/react";
-import Link from "../link";
+import { Button } from "@chakra-ui/react";
 
-const ViewAllBtn = ({ text, link, ...rest }) => {
+const ViewAllBtn = ({ text, ...rest }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <Link link={link ? link : "#"} _hover={{ textDecoration: "none" }}>
     <Button
-      variant="outline"
+      variant="solid"
       colorScheme={"primary"}
-      aria-label="view all button"
+      aria-label="view all"
       onMouseEnter={() => setHovered(!hovered)}
       onMouseLeave={() => setHovered(!hovered)}
       fontSize={{ base: "sm", md: "md" }}
       rightIcon={hovered ? <HiArrowRight /> : <HiChevronRight />}
       {...rest}
     >
-        {text}
+      {text}
     </Button>
-      </Link>
   );
 };
 

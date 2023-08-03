@@ -1,9 +1,9 @@
-import { Stack, Show, Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem, Box, Flex } from "@chakra-ui/react";
 import Section from "../../../atoms/section";
 import ViewAllBtn from "../../../atoms/ViewAllBtn";
-import Title from "../../../atoms/title";
 import { styled } from "frontity";
 import { TopImageCard, NoImageCard } from "../../../molecules/cards";
+import { FancyTitle } from "../../../atoms/fancyTitle";
 
 const CustomGrid = styled(Grid)`
   margin: 0 auto;
@@ -35,27 +35,7 @@ const BlogSection = ({ events, media, linkColor }) => {
       flexDir="column"
       id="blog-section"
     >
-      <Stack
-        direction={{ base: "column", lg: "row" }}
-        justifyContent={{ base: "center", lg: "space-between" }}
-        alignItems="center"
-      >
-        <Title py={["4", "6", "8"]} text="Policy Outreach" />
-        {events.length > 0 && (
-          <Show above="lg">
-            <ViewAllBtn
-              px={["4", "6", "8"]}
-              link={
-                events[0]
-                  ? `/category/` + events[0].categories[0].slug
-                  : "/category/events"
-              }
-              text={"View All"}
-              size="sm"
-            />
-          </Show>
-        )}
-      </Stack>
+      <FancyTitle title={"Policy Outreach"} />
       <CustomGrid
         className="band"
         templateColumns={{ base: "1fr", lg: "repeat(3, 1fr)" }}
@@ -91,9 +71,11 @@ const BlogSection = ({ events, media, linkColor }) => {
             })
           : null}
       </CustomGrid>
-      <Show below="lg">
-        <ViewAllBtn w="full" text={"View All"} mt="1rem" py="6" />
-      </Show>
+      {/* <Show below="lg"> */}
+      <Flex justify={"center"} mt="1rem" py="6">
+        <ViewAllBtn w="50%" py="4" mx="auto" text={"View All"} />
+      </Flex>
+      {/* </Show> */}
     </Section>
   );
 };

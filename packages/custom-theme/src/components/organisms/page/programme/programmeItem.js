@@ -28,27 +28,12 @@ const ProgrammeItem = ({ program, linkColor }) => {
         }}
         maxW="5xl"
       >
-        {/* <Flex justifyContent="space-between" alignItems="center">
-          <Text
-            as="span"
-            fontSize="sm"
-            fontWeight="bold"
-            // textTransform="uppercase"
-            color="gray.600"
-            _dark={{
-              color: "gray.400",
-            }}
-          >
-            {formatDateWithMoment(program.publishDate, "MMMM YYYY")}
-          </Text>
-        </Flex> */}
-
         <Box mt={2}>
           <Heading
             as="h3"
             fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
             color={HeaderColor}
-            lineHeight={"tall"}
+            // lineHeight={"tall"}
           >
             <Link
               href={program.link}

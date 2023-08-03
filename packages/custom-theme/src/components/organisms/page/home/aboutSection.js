@@ -128,15 +128,16 @@ const AboutSection = ({
                         border={`1px solid`}
                         borderColor={ImageBorderColor}
                         objectFit="cover"
-                        style={{ width: "140px", height: "auto" }}
+                        style={{ width: "160px", height: "auto" }}
                       />
                     </Link>
                   );
                 } else {
                   return (
                     <Skeleton
+                      key={slide.id}
                       h="auto"
-                      w="140px"
+                      w="160px"
                       rounded={"xl"}
                       bg={"rgba(255,255,255, 0.1)"}
                     />
@@ -195,15 +196,16 @@ const AboutSection = ({
                         border={`1px solid`}
                         borderColor={ImageBorderColor}
                         objectFit="cover"
-                        style={{ width: "140px", height: "auto" }}
+                        style={{ width: "160px", height: "auto" }}
                       />
                     </Link>
                   );
                 } else {
                   return (
                     <Skeleton
-                      h="230px"
-                      w="175px"
+                      key={slide.id}
+                      h="auto"
+                      w="160px"
                       rounded={"xl"}
                       bg={"rgba(255,255,255, 0.1)"}
                     ></Skeleton>

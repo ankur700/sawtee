@@ -227,7 +227,7 @@ const Members = ({ memberInstitutions, linkColor }) => {
                       color: linkColor,
                       textDecoration: "underline",
                       textDecorationColor: linkColor,
-                      textUnderlineOffset: "3px",
+                      textUnderlineOffset: "6px",
                     }}
                     textDecoration="underline"
                     textUnderlineOffset="3px"
@@ -241,7 +241,7 @@ const Members = ({ memberInstitutions, linkColor }) => {
                       in={hovered[id][country][idx]}
                       offsetY="20px"
                     >
-                      <HiOutlineExternalLink />
+                      <HiOutlineExternalLink color={linkColor}  />
                     </SlideFade>
                   )}
                 </Box>
@@ -280,23 +280,22 @@ const PageSection = ({ section, libraries }) => {
       </Heading>
 
       {tab_or_accordian && title !== "Strategies" && (
-        <Box rounded="xl" p={6} border="1px solid">
+        <Box px="6" py="4">
           <Tabs
             variant="enclosed"
             isFitted
             colorScheme={"blue"}
+            borderColor="blue.500"
             _selected={{ borderBottom: "none" }}
           >
             <TabList>
               {content_repeater.map(({ tab_title }) => (
-                <Tab key={tab_title}>
-                  <Heading as="h4" fontSize={"lg"} fontFamily={"heading"}>
-                    {tab_title}
-                  </Heading>
+                <Tab key={tab_title} fontSize={"lg"} fontFamily={"heading"}>
+                  {tab_title}
                 </Tab>
               ))}
             </TabList>
-            <TabPanels mt={4}>
+            <TabPanels border="1px solid" borderColor="blue.500">
               {content_repeater.map(({ tab_content, tab_title }) => (
                 <TabPanel
                   bg={tabColor}

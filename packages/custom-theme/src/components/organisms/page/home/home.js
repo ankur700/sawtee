@@ -3,7 +3,7 @@ import CarouselSection from "./carouselSection";
 import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
-import { formatCPTData } from "../../../helpers";
+import { formatCPTData, formatDate } from "../../../helpers";
 import React, { useEffect, useState, Fragment } from "react";
 import {
   Badge,
@@ -14,14 +14,14 @@ import {
   Flex,
   Stack,
   VStack,
-  HStack,
   Grid,
-  Icon,
   Divider,
   Link,
   useColorModeValue,
   Text,
+  HStack,
 } from "@chakra-ui/react";
+import { FancyTitle } from "../../../atoms/fancyTitle";
 
 const Home = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
@@ -38,8 +38,6 @@ const Home = ({ state, actions, categories }) => {
   const [eventsList, setEvetnsList] = useState([]);
   const [media, setMedia] = useState(null);
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
-
-  console.log(infocusList);
 
   useEffect(() => {
     eventsData.isReady &&
@@ -103,31 +101,23 @@ const Home = ({ state, actions, categories }) => {
 export default connect(Home);
 
 const InFocusSection = ({ articles }) => {
+  const itemBG = useColorModeValue("gray.200", "gray.700");
   return (
-    <Container maxW="5xl" p={{ base: 5, md: 10 }}>
-      <Flex justify="left" mb={3}>
-        <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
-          In Focus
-        </chakra.h3>
-      </Flex>
-      <VStack
-        border="1px solid"
-        borderColor="gray.400"
-        rounded="md"
-        overflow="hidden"
-        spacing={0}
-      >
+    <Container maxW="8xl" p={{ base: 5, md: 10 }}>
+      <FancyTitle title={"In Focus"} />
+
+      <VStack overflow="hidden" spacing={3}>
         {articles.map((article, index) => {
           return (
             <Fragment key={article.id}>
+              {index === 0 && <Divider m={0} />}
               <Grid
                 templateRows={{ base: "auto auto", md: "auto" }}
                 w="100%"
                 templateColumns={{ base: "unset", md: "2fr 4fr 2fr" }}
                 p={{ base: 2, sm: 4 }}
-                gap={3}
                 alignItems="center"
-                _hover={{ bg: useColorModeValue("gray.200", "gray.700") }}
+                _hover={{ bg: itemBG }}
               >
                 <Flex
                   spacing={{ base: 0, sm: 3 }}
@@ -135,7 +125,12 @@ const InFocusSection = ({ articles }) => {
                   fontWeight="medium"
                   fontSize={{ base: "xs", sm: "sm" }}
                 >
-                  <Badge variant="subtle" colorScheme="green">
+                  <Badge
+                    variant="subtle"
+                    colorScheme="primary"
+                    fontSize={["sm", "md"]}
+                    px="10px"
+                  >
                     In Focus
                   </Badge>
                 </Flex>
@@ -143,13 +138,27 @@ const InFocusSection = ({ articles }) => {
                 <Box gridColumnEnd={{ base: "span 2", md: "unset" }}>
                   <chakra.h3
                     as={Link}
+                    fontFamily={"heading"}
                     href={article.link}
                     isExternal
                     fontWeight="bold"
-                    fontSize="lg"
+                    fontSize={["lg", "xl"]}
                   >
                     {article.title}
                   </chakra.h3>
+                  <HStack pos="relative" mt="20px">
+                    <Text
+                      as="span"
+                      w="5px"
+                      h="full"
+                      bg="primary.400"
+                      rounded="lg"
+                      pos={"absolute"}
+                    />
+                    <Text noOfLines={3} pl="20px">
+                      {article.excerpt}
+                    </Text>
+                  </HStack>
                 </Box>
 
                 <Stack
@@ -162,13 +171,16 @@ const InFocusSection = ({ articles }) => {
                   <Text
                     fontWeight="medium"
                     fontSize="sm"
-                    color={useColorModeValue("gray.600", "gray.300")}
+                    color={"gray.600"}
+                    _dark={{
+                      color: "gray.300",
+                    }}
                   >
-                    Published: {article.publishDate}
+                    {formatDate(article.publishDate)}
                   </Text>
                 </Stack>
               </Grid>
-              {articles.length - 1 !== index && <Divider m={0} />}
+              <Divider m={0} />
             </Fragment>
           );
         })}

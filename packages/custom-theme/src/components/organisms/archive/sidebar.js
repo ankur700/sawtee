@@ -18,13 +18,9 @@ export const Sidebar = ({
   linkColor,
   children,
 }) => {
-  function EmptyArray(array) {
-    return array.length === 0;
-  }
-
   return (
     <Stack spacing={12} w="full" maxW={"xl"}>
-      {posts && postType.items !== undefined && (
+      {posts.items !== undefined && (
         <SidebarWidget
           array={posts.items}
           categories={categories}
@@ -33,7 +29,7 @@ export const Sidebar = ({
           link={postsLink ? postsLink : "#"}
         />
       )}
-      {news && news.items !== undefined && (
+      {news.items !== undefined && (
         <SidebarWidget
           array={news.items}
           categories={categories}

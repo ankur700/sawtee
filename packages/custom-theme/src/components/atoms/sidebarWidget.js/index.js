@@ -1,7 +1,6 @@
 import {
   Box,
   Flex,
-  Container,
   Divider,
   Heading,
   Skeleton,
@@ -23,7 +22,7 @@ const ListHeading = ({ title, link }) => {
         <Heading
           as="h3"
           color={useColorModeValue("gray.800", "whiteAlpha.900")}
-          fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+          fontSize={{ base: "md", md: "lg" }}
         >
           {title}
         </Heading>
