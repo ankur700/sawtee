@@ -74,7 +74,7 @@ const EventItem = ({ state, libraries, event }) => {
           <Heading
             as="h3"
             color={headingColor}
-            fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+            fontSize={{ base: "md", md: "lg" }}
             _hover={{ color: linkColor, textDecoration: "underline" }}
             mb={4}
           >
@@ -96,7 +96,7 @@ const EventItem = ({ state, libraries, event }) => {
               {formatDateWithMoment(event.publishDate, format)}
             </Text>
             <Button
-              size={"md"}
+              size={"sm"}
               colorScheme={useColorModeValue("blackAlpha", "whiteAlpha")}
               aria-label={"Read More"}
               fontWeight="normal"

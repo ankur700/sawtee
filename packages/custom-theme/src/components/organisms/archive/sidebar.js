@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
-import SidebarWidget from "../../atoms/sidebarWidget.js";
+import SidebarWidget from "../../atoms/sidebarWidgets";
 import SubscriptionCard from "../../atoms/subscriptionCard";
 import TwitterTimeline from "../../atoms/twitterTimeline";
 import GlassBox from "../../atoms/glassBox";
@@ -20,24 +20,28 @@ export const Sidebar = ({
 }) => {
   return (
     <Stack spacing={12} w="full" maxW={"xl"}>
-      {posts.items !== undefined && (
-        <SidebarWidget
-          array={posts.items}
-          categories={categories}
-          title={`Latest  ${postType}`}
-          linkColor={linkColor}
-          link={postsLink ? postsLink : "#"}
-        />
-      )}
-      {news.items !== undefined && (
-        <SidebarWidget
-          array={news.items}
-          categories={categories}
-          title={"Sawtee in Media"}
-          linkColor={linkColor}
-          link={newsLink}
-        />
-      )}
+      {posts
+        ? posts.items !== undefined && (
+            <SidebarWidget
+              array={posts.items.slice(0, 5)}
+              categories={categories}
+              title={`Featured  ${postType}`}
+              linkColor={linkColor}
+              link={postsLink}
+            />
+          )
+        : null}
+      {news
+        ? news.items !== undefined && (
+            <SidebarWidget
+              array={news.items}
+              categories={categories}
+              title={"Sawtee in Media"}
+              linkColor={linkColor}
+              link={newsLink}
+            />
+          )
+        : null}
       {showTwitterTimeline && (
         <GlassBox rounded="xl" height="max-content">
           <TwitterTimeline
@@ -55,7 +59,7 @@ export const Sidebar = ({
           px="8"
           rounded="xl"
           height="max-content"
-          position={"sticky"}
+          position={children ? "relative" : "sticky"}
           top={"8.5rem"}
         >
           <SubscriptionCard />

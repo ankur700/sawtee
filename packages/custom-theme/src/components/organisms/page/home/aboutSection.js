@@ -1,6 +1,4 @@
-// import HeroImage from "../../assets/hero-image.jpg";
 import Title from "../../../atoms/title";
-import Section from "../../../atoms/section";
 import { connect } from "frontity";
 import {
   Text,
@@ -13,21 +11,12 @@ import {
 } from "@chakra-ui/react";
 import Carousel from "../../../molecules/Carousel";
 import Link from "../../../atoms/link";
-import { formatCPTData } from "../../../helpers";
 
-const AboutSection = ({
-  state,
-  intro,
-  image,
-  tradeInsight,
-  books,
-  show,
-  categories,
-}) => {
+const AboutSection = ({ state, data, intro, image, show }) => {
   const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
 
   return (
-    <Section width="full" overflow="hidden" id="about-section">
+    <Box width="full" overflow="hidden" id="about-section">
       <SimpleGrid columns={{ base: 1, lg: 2 }}>
         <Box
           w="full"
@@ -75,7 +64,78 @@ const AboutSection = ({
           overflow="hidden"
           w="full"
         >
-          <Box>
+          {data && data.length > 0
+            ? data.map((item) => {
+                console.log(item);
+
+                return (
+                  <Box key={item.category_name}>
+                    <Title
+                      py={["3", "6"]}
+                      text={item.category_name}
+                      color="whiteAlpha.900"
+                    />
+                    <Carousel show={show} gap={"30px"}>
+                      {item.posts.map((id) => {
+                        console.log(id);
+                        const slide = state.source["attachment"][id];
+
+                        if (slide !== undefined) {
+                          return (
+                            <Link
+                              key={slide.id}
+                              title={slide.title}
+                              maxHeight={"250px"}
+                              link={slide.acf.pub_link}
+                              pos={"relative"}
+                              w={`calc(100% / ${show} - 30px )`}
+                              _before={{
+                                content: `''`,
+                                position: "absolute",
+                                top: 0,
+                                left: "unset",
+                                width: `100%`,
+                                height: "auto",
+                                borderRadius: "15px",
+                                background: "rgba(0,0,0,0.3)",
+                                backgroundBlendMode: "overlay",
+                              }}
+                              _hover={{
+                                _before: {
+                                  background: "transparent",
+                                },
+                              }}
+                            >
+                              <Image
+                                src={slide.source_url}
+                                alt={slide.alt_text}
+                                rounded="xl"
+                                border={`1px solid`}
+                                borderColor={ImageBorderColor}
+                                objectFit="cover"
+                                style={{ width: "160px", height: "auto" }}
+                              />
+                            </Link>
+                          );
+                        } else {
+                          return (
+                            <Skeleton
+                              key={slide.id}
+                              h="auto"
+                              w="160px"
+                              rounded={"xl"}
+                              bg={"rgba(255,255,255, 0.1)"}
+                            />
+                          );
+                        }
+                      })}
+                    </Carousel>
+                  </Box>
+                );
+              })
+            : null}
+
+          {/* <Box>
             <Title
               py={["3", "6"]}
               text={"Trade Insight"}
@@ -213,10 +273,10 @@ const AboutSection = ({
                 }
               })}
             </Carousel>
-          </Box>
+          </Box> */}
         </VStack>
       </SimpleGrid>
-    </Section>
+    </Box>
   );
 };
 

@@ -14,7 +14,6 @@ import Section from "../../../styles/section";
 import Sidebar from "../../../organisms/archive/sidebar";
 import Publication1 from "../../../../assets/publications-1-resized.jpg";
 import EventItem from "./eventItem";
-import React, { useState, useEffect } from "react";
 
 import { formatCPTData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
@@ -24,34 +23,10 @@ const EventsArchive = ({ state, actions, categories, news }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const size = useBreakpointValue(["sm", "md", "lg", "huge", "max"]);
-  const [events, setEvents] = useState([]);
   const linkColor = state.theme.colors.linkColor;
 
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue("#121212", "whiteAlpha.800");
-
-  // useEffect(() => {
-  //   if (postData.isReady && postData.page === 1) {
-  //     postData.items.forEach(({ type, id }, idx) => {
-  //       if (idx <= 2) {
-  //         const post = state.source[type][id];
-  //         setEvents((prev) => [
-  //           ...prev,
-  //           formatCPTData(state, post, categories),
-  //         ]);
-  //       }
-  //     });
-  //   }
-  // }, [postData]);
-
-  // useEffect(() => {
-  //   if (news.isReady) {
-  //     news.items.forEach(({ type, id }) => {
-  //       const post = state.source[type][id];
-  //       setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
-  //     });
-  //   }
-  // }, [news]);
 
   // Load the post, but only if the data is ready.
   if (!postData.isReady) return <Loading />;
@@ -99,7 +74,7 @@ const EventsArchive = ({ state, actions, categories, news }) => {
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"
           >
-            {postData.type}
+            {"Policy Outreach"}
           </Heading>
         </Box>
       </Box>

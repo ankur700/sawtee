@@ -16,7 +16,7 @@ import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
 import GlassBox from "../../../atoms/glassBox";
 import { useState, useEffect } from "react";
-import { formatCPTData, formatPostData } from "../../../helpers";
+import { formatCPTData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
 
 const Publications = ({ state, categories, news }) => {
@@ -31,7 +31,7 @@ const Publications = ({ state, categories, news }) => {
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-  const size = useBreakpointValue(["sm", "md", "lg", "huge", "max"]);
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const show = useBreakpointValue([1, 2, 3]);
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
@@ -129,68 +129,62 @@ const Publications = ({ state, categories, news }) => {
           </Heading>
         </Box>
       </Box>
-      {publicationCategories.length > 0 ? (
-        <GlassBox
-          as={Section}
-          mt={"6"}
-          size={"lg"}
-          px={{ base: "32px", md: "16px" }}
-          py="6"
-          display="flex"
-          // pos={"sticky"}
-          // top={"8rem"}
-        >
-          <PublicationFilter
-            categories={publicationCategories}
-            allChecked={allChecked}
-            isIndeterminate={isIndeterminate}
-            checkedItems={checkedItems}
-            setCheckedItems={setCheckedItems}
-          />
-        </GlassBox>
-      ) : null}
 
-      {
-        <Box
-          as={Section}
-          px={{ base: "32px", md: 16 }}
-          w="full"
-          size={size}
-          pt="50px"
-          pb={"80px"}
-          fontSize={["md", "lg", "xl"]}
-          color={contentColor}
+      <Section
+        px={{ base: "32px", md: 0 }}
+        size={size}
+        pt={20}
+        pb={"80px"}
+        fontSize={["md", "lg", "xl"]}
+        color={contentColor}
+      >
+        <Grid
+          templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
+          gap={6}
+          pos={"relative"}
         >
-          <Grid
-            templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
-            gap={6}
-            pos={"relative"}
+          <GridItem colSpan={{ base: 1, xl: 3 }} px={4}>
+            <PublicationSliders
+              linkColor={linkColor}
+              sliderData={sliderData}
+              show={show || 3}
+              checkedItems={checkedItems}
+            />
+          </GridItem>
+          <GridItem
+            colSpan={{ base: 1, xl: 2 }}
+            display={"flex"}
+            flexDirection={"column"}
+            alignItems={"center"}
           >
-            <GridItem colSpan={{ base: 1, xl: 3 }} px={4}>
-              <PublicationSliders
-                linkColor={linkColor}
-                sliderData={sliderData}
-                show={show ? show : 3}
-                checkedItems={checkedItems}
-              />
-            </GridItem>
-            <GridItem
-              colSpan={{ base: 1, xl: 2 }}
-              display={"flex"}
-              justifyContent={"center"}
+            <Sidebar
+              news={news}
+              categories={categories}
+              linkColor={linkColor}
+              newsLink={news.link}
+              showTwitterTimeline={true}
+              showSubscriptionBox={true}
+            />
+            <GlassBox
+              mt={12}
+              py="4"
+              px="8"
+              rounded="xl"
+              height="max-content"
+              position={"sticky"}
+              top={"8.5rem"}
             >
-              <Sidebar
-                news={news}
-                categories={categories}
-                linkColor={linkColor}
-                newsLink={news.link}
-                showTwitterTimeline={true}
-                showSubscriptionBox={true}
+              <PublicationFilter
+                categories={publicationCategories}
+                allChecked={allChecked}
+                isIndeterminate={isIndeterminate}
+                checkedItems={checkedItems}
+                setCheckedItems={setCheckedItems}
               />
-            </GridItem>
-          </Grid>
-        </Box>
-      }
+            </GlassBox>
+          </GridItem>
+        </Grid>
+      </Section>
     </LightPatternBox>
   );
 };

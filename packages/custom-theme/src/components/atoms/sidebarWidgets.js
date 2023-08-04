@@ -11,9 +11,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { formatCPTData, formatedDate } from "../../helpers";
+import { formatCPTData, formatedDate } from "../helpers";
 import { decode, connect } from "frontity";
-import GlassBox from "../glassBox";
+import GlassBox from "./glassBox";
 
 const ListHeading = ({ title, link }) => {
   return (
@@ -22,13 +22,13 @@ const ListHeading = ({ title, link }) => {
         <Heading
           as="h3"
           color={useColorModeValue("gray.800", "whiteAlpha.900")}
-          fontSize={{ base: "md", md: "lg" }}
+          fontSize={{ base: "md", md: "xl" }}
         >
           {title}
         </Heading>
         <Spacer />
         <Link
-          href={link ? link : "#"}
+          href={link}
           fontSize="14px"
           color={useColorModeValue("primary.700", "primary.100")}
           fontWeight="medium"
@@ -59,8 +59,7 @@ const SidebarWidget = ({
       border="1px solid #E2E4E6"
       px={8}
       py={6}
-      // maxH="620px"
-      overflowY="scroll"
+
       {...rest}
     >
       <ListHeading title={title} link={link} />
@@ -68,25 +67,32 @@ const SidebarWidget = ({
       {array.map(({ type, id }, index) => {
         const post = formatCPTData(state, state.source[type][id], categories);
         if (!post) {
-          <Box display={"flex"} flexDir={"column"} gap={2}>
-            <Skeleton w="full" height="15px" />
-            <Box display={"flex"} justifyContent={"space-between"}>
-              <Skeleton w="80px" height="10px" />
-              <Skeleton w="80px" height="10px" />
+          return (
+            <Box key={post.id} display={"flex"} flexDir={"column"} gap={2}>
+              <Skeleton w="full" height="15px" />
+              <Box display={"flex"} justifyContent={"space-between"}>
+                <Skeleton w="80px" height="10px" />
+                <Skeleton w="80px" height="10px" />
+              </Box>
             </Box>
-          </Box>;
+          );
         }
         return (
-          <Stack spacing={2} mt="6" key={post.id}>
+          <Stack
+            spacing={2}
+            mt="6"
+            key={post.id}
+          >
             <Heading
+              as="h4"
               className="title"
-              fontSize={{ base: "lg", md: "xl" }}
+              fontSize={{ base: "sm", md: "md" }}
               mb="2"
               color={HeadingColor}
               lineHeight={1.2}
               fontWeight="bold"
               _hover={{
-                color: linkColor ? linkColor : "primary.700",
+                color: linkColor,
                 textDecoration: "underline",
               }}
             >

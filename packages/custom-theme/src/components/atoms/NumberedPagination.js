@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, styled } from "frontity";
-import link from "../link";
+import link from "./link";
 import { Button, Box, Stack, useColorModeValue, useBreakpointValue } from "@chakra-ui/react";
 // Here we have used react-icons package for the icons
 import {

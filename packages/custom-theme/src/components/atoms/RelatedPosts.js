@@ -6,8 +6,8 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import Title from "../title";
-import Link from "../link";
+import Title from "./title";
+import Link from "./link";
 import { decode } from "frontity";
 
 const RelatedPosts = ({ postType, data, linkColor }) => {

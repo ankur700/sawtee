@@ -1,9 +1,8 @@
-import { Grid, GridItem, Box, Flex } from "@chakra-ui/react";
-import Section from "../../../atoms/section";
-import ViewAllBtn from "../../../atoms/ViewAllBtn";
+import { Grid, GridItem, Box, Flex, Button } from "@chakra-ui/react";
 import { styled } from "frontity";
 import { TopImageCard, NoImageCard } from "../../../molecules/cards";
 import { FancyTitle } from "../../../atoms/fancyTitle";
+import ViewAllBtn from "../../../atoms/ViewAllBtn";
 
 const CustomGrid = styled(Grid)`
   margin: 0 auto;
@@ -27,7 +26,7 @@ const CustomGrid = styled(Grid)`
 
 const BlogSection = ({ events, media, linkColor }) => {
   return (
-    <Section
+    <Box
       width="full"
       display="flex"
       py={{ base: "6", md: "12", lg: "16" }}
@@ -52,7 +51,6 @@ const BlogSection = ({ events, media, linkColor }) => {
                       featured_media={media}
                       excerpt={article.excerpt}
                       target={article.link}
-                      // date={article.publishDate}
                       linkColor={linkColor}
                     />
                   ) : (
@@ -61,8 +59,6 @@ const BlogSection = ({ events, media, linkColor }) => {
                       categories={article.categories}
                       excerpt={article.excerpt}
                       target={article.link}
-                      // date={article.publishDate}
-                      // author={article.author}
                       linkColor={linkColor}
                     />
                   )}
@@ -71,12 +67,16 @@ const BlogSection = ({ events, media, linkColor }) => {
             })
           : null}
       </CustomGrid>
-      {/* <Show below="lg"> */}
-      <Flex justify={"center"} mt="1rem" py="6">
-        <ViewAllBtn w="50%" py="4" mx="auto" text={"View All"} />
+      <Flex
+        as="a"
+        justify={"center"}
+        mt="1rem"
+        py="6"
+        href={"/featured-events"}
+      >
+        <ViewAllBtn text="View All" w="50%" />
       </Flex>
-      {/* </Show> */}
-    </Section>
+    </Box>
   );
 };
 

@@ -1,9 +1,5 @@
 import { connect } from "frontity";
-import CarouselSection from "./carouselSection";
-import AboutSection from "./aboutSection";
-import InfoSection from "./infoSection";
-import BlogSection from "./blogSection";
-import { formatCPTData, formatDate } from "../../../helpers";
+
 import React, { useEffect, useState, Fragment } from "react";
 import {
   Badge,
@@ -21,24 +17,32 @@ import {
   Text,
   HStack,
 } from "@chakra-ui/react";
+import { formatCPTData, formatDate } from "../../../helpers";
+import AboutSection from "./aboutSection";
+import InfoSection from "./infoSection";
+import BlogSection from "./blogSection";
 import { FancyTitle } from "../../../atoms/fancyTitle";
+import FullWidthCarousel from "../../../molecules/fullWIdthCarousel";
+import ViewAllBtn from "../../../atoms/ViewAllBtn";
 
 const Home = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
+  const introText = post.acf?.about_section_intro;
+  const introImage = post.acf?.about_section_image;
+  const publicationSliders = post.acf?.publication_slider;
+
   const eventsData = state.source.get("/featured-events/");
   const tradeInsight = state.source.get("/publications/trade-insight/");
   const books = state.source.get("/publications/books/");
   const infocus = state.source.get("/in-focus/");
   const [infocusList, setInfocusList] = useState([]);
   const linkColor = state.theme.colors.linkColor;
-  const introText = post.acf?.about_section_intro;
-  const introImage = post.acf?.about_section_image;
   const [eventsList, setEvetnsList] = useState([]);
   const [media, setMedia] = useState(null);
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
-
+  console.log(publicationSliders);
   useEffect(() => {
     eventsData.isReady &&
       eventsData.items.forEach((item, idx) => {
@@ -81,19 +85,18 @@ const Home = ({ state, actions, categories }) => {
 
   return (
     <>
-      <CarouselSection data={slides} />
+      <Box id="carousel-section" width="full">
+        <FullWidthCarousel slides={slides} loop={true} />
+      </Box>
       <AboutSection
+        data={publicationSliders}
         intro={introText}
-        image={introImage.sizes.medium_large}
-        tradeInsight={tradeInsight}
-        books={books}
+        image={introImage.sizes.large}
         show={show}
-        categories={categories}
       />
-      <InfoSection />
+      {/* <InfoSection /> */}
       <BlogSection linkColor={linkColor} media={media} events={eventsList} />
       {infocus.isReady && <InFocusSection articles={infocusList} />}
-      {/* <Newsletter /> */}
     </>
   );
 };
@@ -121,7 +124,8 @@ const InFocusSection = ({ articles }) => {
               >
                 <Flex
                   spacing={{ base: 0, sm: 3 }}
-                  alignItems="center"
+                  justifySelf="flex-start"
+                  alignItems="start"
                   fontWeight="medium"
                   fontSize={{ base: "xs", sm: "sm" }}
                 >
@@ -166,7 +170,7 @@ const InFocusSection = ({ articles }) => {
                   direction="row"
                   fontSize={{ base: "sm", sm: "md" }}
                   justifySelf="flex-end"
-                  alignItems="center"
+                  alignItems="start"
                 >
                   <Text
                     fontWeight="medium"
@@ -185,6 +189,9 @@ const InFocusSection = ({ articles }) => {
           );
         })}
       </VStack>
+      <Flex as="a" justify={"center"} mt="1rem" py="6" href={"/in-focus"}>
+        <ViewAllBtn text="View All" w="50%" />
+      </Flex>
     </Container>
   );
 };

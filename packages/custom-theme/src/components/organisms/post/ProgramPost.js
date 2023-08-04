@@ -5,11 +5,9 @@ import {
   Text,
   Grid,
   GridItem,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import { connect, styled, decode } from "frontity";
 import {
-  formatDate,
   formatDateWithMoment,
   formatPostData,
   getPostData,
@@ -22,7 +20,6 @@ import PostProgressBar from "./post-progressbar";
 import PostCategories from "./post-categories";
 import React, { useEffect } from "react";
 import GlassBox from "../../atoms/glassBox";
-import RelatedPosts from "../../atoms/RelatedPosts";
 import Sidebar from "../archive/sidebar";
 import SubscriptionCard from "../../atoms/subscriptionCard";
 

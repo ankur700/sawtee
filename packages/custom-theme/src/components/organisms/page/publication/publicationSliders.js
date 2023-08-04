@@ -26,7 +26,7 @@ const PublicationSliders = ({ sliderData, show, checkedItems }) => {
               <Stack key={item.name} spacing="4">
                 <Text
                   as="h3"
-                  id={item.name}
+                  id={`#${item.name}`}
                   m="0 0 2rem 0"
                   fontSize={{ base: "xl", lg: "2xl" }}
                   fontFamily="heading"
@@ -68,10 +68,7 @@ const PublicationSliders = ({ sliderData, show, checkedItems }) => {
                         }}
                       >
                         {
-                          <LinkOverlay
-                            title={sliderData.alt}
-                            href={slide.link}
-                          >
+                          <LinkOverlay title={sliderData.alt} href={slide.link}>
                             <Image
                               src={slide.src}
                               srcSet={slide.srcSet}

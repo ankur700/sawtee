@@ -1,16 +1,14 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import Chart from "../../../molecules/chart";
-import Section from "../../../atoms/section";
 import TwitterTimeline from "../../../atoms/twitterTimeline";
 import GlassBox from "../../../atoms/glassBox";
 
 const InfoSection = () => {
   return (
-    <Section
-      width="full"
+    <Stack
       id="twitter-section"
-      display="flex"
-      flexDir={{ base: "column", lg: "row" }}
+      direction={{ base: "column", lg: "row" }}
+      spacing={"10"}
     >
       <Box
         id="chart-wrapper"
@@ -33,7 +31,7 @@ const InfoSection = () => {
       >
         <TwitterTimeline height="700" width="100" handle="sawteenp" />
       </GlassBox>
-    </Section>
+    </Stack>
   );
 };
 

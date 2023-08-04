@@ -1,5 +1,5 @@
 import { styled } from "frontity";
-import Link from "../../link";
+import Link from "../link";
 
 const PrimaryMenuLink = ({ link, ariaCurrent, text }) => {
   return (
