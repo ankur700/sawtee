@@ -11,9 +11,20 @@ import {
 } from "@chakra-ui/react";
 import Carousel from "../../../molecules/Carousel";
 import Link from "../../../atoms/link";
+import React, {useEffect} from "react";
+import { formatCPTData } from "../../../helpers";
 
-const AboutSection = ({ state, data, intro, image, show }) => {
+const AboutSection = ({
+  state,
+  tradeInsight,
+  books,
+  categories,
+  intro,
+  image,
+  show,
+}) => {
   const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
+
 
   return (
     <Box width="full" overflow="hidden" id="about-section">
@@ -64,10 +75,8 @@ const AboutSection = ({ state, data, intro, image, show }) => {
           overflow="hidden"
           w="full"
         >
-          {data && data.length > 0
+          {/* {data && data.length > 0
             ? data.map((item) => {
-                console.log(item);
-
                 return (
                   <Box key={item.category_name}>
                     <Title
@@ -76,66 +85,65 @@ const AboutSection = ({ state, data, intro, image, show }) => {
                       color="whiteAlpha.900"
                     />
                     <Carousel show={show} gap={"30px"}>
-                      {item.posts.map((id) => {
-                        console.log(id);
-                        const slide = state.source["attachment"][id];
-
-                        if (slide !== undefined) {
-                          return (
-                            <Link
-                              key={slide.id}
-                              title={slide.title}
-                              maxHeight={"250px"}
-                              link={slide.acf.pub_link}
-                              pos={"relative"}
-                              w={`calc(100% / ${show} - 30px )`}
-                              _before={{
-                                content: `''`,
-                                position: "absolute",
-                                top: 0,
-                                left: "unset",
-                                width: `100%`,
-                                height: "auto",
-                                borderRadius: "15px",
-                                background: "rgba(0,0,0,0.3)",
-                                backgroundBlendMode: "overlay",
-                              }}
-                              _hover={{
-                                _before: {
-                                  background: "transparent",
-                                },
-                              }}
-                            >
-                              <Image
-                                src={slide.source_url}
-                                alt={slide.alt_text}
-                                rounded="xl"
-                                border={`1px solid`}
-                                borderColor={ImageBorderColor}
-                                objectFit="cover"
-                                style={{ width: "160px", height: "auto" }}
-                              />
-                            </Link>
-                          );
-                        } else {
-                          return (
-                            <Skeleton
-                              key={slide.id}
-                              h="auto"
-                              w="160px"
-                              rounded={"xl"}
-                              bg={"rgba(255,255,255, 0.1)"}
-                            />
-                          );
-                        }
+                      {item.posts?.map((post) => {
+                        const slide = state.source.get('/');
+                        console.log(slide);
+                        // if (slide === (undefined || null)) {
+                        //   return (
+                        //     <Skeleton
+                        //       key={post}
+                        //       h="auto"
+                        //       w="160px"
+                        //       rounded={"xl"}
+                        //       bg={"rgba(255,255,255, 0.1)"}
+                        //     />
+                        //   );
+                        // } else {
+                        //   return (
+                        //     <Link
+                        //       key={slide.id}
+                        //       title={slide.title}
+                        //       maxHeight={"250px"}
+                        //       link={slide.acf.pub_link}
+                        //       pos={"relative"}
+                        //       w={`calc(100% / ${show} - 30px )`}
+                        //       _before={{
+                        //         content: `''`,
+                        //         position: "absolute",
+                        //         top: 0,
+                        //         left: "unset",
+                        //         width: `100%`,
+                        //         height: "auto",
+                        //         borderRadius: "15px",
+                        //         background: "rgba(0,0,0,0.3)",
+                        //         backgroundBlendMode: "overlay",
+                        //       }}
+                        //       _hover={{
+                        //         _before: {
+                        //           background: "transparent",
+                        //         },
+                        //       }}
+                        //     >
+                        //       <Image
+                        //         src={slide.source_url}
+                        //         alt={slide.alt_text}
+                        //         rounded="xl"
+                        //         border={`1px solid`}
+                        //         borderColor={ImageBorderColor}
+                        //         objectFit="cover"
+                        //         style={{ width: "160px", height: "auto" }}
+                        //       />
+                        //     </Link>
+                        //   );
+                        // }
                       })}
                     </Carousel>
                   </Box>
                 );
               })
-            : null}
+            : null} */}
 
-          {/* <Box>
+          <Box>
             <Title
               py={["3", "6"]}
               text={"Trade Insight"}
@@ -273,7 +281,7 @@ const AboutSection = ({ state, data, intro, image, show }) => {
                 }
               })}
             </Carousel>
-          </Box> */}
+          </Box>
         </VStack>
       </SimpleGrid>
     </Box>

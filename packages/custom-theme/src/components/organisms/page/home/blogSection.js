@@ -3,6 +3,7 @@ import { styled } from "frontity";
 import { TopImageCard, NoImageCard } from "../../../molecules/cards";
 import { FancyTitle } from "../../../atoms/fancyTitle";
 import ViewAllBtn from "../../../atoms/ViewAllBtn";
+import React, { useEffect, useState } from "react";
 
 const CustomGrid = styled(Grid)`
   margin: 0 auto;
@@ -24,7 +25,22 @@ const CustomGrid = styled(Grid)`
   }
 `;
 
-const BlogSection = ({ events, media, linkColor }) => {
+const BlogSection = ({ eventsData, media, linkColor, categories }) => {
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    eventsData.isReady &&
+      eventsData.items.forEach((item, idx) => {
+        const post = state.source[item.type][item.id];
+        idx < 6 &&
+          setEvents((prev) => [
+            ...prev,
+            formatCPTData(state, post, categories),
+          ]);
+      });
+  }, [eventsData]);
+
+  console.log(events);
+
   return (
     <Box
       width="full"

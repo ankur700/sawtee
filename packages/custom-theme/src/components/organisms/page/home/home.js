@@ -31,51 +31,21 @@ const Home = ({ state, actions, categories }) => {
   const slides = post.acf?.slides;
   const introText = post.acf?.about_section_intro;
   const introImage = post.acf?.about_section_image;
-  const publicationSliders = post.acf?.publication_slider;
-
-  const eventsData = state.source.get("/featured-events/");
+  // const publicationSliders = post.acf?.publication_slider;
   const tradeInsight = state.source.get("/publications/trade-insight/");
   const books = state.source.get("/publications/books/");
+  const eventsData = state.source.get("/featured-events/");
   const infocus = state.source.get("/in-focus/");
-  const [infocusList, setInfocusList] = useState([]);
   const linkColor = state.theme.colors.linkColor;
-  const [eventsList, setEvetnsList] = useState([]);
   const [media, setMedia] = useState(null);
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
-  console.log(publicationSliders);
-  useEffect(() => {
-    eventsData.isReady &&
-      eventsData.items.forEach((item, idx) => {
-        const post = state.source[item.type][item.id];
-        idx < 6 &&
-          setEvetnsList((prev) => [
-            ...prev,
-            formatCPTData(state, post, categories),
-          ]);
-      });
-  }, [eventsData]);
 
   useEffect(() => {
-    if (eventsList.length > 0) {
-      setMedia({
-        alt: eventsList[0].featured_media.alt,
-        src: eventsList[0].featured_media.src,
-        srcSet: eventsList[0].featured_media.srcSet,
-      });
-    }
-  }, [eventsList]);
-
-  useEffect(() => {
-    if (infocus.isReady) {
-      infocus.items.map((item) => {
-        const post = state.source[item.type][item.id];
-        setInfocusList((prev) => [
-          ...prev,
-          formatCPTData(state, post, categories),
-        ]);
-      });
-    }
-  }, [infocus]);
+    actions.source.fetch("/publications/trade-insight/");
+    actions.source.fetch("/publications/books/");
+    actions.source.fetch("/featured-events/");
+    actions.source.fetch("/in-focus/");
+  }, []);
 
   /*
 
@@ -88,29 +58,49 @@ const Home = ({ state, actions, categories }) => {
       <Box id="carousel-section" width="full">
         <FullWidthCarousel slides={slides} loop={true} />
       </Box>
-      <AboutSection
-        data={publicationSliders}
-        intro={introText}
-        image={introImage.sizes.large}
-        show={show}
-      />
+      {tradeInsight.isReady && books.isReady && (
+        <AboutSection
+          tradeInsight={tradeInsight}
+          books={books}
+          categories={categories}
+          intro={introText}
+          image={introImage.sizes.large}
+          show={show}
+        />
+      )}
       {/* <InfoSection /> */}
-      <BlogSection linkColor={linkColor} media={media} events={eventsList} />
-      {infocus.isReady && <InFocusSection articles={infocusList} />}
+      <BlogSection
+        linkColor={linkColor}
+        media={media}
+        eventsData={eventsData}
+        categories={categories}
+      />
+      {infocus.isReady && (
+        <InFocusSection
+          articles={infocus.items}
+          state={state}
+          categories={categories}
+        />
+      )}
     </>
   );
 };
 
 export default connect(Home);
 
-const InFocusSection = ({ articles }) => {
+const InFocusSection = ({ articles, state, categories }) => {
   const itemBG = useColorModeValue("gray.200", "gray.700");
   return (
     <Container maxW="8xl" p={{ base: 5, md: 10 }}>
       <FancyTitle title={"In Focus"} />
 
       <VStack overflow="hidden" spacing={3}>
-        {articles.map((article, index) => {
+        {articles.map((item, index) => {
+          const article = formatCPTData(
+            state,
+            state.source[item.type][item.id],
+            categories
+          );
           return (
             <Fragment key={article.id}>
               {index === 0 && <Divider m={0} />}
