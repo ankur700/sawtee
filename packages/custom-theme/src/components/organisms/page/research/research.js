@@ -129,12 +129,12 @@ const Research = ({ state, news, inFocus, categories }) => {
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
               posts={inFocus}
-              news={news}
+              // news={news}
               categories={categories}
               linkColor={linkColor}
               postsLink={inFocus.link}
               newsLink={news.link}
-              showTwitterTimeline={true}
+              showTwitterTimeline={false}
               showSubscriptionBox={true}
             />
           </GridItem>

@@ -38,8 +38,6 @@ const Post = ({ state, actions, libraries }) => {
   if (!postData.isReady) return null;
   if (postData.type === "programme") {
     return <ProgramPost />;
-  } else if (postData.type === "newsletters") {
-    return <NewsletterPost />;
   } else if (postData.type === "opinion") {
     return <OpinionPost />;
   } else if (postData.type === "featured-events") {

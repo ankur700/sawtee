@@ -125,11 +125,11 @@ const NewsletterArchive = ({ state, categories, news, inFocus }) => {
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
               posts={inFocus}
-              news={news}
+              // news={news}
               linkColor={linkColor}
               postsLink={inFocus.link}
               newsLink={news.link}
-              showTwitterTimeline={true}
+              showTwitterTimeline={false}
               showSubscriptionBox={true}
             />
           </GridItem>

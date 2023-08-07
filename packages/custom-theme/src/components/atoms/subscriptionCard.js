@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "frontity";
-import { HiMailOpen, HiOutlinePaperAirplane } from "react-icons/hi";
+import { HiMailOpen } from "react-icons/hi";
 import {
   Text,
   Box,
@@ -32,24 +32,16 @@ const SubscriptionCard = ({ state, libraries }) => {
       color={useColorModeValue("gray.600", "whiteAlpha.600")}
     >
       <Box display={"flex"} justifyContent="center">
-        <HiMailOpen size={"90px"} fill={useColorModeValue("#000", "white")} />
+        <HiMailOpen size={"60px"} fill={useColorModeValue("#000", "white")} />
       </Box>
       <Heading
         as="h4"
-        fontSize={["4xl", "2xl"]}
+        fontSize={{base: 'lg', lg: 'xl'}}
         textTransform="uppercase"
         color={useColorModeValue("gray.800", "whiteAlpha.800")}
       >
         Don't miss out on our future issues!
       </Heading>
-
-      {/* <HStack margin={"0 auto"}>
-        <Checkbox defaultChecked colorScheme="primary" size="md">
-          <Text as="span" fontSize={"sm"} fontStyle="italic">
-            By subscribing you agree to receiving emails from us.
-          </Text>
-        </Checkbox>
-      </HStack> */}
 
       {post && <Html2React html={post.content.rendered} />}
     </SubscriptionBox>

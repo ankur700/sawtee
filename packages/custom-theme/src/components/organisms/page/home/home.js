@@ -74,13 +74,13 @@ const Home = ({ state, actions, categories }) => {
       />
 
       <InfoSection />
-      {eventsData.isReady && (
-        <BlogSection
-          linkColor={linkColor}
-          eventsData={eventsData}
-          categories={categories}
-        />
-      )}
+
+      <BlogSection
+        linkColor={linkColor}
+        eventsData={eventsData}
+        categories={categories}
+      />
+
       {infocus.isReady && (
         <InFocusSection
           articles={infocus.items}
@@ -98,100 +98,101 @@ const InFocusSection = ({ articles, state, categories }) => {
   const itemBG = useColorModeValue("gray.200", "gray.700");
   return (
     <Box
-      maxW="8xl"
       py={{ base: "6", md: "12", lg: "16" }}
       px={{ base: "10", md: "16", lg: "20" }}
+      mx="auto"
     >
       <FancyTitle title={"In Focus"} />
-
-      <VStack overflow="hidden" spacing={3}>
-        {articles.map((item, index) => {
-          const article = formatCPTData(
-            state,
-            state.source[item.type][item.id],
-            categories
-          );
-          return (
-            <Fragment key={article.id}>
-              {index === 0 && <Divider m={0} />}
-              <Grid
-                templateRows={{ base: "auto auto", md: "auto" }}
-                w="100%"
-                templateColumns={{ base: "unset", md: "2fr 4fr 2fr" }}
-                p={{ base: 2, sm: 4 }}
-                alignItems="center"
-                _hover={{ bg: itemBG }}
-              >
-                <Flex
-                  spacing={{ base: 0, sm: 3 }}
-                  justifySelf="flex-start"
-                  alignItems="start"
-                  fontWeight="medium"
-                  fontSize={{ base: "xs", sm: "sm" }}
+      <Container maxW="7xl">
+        <VStack overflow="hidden" spacing={3}>
+          {articles.map((item, index) => {
+            const article = formatCPTData(
+              state,
+              state.source[item.type][item.id],
+              categories
+            );
+            return (
+              <Fragment key={article.id}>
+                {index === 0 && <Divider m={0} />}
+                <Grid
+                  templateRows={{ base: "auto auto", md: "auto" }}
+                  w="100%"
+                  templateColumns={{ base: "unset", md: "2fr 4fr 2fr" }}
+                  p={{ base: 2, sm: 4 }}
+                  alignItems="center"
+                  _hover={{ bg: itemBG }}
                 >
-                  <Badge
-                    variant="subtle"
-                    colorScheme="primary"
-                    fontSize={["sm", "md"]}
-                    px="10px"
-                  >
-                    In Focus
-                  </Badge>
-                </Flex>
-
-                <Box gridColumnEnd={{ base: "span 2", md: "unset" }}>
-                  <chakra.h3
-                    as={Link}
-                    fontFamily={"heading"}
-                    href={article.link}
-                    isExternal
-                    fontWeight="bold"
-                    fontSize={["lg", "xl"]}
-                  >
-                    {article.title}
-                  </chakra.h3>
-                  <HStack pos="relative" mt="20px">
-                    <Text
-                      as="span"
-                      w="5px"
-                      h="full"
-                      bg="primary.400"
-                      rounded="lg"
-                      pos={"absolute"}
-                    />
-                    <Text noOfLines={3} pl="20px">
-                      {article.excerpt}
-                    </Text>
-                  </HStack>
-                </Box>
-
-                <Stack
-                  spacing={2}
-                  direction="row"
-                  fontSize={{ base: "sm", sm: "md" }}
-                  justifySelf="flex-end"
-                  alignItems="start"
-                >
-                  <Text
+                  <Flex
+                    spacing={{ base: 0, sm: 3 }}
+                    justifySelf="flex-start"
+                    alignItems="start"
                     fontWeight="medium"
-                    fontSize="sm"
-                    color={"gray.600"}
-                    _dark={{
-                      color: "gray.300",
-                    }}
+                    fontSize={{ base: "xs", sm: "sm" }}
                   >
-                    {formatDate(article.publishDate)}
-                  </Text>
-                </Stack>
-              </Grid>
-              <Divider m={0} />
-            </Fragment>
-          );
-        })}
-      </VStack>
-      <Flex as="a" justify={"center"} mt="1rem" py="6" href={"/in-focus"}>
-        <ViewAllBtn text="View All" w="50%" />
-      </Flex>
+                    <Badge
+                      variant="subtle"
+                      colorScheme="primary"
+                      fontSize={["sm", "md"]}
+                      px="10px"
+                    >
+                      In Focus
+                    </Badge>
+                  </Flex>
+
+                  <Box gridColumnEnd={{ base: "span 2", md: "unset" }}>
+                    <chakra.h3
+                      as={Link}
+                      fontFamily={"heading"}
+                      href={article.link}
+                      isExternal
+                      fontWeight="bold"
+                      fontSize={["lg", "xl"]}
+                    >
+                      {article.title}
+                    </chakra.h3>
+                    <HStack pos="relative" mt="20px">
+                      <Text
+                        as="span"
+                        w="5px"
+                        h="full"
+                        bg="primary.400"
+                        rounded="lg"
+                        pos={"absolute"}
+                      />
+                      <Text noOfLines={3} pl="20px">
+                        {article.excerpt}
+                      </Text>
+                    </HStack>
+                  </Box>
+
+                  <Stack
+                    spacing={2}
+                    direction="row"
+                    fontSize={{ base: "sm", sm: "md" }}
+                    justifySelf="flex-end"
+                    alignItems="start"
+                  >
+                    <Text
+                      fontWeight="medium"
+                      fontSize="sm"
+                      color={"gray.600"}
+                      _dark={{
+                        color: "gray.300",
+                      }}
+                    >
+                      {formatDate(article.publishDate)}
+                    </Text>
+                  </Stack>
+                </Grid>
+                <Divider m={0} />
+              </Fragment>
+            );
+          })}
+        </VStack>
+        <Flex as="a" justify={"center"} mt="1rem" py="6" href={"/in-focus"}>
+          <ViewAllBtn text="View All" w="50%" />
+        </Flex>
+      </Container>
     </Box>
   );
 };

@@ -51,7 +51,7 @@ export const TopImageCard = (props) => {
       rounded="lg"
       bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       shadow="lg"
-      maxW="6xl"
+      w="full"
     >
       <Box
         role="group"
@@ -106,7 +106,7 @@ export const TopImageCard = (props) => {
           as="h3"
           display="block"
           color={useColorModeValue("gray.800", "whiteAlpha.900")}
-          fontSize={{ base: "sm", md: "md", lg: "lg" }}
+          fontSize={{ base: "sm", md: "lg", lg: "xl" }}
           mt={2}
           _hover={{
             color: linkColor,
@@ -142,10 +142,8 @@ export const NoImageCard = (props) => {
       py={4}
       rounded="lg"
       shadow="lg"
+      w="full"
       bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
-      maxW="3xl"
-      minH={"12rem"}
-      height="auto"
       display="flex"
       flexDir={"column"}
       justifyContent={"center"}
