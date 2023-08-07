@@ -281,16 +281,18 @@ const PageSection = ({ section, libraries }) => {
 
       {tab_or_accordian && title !== "Strategies" && (
         <Box px="6" py="4">
-          <Tabs
-            variant="enclosed"
-            isFitted
-            colorScheme={"blue"}
-            borderColor="blue.500"
-            _selected={{ borderBottom: "none" }}
-          >
+          <Tabs variant="enclosed" isFitted colorScheme={"blue"}>
             <TabList>
               {content_repeater.map(({ tab_title }) => (
-                <Tab key={tab_title} fontSize={"lg"} fontFamily={"heading"}>
+                <Tab
+                  key={tab_title}
+                  fontSize={"lg"}
+                  fontFamily={"heading"}
+                  _selected={{
+                    borderColor: "blue.500",
+                    borderBottomColor: "transparent",
+                  }}
+                >
                   {tab_title}
                 </Tab>
               ))}

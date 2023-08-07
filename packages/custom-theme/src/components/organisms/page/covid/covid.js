@@ -15,26 +15,15 @@ import Sidebar from "../../../organisms/archive/sidebar";
 import Loading from "../../../atoms/loading";
 import CoverImage from "../../../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
 
-import React from "react";
 import { formatCPTData } from "../../../helpers";
 import CovidItemCard from "./covidItemCard";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
-const Covid = ({ state, categories }) => {
+const Covid = ({ state, categories, news, inFocus }) => {
   const data = state.source.get(state.router.link);
-  const [news, setNews] = React.useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const linkColor = state.theme.colors.linkColor;
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const newsData = state.source.get("/sawtee-in-media/");
-  React.useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
-      });
-    }
-  }, [newsData]);
 
   // Load the post, but only if the data is ready.
   if (!data.isReady) return <Loading />;
@@ -87,10 +76,10 @@ const Covid = ({ state, categories }) => {
         </Box>
       </Box>
 
-      <Box as={Section} pb="80px" size={size ? size : "huge"} pt="50px">
+      <Box as={Section} pb="80px" size={size || "huge"} pt="50px">
         <Grid
           templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-          gap={10}
+          gap={6}
           pos={"relative"}
           w="full"
         >
@@ -115,9 +104,11 @@ const Covid = ({ state, categories }) => {
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
+              posts={inFocus}
               news={news}
               linkColor={linkColor}
-              newsLink={newsData.link}
+              postsLink={inFocus.link}
+              newsLink={inFocus.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}
             />

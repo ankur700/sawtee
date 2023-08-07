@@ -66,6 +66,7 @@ const SidebarWidget = ({
 
       {array.map(({ type, id }, index) => {
         const post = formatCPTData(state, state.source[type][id], categories);
+        
         if (!post) {
           return (
             <Box key={post.id} display={"flex"} flexDir={"column"} gap={2}>

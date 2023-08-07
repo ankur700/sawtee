@@ -1,7 +1,5 @@
-import { useArchiveInfiniteScroll } from "@frontity/hooks";
 import { connect } from "frontity";
-import React from "react";
-import Loading from "../../../atoms/loading";
+import { useEffect } from "react";
 import MediaArticle from "./MediaArticle";
 import { LightPatternBox } from "../../../styles/pattern-box";
 import Publication1 from "../../../../assets/publications-1-resized.jpg";
@@ -20,40 +18,16 @@ import Sidebar from "../../../organisms/archive/sidebar";
 import { formatCPTData } from "../../../helpers";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
-const SawteeInMedia = ({ state, categories }) => {
+const SawteeInMedia = ({ state, actions, categories, inFocus }) => {
   const postData = state.source.get(state.router.link);
   const programeData = state.source.get("/programme/");
   const linkColor = state.theme.colors.linkColor;
-  const [programs, setPrograms] = React.useState([]);
-  const [mediaNews, setMediaNews] = React.useState([]);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const sectionSize = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
-  React.useEffect(() => {
-    if (postData.isReady && postData.page === 1) {
-      postData.items.forEach(({ type, id }, idx) => {
-        if (idx <= 2) {
-          const post = state.source[type][id];
-          setMediaNews((prev) => [
-            ...prev,
-            formatCPTData(state, post, categories),
-          ]);
-        }
-      });
-    }
-  }, [postData]);
-
-  React.useEffect(() => {
-    if (programeData.isReady) {
-      programeData.items.forEach((item) => {
-        const post = state.source[item.type][item.id];
-        setPrograms((prev) => [
-          ...prev,
-          formatCPTData(state, post, categories),
-        ]);
-      });
-    }
-  }, [programeData]);
+  useEffect(() => {
+    actions.source.fetch("/programme/");
+  }, []);
 
   return (
     <LightPatternBox
@@ -106,7 +80,7 @@ const SawteeInMedia = ({ state, categories }) => {
       <Section
         // bg={useColorModeValue("whiteAlpha.700", "gray.700")}
         pb="80px"
-        size={sectionSize ? sectionSize : "full"}
+        size={sectionSize || "full"}
         px={{ base: "32px", md: "0" }}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
@@ -142,11 +116,10 @@ const SawteeInMedia = ({ state, categories }) => {
             justifyContent={"center"}
           >
             <Sidebar
-              posts={mediaNews}
-              news={programs}
-              postType={"Media Mentions"}
+              posts={inFocus}
+              news={programeData}
               linkColor={linkColor}
-              postsLink={postData.link}
+              postsLink={inFocus.link}
               newsLink={programeData.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}

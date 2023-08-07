@@ -19,7 +19,7 @@ import { formatCPTData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
-const EventsArchive = ({ state, actions, categories, news }) => {
+const EventsArchive = ({ state, actions, categories, news, inFocus }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const size = useBreakpointValue(["sm", "md", "lg", "huge", "max"]);
@@ -124,12 +124,11 @@ const EventsArchive = ({ state, actions, categories, news }) => {
             w="full"
           >
             <Sidebar
-              posts={postData}
+              posts={inFocus}
               news={news}
-              postType={"Events"}
               categories={categories}
               linkColor={linkColor}
-              postsLink={postData.link}
+              postsLink={inFocus.link}
               newsLink={news.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}

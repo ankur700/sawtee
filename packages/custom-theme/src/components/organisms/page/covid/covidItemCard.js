@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
   Flex,
   Box,
@@ -9,10 +8,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { formatDateWithMoment } from "../../../helpers";
-import Link from "@frontity/components/link";
+import Link from "../../../atoms/link";
 import { BsArrowUpRight } from "react-icons/bs";
 
 const CovidItemCard = ({ post }) => {
+  console.log(post);
   return (
     <Box
       w="full"
@@ -47,8 +47,8 @@ const CovidItemCard = ({ post }) => {
             {formatDateWithMoment(post.publishDate, "MMM YYYY")}
           </Text>
         </HStack>
-        <Heading color={"black"} fontSize={"lg"}>
-          {post.title}
+        <Heading as="h3" color={"black"} fontSize={"lg"}>
+          <Link link={post.link}>{post.title}</Link>
         </Heading>
         <HStack
           shouldWrapChildren="true"
@@ -57,12 +57,12 @@ const CovidItemCard = ({ post }) => {
         >
           {post.acf.authors
             ? post.acf.authors?.map(({ author }, idx) => {
-              return (
-                <Text key={author} color={"gray.600"} fontSize="sm">
-                  {idx === post.acf.authors.length ? author + " | " : author}
-                </Text>
-              );
-            })
+                return (
+                  <Text key={author} color={"gray.600"} fontSize="sm">
+                    {idx === post.acf.authors.length ? author + " | " : author}
+                  </Text>
+                );
+              })
             : null}
         </HStack>
       </VStack>
@@ -80,21 +80,7 @@ const CovidItemCard = ({ post }) => {
           </Link>
           <BsArrowUpRight />
         </Flex>
-        {/* <Flex
-          p={4}
-          alignItems="center"
-          justifyContent={"space-between"}
-          roundedBottom={"sm"}
-          borderLeft={"1px"}
-          cursor="pointer"
-          onClick={() => setLiked(!liked)}
-        >
-          {liked ? (
-            <BsHeartFill fill="red" fontSize={"24px"} />
-          ) : (
-            <BsHeart fontSize={"24px"} />
-          )}
-        </Flex> */}
+
       </HStack>
     </Box>
   );

@@ -1,9 +1,9 @@
-import { Grid, GridItem, Box, Flex, Button } from "@chakra-ui/react";
-import { styled } from "frontity";
+import { Grid, GridItem, Box, Flex } from "@chakra-ui/react";
+import { connect, styled } from "frontity";
 import { TopImageCard, NoImageCard } from "../../../molecules/cards";
 import { FancyTitle } from "../../../atoms/fancyTitle";
 import ViewAllBtn from "../../../atoms/ViewAllBtn";
-import React, { useEffect, useState } from "react";
+import { formatCPTData } from "../../../helpers";
 
 const CustomGrid = styled(Grid)`
   margin: 0 auto;
@@ -23,24 +23,10 @@ const CustomGrid = styled(Grid)`
       grid-row: 2 / span 1;
     }
   }
+
 `;
 
-const BlogSection = ({ eventsData, media, linkColor, categories }) => {
-  const [events, setEvents] = useState([]);
-  useEffect(() => {
-    eventsData.isReady &&
-      eventsData.items.forEach((item, idx) => {
-        const post = state.source[item.type][item.id];
-        idx < 6 &&
-          setEvents((prev) => [
-            ...prev,
-            formatCPTData(state, post, categories),
-          ]);
-      });
-  }, [eventsData]);
-
-  console.log(events);
-
+const BlogSection = ({ state, eventsData, linkColor, categories }) => {
   return (
     <Box
       width="full"
@@ -51,38 +37,49 @@ const BlogSection = ({ eventsData, media, linkColor, categories }) => {
       id="blog-section"
     >
       <FancyTitle title={"Policy Outreach"} />
+
       <CustomGrid
         className="band"
-        templateColumns={{ base: "1fr", lg: "repeat(3, 1fr)" }}
-        templateRows={{ base: "auto", lg: "repeat(3, 1fr)" }}
+        templateColumns={{ base: "1fr", md: "2fr", lg: "repeat(3, 1fr)" }}
+        templateRows={{ base: "auto", md: "auto", lg: "repeat(3, 1fr)" }}
       >
-        {events
-          ? events.map((article, i) => {
-              return (
-                <GridItem key={article.id} id={"item-" + (i + 1)}>
-                  {i === 0 ? (
-                    <TopImageCard
-                      title={article.title}
-                      categories={article.categories}
-                      featured_media={media}
-                      excerpt={article.excerpt}
-                      target={article.link}
-                      linkColor={linkColor}
-                    />
-                  ) : (
-                    <NoImageCard
-                      title={article.title}
-                      categories={article.categories}
-                      excerpt={article.excerpt}
-                      target={article.link}
-                      linkColor={linkColor}
-                    />
-                  )}
-                </GridItem>
-              );
-            })
-          : null}
+        {eventsData.items.length > 0 &&
+          eventsData.items.slice(0, 6).map((item, i) => {
+            const article = formatCPTData(
+              state,
+              state.source[item.type][item.id],
+              categories
+            );
+
+            return (
+              <GridItem key={article.id} id={"item-" + (i + 1)}>
+                {i === 0 ? (
+                  <TopImageCard
+                    title={article.title}
+                    categories={article.categories}
+                    featured_media={{
+                      alt: article.featured_media.alt,
+                      src: article.featured_media.src,
+                      srcSet: article.featured_media.srcSet,
+                    }}
+                    excerpt={article.excerpt}
+                    target={article.link}
+                    linkColor={linkColor}
+                  />
+                ) : (
+                  <NoImageCard
+                    title={article.title}
+                    categories={article.categories}
+                    excerpt={article.excerpt}
+                    target={article.link}
+                    linkColor={linkColor}
+                  />
+                )}
+              </GridItem>
+            );
+          })}
       </CustomGrid>
+
       <Flex
         as="a"
         justify={"center"}
@@ -96,4 +93,4 @@ const BlogSection = ({ eventsData, media, linkColor, categories }) => {
   );
 };
 
-export default BlogSection;
+export default connect(BlogSection);

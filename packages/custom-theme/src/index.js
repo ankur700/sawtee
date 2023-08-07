@@ -6,9 +6,9 @@ import {
   PublicationArchiveHandler,
   PublicationsHandler,
   MenuHandler,
-  CategoriesHandler
+  CategoriesHandler,
+  EventsHandler,
 } from "./components/handlers";
-
 
 const customTheme = {
   name: "custom-theme",
@@ -97,9 +97,8 @@ const customTheme = {
         await actions.source.fetch("/menu/footer/");
         await actions.source.fetch("get-all-categories");
         await actions.source.fetch("/subscription-page");
-        // await actions.source.fetch("/featured-events");
+        // await actions.source.fetch("/events");
         await actions.source.fetch("get-publications-categories-posts");
-        // await actions.source.fetch("/in-focus");
       },
     },
   },
@@ -116,6 +115,7 @@ const customTheme = {
         CategoriesHandler,
         PublicationArchiveHandler,
         PublicationsHandler,
+        EventsHandler,
       ],
     },
   },

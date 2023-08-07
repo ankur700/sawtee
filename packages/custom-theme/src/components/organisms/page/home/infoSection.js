@@ -8,6 +8,8 @@ const InfoSection = () => {
     <Stack
       id="twitter-section"
       direction={{ base: "column", lg: "row" }}
+      py={{ base: "6", md: "12", lg: "16" }}
+      px={{ base: "10", md: "16", lg: "20" }}
       spacing={"10"}
     >
       <Box
@@ -29,7 +31,12 @@ const InfoSection = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <TwitterTimeline height="700" width="100" handle="sawteenp" />
+        <TwitterTimeline
+          maxH="700"
+          height="500px"
+          width="100"
+          handle="sawteenp"
+        />
       </GlassBox>
     </Stack>
   );

@@ -1,18 +1,11 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";
-import { formatPostData, getPostData } from "../../../helpers";
-import FeaturedMedia from "../../post/featured-media";
-import PostHeader from "../../post/post-header";
-import { LightPatternBox } from "../../../styles/pattern-box";
 import Section from "../../../styles/section";
 import GlassBox from "../../../atoms/glassBox";
 
-const Career = ({ state, libraries }) => {
-  const postData = getPostData(state);
-  const post = formatPostData(state, postData);
+const Career = ({ state, post, postData, libraries }) => {
   const Html2React = libraries.html2react.Component;
-  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
@@ -21,73 +14,30 @@ const Career = ({ state, libraries }) => {
   if (!postData.isReady) return null;
 
   return (
-    <LightPatternBox
-      bg={patternBoxColor}
-      showPattern={state.theme.showBackgroundPattern}
-      pt="0"
+    <Section
+      px={"32px"}
+      w="full"
+      size={"lg"}
+      pt="50px"
+      pb={"80px"}
+      fontSize={["md", "lg", "xl"]}
+      color={contentColor}
     >
-      <Box pos="relative">
-        {post.featured_media != null && (
-          <FeaturedMedia
-            mt="0"
-            height={"350px"}
-            id={post.featured_media.id}
-            objectFit={"contain"}
-            _after={{
-              display: "block",
-              content: '""',
-              width: "100%",
-              height: "350px",
-              background: "rgba(0,0,0,0.4)",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-            }}
-          />
-        )}
-        <PostHeader
-          mt={{ base: "20px", lg: "4rem" }}
-          px={{ base: "32px", md: "0" }}
-          color={"whiteAlpha.900"}
-          categories={post.categories}
-          heading={post.title}
-          author={post.author}
-          date={post.publishDate}
-          isPage={postData.isPage}
-          position="absolute"
-          bottom="15%"
-          left="15%"
-        />
-      </Box>
-      {/* Look at the settings to see if we should include the featured image */}
-      <Section
-        px={"32px"}
-        w="full"
-        size={"lg"}
-        pt="50px"
-        pb={"80px"}
-        fontSize={["md", "lg", "xl"]}
-        color={contentColor}
-      >
-        <GlassBox border="none">
-          {/* Render the content using the Html2React component so the HTML is processed
+      <GlassBox border="none">
+        {/* Render the content using the Html2React component so the HTML is processed
        by the processors we included in the libraries.html2react.processors array. */}
-          <Content
-            as={Section}
-            px={{ base: "32px", md: "0" }}
-            size="sm"
-            paddingBlock="50px"
-            fontSize={["sm", "md"]}
-            color={contentColor}
-          >
-            <Html2React html={post.content} />
-          </Content>
-        </GlassBox>
-      </Section>
-      ;
-    </LightPatternBox>
+        <Content
+          as={Section}
+          px={{ base: "32px", md: "0" }}
+          size="sm"
+          paddingBlock="50px"
+          fontSize={["sm", "md"]}
+          color={contentColor}
+        >
+          <Html2React html={post.content} />
+        </Content>
+      </GlassBox>
+    </Section>
   );
 };
 

@@ -17,7 +17,7 @@ import ResearchList from "./researchList";
 import { formatCPTData } from "../../../helpers";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
-const Research = ({ state, categories }) => {
+const Research = ({ state, news, inFocus, categories }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
@@ -25,9 +25,7 @@ const Research = ({ state, categories }) => {
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const [researches, setResearches] = useState([]);
   const [tagsArray, setTagsArray] = useState([]);
-  const [latestResearch, setLatestResearch] = useState([]);
-  const newsData = state.source.get("/sawtee-in-media/");
-  const [news, setNews] = useState([]);
+
   useEffect(() => {
     if (postData.isReady) {
       postData.items.map(({ type, id }, idx) => {
@@ -36,37 +34,21 @@ const Research = ({ state, categories }) => {
           ...prev,
           formatCPTData(state, post, categories),
         ]);
-        if (postData.page === 1 && idx <= 2) {
-          setLatestResearch((prev) => [
-            ...prev,
-            formatCPTData(state, post, categories),
-          ]);
-        }
       });
     }
   }, [postData]);
 
   useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach(({ type, id }) => {
-        const post = state.source[type][id];
-        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
-      });
-    }
-  }, [newsData]);
-
-  useEffect(() => {
     let array = new Map();
     researches.forEach((research) => {
       research.tags.map((tag) => {
-        array.set(`${tag.name}`, { id: tag.id, name: tag.name, posts: []});
+        array.set(`${tag.name}`, { id: tag.id, name: tag.name, posts: [] });
       });
     });
     if (array.size > 0) {
       return setTagsArray(Array.from(array.values()));
     }
   }, [researches]);
-
 
   // console.log(tagsArray);
 
@@ -126,7 +108,7 @@ const Research = ({ state, categories }) => {
       </Box>
       <Section
         pb="80px"
-        size={size ? size : "full"}
+        size={size || "full"}
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
@@ -146,12 +128,12 @@ const Research = ({ state, categories }) => {
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
-              posts={latestResearch}
+              posts={inFocus}
               news={news}
-              postType={"Researches"}
+              categories={categories}
               linkColor={linkColor}
-              postsLink={postData.link}
-              newsLink={newsData.link}
+              postsLink={inFocus.link}
+              newsLink={news.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}
             />

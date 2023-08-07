@@ -2,20 +2,22 @@ import { connect } from "frontity";
 import { getPostData, formatPostData } from "../../helpers";
 import KnowUs from "./KnowUs";
 import OurWork from "./OurWork";
-
+import Contact from "./contact/contact";
+import Career from "./career/career";
 import Switch from "@frontity/components/switch";
 import { LightPatternBox } from "../../styles/pattern-box";
 import FeaturedMedia from "../post/featured-media";
 import PostHeader from "../post/post-header";
 import { Box, useColorModeValue } from "@chakra-ui/react";
+import Loading from "../../atoms/loading";
 
-const Page = ({ state, libraries, categories }) => {
+const Page = ({ state, libraries }) => {
   const postData = getPostData(state);
   const linkColor = state.theme.colors.linkColor;
   const post = formatPostData(state, postData);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
 
-  if (!postData.isReady) return null;
+  if (!postData.isReady) return <Loading />;
 
   return (
     <LightPatternBox
@@ -66,6 +68,20 @@ const Page = ({ state, libraries, categories }) => {
         />
         <KnowUs
           when={postData.route === "/about/"}
+          post={post}
+          postData={postData}
+          linkColor={linkColor}
+          libraries={libraries}
+        />
+        <Career
+          when={postData.route === "/career/"}
+          post={post}
+          postData={postData}
+          linkColor={linkColor}
+          libraries={libraries}
+        />
+        <Contact
+          when={postData.route === "/contact/"}
           post={post}
           postData={postData}
           linkColor={linkColor}

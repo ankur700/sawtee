@@ -52,6 +52,27 @@ export const MenuHandler = {
 };
 
 
+export const EventsHandler = {
+  pattern: "/events",
+  func: async ({ route, params, state, libraries }) => {
+    // Get the posts from those categories.
+    const postsResponse = await libraries.source.api.get({
+      endpoint: "featured-events",
+      params: { _embed: true, per_page: 6 },
+    });
+    const items = await libraries.source.populate({
+      state,
+      response: postsResponse,
+    });
+
+    // Populate state.source.data with the proper info about this URL.
+    Object.assign(state.source.data[route], {
+      items,
+    });
+  },
+};
+
+
 export const PublicationArchiveHandler = {
   pattern: "/publications/:slug",
   func: async ({ route, params, state, libraries }) => {

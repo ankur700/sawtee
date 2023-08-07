@@ -19,7 +19,7 @@ import { useState, useEffect } from "react";
 import { formatCPTData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
 
-const Publications = ({ state, categories, news }) => {
+const Publications = ({ state, categories, news, inFocus }) => {
   const data = state.source.get(state.router.link);
   const postData = state.source.get("get-publications-categories-posts");
   const [publicationCategories, setPublicationCategories] = useState([]);
@@ -158,9 +158,11 @@ const Publications = ({ state, categories, news }) => {
             alignItems={"center"}
           >
             <Sidebar
+              posts={inFocus}
               news={news}
               categories={categories}
               linkColor={linkColor}
+              postsLink={inFocus.link}
               newsLink={news.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}

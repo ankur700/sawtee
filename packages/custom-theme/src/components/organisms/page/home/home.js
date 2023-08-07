@@ -1,6 +1,5 @@
 import { connect } from "frontity";
-
-import React, { useEffect, useState, Fragment } from "react";
+import { useEffect, Fragment } from "react";
 import {
   Badge,
   useBreakpointValue,
@@ -31,21 +30,27 @@ const Home = ({ state, actions, categories }) => {
   const slides = post.acf?.slides;
   const introText = post.acf?.about_section_intro;
   const introImage = post.acf?.about_section_image;
-  // const publicationSliders = post.acf?.publication_slider;
+  const publicationSliders = post.acf?.publication_slider;
   const tradeInsight = state.source.get("/publications/trade-insight/");
   const books = state.source.get("/publications/books/");
-  const eventsData = state.source.get("/featured-events/");
+  const eventsData = state.source.get("/events/");
   const infocus = state.source.get("/in-focus/");
   const linkColor = state.theme.colors.linkColor;
-  const [media, setMedia] = useState(null);
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
   useEffect(() => {
-    actions.source.fetch("/publications/trade-insight/");
-    actions.source.fetch("/publications/books/");
-    actions.source.fetch("/featured-events/");
+    actions.source.fetch("/events/");
     actions.source.fetch("/in-focus/");
   }, []);
+
+  useEffect(() => {
+    actions.source.fetch(
+      `/publications/${publicationSliders[0].category_slug}/`
+    );
+    actions.source.fetch(
+      `/publications/${publicationSliders[1].category_slug}/`
+    );
+  }, [publicationSliders]);
 
   /*
 
@@ -58,23 +63,24 @@ const Home = ({ state, actions, categories }) => {
       <Box id="carousel-section" width="full">
         <FullWidthCarousel slides={slides} loop={true} />
       </Box>
-      {tradeInsight.isReady && books.isReady && (
-        <AboutSection
-          tradeInsight={tradeInsight}
-          books={books}
+
+      <AboutSection
+        tradeInsight={tradeInsight}
+        books={books}
+        categories={categories}
+        intro={introText}
+        image={introImage.sizes.large}
+        show={show}
+      />
+
+      <InfoSection />
+      {eventsData.isReady && (
+        <BlogSection
+          linkColor={linkColor}
+          eventsData={eventsData}
           categories={categories}
-          intro={introText}
-          image={introImage.sizes.large}
-          show={show}
         />
       )}
-      {/* <InfoSection /> */}
-      <BlogSection
-        linkColor={linkColor}
-        media={media}
-        eventsData={eventsData}
-        categories={categories}
-      />
       {infocus.isReady && (
         <InFocusSection
           articles={infocus.items}
@@ -91,7 +97,11 @@ export default connect(Home);
 const InFocusSection = ({ articles, state, categories }) => {
   const itemBG = useColorModeValue("gray.200", "gray.700");
   return (
-    <Container maxW="8xl" p={{ base: 5, md: 10 }}>
+    <Box
+      maxW="8xl"
+      py={{ base: "6", md: "12", lg: "16" }}
+      px={{ base: "10", md: "16", lg: "20" }}
+    >
       <FancyTitle title={"In Focus"} />
 
       <VStack overflow="hidden" spacing={3}>
@@ -182,6 +192,6 @@ const InFocusSection = ({ articles, state, categories }) => {
       <Flex as="a" justify={"center"} mt="1rem" py="6" href={"/in-focus"}>
         <ViewAllBtn text="View All" w="50%" />
       </Flex>
-    </Container>
+    </Box>
   );
 };

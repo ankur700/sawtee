@@ -14,31 +14,20 @@ import Section from "../../../styles/section";
 import Sidebar from "../../../organisms/archive/sidebar";
 import Loading from "../../../atoms/loading";
 import Publication1 from "../../../../assets/publications-1-resized.jpg";
-import React, { useState, useEffect } from "react";
 import { formatCPTData } from "../../../helpers";
 import NewsletterCard from "./newsletterCard";
 import Pagination from "../../../organisms/archive/pagination";
 
-const NewsletterArchive = ({ state, categories }) => {
+const NewsletterArchive = ({ state, categories, news, inFocus }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
-  const [news, setNews] = useState([]);
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-  const newsData = state.source.get("/sawtee-in-media");
-  useEffect(() => {
-    if (newsData.isReady) {
-      newsData.items.forEach(({ type, id }) => {
-        const post = state.source[type][id];
-        setNews((prev) => [...prev, formatCPTData(state, post, categories)]);
-      });
-    }
-  }, [newsData]);
 
   // Once the post has loaded in the DOM, prefetch both the
   // home posts and the list component so if the user visits
@@ -98,7 +87,7 @@ const NewsletterArchive = ({ state, categories }) => {
       <Box
         as={Section}
         pb="80px"
-        size={size ? size : "full"}
+        size={size || "full"}
         px={"32px"}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
@@ -135,9 +124,11 @@ const NewsletterArchive = ({ state, categories }) => {
 
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
+              posts={inFocus}
               news={news}
               linkColor={linkColor}
-              newsLink={newsData.link}
+              postsLink={inFocus.link}
+              newsLink={news.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}
             />

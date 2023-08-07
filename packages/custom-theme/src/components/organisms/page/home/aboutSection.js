@@ -8,10 +8,10 @@ import {
   VStack,
   Image,
   useColorModeValue,
+  Flex,
 } from "@chakra-ui/react";
 import Carousel from "../../../molecules/Carousel";
 import Link from "../../../atoms/link";
-import React, {useEffect} from "react";
 import { formatCPTData } from "../../../helpers";
 
 const AboutSection = ({
@@ -24,7 +24,6 @@ const AboutSection = ({
   show,
 }) => {
   const ImageBorderColor = useColorModeValue("gray.900", "whiteAlpha.900");
-
 
   return (
     <Box width="full" overflow="hidden" id="about-section">
@@ -70,216 +69,190 @@ const AboutSection = ({
         <VStack
           spacing={8}
           align="center"
-          bg={"rgba(70,55,55, 1)"}
+          bg={"rgba(70,55,55, 0.85)"}
+          bgBlendMode={"lighten"}
+          _dark={{
+            background: "rgba(70,55,55, 1)",
+          }}
           p={6}
           overflow="hidden"
           w="full"
         >
-          {/* {data && data.length > 0
-            ? data.map((item) => {
-                return (
-                  <Box key={item.category_name}>
-                    <Title
-                      py={["3", "6"]}
-                      text={item.category_name}
-                      color="whiteAlpha.900"
-                    />
-                    <Carousel show={show} gap={"30px"}>
-                      {item.posts?.map((post) => {
-                        const slide = state.source.get('/');
-                        console.log(slide);
-                        // if (slide === (undefined || null)) {
-                        //   return (
-                        //     <Skeleton
-                        //       key={post}
-                        //       h="auto"
-                        //       w="160px"
-                        //       rounded={"xl"}
-                        //       bg={"rgba(255,255,255, 0.1)"}
-                        //     />
-                        //   );
-                        // } else {
-                        //   return (
-                        //     <Link
-                        //       key={slide.id}
-                        //       title={slide.title}
-                        //       maxHeight={"250px"}
-                        //       link={slide.acf.pub_link}
-                        //       pos={"relative"}
-                        //       w={`calc(100% / ${show} - 30px )`}
-                        //       _before={{
-                        //         content: `''`,
-                        //         position: "absolute",
-                        //         top: 0,
-                        //         left: "unset",
-                        //         width: `100%`,
-                        //         height: "auto",
-                        //         borderRadius: "15px",
-                        //         background: "rgba(0,0,0,0.3)",
-                        //         backgroundBlendMode: "overlay",
-                        //       }}
-                        //       _hover={{
-                        //         _before: {
-                        //           background: "transparent",
-                        //         },
-                        //       }}
-                        //     >
-                        //       <Image
-                        //         src={slide.source_url}
-                        //         alt={slide.alt_text}
-                        //         rounded="xl"
-                        //         border={`1px solid`}
-                        //         borderColor={ImageBorderColor}
-                        //         objectFit="cover"
-                        //         style={{ width: "160px", height: "auto" }}
-                        //       />
-                        //     </Link>
-                        //   );
-                        // }
-                      })}
-                    </Carousel>
-                  </Box>
-                );
-              })
-            : null} */}
-
-          <Box>
+          <Box px={6}>
             <Title
               py={["3", "6"]}
               text={"Trade Insight"}
               color="whiteAlpha.900"
             />
             <Carousel show={show} gap={"30px"}>
-              {tradeInsight.items.map(({ type, id }) => {
-                const slide = formatCPTData(
-                  state,
-                  state.source[type][id],
-                  categories
-                );
+              {tradeInsight.isReady && tradeInsight.items.length > 0 ? (
+                tradeInsight.items.map(({ type, id }) => {
+                  const slide = formatCPTData(
+                    state,
+                    state.source[type][id],
+                    categories
+                  );
 
-                if (slide !== undefined) {
-                  return (
-                    <Link
-                      key={slide.id}
-                      title={slide.title}
-                      maxHeight={"250px"}
-                      link={slide.acf.pub_link}
-                      pos={"relative"}
-                      w={`calc(100% / ${show} - 30px )`}
-                      _before={{
-                        content: `''`,
-                        position: "absolute",
-                        top: 0,
-                        left: "unset",
-                        width: `100%`,
-                        height: "auto",
-                        borderRadius: "15px",
-                        background: "rgba(0,0,0,0.3)",
-                        backgroundBlendMode: "overlay",
-                      }}
-                      _hover={{
-                        _before: {
-                          background: "transparent",
-                        },
-                      }}
-                    >
-                      <Image
-                        src={slide.featured_media.src}
-                        srcSet={
-                          slide.srcSet
-                            ? slide.srcSet
-                            : slide.featured_media.srcSet
-                        }
-                        alt={slide.title}
+                  if (slide !== undefined) {
+                    return (
+                      <Link
+                        key={slide.id}
                         title={slide.title}
-                        rounded="xl"
-                        border={`1px solid`}
-                        borderColor={ImageBorderColor}
-                        objectFit="cover"
-                        style={{ width: "160px", height: "auto" }}
-                      />
-                    </Link>
-                  );
-                } else {
-                  return (
-                    <Skeleton
-                      key={slide.id}
-                      h="auto"
-                      w="160px"
-                      rounded={"xl"}
-                      bg={"rgba(255,255,255, 0.1)"}
-                    />
-                  );
-                }
-              })}
+                        maxHeight={"250px"}
+                        link={slide.acf.pub_link}
+                        pos={"relative"}
+                        w={`calc(100% / ${show} - 30px )`}
+                        _before={{
+                          content: `''`,
+                          position: "absolute",
+                          top: 0,
+                          left: "unset",
+                          width: `100%`,
+                          height: "auto",
+                          borderRadius: "15px",
+                          background: "rgba(0,0,0,0.3)",
+                          backgroundBlendMode: "overlay",
+                        }}
+                        _hover={{
+                          _before: {
+                            background: "transparent",
+                          },
+                        }}
+                      >
+                        <Image
+                          src={slide.featured_media.src}
+                          srcSet={
+                            slide.srcSet
+                              ? slide.srcSet
+                              : slide.featured_media.srcSet
+                          }
+                          alt={slide.title}
+                          title={slide.title}
+                          rounded="xl"
+                          border={`1px solid`}
+                          borderColor={ImageBorderColor}
+                          objectFit="cover"
+                          style={{ width: "160px", height: "auto" }}
+                        />
+                      </Link>
+                    );
+                  }
+                })
+              ) : (
+                <Flex
+                  mt="3"
+                  rounded="xl"
+                  flexDir="row"
+                  gap={{ base: "10px", sm: "20px", md: "30px" }}
+                  className="wrapper"
+                >
+                  <Skeleton
+                    h="auto"
+                    w="160px"
+                    rounded={"xl"}
+                    bg={"rgba(255,255,255, 0.1)"}
+                  ></Skeleton>
+                  <Skeleton
+                    h="auto"
+                    w="160px"
+                    rounded={"xl"}
+                    bg={"rgba(255,255,255, 0.1)"}
+                  ></Skeleton>
+                  <Skeleton
+                    h="auto"
+                    w="160px"
+                    rounded={"xl"}
+                    bg={"rgba(255,255,255, 0.1)"}
+                  ></Skeleton>
+                </Flex>
+              )}
             </Carousel>
           </Box>
 
-          <Box>
+          <Box px={6}>
             <Title py={["3", "6"]} text={"Books"} color="whiteAlpha.900" />
             <Carousel show={show} gap={"30px"}>
-              {books.items.map(({ type, id }) => {
-                const slide = formatCPTData(
-                  state,
-                  state.source[type][id],
-                  categories
-                );
+              {books.isReady && books.items.length > 0 ? (
+                books.items.map(({ type, id }) => {
+                  const slide = formatCPTData(
+                    state,
+                    state.source[type][id],
+                    categories
+                  );
 
-                if (slide !== undefined) {
-                  return (
-                    <Link
-                      key={slide.id}
-                      title={slide.title}
-                      maxHeight={"250px"}
-                      link={slide.acf.pub_link}
-                      pos={"relative"}
-                      w={`calc(100% / ${show} - 30px )`}
-                      _before={{
-                        content: `''`,
-                        position: "absolute",
-                        top: 0,
-                        left: "unset",
-                        width: `100%`,
-                        height: "auto",
-                        borderRadius: "15px",
-                        background: "rgba(0,0,0,0.3)",
-                        backgroundBlendMode: "overlay",
-                      }}
-                      _hover={{
-                        _before: {
-                          background: "transparent",
-                        },
-                      }}
-                    >
-                      <Image
-                        src={slide.featured_media.src}
-                        srcSet={
-                          slide.srcSet
-                            ? slide.srcSet
-                            : slide.featured_media.srcSet
-                        }
-                        alt={slide.title}
+                  if (slide !== undefined) {
+                    return (
+                      <Link
+                        key={slide.id}
                         title={slide.title}
-                        rounded="xl"
-                        border={`1px solid`}
-                        borderColor={ImageBorderColor}
-                        objectFit="cover"
-                        style={{ width: "160px", height: "auto" }}
-                      />
-                    </Link>
-                  );
-                } else {
-                  return (
-                    <Skeleton
-                      key={slide.id}
-                      h="auto"
-                      w="160px"
-                      rounded={"xl"}
-                      bg={"rgba(255,255,255, 0.1)"}
-                    ></Skeleton>
-                  );
-                }
-              })}
+                        maxHeight={"250px"}
+                        link={slide.acf.pub_link}
+                        pos={"relative"}
+                        w={`calc(100% / ${show} - 30px )`}
+                        _before={{
+                          content: `''`,
+                          position: "absolute",
+                          top: 0,
+                          left: "unset",
+                          width: `100%`,
+                          height: "auto",
+                          borderRadius: "15px",
+                          background: "rgba(0,0,0,0.3)",
+                          backgroundBlendMode: "overlay",
+                        }}
+                        _hover={{
+                          _before: {
+                            background: "transparent",
+                          },
+                        }}
+                      >
+                        <Image
+                          src={slide.featured_media.src}
+                          srcSet={
+                            slide.srcSet
+                              ? slide.srcSet
+                              : slide.featured_media.srcSet
+                          }
+                          alt={slide.title}
+                          title={slide.title}
+                          rounded="xl"
+                          border={`1px solid`}
+                          borderColor={ImageBorderColor}
+                          objectFit="cover"
+                          style={{ width: "160px", height: "auto" }}
+                        />
+                      </Link>
+                    );
+                  }
+                })
+              ) : (
+                <Flex
+                  mt="3"
+                  rounded="xl"
+                  flexDir="row"
+                  gap={{ base: "10px", sm: "20px", md: "30px" }}
+                  className="wrapper"
+                >
+                  <Skeleton
+                    h="auto"
+                    w="160px"
+                    rounded={"xl"}
+                    bg={"rgba(255,255,255, 0.1)"}
+                  ></Skeleton>
+                  <Skeleton
+                    h="auto"
+                    w="160px"
+                    rounded={"xl"}
+                    bg={"rgba(255,255,255, 0.1)"}
+                  ></Skeleton>
+                  <Skeleton
+                    h="auto"
+                    w="160px"
+                    rounded={"xl"}
+                    bg={"rgba(255,255,255, 0.1)"}
+                  ></Skeleton>
+                </Flex>
+              )}
             </Carousel>
           </Box>
         </VStack>

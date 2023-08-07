@@ -8,7 +8,6 @@ import GlassBox from "../../atoms/glassBox";
 
 export const Sidebar = ({
   posts,
-  postType,
   news,
   postsLink,
   categories,
@@ -25,7 +24,7 @@ export const Sidebar = ({
             <SidebarWidget
               array={posts.items.slice(0, 5)}
               categories={categories}
-              title={`Featured  ${postType}`}
+              title={posts.type.replaceAll("-", " ").toLocaleUpperCase()}
               linkColor={linkColor}
               link={postsLink}
             />
@@ -34,9 +33,9 @@ export const Sidebar = ({
       {news
         ? news.items !== undefined && (
             <SidebarWidget
-              array={news.items}
+              array={news.items.slice(0, 5)}
               categories={categories}
-              title={"Sawtee in Media"}
+              title={news.type.replaceAll("-", " ").toLocaleUpperCase()}
               linkColor={linkColor}
               link={newsLink}
             />

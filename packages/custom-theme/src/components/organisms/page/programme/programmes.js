@@ -13,13 +13,12 @@ import Section from "../../../styles/section";
 import Sidebar from "../../archive/sidebar";
 import Loading from "../../../atoms/loading";
 import Publication1 from "../../../../assets/publications-1-resized.jpg";
-import { useState, useEffect } from "react";
 import { formatCPTData } from "../../../helpers";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 import ProgrammeItem from "./programmeItem";
 import { LightPatternBox } from "../../../styles/pattern-box";
 
-const Programmes = ({ state, categories, news }) => {
+const Programmes = ({ state, categories, news, inFocus }) => {
   const postData = state.source.get(state.router.link);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const size = useBreakpointValue(["sm", "md", "lg", "huge", "max"]);
@@ -82,7 +81,7 @@ const Programmes = ({ state, categories, news }) => {
       <Box
         as={Section}
         pb="80px"
-        size={size ? size : "full"}
+        size={size || "full"}
         px={["32px", 16]}
         pt="50px"
         fontSize={["md", "lg", "xl"]}
@@ -114,12 +113,11 @@ const Programmes = ({ state, categories, news }) => {
           </GridItem>
           <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
             <Sidebar
-              posts={postData}
+              posts={inFocus}
               news={news}
               categories={categories}
-              postType={"Programmes"}
               linkColor={state.theme.colors.linkColor}
-              postsLink={postData.link}
+              postsLink={inFocus.link}
               newsLink={news.link}
               showTwitterTimeline={true}
               showSubscriptionBox={true}

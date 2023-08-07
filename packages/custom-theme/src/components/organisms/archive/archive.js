@@ -17,9 +17,11 @@ import Switch from "@frontity/components/switch";
 const Archive = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const newsData = state.source.get("/sawtee-in-media/");
+  const inFocus = state.source.get("/in-focus/");
 
   useEffect(() => {
     actions.source.fetch("/sawtee-in-media/");
+    actions.source.fetch("/in-focus/");
   }, []);
   return (
     <Switch>
@@ -27,32 +29,42 @@ const Archive = ({ state, actions, categories }) => {
         when={data.isFeaturedEventsArchive}
         categories={categories}
         news={newsData}
+        inFocus={inFocus}
       />
       <Publications
         when={data.isPublicationsArchive}
         categories={categories}
         news={newsData}
+        inFocus={inFocus}
       />
       <SawteeInMedia
         when={data.isSawteeInMediaArchive}
         categories={categories}
+        inFocus={inFocus}
       />
-      <Newsletters when={data.isNewslettersArchive} news={newsData} />
+      <Newsletters
+        when={data.isNewslettersArchive}
+        news={newsData}
+        inFocus={inFocus}
+      />
       <Research
         when={data.isResearchArchive}
         categories={categories}
         news={newsData}
+        inFocus={inFocus}
       />
       <Covid
         when={data.isCovidArchive}
         categories={categories}
         news={newsData}
+        inFocus={inFocus}
       />
 
       <Programme
         when={data.isProgrammeArchive}
         categories={categories}
         news={newsData}
+        inFocus={inFocus}
       />
       <DefaultArchive
         when={data.isArchive && data.isCategory}
