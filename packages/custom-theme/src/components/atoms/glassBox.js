@@ -6,11 +6,9 @@ const GlassBox = ({ children, ...rest }) => {
       w="100%"
       h="auto"
       border={useColorModeValue("1px solid", "none")}
-      borderColor={"rgba(255, 255, 255, 0.18)"}
-      bg={useColorModeValue("rgba(255, 255, 255, 0.75)", "blackAlpha.300")}
-      backdropFilter="blur(4px)"
+      borderColor={"blackAlpha.100"}
+      bg={useColorModeValue("blackAlpha.100", "blackAlpha.300")}
       boxShadow={"0 8px 20px 0 rgba(0, 0, 0, 0.17)"}
-      saturate={"180%"}
       borderRadius="xl"
       {...rest}
     >

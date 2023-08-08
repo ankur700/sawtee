@@ -1,29 +1,9 @@
 import { Grid, GridItem, Box, Flex, Container } from "@chakra-ui/react";
-import { connect, styled } from "frontity";
+import { connect } from "frontity";
 import { TopImageCard, NoImageCard } from "../../../molecules/cards";
 import { FancyTitle } from "../../../atoms/fancyTitle";
 import ViewAllBtn from "../../../atoms/ViewAllBtn";
 import { formatCPTData } from "../../../helpers";
-
-const CustomGrid = styled(Grid)`
-  margin: 0 auto;
-  display: grid;
-  grid-gap: 20px;
-  align-items: center;
-
-  @media (min-width: 80em) {
-    & #item-1 {
-      grid-column: 1 / span 2;
-      grid-row: 1 / span 2;
-    }
-    & #item-2 {
-      grid-row: 1 / span 1;
-    }
-    & #item-3 {
-      grid-row: 2 / span 1;
-    }
-  }
-`;
 
 const BlogSection = ({ state, eventsData, linkColor, categories }) => {
   return (
@@ -41,7 +21,8 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
           className="band"
           templateColumns={{
             base: "1fr",
-            lg: "repeat(7, 1fr)",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(6, 1fr)",
           }}
           templateRows={"auto"}
           placeItems="center"
@@ -49,19 +30,21 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
         >
           {eventsData.isReady &&
             eventsData.items.length > 0 &&
-            eventsData.items.slice(0, 5).map((item, i) => {
+            eventsData.items.slice(0, 6).map((item, i) => {
               const article = formatCPTData(
                 state,
                 state.source[item.type][item.id],
                 categories
               );
 
+
               if (i === 0) {
                 return (
                   <GridItem
-                    colSpan={{ base: "1", lg: "3" }}
+                    key={article.id}
+                    colSpan={{ base: "1", md: "2", lg: "4" }}
                     rowSpan={2}
-                    maxW="6xl"
+                    // maxW="6xl"
                   >
                     <TopImageCard
                       title={article.title}
@@ -74,16 +57,18 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
                       excerpt={article.excerpt}
                       target={article.link}
                       linkColor={linkColor}
+                      date={article.publishDate}
                     />
                   </GridItem>
                 );
               } else {
                 return (
                   <GridItem
-                    colSpan={{ base: "1", lg: "2" }}
+                    key={article.id}
+                    colSpan={{ base: "1", md: "1", lg: "2" }}
                     rowSpan="auto"
-                    maxW="3xl"
-                    minH={"10rem"}
+                    // maxW="3xl"
+                    // minH={"10rem"}
                   >
                     <NoImageCard
                       title={article.title}
@@ -91,6 +76,7 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
                       excerpt={article.excerpt}
                       target={article.link}
                       linkColor={linkColor}
+                      date={article.publishDate}
                     />
                   </GridItem>
                 );
@@ -104,7 +90,7 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
           py="6"
           href={"/featured-events"}
         >
-          <ViewAllBtn text="View All" w="50%" />
+          <ViewAllBtn text="Explore All" w="50%" />
         </Flex>
       </Container>
     </Box>

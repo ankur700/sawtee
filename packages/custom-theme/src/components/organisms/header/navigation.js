@@ -12,7 +12,6 @@ import {
   SimpleGrid,
   VStack,
   Divider,
-  Link,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";

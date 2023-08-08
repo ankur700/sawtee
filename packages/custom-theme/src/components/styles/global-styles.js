@@ -30,7 +30,7 @@ const documentSetup = (colors) => css`
 
   body {
     box-sizing: border-box;
-    background-color: var(--chakra-colors-bodyBg-light);
+    background-color: var(--chakra-colors-blackAlpha.50);
     color: gray.800;
     font-family: var(--chakra-fonts-body);
     text-align: left;
@@ -64,7 +64,7 @@ const documentSetup = (colors) => css`
 
   .chakra-ui-dark {
     color: var(--chakra-colors-whiteAlpha-800);
-    background-color: var(--chakra-colors-bodyBg-dark);
+    background-color: var(--chakra-colors-blackAlpha.800);
   }
 
   main {

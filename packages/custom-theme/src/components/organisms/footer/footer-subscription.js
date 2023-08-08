@@ -1,7 +1,10 @@
-import { Stack, Heading, Text, Container, Box } from "@chakra-ui/react";
-import { styled } from "frontity";
+import { Stack, Heading, Container, Box } from "@chakra-ui/react";
+import { styled, connect } from "frontity";
 
-const FooterSubscription = ({ post, Html2React }) => {
+const FooterSubscription = ({ state, libraries }) => {
+  const post = state.source["page"][735];
+  const Html2React = libraries.html2react.Component;
+
   return (
     <Container
       maxW={"lg"}
@@ -10,12 +13,7 @@ const FooterSubscription = ({ post, Html2React }) => {
       p={6}
       direction={"column"}
     >
-      <Heading
-        as={"h2"}
-        fontSize={{ base: "xl", sm: "2xl" }}
-        textAlign={"center"}
-        mb={5}
-      >
+      <Heading as={"h6"} fontSize={{ base: "md", sm: "lg" }} mb={5}>
         Subscribe to our Newsletter
       </Heading>
       <Form direction={{ base: "column", md: "row" }} spacing={"12px"}>
@@ -23,16 +21,16 @@ const FooterSubscription = ({ post, Html2React }) => {
           {post && <Html2React html={post.content.rendered} />}
         </Box>
       </Form>
-      <Text mt={2} textAlign={"center"} color={error ? "red.500" : "gray.500"}>
+      {/* <Text mt={2} textAlign={"center"} color={error ? "red.500" : "gray.500"}>
         {error
           ? "Oh no an error occured! 😢 Please try again later."
           : "You won't receive any spam! ✌️"}
-      </Text>
+      </Text> */}
     </Container>
   );
 };
 
-export default FooterSubscription;
+export default connect(FooterSubscription);
 
 const Form = styled(Stack)`
   & .input-group {
@@ -41,8 +39,10 @@ const Form = styled(Stack)`
     gap: 20px;
     align-content: stretch;
 
-    & .chakra-text {
-      position: relative;
+    & p {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
   }
 
@@ -53,27 +53,23 @@ const Form = styled(Stack)`
 
   & input[type="email"] {
     flex: 1 0 auto;
-    width: 95%;
+    width: 100%;
     border: 1px solid #999 !important;
     background-color: #eee;
     height: 40px;
     color: #000;
     border-radius: 10px;
     padding: 0 10px;
-    position: relative;
   }
 
   & input[type="submit"] {
-    width: 90px;
-    position: absolute;
-    right: 24px;
-    top: -6px;
-    height: 30px;
-    margin-top: 10px;
+    width: 100%;
+    margin: 0 auto;
+    height: 40px;
     background-color: #000;
     color: #fff;
     border-radius: 10px;
-    font-size: 13px;
+    margin-bottom: 20px;
   }
 
   & input[type="checkbox"] {

@@ -5,7 +5,6 @@ import {
   LinkOverlay,
   LinkBox,
   useColorModeValue,
-  Button,
   Flex,
   Show,
   Heading,
@@ -13,28 +12,15 @@ import {
 
 import { decode } from "frontity";
 
-const today = new Date();
 import { formatDateWithMoment } from "../../helpers";
 import PostCategories from "../../organisms/post/post-categories";
 import generateGradient from "../../molecules/featured-post/genarate-gradient";
 
-const defaultValues = {
-  categories: ["Default", "Events", "Sawtee in Media", "Publications"],
-  avatar:
-    "https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&q=80",
-  title: "Default Title",
-  target: "#",
-  excerpt:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Molestie parturient et sem ipsum volutpat vel. Natoque sem et aliquam mauris egestas quam volutpat viverra. In pretium nec senectus erat. Et malesuada lobortis.",
-  author: "",
-  showAvatar: false,
-  date: today.getDate(),
-  categoryLink: "#",
-  authorLink: "#",
-  imageUrl: generateGradient(),
-};
+const imageUrl = generateGradient();
+const today = new Date();
 
 export const TopImageCard = (props) => {
+  const cardBg = useColorModeValue("blackAlpha.200", "blackAlpha.300");
   const {
     categories,
     title,
@@ -46,27 +32,20 @@ export const TopImageCard = (props) => {
   } = props;
 
   return (
-    <LinkBox
-      as="article"
-      rounded="lg"
-      bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
-      shadow="lg"
-      w="full"
-    >
+    <LinkBox as="article" rounded="lg" bg={cardBg} shadow="lg" w="full">
       <Box
         role="group"
         cursor="pointer"
-        height="300px"
         width="100%"
-        bgImage={defaultValues.imageUrl}
+        bgImage={imageUrl}
         pos="relative"
-        rounded="lg"
+        borderRadius={"0.5rem 0.5rem 0 0"}
         overflow="hidden"
       >
         {featured_media && (
           <Image
             {...featured_media}
-            h="100%"
+            h="300px"
             w="100%"
             objectFit="cover"
             borderRadius={"0.5rem 0.5rem 0 0"}
@@ -96,9 +75,8 @@ export const TopImageCard = (props) => {
               fontSize="sm"
               color={useColorModeValue("gray.700", "whiteAlpha.700")}
             >
-              {date
-                ? formatDateWithMoment(date)
-                : formatDateWithMoment(defaultValues.date)}
+              {formatDateWithMoment(date) ||
+                formatDateWithMoment(today.getDate())}
             </Box>
           )}
         </Box>
@@ -113,9 +91,7 @@ export const TopImageCard = (props) => {
             textDecor: "underline",
           }}
         >
-          <LinkOverlay href={target ? target : "#"}>
-            {title ? decode(title) : defaultValues.title}
-          </LinkOverlay>
+          <LinkOverlay href={target}>{decode(title)}</LinkOverlay>
         </Heading>
         <Text
           mt={2}
@@ -133,6 +109,7 @@ export const TopImageCard = (props) => {
 
 export const NoImageCard = (props) => {
   const { categories, title, target, excerpt, author, date, linkColor } = props;
+  const cardBg = useColorModeValue("blackAlpha.200", "blackAlpha.300");
 
   return (
     <LinkBox
@@ -143,12 +120,12 @@ export const NoImageCard = (props) => {
       rounded="lg"
       shadow="lg"
       w="full"
-      bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
+      bg={cardBg}
       display="flex"
       flexDir={"column"}
       justifyContent={"center"}
     >
-      <Flex justifyContent="space-between" alignItems="center" mb="8">
+      <Flex justifyContent="space-between" alignItems="center">
         <PostCategories
           justify="flex-start"
           categories={categories}
@@ -161,12 +138,12 @@ export const NoImageCard = (props) => {
             fontSize="xs"
             color={useColorModeValue("gray.700", "whiteAlpha.700")}
           >
-            {date ? formatDateWithMoment(date) : defaultValues.date}
+            {formatDateWithMoment(date)}
           </Box>
         )}
       </Flex>
 
-      <Box>
+      <Box mt={2}>
         <Heading
           as="h3"
           fontSize={{ base: "sm", md: "md", lg: "lg" }}
@@ -177,9 +154,7 @@ export const NoImageCard = (props) => {
             textDecor: "underline",
           }}
         >
-          <LinkOverlay href={target ? target : defaultValues.target}>
-            {title ? decode(title) : defaultValues.title}
-          </LinkOverlay>
+          <LinkOverlay href={target}>{decode(title)}</LinkOverlay>
         </Heading>
         <Text
           mt={3}
@@ -190,7 +165,7 @@ export const NoImageCard = (props) => {
           noOfLines={2}
           fontSize={{ base: "sm", lg: "md" }}
           dangerouslySetInnerHTML={{
-            __html: excerpt ? excerpt : defaultValues.excerpt,
+            __html: excerpt,
           }}
         />
       </Box>
@@ -206,9 +181,9 @@ export const NoImageCard = (props) => {
                 }}
                 fontWeight="700"
                 cursor="pointer"
-                href={author.link ? author.link : defaultValues.authorLink}
+                href={author.link}
               >
-                {author.name ? author.name : defaultValues.author}
+                {author.name}
               </LinkOverlay>
             </Flex>
           </Show>
@@ -218,95 +193,3 @@ export const NoImageCard = (props) => {
   );
 };
 
-export const LeftImageCard = (props) => {
-  const { imageUrl, title, href, content } = props;
-  return (
-    <Box
-      bg={useColorModeValue("rgba(255, 255, 255, 0.25)", "gray.800")}
-      mx={{
-        lg: 8,
-      }}
-      display={{
-        lg: "flex",
-      }}
-      maxW={{
-        lg: "5xl",
-      }}
-      shadow={{
-        lg: "lg",
-      }}
-      rounded={{
-        lg: "lg",
-      }}
-    >
-      <Box
-        w={{
-          lg: "50%",
-        }}
-      >
-        <Box
-          h={{
-            base: 64,
-            lg: "full",
-          }}
-          rounded={{
-            lg: "lg",
-          }}
-          bgSize="cover"
-          style={{
-            backgroundImage: `url(${
-              imageUrl ? imageUrl : defaultValues.imageUrl
-            })`,
-          }}
-        ></Box>
-      </Box>
-
-      <Box
-        py={12}
-        px={6}
-        maxW={{
-          base: "xl",
-          lg: "5xl",
-        }}
-        w={{
-          lg: "50%",
-        }}
-      >
-        <Box
-          as="a"
-          fontSize={{
-            base: "2xl",
-            md: "3xl",
-          }}
-          color={useColorModeValue("gray.800", "white")}
-          fontWeight="bold"
-        >
-          <LinkOverlay href={href ? href : defaultValues.href}>
-            {title ? title : defaultValues.title}
-          </LinkOverlay>
-        </Box>
-        <Text mt={4} color={useColorModeValue("gray.600", "gray.400")}>
-          {content ? content : defaultValues.content}
-        </Text>
-
-        <Box mt={8}>
-          <Button
-            bg="gray.900"
-            color="gray.100"
-            px={5}
-            py={3}
-            fontWeight="semibold"
-            rounded="lg"
-            _hover={{
-              bg: "gray.800",
-            }}
-          >
-            <Text as="a" href="#">
-              Start Now
-            </Text>
-          </Button>
-        </Box>
-      </Box>
-    </Box>
-  );
-};

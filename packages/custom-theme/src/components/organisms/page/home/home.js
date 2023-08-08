@@ -95,7 +95,7 @@ const Home = ({ state, actions, categories }) => {
 export default connect(Home);
 
 const InFocusSection = ({ articles, state, categories }) => {
-  const itemBG = useColorModeValue("gray.200", "gray.700");
+  const itemBG = useColorModeValue("blackAlpha.200", "blackAlpha.300");
   return (
     <Box
       py={{ base: "6", md: "12", lg: "16" }}
@@ -104,7 +104,7 @@ const InFocusSection = ({ articles, state, categories }) => {
     >
       <FancyTitle title={"In Focus"} />
       <Container maxW="7xl">
-        <VStack overflow="hidden" spacing={3}>
+        <VStack overflow="hidden">
           {articles.map((item, index) => {
             const article = formatCPTData(
               state,
@@ -190,7 +190,7 @@ const InFocusSection = ({ articles, state, categories }) => {
           })}
         </VStack>
         <Flex as="a" justify={"center"} mt="1rem" py="6" href={"/in-focus"}>
-          <ViewAllBtn text="View All" w="50%" />
+          <ViewAllBtn text="Explore All " w="50%" />
         </Flex>
       </Container>
     </Box>

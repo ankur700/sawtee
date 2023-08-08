@@ -14,12 +14,14 @@ import {
   useDisclosure,
   Button,
   Grid,
+  GridItem,
 } from "@chakra-ui/react";
 import React from "react";
 import { SocialMenu } from "../header/social-menu";
 import { connect, styled } from "frontity";
 import Iframe from "@frontity/components/iframe";
 import link from "../../atoms/link";
+import FooterSubscription from "./footer-subscription";
 
 const FancyLink = styled(link)`
   position: relative;
@@ -60,18 +62,11 @@ const FooterSection = (props) => (
 );
 
 const FooterSectionGroup = (props) => (
-  <Grid
-    templateColumns={{ sm: "1fr", md: "1fr 2fr 1fr" }}
-    maxWidth="7xl"
-    mx="auto"
-    width="100%"
-    spacing={8}
-    {...props}
-  />
+  <Grid maxWidth="7xl" mx="auto" width="100%" gap={8} {...props} />
 );
 
 const FooterSectionItem = (props) => (
-  <Box
+  <GridItem
     padding={props.padding ? props.padding : "24px"}
     color={useColorModeValue("gray.800", "whiteAlpha.800")}
     {...props}
@@ -165,11 +160,15 @@ const Footer = ({ state, libraries }) => {
   return (
     <FooterSection alignSelf="flex-end">
       <FooterSectionGroup
-        templateColumns={{ sm: "1fr", md: "1fr 1fr 1fr" }}
-        spacing={8}
+        templateColumns={{
+          base: "1fr",
+          md: "repeat(2, 1fr)",
+          lg: "repeat(6, 1fr)",
+        }}
+        gap={8}
       >
-        <FooterSectionItem>
-          <Stack colSpan={1} id={"Contact"}>
+        <FooterSectionItem colSpan={{ base: 1, md: 1, lg: 2 }}>
+          <Stack id={"Contact"}>
             <ListHeader color={useColorModeValue("gray.800", "whiteAlpha.900")}>
               {"Contact Us"}
             </ListHeader>
@@ -193,9 +192,8 @@ const Footer = ({ state, libraries }) => {
         {isReady &&
           Object.entries(items).map(([key, item]) => {
             return (
-              <FooterSectionItem key={key}>
+              <FooterSectionItem key={key} colSpan={1}>
                 <Widget
-                  colSpan={1}
                   item={item}
                   libraries={libraries}
                   linkcolor={FancyLinkColor}
@@ -203,11 +201,19 @@ const Footer = ({ state, libraries }) => {
               </FooterSectionItem>
             );
           })}
+        <FooterSectionItem colSpan={{ base: 1, md: 1, lg: 2 }}>
+          <FooterSubscription />
+        </FooterSectionItem>
       </FooterSectionGroup>
 
-      <FooterSectionGroup templateColumns={["1fr", "repeat(3, 1fr)"]} mt="12">
+      <Stack
+        flexDir={{ base: "column", lg: "row" }}
+        justifyContent={{ lg: "space-between" }}
+        mt="12"
+        maxW="5xl"
+        margin="0 auto"
+      >
         <FooterSectionItem
-          // padding={"24px 0"}
           colSpan={1}
           fontWeight="bold"
           fontFamily="heading"
@@ -216,27 +222,10 @@ const Footer = ({ state, libraries }) => {
           © {new Date().getFullYear()} {state.frontity.title}
         </FooterSectionItem>
 
-        <FooterSectionItem
-          // padding={"24px 0"}
-          colSpan={1}
-          borderColor="accent.400"
-        >
+        <FooterSectionItem colSpan={1} borderColor="accent.400">
           <SocialMenu ml="0" menu={state.theme.socialLinks} />
         </FooterSectionItem>
-
-        <FooterSectionItem
-          // padding={"24px 0"}
-          colSpan={1}
-          fontWeight="bold"
-          fontFamily="heading"
-          textTransform="uppercase"
-        >
-          Made with ❤ by{" "}
-          <FancyLink color={FancyLinkColor} href="https://ankursingh.com.np/">
-            Ankur
-          </FancyLink>
-        </FooterSectionItem>
-      </FooterSectionGroup>
+      </Stack>
     </FooterSection>
   );
 };

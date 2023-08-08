@@ -2,8 +2,14 @@ import { HStack, Divider, Box, Heading } from "@chakra-ui/react";
 
 export const FancyTitle = ({ title }) => {
   return (
-    <HStack position="relative" justify={"center"} padding="10" mb="6" gap="4">
-      <Divider h="2px" w="40%" bg="gray.800" _dark={{ bg: "whiteAlpha.800" }} />
+    <HStack
+      position="relative"
+      justify={"space-evenly"}
+      padding="10"
+      mb="6"
+      gap="4"
+    >
+      <Divider h="2px" bg="gray.800" _dark={{ bg: "whiteAlpha.800" }} />
       <Box
         bg="blackAlpha.800"
         color="whiteAlpha.900"
@@ -17,12 +23,13 @@ export const FancyTitle = ({ title }) => {
           fontSize={{ base: "md", md: "lg", lg: "2xl" }}
           fontWeight="bold"
           textAlign="center"
+          w="max-content"
         >
           {title}
         </Heading>
       </Box>
 
-      <Divider h="2px" w="40%" bg="gray.800" _dark={{ bg: "whiteAlpha.800" }} />
+      <Divider h="2px" bg="gray.800" _dark={{ bg: "whiteAlpha.800" }} />
     </HStack>
   );
 };

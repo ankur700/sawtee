@@ -1,20 +1,7 @@
 import React from "react";
-import { styled } from "frontity";
+import { styled, connect } from "frontity";
 import { HiMailOpen } from "react-icons/hi";
-import {
-  Text,
-  Box,
-  Heading,
-  Button,
-  Input,
-  useColorModeValue,
-  InputGroup,
-  InputRightElement,
-  Flex,
-  HStack,
-  Checkbox,
-} from "@chakra-ui/react";
-import { connect } from "frontity";
+import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
 
 const SubscriptionCard = ({ state, libraries }) => {
   const post = state.source["page"][735];

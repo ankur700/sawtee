@@ -74,10 +74,6 @@ const settings = {
             },
             headerBg: "#e8f3ff",
             footerBg: "#006181",
-            bodyBg: {
-              light: "#fff",
-              dark: "#343e4b",
-            },
             linkColor: "rgba(8 ,126, 164, 1)",
           },
           showSearchInHeader: true,

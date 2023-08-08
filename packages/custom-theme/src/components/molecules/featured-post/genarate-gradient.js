@@ -1,5 +1,5 @@
 function generateGradient() {
-  var hexValues = [
+  let hexValues = [
     "0",
     "1",
     "2",
@@ -14,23 +14,23 @@ function generateGradient() {
     "b",
     "c",
     "d",
-    "e"
+    "e",
   ];
 
   function populate(a) {
-    for (var i = 0; i < 6; i++) {
-      var x = Math.round(Math.random() * 14);
-      var y = hexValues[x];
+    for (let i = 0; i < 6; i++) {
+      let x = Math.round(Math.random() * 14);
+      let y = hexValues[x];
       a += y;
     }
     return a;
   }
 
-  var newColor1 = populate("#");
-  var newColor2 = populate("#");
-  var angle = Math.round(Math.random() * 240);
+  let newColor1 = populate("#");
+  let newColor2 = populate("#");
+  let angle = Math.round(Math.random() * 240);
 
-  var gradient =
+  let gradient =
     "linear-gradient(" + angle + "deg, " + newColor1 + ", " + newColor2 + ")";
 
   return gradient;
