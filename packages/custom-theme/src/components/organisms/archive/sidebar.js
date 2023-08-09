@@ -19,17 +19,11 @@ export const Sidebar = ({
 }) => {
   return (
     <Stack spacing={12} w="full" maxW={"xl"}>
-      {posts
-        ? posts.items !== undefined && (
-            <SidebarWidget
-              array={posts.items.slice(0, 5)}
-              categories={categories}
-              title={posts.type.replaceAll("-", " ").toLocaleUpperCase()}
-              linkColor={linkColor}
-              link={postsLink}
-            />
-          )
-        : null}
+      {showSubscriptionBox && (
+        <GlassBox py="4" px="8" rounded="xl" height="max-content">
+          <SubscriptionCard />
+        </GlassBox>
+      )}
       {news
         ? news.items !== undefined && (
             <SidebarWidget
@@ -41,6 +35,7 @@ export const Sidebar = ({
             />
           )
         : null}
+
       {showTwitterTimeline && (
         <GlassBox rounded="xl" height="max-content">
           <TwitterTimeline
@@ -52,18 +47,20 @@ export const Sidebar = ({
           />
         </GlassBox>
       )}
-      {showSubscriptionBox && (
-        <GlassBox
-          py="4"
-          px="8"
-          rounded="xl"
-          height="max-content"
-          position={children ? "relative" : "sticky"}
-          top={"8.5rem"}
-        >
-          <SubscriptionCard />
-        </GlassBox>
-      )}
+
+      {posts
+        ? posts.items !== undefined && (
+            <SidebarWidget
+              array={posts.items.slice(0, 5)}
+              categories={categories}
+              title={posts.type.replaceAll("-", " ").toLocaleUpperCase()}
+              linkColor={linkColor}
+              link={postsLink}
+              position={children ? "relative" : "sticky"}
+              top={"8.5rem"}
+            />
+          )
+        : null}
       {children}
     </Stack>
   );

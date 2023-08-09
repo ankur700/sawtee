@@ -34,7 +34,7 @@ const FancyLink = styled(link)`
     width: 0%;
     height: 2px;
     position: absolute;
-    bottom: -5px;
+    bottom: -3px;
     left: 0;
 
     background: ${(props) => (props.color ? props.color : "#fff")};
@@ -51,26 +51,28 @@ const FancyLink = styled(link)`
   }
 `;
 
-const FooterSection = (props) => (
+const FooterSection = ({ children, ...rest }) => (
   <Box
     as="footer"
     pos="relative"
-    bg={useColorModeValue("#e8f3ff", "primary.900")}
-    py={{ base: "32px", lg: "40px" }}
-    {...props}
-  />
+    bg="accent.50"
+    _dark={{ bg: "primary.900" }}
+    {...rest}
+  >
+    {children}
+  </Box>
 );
 
-const FooterSectionGroup = (props) => (
-  <Grid maxWidth="7xl" mx="auto" width="100%" gap={8} {...props} />
+const FooterSectionGroup = ({ children, ...rest }) => (
+  <Grid maxWidth="7xl" mx="auto" width="100%" gap={8} {...rest}>
+    {children}
+  </Grid>
 );
 
-const FooterSectionItem = (props) => (
-  <GridItem
-    padding={props.padding ? props.padding : "24px"}
-    color={useColorModeValue("gray.800", "whiteAlpha.800")}
-    {...props}
-  />
+const FooterSectionItem = ({ children, ...rest }) => (
+  <GridItem color={useColorModeValue("gray.800", "whiteAlpha.800")} {...rest}>
+    {children}
+  </GridItem>
 );
 
 const ListHeader = ({ children }) => {
@@ -158,7 +160,7 @@ const Footer = ({ state, libraries }) => {
   const FancyLinkColor = useColorModeValue("#222", "#FFF");
 
   return (
-    <FooterSection alignSelf="flex-end">
+    <FooterSection alignSelf="flex-end" px={{ base: 6, md: 8, lg: 12 }} py={12}>
       <FooterSectionGroup
         templateColumns={{
           base: "1fr",
@@ -207,11 +209,13 @@ const Footer = ({ state, libraries }) => {
       </FooterSectionGroup>
 
       <Stack
-        flexDir={{ base: "column", lg: "row" }}
-        justifyContent={{ lg: "space-between" }}
-        mt="12"
-        maxW="5xl"
-        margin="0 auto"
+        flexDir={{ base: "column", md: "row" }}
+        justifyContent={{ md: "space-between" }}
+        alignItems="center"
+        maxW="3xl"
+        mx="auto"
+        mt="16"
+        gap={6}
       >
         <FooterSectionItem
           colSpan={1}
