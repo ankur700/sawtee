@@ -146,7 +146,7 @@ const PaginationButton = ({ children, isDisabled, isActive, ...rest }) => {
     color: "white",
     border: "none",
   };
-  const size = useBreakpointValue(["sm", "md", "lg"]);
+  const size = useBreakpointValue(["sm", "md"]);
   const ButtonColor = useColorModeValue("gray.700", "whiteAlpha.700");
 
   return (

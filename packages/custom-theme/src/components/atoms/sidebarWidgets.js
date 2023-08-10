@@ -66,7 +66,7 @@ const SidebarWidget = ({
 
       {array.map(({ type, id }, index) => {
         const post = formatCPTData(state, state.source[type][id], categories);
-        
+
         if (!post) {
           return (
             <Box key={post.id} display={"flex"} flexDir={"column"} gap={2}>
@@ -79,15 +79,11 @@ const SidebarWidget = ({
           );
         }
         return (
-          <Stack
-            spacing={2}
-            mt="6"
-            key={post.id}
-          >
+          <Stack spacing={2} mt="6" key={post.id}>
             <Heading
               as="h4"
               className="title"
-              fontSize={{ base: "sm", md: "md" }}
+              fontSize={{ base: "sm", lg: "md" }}
               mb="2"
               color={HeadingColor}
               lineHeight={1.2}

@@ -12,42 +12,48 @@ const FooterSubscription = ({ state, libraries }) => {
   const post = state.source["page"][735];
   const Html2React = libraries.html2react.Component;
 
-  return (
-    <Container
-      bg={"primary.100"}
-      _dark={{ bg: "primary.800" }}
-      maxW={"lg"}
-      boxShadow={"xl"}
-      rounded={"lg"}
-      p={6}
-      direction={"column"}
-    >
-      <Heading
-        as={"h6"}
-        fontSize={{ base: "md", sm: "lg" }}
-        mb={5}
-        textAlign={"center"}
+  if (post)
+    return (
+      <Container
+        bg={"primary.100"}
+        _dark={{ bg: "primary.800" }}
+        maxW={"md"}
+        boxShadow={"xl"}
+        rounded={"lg"}
+        p={6}
+        direction={"column"}
       >
-        Subscribe to our Newsletter
-      </Heading>
-      <Text fontSize="sm">
-        <Checkbox
-          isDisabled
-          defaultChecked
-          colorScheme="green"
-          size="sm"
-          spacing={4}
+        <Heading
+          as={"h6"}
+          fontSize={{ base: "sm", sm: "md" }}
+          mb={3}
+          textAlign={"center"}
         >
-          I agree receiving emails from SAWTEE.
-        </Checkbox>
-      </Text>
-      <Form direction={{ base: "column", md: "row" }} spacing={"12px"}>
-        <Box margin={"0 auto"}>
-          {post && <Html2React html={post.content.rendered} />}
-        </Box>
-      </Form>
-    </Container>
-  );
+          Subscribe to our Newsletter
+        </Heading>
+        <Text
+          fontSize={["xs", "sm"]}
+          textAlign="center"
+          fontStyle="italic"
+          mb={2}
+        >
+          <Checkbox
+            isDisabled
+            defaultChecked
+            colorScheme="green"
+            size="sm"
+            spacing={4}
+          >
+            I agree receiving emails from SAWTEE.
+          </Checkbox>
+        </Text>
+        <Form direction={{ base: "column", md: "row" }} spacing={"12px"}>
+          <Box margin={"0 auto"}>
+            {post && <Html2React html={post.content.rendered} />}
+          </Box>
+        </Form>
+      </Container>
+    );
 };
 
 export default connect(FooterSubscription);
@@ -56,39 +62,37 @@ const Form = styled(Stack)`
   & .input-group {
     display: flex;
     flex-direction: column;
-    align-content: stretch;
 
-  }
+    & p {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
-  & .wpcf7-list-item-label {
-    font-size: 14px;
-    font-style: italic;
-  }
-
-  & input[type="email"] {
-    flex: 1 0 auto;
-    width: 100%;
-    max-width: 350px;
-    border: 1px solid #999 !important;
-    background-color: #eee;
-    height: 40px;
-    color: #000;
-    border-radius: 10px;
-    padding: 0 10px;
-    margin-top: 10px;
+    & .wpcf7-form-control-wrap {
+      flex-grow: 1;
+      width: 75%;
+      & input[type="email"] {
+        flex: 1 0 auto;
+        width: 100%;
+        border: 1px solid #999 !important;
+        background-color: #eee;
+        height: 40px;
+        color: #000;
+        border-radius: 10px;
+        padding: 0 10px;
+      }
+    }
   }
 
   & input[type="submit"] {
     width: 100%;
-    max-width: 100px;
-    height: 32px;
+    max-width: 25%;
+    height: 40px;
     background-color: #000;
     color: #fff;
     border-radius: 10px;
-  }
-
-  & input[type="checkbox"] {
-    margin-right: 5px;
+    font-size: var(--chakra-fontSizes-sm);
   }
 
   /**
@@ -100,5 +104,9 @@ const Form = styled(Stack)`
     background: #eee;
     border: 1px solid #ccc;
     padding: 0.5em 1em;
+  }
+
+  & .wpcf7-response-output {
+    margin-top: 10px;
   }
 `;

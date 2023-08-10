@@ -146,7 +146,7 @@ export const NoImageCard = (props) => {
       <Box mt={2}>
         <Heading
           as="h3"
-          fontSize={{ base: "sm", md: "md", lg: "lg" }}
+          fontSize={{ base: "md", lg: "lg" }}
           color={useColorModeValue("gray.800", "whiteAlpha.900")}
           noOfLines={2}
           _hover={{

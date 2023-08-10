@@ -90,7 +90,7 @@ const ListContainerVariants = {
 };
 
 const MenuItem = ({ children, ...rest }) => {
-  const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
+  const li = useColorModeValue("gray.800", "whiteAlpha.800");
   return (
     <Button
       as={motion.button}

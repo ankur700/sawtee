@@ -35,7 +35,6 @@ const EventItem = ({ state, libraries, event }) => {
       overflow={"hidden"}
       rounded="xl"
       boxShadow={"lg"}
-      // shadow="lg"
       _hover={{
         border: "2px solid",
         boxShadow: "xl",
@@ -46,13 +45,14 @@ const EventItem = ({ state, libraries, event }) => {
           <Link link={event.link}>
             <PostImageWithOverlay
               {...event.featured_media}
-              height="250px"
+              height="200px"
               borderRadius="0.75rem 0.75rem 0 0"
               overflow="hidden"
               _groupHover={{
                 transition: "transform 0.4s ease-in-out",
                 transform: "scale(1.05)",
                 borderRadius: "0.75rem 0.75rem 0 0",
+                cusrsor: "pointer",
               }}
             />
           </Link>
@@ -82,7 +82,7 @@ const EventItem = ({ state, libraries, event }) => {
               {decode(event.title)}
             </Link>
           </Heading>
-          <Text fontSize={["sm", "md"]} color={textColor} noOfLines={2}>
+          <Text fontSize={["xs", "sm"]} color={textColor} noOfLines={2}>
             <Html2React html={event.excerpt} />
           </Text>
         </Box>
@@ -92,7 +92,7 @@ const EventItem = ({ state, libraries, event }) => {
             direction={{ base: "column", sm: "row" }}
             alignItems={"center"}
           >
-            <Text fontSize={["sm", "md"]} color={textColor}>
+            <Text fontSize={["xs", "sm"]} color={textColor}>
               {formatDateWithMoment(event.publishDate, format)}
             </Text>
             <Button

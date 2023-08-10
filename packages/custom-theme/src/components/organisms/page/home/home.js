@@ -115,12 +115,13 @@ const InFocusSection = ({ articles, state, categories }) => {
               <Fragment key={article.id}>
                 {index === 0 && <Divider m={0} />}
                 <Grid
-                  templateRows={{ base: "auto auto", md: "auto" }}
+                  templateRows={{ base: "auto auto auto", md: "auto" }}
                   w="100%"
-                  templateColumns={{ base: "unset", md: "2fr 4fr 2fr" }}
+                  templateColumns={{ base: "1fr", md: "2fr 4fr 2fr" }}
                   p={{ base: 2, sm: 4 }}
                   alignItems="center"
                   _hover={{ bg: itemBG }}
+                  rowGap={3}
                 >
                   <Flex
                     spacing={{ base: 0, sm: 3 }}
@@ -146,7 +147,7 @@ const InFocusSection = ({ articles, state, categories }) => {
                       href={article.link}
                       isExternal
                       fontWeight="bold"
-                      fontSize={["lg", "xl"]}
+                      fontSize={{ base: "md", lg: "xl", xl: "2xl" }}
                     >
                       {article.title}
                     </chakra.h3>
@@ -159,7 +160,11 @@ const InFocusSection = ({ articles, state, categories }) => {
                         rounded="lg"
                         pos={"absolute"}
                       />
-                      <Text noOfLines={3} pl="20px">
+                      <Text
+                        noOfLines={3}
+                        pl="20px"
+                        fontSize={{ base: "sm", lg: "md" }}
+                      >
                         {article.excerpt}
                       </Text>
                     </HStack>

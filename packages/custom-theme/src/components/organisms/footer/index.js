@@ -15,6 +15,9 @@ import {
   Button,
   Grid,
   GridItem,
+  ListItem,
+  List,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { SocialMenu } from "../header/social-menu";
@@ -32,10 +35,11 @@ const FancyLink = styled(link)`
   &::after {
     content: "";
     width: 0%;
-    height: 2px;
+    height: 1px;
     position: absolute;
-    bottom: -3px;
+    bottom: 0;
     left: 0;
+    margin: 0;
 
     background: ${(props) => (props.color ? props.color : "#fff")};
     opacity: 0;
@@ -90,67 +94,73 @@ const Widget = ({ item, libraries, linkcolor }) => {
     <>
       <Stack align="flex-start" id={item.title}>
         <ListHeader>{item.title}</ListHeader>
-        {item.child_items
-          ? item.child_items.map((item) => {
-              const { url, title } = item;
-              const link = libraries.source.normalize(url);
-              return (
-                <FancyLink
-                  key={item.title}
-                  link={title === "Map" ? null : link}
-                  onClick={title === "Map" ? onOpen : null}
-                  color={linkcolor}
-                >
-                  {title}
-                </FancyLink>
-              );
-            })
-          : null}
-      </Stack>
-
-      <Modal
-        isCentered
-        onClose={onClose}
-        isOpen={isOpen}
-        motionPreset="slideInBottom"
-        closeOnOverlayClick={true}
-        blockScrollOnMount={false}
-      >
-        <ModalOverlay />
-        <ModalContent
-          bg={useColorModeValue(
-            "rgba(255, 255, 255, 0.7)",
-            "rgba(0, 0, 0, 0.7)"
-          )}
-          maxW={"2xl"}
+        <List spacing={2}>
+          {item.child_items
+            ? item.child_items.map((child_item) => {
+                const { url, title } = child_item;
+                const link = libraries.source.normalize(url);
+                return (
+                  <ListItem key={title}>
+                    {title === "Address: Tukucha Marg, Baluwatar, Kathmandu" ? (
+                      <FancyLink link={link} onClick={onOpen} color={linkcolor}>
+                        {title}
+                      </FancyLink>
+                    ) : (
+                      <FancyLink link={link} color={linkcolor}>
+                        {title}
+                      </FancyLink>
+                    )}
+                  </ListItem>
+                );
+              })
+            : null}
+        </List>
+        <Modal
+          isCentered
+          onClose={onClose}
+          isOpen={isOpen}
+          motionPreset="slideInBottom"
+          closeOnOverlayClick={true}
+          blockScrollOnMount={false}
         >
-          <ModalHeader color={useColorModeValue("gray.700", "whiteAlpha.900")}>
-            Our Location
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody margin={"0 auto"}>
-            <Iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.8576860518533!2d85.32674871047516!3d27.721679976074906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1913dfb0b0b3%3A0x4d5d3519d24d3c38!2sSouth%20Asia%20Watch%20on%20Trade%2C%20Economics%20and%20Environment%20(SAWTEE)!5e0!3m2!1sne!2snp!4v1681725594330!5m2!1sne!2snp"
-              title="SAWTEE's Location"
-              height="450"
-              width="600"
-              loading="lazy"
-              // rootMargin="0 auto"
-            />
-          </ModalBody>
+          <ModalOverlay />
+          <ModalContent
+            bg={useColorModeValue(
+              "rgba(255, 255, 255, 0.7)",
+              "rgba(0, 0, 0, 0.7)"
+            )}
+            maxW={"2xl"}
+          >
+            <ModalHeader
+              color={useColorModeValue("gray.700", "whiteAlpha.900")}
+            >
+              Our Location
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody margin={"0 auto"}>
+              <Iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3531.8576860518533!2d85.32674871047516!3d27.721679976074906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1913dfb0b0b3%3A0x4d5d3519d24d3c38!2sSouth%20Asia%20Watch%20on%20Trade%2C%20Economics%20and%20Environment%20(SAWTEE)!5e0!3m2!1sne!2snp!4v1681725594330!5m2!1sne!2snp"
+                title="SAWTEE's Location"
+                height="450"
+                width="600"
+                loading="lazy"
+                // rootMargin="0 auto"
+              />
+            </ModalBody>
 
-          <ModalFooter>
-            <Button variant="ghost">
-              <Link
-                href="https://goo.gl/maps/fwZuwNSbjN5jwZia7"
-                target="_blank"
-              >
-                View Map
-              </Link>
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+            <ModalFooter>
+              <Button variant="ghost">
+                <Link
+                  href="https://goo.gl/maps/fwZuwNSbjN5jwZia7"
+                  target="_blank"
+                >
+                  View Map
+                </Link>
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Stack>
     </>
   );
 };
@@ -158,43 +168,28 @@ const Widget = ({ item, libraries, linkcolor }) => {
 const Footer = ({ state, libraries }) => {
   const { items, isReady } = state.source.get("/menu/footer/");
   const FancyLinkColor = useColorModeValue("#222", "#FFF");
+  const maxWidth = useBreakpointValue(["xs", "sm", "md"]);
 
   return (
     <FooterSection alignSelf="flex-end" px={{ base: 6, md: 8, lg: 12 }} py={12}>
       <FooterSectionGroup
         templateColumns={{
           base: "1fr",
-          md: "repeat(2, 1fr)",
+          sm: "repeat(2, 1fr)",
           lg: "repeat(6, 1fr)",
         }}
-        gap={8}
+        columnGap={[2, 4, 6]}
+        rowGap={4}
       >
-        <FooterSectionItem colSpan={{ base: 1, md: 1, lg: 2 }}>
-          <Stack id={"Contact"}>
-            <ListHeader color={useColorModeValue("gray.800", "whiteAlpha.900")}>
-              {"Contact Us"}
-            </ListHeader>
-            <Stack as="ul" alignItems={"start"} listStyleType="none">
-              <FancyLink color={FancyLinkColor} link="tel:+977-1-4444438">
-                Phone: +977-1-4444438
-              </FancyLink>
-              <FancyLink color={FancyLinkColor} link="tel:+977 1 4444570">
-                Fax: +977-1-4444570
-              </FancyLink>
-              <FancyLink color={FancyLinkColor} link="mailto:sawtee@sawtee.org">
-                Email: sawtee@sawtee.org
-              </FancyLink>
-
-              <FancyLink color={FancyLinkColor} link="#">
-                Address: Tukucha Marg, Baluwatar, Kathmandu
-              </FancyLink>
-            </Stack>
-          </Stack>
-        </FooterSectionItem>
         {isReady &&
           Object.entries(items).map(([key, item]) => {
             return (
-              <FooterSectionItem key={key} colSpan={1}>
+              <FooterSectionItem
+                key={key}
+                colSpan={item.title === "Contact Us" ? { base: 1, lg: 2 } : 1}
+                placeSelf="start"
+                maxW={maxWidth}
+              >
                 <Widget
                   item={item}
                   libraries={libraries}
@@ -203,7 +198,10 @@ const Footer = ({ state, libraries }) => {
               </FooterSectionItem>
             );
           })}
-        <FooterSectionItem colSpan={{ base: 1, md: 1, lg: 2 }}>
+        <FooterSectionItem
+          colSpan={{ base: 1, md: 1, lg: 2 }}
+          placeSelf="center"
+        >
           <FooterSubscription />
         </FooterSectionItem>
       </FooterSectionGroup>
