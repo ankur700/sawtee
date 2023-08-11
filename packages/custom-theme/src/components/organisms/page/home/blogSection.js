@@ -1,4 +1,4 @@
-import { Grid, GridItem, Box, Flex, Container } from "@chakra-ui/react";
+import { Grid, GridItem, Box, Link, Container } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { TopImageCard, NoImageCard } from "../../../molecules/cards";
 import { FancyTitle } from "../../../atoms/fancyTitle";
@@ -37,7 +37,6 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
                 categories
               );
 
-
               if (i === 0) {
                 return (
                   <GridItem
@@ -58,6 +57,7 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
                       target={article.link}
                       linkColor={linkColor}
                       date={article.publishDate}
+                      imageHeight={"250px"}
                     />
                   </GridItem>
                 );
@@ -83,15 +83,9 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
               }
             })}
         </Grid>
-        <Flex
-          as="a"
-          justify={"center"}
-          mt="1rem"
-          py="6"
-          href={"/featured-events"}
-        >
-          <ViewAllBtn text="Explore All" w="50%" />
-        </Flex>
+        <Link mt={6} href={"/featured-events"} w="50%">
+          <ViewAllBtn text="Explore All" w="full" />
+        </Link>
       </Container>
     </Box>
   );

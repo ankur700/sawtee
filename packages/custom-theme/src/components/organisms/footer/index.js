@@ -59,7 +59,7 @@ const FooterSection = ({ children, ...rest }) => (
   <Box
     as="footer"
     pos="relative"
-    bg="accent.50"
+    bg="primary.100"
     _dark={{ bg: "primary.900" }}
     {...rest}
   >

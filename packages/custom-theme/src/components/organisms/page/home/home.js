@@ -122,6 +122,7 @@ const InFocusSection = ({ articles, state, categories }) => {
                   alignItems="center"
                   _hover={{ bg: itemBG }}
                   rowGap={3}
+                  m={0}
                 >
                   <Flex
                     spacing={{ base: 0, sm: 3 }}
@@ -147,7 +148,7 @@ const InFocusSection = ({ articles, state, categories }) => {
                       href={article.link}
                       isExternal
                       fontWeight="bold"
-                      fontSize={{ base: "md", lg: "xl", xl: "2xl" }}
+                      fontSize={{ base: "md", lg: "xl" }}
                     >
                       {article.title}
                     </chakra.h3>
@@ -193,10 +194,10 @@ const InFocusSection = ({ articles, state, categories }) => {
               </Fragment>
             );
           })}
+          <Link mt={6} href={"/in-focus"} w="50%">
+            <ViewAllBtn text="Explore All " w="full" />
+          </Link>
         </VStack>
-        <Flex as="a" justify={"center"} mt="1rem" py="6" href={"/in-focus"}>
-          <ViewAllBtn text="Explore All " w="50%" />
-        </Flex>
       </Container>
     </Box>
   );

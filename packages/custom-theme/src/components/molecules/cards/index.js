@@ -29,6 +29,7 @@ export const TopImageCard = (props) => {
     featured_media,
     date,
     linkColor,
+    imageHeight,
   } = props;
 
   return (
@@ -45,7 +46,7 @@ export const TopImageCard = (props) => {
         {featured_media && (
           <Image
             {...featured_media}
-            h="300px"
+            h={imageHeight}
             w="100%"
             objectFit="cover"
             borderRadius={"0.5rem 0.5rem 0 0"}

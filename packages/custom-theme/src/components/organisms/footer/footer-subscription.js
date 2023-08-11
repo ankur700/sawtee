@@ -15,10 +15,10 @@ const FooterSubscription = ({ state, libraries }) => {
   if (post)
     return (
       <Container
-        bg={"primary.100"}
+        bg={"primary.200"}
         _dark={{ bg: "primary.800" }}
         maxW={"md"}
-        boxShadow={"xl"}
+        shadow={"2xl"}
         rounded={"lg"}
         p={6}
         direction={"column"}
