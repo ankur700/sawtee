@@ -141,6 +141,59 @@ const documentSetup = (colors) => css`
     overflow: hidden;
   }
 
+  .footer-form {
+    & .input-group {
+      display: flex;
+      flex-direction: column;
+
+      & p {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      & .wpcf7-form-control-wrap {
+        flex-grow: 1;
+        width: 75%;
+        & input[type="email"] {
+          flex: 1 0 auto;
+          width: 100%;
+          border: 1px solid #999 !important;
+          background-color: #eee;
+          height: 40px;
+          color: #000;
+          border-radius: 10px;
+          padding: 0 10px;
+        }
+      }
+    }
+
+    & input[type="submit"] {
+      width: 100%;
+      max-width: 25%;
+      height: 40px;
+      background-color: #000;
+      color: #fff;
+      border-radius: 10px;
+      font-size: var(--chakra-fontSizes-sm);
+    }
+
+    /**
+ * Even when I set some dimension-related styles on this
+ * element but not on the input or button, they'll still
+ * line up.
+ */
+    & .input-group-addon {
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 0.5em 1em;
+    }
+
+    & .wpcf7-response-output {
+      margin-top: 10px;
+    }
+  }
+
   @media (hover: none) and (pointer: coarse) {
     .left-arrow,
     .right-arrow {

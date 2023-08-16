@@ -179,7 +179,7 @@ const Members = ({ memberInstitutions, linkColor }) => {
     <Box>
       <Heading
         as="h3"
-        fontSize={["xl", "2xl", "4xl"]}
+        fontSize={["lg", "xl", "2xl"]}
         py={"4"}
         mb="4"
         fontFamily="heading"
@@ -194,7 +194,7 @@ const Members = ({ memberInstitutions, linkColor }) => {
           <Box key={country} mb="6">
             <Heading
               as="h4"
-              fontSize={["lg", "xl", "2xl"]}
+              fontSize={["md", "lg", "xl"]}
               fontWeight="bold"
               mb="4"
               fontFamily="heading"
@@ -241,7 +241,7 @@ const Members = ({ memberInstitutions, linkColor }) => {
                       in={hovered[id][country][idx]}
                       offsetY="20px"
                     >
-                      <HiOutlineExternalLink color={linkColor}  />
+                      <HiOutlineExternalLink color={linkColor} />
                     </SlideFade>
                   )}
                 </Box>
@@ -270,7 +270,7 @@ const PageSection = ({ section, libraries }) => {
     <Box>
       <Heading
         as="h3"
-        fontSize={["xl", "2xl", "4xl"]}
+        fontSize={["lg", "xl", "2xl"]}
         py={"4"}
         mb="4"
         fontFamily="heading"
@@ -281,12 +281,18 @@ const PageSection = ({ section, libraries }) => {
 
       {tab_or_accordian && title !== "Strategies" && (
         <Box px="6" py="4">
-          <Tabs variant="enclosed" isFitted colorScheme={"blue"}>
+          <Tabs
+            orientation={["vertical", "vertical", "horizontal"]}
+            variant="enclosed"
+            isFitted
+            colorScheme={"blue"}
+          >
             <TabList>
               {content_repeater.map(({ tab_title }) => (
                 <Tab
                   key={tab_title}
-                  fontSize={"lg"}
+                  fontSize={["md", "lg"]}
+                  fontWeight={"semibold"}
                   fontFamily={"heading"}
                   _selected={{
                     borderColor: "blue.500",
@@ -331,7 +337,7 @@ const PageSection = ({ section, libraries }) => {
                   <Heading
                     as="h4"
                     flex="1"
-                    fontSize={"lg"}
+                    fontSize={["md", "lg"]}
                     fontFamily={"heading"}
                     textAlign="left"
                     color={headingColor}

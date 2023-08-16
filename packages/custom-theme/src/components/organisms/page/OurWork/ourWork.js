@@ -26,88 +26,88 @@ const OurWork = ({ postData, post, libraries }) => {
 
   return (
     <>
+      <Container
+        className="intro"
+        pos="relative"
+        my="8"
+        maxW="4xl"
+        px={{ base: 5, md: 10 }}
+        centerContent
+      >
+        <Heading
+          as={"h3"}
+          fontSize={{ base: "md", md: "lg", lg: "xl" }}
+          fontWeight="bold"
+          mb={12}
+          textAlign="center"
+          color={headingColor}
+        >
+          Thematic Areas
+        </Heading>
+
+        <Box textAlign="center" mb={20}>
+          <Html2React html={intro} fontSize={["sm", "md"]} />
+        </Box>
+        <SimpleGrid
+          columns={{ base: 1, sm: 2 }}
+          placeItems="center"
+          spacing={10}
+          mb={4}
+        >
+          {themes.map((theme) => (
+            <VStack
+              key={theme.title}
+              bg={cardBackground}
+              p={6}
+              rounded="lg"
+              textAlign="center"
+              pos="relative"
+              mt={6}
+              justify={"center"}
+              align={"center"}
+              gap={4}
+              minH={"250px"}
+              transition={"all 0.8s ease-out"}
+              role="group"
+              cursor="pointer"
+            >
+              <Heading
+                as="h3"
+                fontWeight="semibold"
+                fontSize="2xl"
+                color={headingColor}
+              >
+                {theme.title}
+              </Heading>
+
+              <Text
+                fontSize="md"
+                mt={4}
+                transition={"display 1s ease-in"}
+                transitionDelay={"0.4s"}
+                sx={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: "3",
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+                _groupHover={{
+                  display: "block",
+                }}
+                color={contentColor}
+              >
+                {theme.content}
+              </Text>
+            </VStack>
+          ))}
+        </SimpleGrid>
+      </Container>
       <Content
         as={Section}
         px={{ base: "32px", md: "16px" }}
-        size="huge"
+        size="lg"
         paddingBlock="50px"
       >
-        <Container
-          className="intro"
-          pos="relative"
-          mb="16"
-          maxW="7xl"
-          p={{ base: 5, md: 10 }}
-          centerContent
-        >
-          <Heading
-            as={"h3"}
-            fontSize="4xl"
-            fontWeight="bold"
-            mb={12}
-            textAlign="center"
-            color={headingColor}
-          >
-            Thematic Areas
-          </Heading>
-
-          <Box textAlign="center" mb={20}>
-            <Html2React html={intro} fontSize={["lg", "2xl"]} />
-          </Box>
-          <SimpleGrid
-            columns={{ base: 1, sm: 2 }}
-            placeItems="center"
-            spacing={10}
-            mb={4}
-          >
-            {themes.map((theme) => (
-              <VStack
-                key={theme.title}
-                bg={cardBackground}
-                p={6}
-                rounded="lg"
-                textAlign="center"
-                pos="relative"
-                mt={6}
-                justify={"center"}
-                align={"center"}
-                gap={4}
-                minH={"250px"}
-                transition={"all 0.8s ease-out"}
-                role="group"
-                cursor="pointer"
-              >
-                <Heading
-                  as="h3"
-                  fontWeight="semibold"
-                  fontSize="2xl"
-                  color={headingColor}
-                >
-                  {theme.title}
-                </Heading>
-
-                <Text
-                  fontSize="md"
-                  mt={4}
-                  transition={"display 1s ease-in"}
-                  transitionDelay={"0.4s"}
-                  sx={{
-                    display: "-webkit-box",
-                    WebkitLineClamp: "3",
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                  }}
-                  _groupHover={{
-                    display: "block",
-                  }}
-                  color={contentColor}
-                >
-                  {theme.content}
-                </Text>
-              </VStack>
-            ))}
-          </SimpleGrid>
-        </Container>
         <Box
           display="flex"
           mx="auto"
