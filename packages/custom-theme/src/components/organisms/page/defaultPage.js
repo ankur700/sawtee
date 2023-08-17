@@ -2,26 +2,43 @@ import Section from "../../styles/section";
 import GlassBox from "../../atoms/glassBox";
 import { styled } from "frontity";
 import { Box } from "@chakra-ui/react";
+import { connect } from "frontity";
+import { formatPostData } from "../../helpers";
 
-const DefaultPage = () => {
+const DefaultPage = ({ state, data, libraries }) => {
+  const post = formatPostData(state, data);
+  const Html2React = libraries.html2react.Component;
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
   return (
-    <Section className="content" paddingBlock={10} size={"lg"}>
+    <Section
+      px={"32px"}
+      w="full"
+      size={"lg"}
+      pt="50px"
+      pb={"80px"}
+      fontSize={["md", "lg", "xl"]}
+      color={contentColor}
+    >
       <GlassBox border="none">
-        {/* Render the content using the Html2React component so the HTML is processed
-       by the processors we included in the libraries.html2react.processors array. */}
         <Content
           as={Section}
           px={{ base: "32px", md: "0" }}
-          size="md"
+          size="sm"
           paddingBlock="50px"
-          fontSize={"1.0625rem"}
-        ></Content>
+          fontSize={["sm", "md"]}
+          color={contentColor}
+        >
+          <Html2React html={post.content} />
+        </Content>
       </GlassBox>
     </Section>
   );
 };
 
-export default DefaultPage;
+export default connect(DefaultPage);
 
 const Content = styled(Box)`
   word-break: break-word;

@@ -21,8 +21,8 @@ import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
 import { FancyTitle } from "../../../atoms/fancyTitle";
-import FullWidthCarousel from "../../../molecules/fullWIdthCarousel";
 import ViewAllBtn from "../../../atoms/ViewAllBtn";
+import { FullWidthCarousel } from "../../../atoms/carousels";
 
 const Home = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
@@ -104,7 +104,7 @@ const InFocusSection = ({ articles, state, categories }) => {
     >
       <FancyTitle title={"In Focus"} />
       <Container maxW="7xl">
-        <VStack overflow="hidden">
+        <VStack overflow="hidden" spacing={6}>
           {articles.map((item, index) => {
             const article = formatCPTData(
               state,

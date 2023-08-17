@@ -1,7 +1,7 @@
 import { Box, Stack } from "@chakra-ui/react";
-import Chart from "../../../molecules/chart";
 import TwitterTimeline from "../../../atoms/twitterTimeline";
 import GlassBox from "../../../atoms/glassBox";
+import DemoChart from "../../../atoms/charts";
 
 const InfoSection = () => {
   return (
@@ -21,7 +21,7 @@ const InfoSection = () => {
         alignItems="center"
         minH={"500px"}
       >
-        <Chart />
+        <DemoChart />
       </Box>
       <GlassBox
         rounded="2xl"

@@ -1,23 +1,23 @@
 import { connect } from "frontity";
-import { getPostData, formatPostData } from "../../helpers";
+import { formatPostData, getPostData } from "../../helpers";
 import KnowUs from "./KnowUs";
 import OurWork from "./OurWork";
 import Contact from "./contact/contact";
-import Career from "./career/career";
+// import Career from "./career/career";
 import Switch from "@frontity/components/switch";
 import { LightPatternBox } from "../../styles/pattern-box";
 import FeaturedMedia from "../post/featured-media";
 import PostHeader from "../post/post-header";
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import Loading from "../../atoms/loading";
+import DefaultPage from "./defaultPage";
 
-const Page = ({ state, libraries }) => {
-  const postData = getPostData(state);
-  const linkColor = state.theme.colors.linkColor;
-  const post = formatPostData(state, postData);
+const Page = ({ state }) => {
+  const data = getPostData(state);
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const post = formatPostData(state, data);
 
-  if (!postData.isReady) return <Loading />;
+  if (!data.isReady) return <Loading />;
 
   return (
     <LightPatternBox
@@ -53,40 +53,17 @@ const Page = ({ state, libraries }) => {
           heading={post.title}
           author={post.author}
           date={post.publishDate}
-          isPage={postData.isPage}
+          isPage={data.isPage}
           position="absolute"
           bottom="15%"
           left="5%"
         />
       </Box>
       <Switch>
-        <OurWork
-          when={postData.route === "/our-work/"}
-          post={post}
-          postData={postData}
-          libraries={libraries}
-        />
-        <KnowUs
-          when={postData.route === "/about/"}
-          post={post}
-          postData={postData}
-          linkColor={linkColor}
-          libraries={libraries}
-        />
-        <Career
-          when={postData.route === "/career/"}
-          post={post}
-          postData={postData}
-          linkColor={linkColor}
-          libraries={libraries}
-        />
-        <Contact
-          when={postData.route === "/contact/"}
-          post={post}
-          postData={postData}
-          linkColor={linkColor}
-          libraries={libraries}
-        />
+        <OurWork when={data.route === "/our-work/"} data={data} />
+        <KnowUs when={data.route === "/about/"} data={data} />
+        <Contact when={data.route === "/contact/"} data={data} />
+        <DefaultPage data={data} />
       </Switch>
     </LightPatternBox>
   );

@@ -3,15 +3,15 @@ import { connect, styled } from "frontity";
 import React from "react";
 import Section from "../../../styles/section";
 import GlassBox from "../../../atoms/glassBox";
+import { formatPostData } from "../../../helpers";
 
-const Career = ({ state, post, postData, libraries }) => {
+const Career = ({ state, data, libraries }) => {
+  const post = formatPostData(state, data);
   const Html2React = libraries.html2react.Component;
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
-  // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
 
   return (
     <Section
@@ -24,8 +24,6 @@ const Career = ({ state, post, postData, libraries }) => {
       color={contentColor}
     >
       <GlassBox border="none">
-        {/* Render the content using the Html2React component so the HTML is processed
-       by the processors we included in the libraries.html2react.processors array. */}
         <Content
           as={Section}
           px={{ base: "32px", md: "0" }}
@@ -43,8 +41,6 @@ const Career = ({ state, post, postData, libraries }) => {
 
 export default connect(Career);
 
-// This component is the parent of the `content.rendered` HTML. We can use nested
-// selectors to style that HTML.
 const Content = styled(Box)`
   word-break: break-word;
 

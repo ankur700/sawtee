@@ -9,17 +9,15 @@ import {
   Show,
   Heading,
 } from "@chakra-ui/react";
-
+import PostCategories from "../organisms/post/post-categories";
+import generateGradient from "../molecules/featured-post/genarate-gradient";
+import { formatDateWithMoment } from "../helpers";
 import { decode } from "frontity";
-
-import { formatDateWithMoment } from "../../helpers";
-import PostCategories from "../../organisms/post/post-categories";
-import generateGradient from "../../molecules/featured-post/genarate-gradient";
 
 const imageUrl = generateGradient();
 const today = new Date();
 
-export const TopImageCard = (props) => {
+export const ImageCard = (props) => {
   const cardBg = useColorModeValue("blackAlpha.200", "blackAlpha.300");
   const {
     categories,
@@ -108,7 +106,7 @@ export const TopImageCard = (props) => {
   );
 };
 
-export const NoImageCard = (props) => {
+export const Card = (props) => {
   const { categories, title, target, excerpt, author, date, linkColor } = props;
   const cardBg = useColorModeValue("blackAlpha.200", "blackAlpha.300");
 
@@ -193,4 +191,3 @@ export const NoImageCard = (props) => {
     </LinkBox>
   );
 };
-

@@ -24,6 +24,8 @@ node_modules_old/
 jspm_packages/
 .vscode/
 packages/sawtee-theme
+packages/package.json
+
 
 # TypeScript cache
 *.tsbuildinfo
@@ -49,6 +51,8 @@ macOS .DS_Store files
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+.safurai
+.vscode
 
 # yarn v2
 .yarn/cache
@@ -60,3 +64,4 @@ macOS .DS_Store files
 # Frontity
 build
 .vercel
+build.zip

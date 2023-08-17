@@ -9,20 +9,22 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { decode, styled } from "frontity";
+import { connect, decode, styled } from "frontity";
 import Section from "../../../styles/section";
+import { formatPostData } from "../../../helpers";
 
-const OurWork = ({ postData, post, libraries }) => {
-  const sectors = post.acf.sectors;
-  const intro = post.acf.intro;
-  const themes = post.acf.thematic_areas;
+const OurWork = ({ state, data, libraries }) => {
+  const post = formatPostData(state, data);
   const Html2React = libraries.html2react.Component;
+  // const linkColor = state.theme.colors.linkColor;
+  const sectors = post?.acf.sectors || null;
+  const intro = post?.acf.intro || null;
+  const themes = post?.acf.thematic_areas || null;
   const headingColor = useColorModeValue("gray.900, whiteAlpha.900");
   const contentColor = useColorModeValue("gray.800", "whiteAlpha.800");
   const linkColor = useColorModeValue("blackAlpha.700", "whiteAlpha.600");
   const cardBackground = useColorModeValue("gray.100", "blackAlpha.300");
   // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
 
   return (
     <>
@@ -36,7 +38,7 @@ const OurWork = ({ postData, post, libraries }) => {
       >
         <Heading
           as={"h3"}
-          fontSize={{ base: "md", md: "lg", lg: "xl" }}
+          fontSize={{ base: "lg", md: "2xl", lg: "3xl" }}
           fontWeight="bold"
           mb={12}
           textAlign="center"
@@ -74,14 +76,14 @@ const OurWork = ({ postData, post, libraries }) => {
               <Heading
                 as="h3"
                 fontWeight="semibold"
-                fontSize="2xl"
+                fontSize={{ base: "lg", md: "xl" }}
                 color={headingColor}
               >
                 {theme.title}
               </Heading>
 
               <Text
-                fontSize="md"
+                fontSize={["sm", "md"]}
                 mt={4}
                 transition={"display 1s ease-in"}
                 transitionDelay={"0.4s"}
@@ -174,7 +176,7 @@ const OurWork = ({ postData, post, libraries }) => {
   );
 };
 
-export default OurWork;
+export default connect(OurWork);
 
 // This component is the parent of the `content.rendered` HTML. We can use nested
 // selectors to style that HTML.

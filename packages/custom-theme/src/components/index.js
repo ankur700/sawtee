@@ -30,8 +30,8 @@ const Theme = ({ state, actions }) => {
   const categories = state.source.data["get-all-categories/"].items;
   const overrides = extendTheme({
     fonts: {
-      heading: "'Nunito', system-ui, 'Helvetica', sans-serif",
-      body: "'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Helvetica Neue','Helvetica', sans-serif",
+      heading: "'Source Sans Pro', system-ui, 'Helvetica', sans-serif",
+      body: "'Source Serif Pro', -apple-system, BlinkMacSystemFont, 'Helvetica Neue','Helvetica', serif",
     },
     colors: { ...state.theme.colors },
   });

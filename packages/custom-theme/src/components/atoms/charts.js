@@ -54,13 +54,9 @@ const data = [
   },
 ];
 
-export default class Example extends PureComponent {
-  // static demoUrl =
-  //   "https://codesandbox.io/s/composed-chart-in-responsive-container-pkqmy";
-
+export default class DemoChart extends PureComponent {
   render() {
     return (
-      
       <ResponsiveContainer>
         <AreaChart
           width={730}

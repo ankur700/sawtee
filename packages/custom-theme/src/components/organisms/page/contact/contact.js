@@ -30,8 +30,10 @@ import {
   FaLinkedin,
   FaYoutube,
 } from "react-icons/fa";
+import { formatPostData } from "../../../helpers";
 
-const Contact = ({ state, post, postData, libraries }) => {
+const Contact = ({ state, data, libraries }) => {
+  const post = formatPostData(state, data);
   const CONTACT_FORM = post.acf.cf7_form;
   const Html2React = libraries.html2react.Component;
   const modalContentColor = useColorModeValue(

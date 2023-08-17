@@ -10,9 +10,9 @@ import {
   useColorModeValue,
   Flex,
 } from "@chakra-ui/react";
-import Carousel from "../../../molecules/Carousel";
 import Link from "../../../atoms/link";
 import { formatCPTData } from "../../../helpers";
+import { MultiItemCarousel } from "../../../atoms/carousels";
 
 const AboutSection = ({
   state,
@@ -84,7 +84,7 @@ const AboutSection = ({
               text={"Trade Insight"}
               color="whiteAlpha.900"
             />
-            <Carousel show={show} gap={"30px"}>
+            <MultiItemCarousel show={show} gap={"30px"}>
               {tradeInsight.isReady && tradeInsight.items.length > 0 ? (
                 tradeInsight.items.map(({ type, id }) => {
                   const slide = formatCPTData(
@@ -166,12 +166,12 @@ const AboutSection = ({
                   ></Skeleton>
                 </Flex>
               )}
-            </Carousel>
+            </MultiItemCarousel>
           </Box>
 
           <Box px={6}>
             <Title py={["3", "6"]} text={"Books"} color="whiteAlpha.900" />
-            <Carousel show={show} gap={"30px"}>
+            <MultiItemCarousel show={show} gap={"30px"}>
               {books.isReady && books.items.length > 0 ? (
                 books.items.map(({ type, id }) => {
                   const slide = formatCPTData(
@@ -253,7 +253,7 @@ const AboutSection = ({
                   ></Skeleton>
                 </Flex>
               )}
-            </Carousel>
+            </MultiItemCarousel>
           </Box>
         </VStack>
       </SimpleGrid>
