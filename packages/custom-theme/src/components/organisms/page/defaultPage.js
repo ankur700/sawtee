@@ -1,7 +1,7 @@
 import Section from "../../styles/section";
 import GlassBox from "../../atoms/glassBox";
 import { styled } from "frontity";
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect } from "frontity";
 import { formatPostData } from "../../helpers";
 

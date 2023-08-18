@@ -13,7 +13,7 @@ const FontFace = () => {
         @font-face {
           font-family: "Source Sans Pro";
           font-style: normal;
-          font-weight: 500;
+
           font-display: "swap";
           src: url(${SourceSansProRegular}) format("ttf");
         }
@@ -21,7 +21,7 @@ const FontFace = () => {
         @font-face {
           font-family: "Source Sans Pro";
           font-style: normal;
-          font-weight: 600;
+
           font-display: "swap";
           src: url(${SourceSansProMedium}) format("ttf");
         }
@@ -29,14 +29,14 @@ const FontFace = () => {
         @font-face {
           font-family: "Source Sans Pro";
           font-style: normal;
-          font-weight: 700;
+
           font-display: "swap";
           src: url(${SourceSansProBold}) format("ttf");
         }
         @font-face {
           font-family: "Source Serif Pro";
           font-style: normal;
-          font-weight: 500;
+
           font-display: "swap";
           src: url(${SourceSerifProRegular}) format("ttf");
         }
@@ -44,7 +44,7 @@ const FontFace = () => {
         @font-face {
           font-family: "Source Serif Pro";
           font-style: normal;
-          font-weight: 600;
+
           font-display: "swap";
           src: url(${SourceSerifProMedium}) format("ttf");
         }
@@ -52,7 +52,7 @@ const FontFace = () => {
         @font-face {
           font-family: "Source Serif Pro";
           font-style: normal;
-          font-weight: 700;
+
           font-display: "swap";
           src: url(${SourceSerifProBold}) format("ttf");
         }

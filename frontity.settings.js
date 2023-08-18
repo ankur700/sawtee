@@ -89,7 +89,7 @@ const settings = {
             showOnPost: true,
           },
 
-          autoPreFetch: "all",
+          autoPreFetch: "hover",
           fontSets: "us-ascii",
         },
       },
