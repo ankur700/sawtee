@@ -1,23 +1,11 @@
-import {
-  Box,
-  Heading,
-  Image,
-  Grid,
-  GridItem,
-  useBreakpointValue,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Grid, GridItem, useBreakpointValue } from "@chakra-ui/react";
 import { connect } from "frontity";
-import Publication1 from "../../../../assets/publications-1-resized.jpg";
 import Sidebar from "../../../organisms/archive/sidebar";
-import { LightPatternBox } from "../../../styles/pattern-box";
-import Section from "../../../styles/section";
 import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
 import GlassBox from "../../../atoms/glassBox";
 import { useState, useEffect } from "react";
 import { formatCPTData } from "../../../helpers";
-import Loading from "../../../atoms/loading";
 
 const Publications = ({ state, categories, news, inFocus }) => {
   const data = state.source.get(state.router.link);
@@ -26,12 +14,7 @@ const Publications = ({ state, categories, news, inFocus }) => {
   const [sliderData, setSliderData] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
   const linkColor = state.theme.colors.linkColor;
-  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
-  );
-  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+
   const show = useBreakpointValue([1, 2, 3]);
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
@@ -78,116 +61,55 @@ const Publications = ({ state, categories, news, inFocus }) => {
     });
   }, [publicationCategories]);
 
-  // Load the post, but only if the data is ready.
-  if (!data.isReady) return <Loading />;
   return (
-    <LightPatternBox
-      bg={patternBoxColor}
-      showPattern={state.theme.showBackgroundPattern}
-      pt="0"
+    <Grid
+      templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
+      gap={6}
+      pos={"relative"}
     >
-      <Box pos="relative">
-        <Box
-          as="figure"
-          mt={4}
-          height="350px"
-          _after={{
-            display: "block",
-            content: '""',
-            width: "100%",
-            height: "350px",
-            background: "rgba(0,0,0,0.4)",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-          }}
-        >
-          <Box as={Image} boxSize="100%" objectFit="cover" src={Publication1} />
-        </Box>
-
-        <Box
-          textAlign="center"
-          mt={{ base: "20px", lg: "4rem" }}
-          px={{ base: "32px", md: "0" }}
-          position="absolute"
-          bottom="15%"
-          left="15%"
-        >
-          <Heading
-            as="h2"
-            fontWeight="bold"
-            color={"whiteAlpha.900"}
-            size={"2xl"}
-            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-            mt="30px"
-            mb={{ base: "20px", lg: "32px" }}
-            textTransform="capitalize"
-          >
-            {data.type}
-          </Heading>
-        </Box>
-      </Box>
-
-      <Section
-        px={{ base: "32px", md: 0 }}
-        size={size}
-        pt={20}
-        pb={"80px"}
-        fontSize={["md", "lg", "xl"]}
-        color={contentColor}
+      <GridItem colSpan={{ base: 1, xl: 3 }} px={4}>
+        <PublicationSliders
+          linkColor={linkColor}
+          sliderData={sliderData}
+          show={show || 3}
+          checkedItems={checkedItems}
+        />
+      </GridItem>
+      <GridItem
+        colSpan={{ base: 1, xl: 2 }}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
       >
-        <Grid
-          templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
-          gap={6}
-          pos={"relative"}
+        <Sidebar
+          posts={inFocus}
+          news={news}
+          categories={categories}
+          linkColor={linkColor}
+          postsLink={inFocus.link}
+          newsLink={news.link}
+          showTwitterTimeline={true}
+          showSubscriptionBox={true}
+        />
+        <GlassBox
+          mt={12}
+          py="4"
+          px="8"
+          rounded="xl"
+          height="max-content"
+          position={"sticky"}
+          top={"8.5rem"}
         >
-          <GridItem colSpan={{ base: 1, xl: 3 }} px={4}>
-            <PublicationSliders
-              linkColor={linkColor}
-              sliderData={sliderData}
-              show={show || 3}
-              checkedItems={checkedItems}
-            />
-          </GridItem>
-          <GridItem
-            colSpan={{ base: 1, xl: 2 }}
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-          >
-            <Sidebar
-              posts={inFocus}
-              news={news}
-              categories={categories}
-              linkColor={linkColor}
-              postsLink={inFocus.link}
-              newsLink={news.link}
-              showTwitterTimeline={true}
-              showSubscriptionBox={true}
-            />
-            <GlassBox
-              mt={12}
-              py="4"
-              px="8"
-              rounded="xl"
-              height="max-content"
-              position={"sticky"}
-              top={"8.5rem"}
-            >
-              <PublicationFilter
-                categories={publicationCategories}
-                allChecked={allChecked}
-                isIndeterminate={isIndeterminate}
-                checkedItems={checkedItems}
-                setCheckedItems={setCheckedItems}
-              />
-            </GlassBox>
-          </GridItem>
-        </Grid>
-      </Section>
-    </LightPatternBox>
+          <PublicationFilter
+            categories={publicationCategories}
+            allChecked={allChecked}
+            isIndeterminate={isIndeterminate}
+            checkedItems={checkedItems}
+            setCheckedItems={setCheckedItems}
+          />
+        </GlassBox>
+      </GridItem>
+    </Grid>
   );
 };
 

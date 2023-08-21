@@ -1,10 +1,16 @@
-import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Image,
+  SimpleGrid,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { connect, decode } from "frontity";
 import { useEffect } from "react";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
-import HomeArchive from "./home-archive";
 import Publications from "../page/publication";
 import Events from "../page/events";
 import Programme from "../page/programme";
@@ -13,65 +19,142 @@ import Research from "../page/research";
 import SawteeInMedia from "../page/sawteeInMedia";
 import Covid from "../page/covid";
 import Switch from "@frontity/components/switch";
+import { LightPatternBox } from "../../styles/pattern-box";
+import CoverImage from "../../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
+import PublicationImage from "../../../assets/publications-1-resized.jpg";
+import Section from "../../styles/section";
 
 const Archive = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
   const newsData = state.source.get("/sawtee-in-media/");
   const inFocus = state.source.get("/in-focus/");
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
 
   useEffect(() => {
     actions.source.fetch("/sawtee-in-media/");
     actions.source.fetch("/in-focus/");
   }, []);
-  return (
-    <Switch>
-      <Events
-        when={data.isFeaturedEventsArchive}
-        categories={categories}
-        news={newsData}
-        inFocus={inFocus}
-      />
-      <Publications
-        when={data.isPublicationsArchive}
-        categories={categories}
-        news={newsData}
-        inFocus={inFocus}
-      />
-      <SawteeInMedia
-        when={data.isSawteeInMediaArchive}
-        categories={categories}
-        inFocus={inFocus}
-      />
-      <Newsletters
-        when={data.isNewslettersArchive}
-        news={newsData}
-        inFocus={inFocus}
-      />
-      <Research
-        when={data.isResearchArchive}
-        categories={categories}
-        news={newsData}
-        inFocus={inFocus}
-      />
-      <Covid
-        when={data.isCovidArchive}
-        categories={categories}
-        news={newsData}
-        inFocus={inFocus}
-      />
 
-      <Programme
-        when={data.isProgrammeArchive}
-        categories={categories}
-        news={newsData}
-        inFocus={inFocus}
-      />
-      <DefaultArchive
-        when={data.isArchive && data.isCategory}
-        data={data}
-        state={state}
-      />
-    </Switch>
+  if (!data.isReady) return <Loading />;
+
+  return (
+    <LightPatternBox
+      bg={patternBoxColor}
+      showPattern={state.theme.showBackgroundPattern}
+      pt="0"
+    >
+      <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
+        <Box
+          as="figure"
+          mt={4}
+          height="350px"
+          _after={{
+            display: "block",
+            content: '""',
+            width: "100%",
+            height: "350px",
+            background: "rgba(0,0,0,0.4)",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+          }}
+        >
+          <Box
+            as={Image}
+            boxSize="100%"
+            objectFit="cover"
+            src={data.route === "/covid/" ? CoverImage : PublicationImage}
+          />
+        </Box>
+
+        <Box
+          textAlign="center"
+          mt={{ base: "20px", lg: "4rem" }}
+          px={{ base: "32px", md: "0" }}
+          color={"whiteAlpha.900"}
+          position="absolute"
+          bottom="15%"
+          left="15%"
+        >
+          <Heading
+            fontWeight="bold"
+            size={"2xl"}
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+            mt="30px"
+            mb={{ base: "20px", lg: "32px" }}
+            textTransform="capitalize"
+          >
+            {data.type}
+          </Heading>
+        </Box>
+      </Box>
+
+      <Box
+        as={Section}
+        pb="80px"
+        size={size || "huge"}
+        px={{ base: "32px", md: "0" }}
+        pt="50px"
+        fontSize={["md", "lg", "xl"]}
+        color={contentColor}
+      >
+        <Switch>
+          <Events
+            when={data.isFeaturedEventsArchive}
+            categories={categories}
+            news={newsData}
+            inFocus={inFocus}
+          />
+          <Publications
+            when={data.isPublicationsArchive}
+            categories={categories}
+            news={newsData}
+            inFocus={inFocus}
+          />
+          <SawteeInMedia
+            when={data.isSawteeInMediaArchive}
+            categories={categories}
+            inFocus={inFocus}
+          />
+          <Newsletters
+            when={data.isNewslettersArchive}
+            news={newsData}
+            inFocus={inFocus}
+          />
+          <Research
+            when={data.isResearchArchive}
+            categories={categories}
+            news={newsData}
+            inFocus={inFocus}
+          />
+          <Covid
+            when={data.isCovidArchive}
+            categories={categories}
+            news={newsData}
+            inFocus={inFocus}
+          />
+
+          <Programme
+            when={data.isProgrammeArchive}
+            categories={categories}
+            news={newsData}
+            inFocus={inFocus}
+          />
+          <DefaultArchive
+            when={data.isArchive && data.isCategory}
+            data={data}
+            state={state}
+          />
+        </Switch>
+      </Box>
+    </LightPatternBox>
   );
 };
 

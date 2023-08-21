@@ -18,13 +18,14 @@ const NewsletterCard = ({ post, linkColor }) => {
     <HStack
       flex={1}
       p={{ base: 3, sm: 6 }}
-      bg={useColorModeValue("gray.100", "gray.800")}
+      bg={useColorModeValue("gray.100", "blackAlpha.300")}
       spacing={5}
       rounded="lg"
       alignItems="center"
       justifyContent="space-between"
       pos="relative"
       w="full"
+      maxW={"2xl"}
     >
       {/* <Icon as={FaRegNewspaper} w={8} h={8} color={linkColor} /> */}
       <Image
@@ -42,7 +43,7 @@ const NewsletterCard = ({ post, linkColor }) => {
         w="full"
       >
         <Text
-          color={useColorModeValue("gray.700", "whiteAlpha.700")}
+          color={useColorModeValue("gray.700", "whiteAlpha.800")}
           _hover={{ color: linkColor }}
           fontSize="2xl"
           lineHeight={1.2}

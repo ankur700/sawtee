@@ -31,9 +31,8 @@ const ProgrammeItem = ({ program, linkColor }) => {
         <Box mt={2}>
           <Heading
             as="h3"
-            fontSize={{ base: "lg", md: "xl", lg: "2xl" }}
+            fontSize={{ base: "lg", md: "xl", xl: "2xl" }}
             color={HeaderColor}
-            // lineHeight={"tall"}
           >
             <Link
               href={program.link}
@@ -44,7 +43,6 @@ const ProgrammeItem = ({ program, linkColor }) => {
             </Link>
           </Heading>
           <Text
-            // isTruncated
             my={4}
             fontSize={["sm", "md"]}
             color="gray.600"

@@ -46,6 +46,8 @@ export const MenuHandler = {
     Object.assign(menu, {
       items: menuData.items,
       experts: menuData.acf?.experts,
+      introText: menuData.acf?.intro_text,
+      introImage: menuData.acf?.intro_image,
       isMenu: true,
     });
   },

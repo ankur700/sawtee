@@ -12,18 +12,21 @@ import Link from "../../../atoms/link";
 import { BsArrowUpRight } from "react-icons/bs";
 
 const CovidItemCard = ({ post }) => {
-  console.log(post);
   return (
     <Box
-      w="full"
       rounded={"sm"}
+      maxW="2xl"
+      w="full"
       my={5}
       mx={[0, 5]}
       overflow={"hidden"}
-      bg="white"
+      bg={useColorModeValue("white", "blackAlpha.300")}
       border={"1px"}
-      borderColor="black"
-      boxShadow={useColorModeValue("6px 6px 0 black", "6px 6px 0 cyan")}
+      borderColor={useColorModeValue("gray.800", "blackAlpha.500")}
+      boxShadow={useColorModeValue(
+        "6px 6px 0 var(--chakra-colors-gray-800)",
+        "6px 6px 0 var(--chakra-colors-blackAlpha-500)"
+      )}
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
@@ -31,12 +34,12 @@ const CovidItemCard = ({ post }) => {
       <VStack p={4} align="stretch" justify="space-between" spacing={4}>
         <HStack justify="space-between">
           <Box
-            bg="black"
+            bg={useColorModeValue("gray.800", "blackAlpha.500")}
             w="max-content"
             display={"inline-block"}
             px={2}
             py={1}
-            color="white"
+            color="gray.200"
           >
             <Text fontSize={"xs"} fontWeight="medium">
               {post.acf.genre}
@@ -47,7 +50,11 @@ const CovidItemCard = ({ post }) => {
             {formatDateWithMoment(post.publishDate, "MMM YYYY")}
           </Text>
         </HStack>
-        <Heading as="h3" color={"black"} fontSize={"lg"}>
+        <Heading
+          as="h3"
+          color={useColorModeValue("gray.800", "gray.300")}
+          fontSize={"lg"}
+        >
           <Link link={post.link}>{post.title}</Link>
         </Heading>
         <HStack
@@ -58,7 +65,11 @@ const CovidItemCard = ({ post }) => {
           {post.acf.authors
             ? post.acf.authors?.map(({ author }, idx) => {
                 return (
-                  <Text key={author} color={"gray.600"} fontSize="sm">
+                  <Text
+                    key={author}
+                    color={useColorModeValue("gray.600", "gray.400")}
+                    fontSize="sm"
+                  >
                     {idx === post.acf.authors.length ? author + " | " : author}
                   </Text>
                 );
@@ -66,7 +77,7 @@ const CovidItemCard = ({ post }) => {
             : null}
         </HStack>
       </VStack>
-      <HStack borderTop={"1px"} color="black">
+      <HStack borderTop={"1px"}>
         <Flex
           p={4}
           alignItems="center"
@@ -80,7 +91,6 @@ const CovidItemCard = ({ post }) => {
           </Link>
           <BsArrowUpRight />
         </Flex>
-
       </HStack>
     </Box>
   );
