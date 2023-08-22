@@ -2,13 +2,12 @@ import { connect } from "frontity";
 import { useEffect } from "react";
 import MediaArticle from "./MediaArticle";
 import { Grid, GridItem, VStack } from "@chakra-ui/react";
-import Sidebar from "../../../organisms/archive/sidebar";
+import Sidebar from "../sidebar";
 import { formatCPTData } from "../../../helpers";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
 const SawteeInMedia = ({ state, actions, categories, inFocus }) => {
   const postData = state.source.get(state.router.link);
-  const programeData = state.source.get("/programme/");
   const linkColor = state.theme.colors.linkColor;
 
   useEffect(() => {
@@ -48,7 +47,7 @@ const SawteeInMedia = ({ state, actions, categories, inFocus }) => {
       >
         <Sidebar
           posts={inFocus}
-          news={programeData}
+          // news={programeData}
           linkColor={linkColor}
           postsLink={inFocus.link}
           newsLink={programeData.link}

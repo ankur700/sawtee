@@ -1,16 +1,19 @@
 import { Grid, GridItem, VStack } from "@chakra-ui/react";
 import { connect } from "frontity";
 import Sidebar from "../../archive/sidebar";
-import Loading from "../../../atoms/loading";
 import { formatCPTData } from "../../../helpers";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 import ProgrammeItem from "./programmeItem";
 
-const Programmes = ({ state, categories, news, inFocus }) => {
-  const postData = state.source.get(state.router.link);
-
-  // Load the post, but only if the data is ready.
-  if (!postData.isReady) return <Loading />;
+const Programmes = ({
+  state,
+  postData,
+  linkColor,
+  categories,
+  news,
+  inFocus,
+}) => {
+  // const postData = state.source.get(state.router.link);
 
   return (
     <Grid
@@ -30,7 +33,7 @@ const Programmes = ({ state, categories, news, inFocus }) => {
               <ProgrammeItem
                 key={program.id}
                 program={program}
-                linkColor={state.theme.colors.linkColor}
+                linkColor={linkColor}
               />
             );
           })}

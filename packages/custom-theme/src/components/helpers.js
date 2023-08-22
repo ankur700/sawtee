@@ -1,5 +1,4 @@
 import * as dayjs from "dayjs";
-import { categoriesWidgetsHome } from "./config";
 import { useBreakpointValue } from "@chakra-ui/react";
 
 const MAXIMUM_POSTS = 5;

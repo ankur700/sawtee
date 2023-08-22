@@ -6,9 +6,8 @@ import { formatCPTData } from "../../../helpers";
 import CovidItemCard from "./covidItemCard";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
-const Covid = ({ state, categories, news, inFocus }) => {
-  const data = state.source.get(state.router.link);
-  const linkColor = state.theme.colors.linkColor;
+const Covid = ({ state, data, linkColor, categories, news, inFocus }) => {
+  // const data = state.source.get(state.router.link);
 
   return (
     <Grid

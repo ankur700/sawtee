@@ -7,13 +7,7 @@ import { formatCPTData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
-const EventsArchive = ({ state, actions, categories, news, inFocus }) => {
-  // Get the data of the current list.
-  const postData = state.source.get(state.router.link);
-  const linkColor = state.theme.colors.linkColor;
-
-  // Load the post, but only if the data is ready.
-
+const EventsArchive = ({ postData, linkColor, categories, news, inFocus }) => {
   return (
     <Grid
       templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}

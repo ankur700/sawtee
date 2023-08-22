@@ -11,13 +11,13 @@ import { useEffect } from "react";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
-import Publications from "../page/publication";
-import Events from "../page/events";
-import Programme from "../page/programme";
-import Newsletters from "../page/newsletters";
-import Research from "../page/research";
-import SawteeInMedia from "../page/sawteeInMedia";
-import Covid from "../page/covid";
+import Publications from "./publication";
+import Events from "./events";
+import Programme from "./programme";
+import Newsletters from "./newsletters";
+import Research from "./research";
+import SawteeInMedia from "./sawteeInMedia";
+import Covid from "./covid";
 import Switch from "@frontity/components/switch";
 import { LightPatternBox } from "../../styles/pattern-box";
 import CoverImage from "../../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
@@ -34,6 +34,7 @@ const Archive = ({ state, actions, categories }) => {
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
+  const linkColor = state.theme.colors.linkColor;
 
   useEffect(() => {
     actions.source.fetch("/sawtee-in-media/");
@@ -111,34 +112,43 @@ const Archive = ({ state, actions, categories }) => {
             categories={categories}
             news={newsData}
             inFocus={inFocus}
+            postData={data}
+            linkColor={linkColor}
           />
           <Publications
             when={data.isPublicationsArchive}
             categories={categories}
             news={newsData}
             inFocus={inFocus}
+            linkColor={linkColor}
           />
           <SawteeInMedia
             when={data.isSawteeInMediaArchive}
             categories={categories}
             inFocus={inFocus}
+            linkColor={linkColor}
           />
           <Newsletters
             when={data.isNewslettersArchive}
             news={newsData}
             inFocus={inFocus}
+            postData={data}
+            linkColor={linkColor}
           />
           <Research
             when={data.isResearchArchive}
             categories={categories}
             news={newsData}
             inFocus={inFocus}
+            linkColor={linkColor}
           />
           <Covid
             when={data.isCovidArchive}
             categories={categories}
             news={newsData}
             inFocus={inFocus}
+            data={data}
+            linkColor={linkColor}
           />
 
           <Programme
@@ -146,6 +156,8 @@ const Archive = ({ state, actions, categories }) => {
             categories={categories}
             news={newsData}
             inFocus={inFocus}
+            postData={data}
+            linkColor={linkColor}
           />
           <DefaultArchive
             when={data.isArchive && data.isCategory}

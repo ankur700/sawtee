@@ -4,24 +4,13 @@ import {
   SimpleGrid,
   VStack,
   Text,
-  useColorModeValue,
   IconButton,
   Button,
   HStack,
   Link,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   useDisclosure,
 } from "@chakra-ui/react";
-import { connect, styled } from "frontity";
-import React from "react";
-import GlassBox from "../../../atoms/glassBox";
-import Iframe from "@frontity/components/iframe";
+import { connect } from "frontity";
 import { MdPhone, MdEmail, MdLocationOn } from "react-icons/md";
 import {
   FaFax,
@@ -31,29 +20,26 @@ import {
   FaYoutube,
 } from "react-icons/fa";
 import { formatPostData } from "../../../helpers";
+import Section from "../../../styles/section";
+import { Content } from "../../../atoms/content";
+import { MapModel } from "../../../atoms/mapModel";
 
 const Contact = ({ state, data, libraries }) => {
   const post = formatPostData(state, data);
   const CONTACT_FORM = post.acf.cf7_form;
   const Html2React = libraries.html2react.Component;
-  const modalContentColor = useColorModeValue(
-    "rgba(255, 255, 255, 0.7)",
-    "rgba(0, 0, 0, 0.7)"
-  );
-  const modelHeaderColor = useColorModeValue("gray.700", "whiteAlpha.900");
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const socialMenus = state.theme.socialLinks;
 
-  // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
-
   return (
     <Content
-      as={GlassBox}
+      className="page_content"
+      as={Section}
       px={{ base: "16px", lg: "32px" }}
-      maxW={"6xl"}
+      size={"lg"}
       mx="auto"
-      mt="50px"
+      my="50px"
       bg="transparent"
       boxShadow="none"
     >
@@ -218,41 +204,11 @@ const Contact = ({ state, data, libraries }) => {
             </Box>
           </SimpleGrid>
         </Box>
-
-        <Modal
-          isCentered
-          onClose={onClose}
+        <MapModel
           isOpen={isOpen}
-          motionPreset="slideInBottom"
-          closeOnOverlayClick={true}
-          blockScrollOnMount={false}
-        >
-          <ModalOverlay />
-          <ModalContent bg={modalContentColor} maxW={"3xl"}>
-            <ModalHeader color={modelHeaderColor}>Our Location</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody margin={"0 auto"}>
-              <Iframe
-                src={post.acf.map_link}
-                title="SAWTEE's Location"
-                height="450"
-                width="700"
-                loading="lazy"
-              />
-            </ModalBody>
-
-            <ModalFooter>
-              <Button variant="solid" colorScheme={"primary"}>
-                <Link
-                  href="https://goo.gl/maps/fwZuwNSbjN5jwZia7"
-                  target="_blank"
-                >
-                  View Map
-                </Link>
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
+          onOpen={onOpen}
+          mapLink={post.acf.map_link}
+        />
       </Box>
     </Content>
   );
@@ -260,132 +216,3 @@ const Contact = ({ state, data, libraries }) => {
 
 export default connect(Contact);
 
-// This component is the parent of the `content.rendered` HTML. We can use nested
-// selectors to style that HTML.
-const Content = styled(Box)`
-  word-break: break-word;
-
-  * {
-    max-width: 100%;
-  }
-
-  ul {
-    padding: 1rem;
-  }
-
-  img {
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  & .wpcf7 form {
-    padding: 24px;
-
-    & p {
-      padding-bottom: 1em;
-    }
-
-    & label {
-      color: #121212;
-    }
-  }
-
-  figure {
-    margin: 24px auto;
-    /* next line overrides an inline style of the figure element. */
-    width: 100% !important;
-  }
-
-  iframe {
-    display: block;
-    margin: auto;
-  }
-
-  /* Input fields styles */
-
-  & .wpcf7 input[type="text"],
-  & .wpcf7 input[type="email"],
-  & .wpcf7 input[type="url"],
-  & .wpcf7 input[type="tel"],
-  & .wpcf7 input[type="number"],
-  & .wpcf7 input[type="date"],
-  & .wpcf7 textarea,
-  & .wpcf7 select {
-    display: block;
-    padding: 6px 12px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    outline-color: transparent;
-    transition: outline-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    margin: 8px 0 4px 0;
-
-    &:focus {
-      outline-color: #1f38c5;
-    }
-  }
-
-  & .wpcf7 input[type="submit"] {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    background-image: none;
-    border: 1px solid #1f38c5;
-    padding: 12px 36px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #1f38c5;
-  }
-
-  /* WordPress Core Align Classes */
-
-  @media (min-width: 420px) {
-    img.aligncenter,
-    img.alignleft,
-    img.alignright {
-      width: auto;
-    }
-
-    .aligncenter {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .alignright {
-      float: right;
-      margin-left: 24px;
-    }
-
-    .alignleft {
-      float: left;
-      margin-right: 24px;
-    }
-  }
-  a {
-    text-decoration: none;
-
-    &:hover,
-    &:focus {
-      text-decoration: underline;
-      text-decoration-style: dotted;
-
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
-    }
-  }
-`;

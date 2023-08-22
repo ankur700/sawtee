@@ -1,44 +1,7 @@
-import Section from "../../styles/section";
-import GlassBox from "../../atoms/glassBox";
 import { styled } from "frontity";
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import { connect } from "frontity";
-import { formatPostData } from "../../helpers";
+import { Box } from "@chakra-ui/react";
 
-const DefaultPage = ({ state, data, libraries }) => {
-  const post = formatPostData(state, data);
-  const Html2React = libraries.html2react.Component;
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
-  );
-  return (
-    <Section
-      px={{ base: "32px", md: "0" }}
-      w="full"
-      size={"lg"}
-      pt="50px"
-      pb={"80px"}
-      fontSize={["md", "lg", "xl"]}
-      color={contentColor}
-    >
-      <Content
-        as={GlassBox}
-        px={["4", "8"]}
-        maxW="5xl"
-        paddingBlock="50px"
-        fontSize={["sm", "md"]}
-        color={contentColor}
-      >
-        <Html2React html={post.content} />
-      </Content>
-    </Section>
-  );
-};
-
-export default connect(DefaultPage);
-
-const Content = styled(Box)`
+export const Content = styled(Box)`
   word-break: break-word;
 
   * {
@@ -74,16 +37,27 @@ const Content = styled(Box)`
     margin: auto;
   }
 
-  /* Input fields styles */
+  & .wpcf7 form {
+    padding: 24px;
 
-  input[type="text"],
-  input[type="email"],
-  input[type="url"],
-  input[type="tel"],
-  input[type="number"],
-  input[type="date"],
-  textarea,
-  select {
+    & p {
+      padding-bottom: 1em;
+    }
+
+    & label {
+      color: #121212;
+    }
+  }
+
+  /*Contact form 7 Input fields styles */
+  & .wpcf7 input[type="text"],
+  & .wpcf7 input[type="email"],
+  & .wpcf7 input[type="url"],
+  & .wpcf7 input[type="tel"],
+  & .wpcf7 input[type="number"],
+  & .wpcf7 input[type="date"],
+  & .wpcf7 textarea,
+  & .wpcf7 select {
     display: block;
     padding: 6px 12px;
     font-size: 16px;
@@ -103,7 +77,7 @@ const Content = styled(Box)`
     }
   }
 
-  input[type="submit"] {
+  & .wpcf7 input[type="submit"] {
     display: inline-block;
     margin-bottom: 0;
     font-weight: 400;
@@ -123,8 +97,20 @@ const Content = styled(Box)`
     background-color: #1f38c5;
   }
 
-  /* WordPress Core Align Classes */
+  a {
+    text-decoration: none;
 
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      text-decoration-style: dotted;
+
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+  }
+
+  /* WordPress Core Align Classes */
   @media (min-width: 420px) {
     img.aligncenter,
     img.alignleft,

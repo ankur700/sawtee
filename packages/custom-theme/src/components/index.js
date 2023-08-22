@@ -1,10 +1,4 @@
-import {
-  Box,
-  ChakraProvider,
-  ScaleFade,
-  extendTheme,
-  Link,
-} from "@chakra-ui/react";
+import { Box, ChakraProvider, ScaleFade, extendTheme } from "@chakra-ui/react";
 import Switch from "@frontity/components/switch";
 import "focus-visible/dist/focus-visible";
 import { Global, Head, connect } from "frontity";
@@ -20,8 +14,6 @@ import Footer from "./organisms/footer";
 import Header from "./organisms/header";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
-import Home from "./organisms/page/home/home";
-import HomeArchive from "./organisms/archive/home-archive";
 
 const config = {
   initialColorMode: "light",
@@ -59,22 +51,17 @@ const Theme = ({ state, actions }) => {
           rel="stylesheet"
         />
       </Head>
-      {/* Accessibility: Provides ability to skip to main content */}
       <SkipLink as="a" href="#main">
         Skip to main content
       </SkipLink>
-      {/* Add the header of the site. */}
       <Header />
-      {/* Add the main section. It renders a different component depending
-      on the type of URL we are in. */}
+
       <ScaleFade key={state.router.link} initialScale={0.9} in="true">
         <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
           <Switch>
             <Loading when={data.isFetching} />
-            <Home when={data.route === "/"} categories={categories} />
             <Page when={data.isPage} categories={categories} />
             <Post when={data.isPostType} />
-            <HomeArchive when={data.route === "/blog/"} />
             <Archive when={data.isArchive} categories={categories} />
             <SearchResults when={data.isSearch} />
             <Page404 when={data.is404} />

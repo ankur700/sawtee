@@ -7,13 +7,11 @@ import GlassBox from "../../../atoms/glassBox";
 import { useState, useEffect } from "react";
 import { formatCPTData } from "../../../helpers";
 
-const Publications = ({ state, categories, news, inFocus }) => {
-  const data = state.source.get(state.router.link);
+const Publications = ({ state, linkColor, categories, news, inFocus }) => {
   const postData = state.source.get("get-publications-categories-posts");
   const [publicationCategories, setPublicationCategories] = useState([]);
   const [sliderData, setSliderData] = useState([]);
   const [checkedItems, setCheckedItems] = useState([]);
-  const linkColor = state.theme.colors.linkColor;
 
   const show = useBreakpointValue([1, 2, 3]);
   const allChecked = checkedItems.every(Boolean);

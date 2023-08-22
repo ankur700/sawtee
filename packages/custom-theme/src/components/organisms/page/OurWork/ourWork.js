@@ -12,11 +12,11 @@ import {
 import { connect, decode, styled } from "frontity";
 import Section from "../../../styles/section";
 import { formatPostData } from "../../../helpers";
+import { Content } from "../../../atoms/content";
 
 const OurWork = ({ state, data, libraries }) => {
   const post = formatPostData(state, data);
   const Html2React = libraries.html2react.Component;
-  // const linkColor = state.theme.colors.linkColor;
   const sectors = post?.acf.sectors || null;
   const intro = post?.acf.intro || null;
   const themes = post?.acf.thematic_areas || null;
@@ -105,6 +105,7 @@ const OurWork = ({ state, data, libraries }) => {
         </SimpleGrid>
       </Container>
       <Content
+        className="page_content"
         as={Section}
         px={{ base: "32px", md: "16px" }}
         size="lg"
@@ -177,31 +178,3 @@ const OurWork = ({ state, data, libraries }) => {
 };
 
 export default connect(OurWork);
-
-// This component is the parent of the `content.rendered` HTML. We can use nested
-// selectors to style that HTML.
-const Content = styled(Box)`
-  @media (min-width: 420px) {
-    & .cards {
-      & .title {
-        color: white !important;
-        z-index: 1;
-      }
-
-      & .content {
-        z-index: 1;
-      }
-      &:hover {
-        transition: all 0.4s ease-in-out;
-        & .title {
-          background: hsl(194, 100%, 25%, 0.4);
-        }
-        & .content {
-          color: rgb(0, 0, 0);
-          background: hsl(0, 17%, 95%, 0.4);
-          opacity: 1;
-        }
-      }
-    }
-  }
-`;

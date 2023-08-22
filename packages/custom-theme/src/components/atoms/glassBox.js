@@ -4,7 +4,6 @@ const GlassBox = ({ children, ...rest }) => {
   return (
     <Box
       w="100%"
-      h="auto"
       border={useColorModeValue("1px solid", "none")}
       borderColor={"blackAlpha.100"}
       bg={useColorModeValue("blackAlpha.100", "blackAlpha.300")}
