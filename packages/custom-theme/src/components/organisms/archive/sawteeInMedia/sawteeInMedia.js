@@ -10,6 +10,8 @@ const SawteeInMedia = ({ state, actions, categories, inFocus }) => {
   const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
 
+  const programeData = state.source.get("/programme/");
+
   useEffect(() => {
     actions.source.fetch("/programme/");
   }, []);

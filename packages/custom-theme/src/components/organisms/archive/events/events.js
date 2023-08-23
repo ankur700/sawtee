@@ -7,7 +7,14 @@ import { formatCPTData } from "../../../helpers";
 import Loading from "../../../atoms/loading";
 import NumberedPagination from "../../../atoms/NumberedPagination";
 
-const EventsArchive = ({ postData, linkColor, categories, news, inFocus }) => {
+const EventsArchive = ({
+  state,
+  postData,
+  linkColor,
+  categories,
+  news,
+  inFocus,
+}) => {
   return (
     <Grid
       templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}

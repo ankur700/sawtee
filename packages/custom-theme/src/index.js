@@ -3,11 +3,11 @@ import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
 import {
   GetAllCategoriesHandler,
-  PublicationArchiveHandler,
   PublicationsHandler,
   MenuHandler,
   CategoriesHandler,
   EventsHandler,
+  CategoriesWithParentHandler,
 } from "./components/handlers";
 
 const customTheme = {
@@ -82,6 +82,7 @@ const customTheme = {
         await actions.source.fetch("get-all-categories");
         await actions.source.fetch("/subscription-page");
         await actions.source.fetch("get-publications-categories-posts");
+        await actions.source.fetch("/category/sawtee-in-media/");
       },
     },
   },
@@ -94,7 +95,7 @@ const customTheme = {
         GetAllCategoriesHandler,
         MenuHandler,
         CategoriesHandler,
-        PublicationArchiveHandler,
+        CategoriesWithParentHandler,
         PublicationsHandler,
         EventsHandler,
       ],

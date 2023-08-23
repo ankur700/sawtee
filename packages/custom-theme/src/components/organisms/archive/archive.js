@@ -122,12 +122,12 @@ const Archive = ({ state, actions, categories }) => {
             inFocus={inFocus}
             linkColor={linkColor}
           />
-          <SawteeInMedia
+          {/* <SawteeInMedia
             when={data.isSawteeInMediaArchive}
             categories={categories}
             inFocus={inFocus}
             linkColor={linkColor}
-          />
+          /> */}
           <Newsletters
             when={data.isNewslettersArchive}
             news={newsData}

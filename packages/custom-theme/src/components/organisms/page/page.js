@@ -7,6 +7,7 @@ import DefaultPage from "./defaultPage";
 import { PageLayout } from "../layouts/pageLayout";
 import Home from "./home/home";
 import Contact from "./contact/contact";
+import SawteeInMedia from "./sawteeInMedia";
 
 const Page = ({ state, categories }) => {
   const data = getPostData(state);
@@ -27,6 +28,11 @@ const Page = ({ state, categories }) => {
         <OurWork when={data.route === "/our-work/"} data={data} />
         <KnowUs when={data.route === "/about/"} data={data} />
         <Contact when={data.route === "/contact/"} data={data} />
+        <SawteeInMedia
+          when={data.route === "/sawtee-in-media/"}
+          data={data}
+          categories={categories}
+        />
         <DefaultPage data={data} />
       </Switch>
     </PageLayout>

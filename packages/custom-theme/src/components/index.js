@@ -28,7 +28,7 @@ const Theme = ({ state, actions }) => {
   const overrides = extendTheme({
     fonts: {
       heading: "'Roboto Slab', system-ui, 'Helvetica', serif",
-      body: "'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif",
+      body: "'Roboto', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif",
     },
     colors: { ...state.theme.colors },
   });
@@ -47,7 +47,7 @@ const Theme = ({ state, actions }) => {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700&family=Roboto+Slab:wght@600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Roboto:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700&family=Roboto+Slab:wght@600;700;800;900&display=swap"
           rel="stylesheet"
         />
       </Head>
