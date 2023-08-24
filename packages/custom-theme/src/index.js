@@ -5,9 +5,8 @@ import {
   GetAllCategoriesHandler,
   PublicationsHandler,
   MenuHandler,
-  CategoriesHandler,
   EventsHandler,
-  CategoriesWithParentHandler,
+  PublicationSubcategoryHandler,
 } from "./components/handlers";
 
 const customTheme = {
@@ -82,7 +81,6 @@ const customTheme = {
         await actions.source.fetch("get-all-categories");
         await actions.source.fetch("/subscription-page");
         await actions.source.fetch("get-publications-categories-posts");
-        await actions.source.fetch("/category/sawtee-in-media/");
       },
     },
   },
@@ -94,10 +92,9 @@ const customTheme = {
       handlers: [
         GetAllCategoriesHandler,
         MenuHandler,
-        CategoriesHandler,
-        CategoriesWithParentHandler,
         PublicationsHandler,
         EventsHandler,
+        PublicationSubcategoryHandler,
       ],
     },
   },

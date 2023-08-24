@@ -103,6 +103,7 @@ export const MenuItem = ({ index, children, mb, link, ...rest }) => (
 );
 
 const Menu = ({ state, actions }) => {
+  const menu = state.source.get("/menu/primary/");
   const { isMobileMenuOpen } = state.theme;
   const { openMobileMenu, closeMobileMenu } = actions.theme;
   const buttonRef = useRef();
@@ -116,11 +117,16 @@ const Menu = ({ state, actions }) => {
         onClose={closeMobileMenu}
       >
         <Stack mt="20%" spacing={6} direction="column" as="ul" ml="0">
-          {state.theme.menu.map((menu, index) => (
-            <MenuItem link={menu.href} key={menu.name} index={`0${index + 1}`}>
-              {menu.name}
-            </MenuItem>
-          ))}
+          {menu.isReady &&
+            menu.items.map((menuItem, index) => (
+              <MenuItem
+                link={menuItem.href}
+                key={menuItem.ID}
+                index={`0${index + 1}`}
+              >
+                {menuItem.title}
+              </MenuItem>
+            ))}
         </Stack>
 
         {state.theme.showSocialLinks && (

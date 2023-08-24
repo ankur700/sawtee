@@ -77,6 +77,7 @@ const AboutSection = ({
           p={6}
           overflow="hidden"
           w="full"
+          minH="600px"
         >
           <Box px={6}>
             <Title
@@ -85,7 +86,7 @@ const AboutSection = ({
               color="whiteAlpha.900"
             />
             <MultiItemCarousel show={show} gap={"30px"}>
-              {tradeInsight.isReady && tradeInsight.items.length > 0 ? (
+              {tradeInsight.isReady &&
                 tradeInsight.items.map(({ type, id }) => {
                   const slide = formatCPTData(
                     state,
@@ -93,52 +94,50 @@ const AboutSection = ({
                     categories
                   );
 
-                  if (slide !== undefined) {
-                    return (
-                      <Link
-                        key={slide.id}
+                  return (
+                    <Link
+                      key={slide.id}
+                      title={slide.title}
+                      maxHeight={"250px"}
+                      link={slide.acf.pub_link}
+                      pos={"relative"}
+                      w={`calc(100% / ${show} - 30px )`}
+                      _before={{
+                        content: `''`,
+                        position: "absolute",
+                        top: 0,
+                        left: "unset",
+                        width: `100%`,
+                        height: "auto",
+                        borderRadius: "15px",
+                        background: "rgba(0,0,0,0.3)",
+                        backgroundBlendMode: "overlay",
+                      }}
+                      _hover={{
+                        _before: {
+                          background: "transparent",
+                        },
+                      }}
+                    >
+                      <Image
+                        src={slide.featured_media.src}
+                        srcSet={
+                          slide.srcSet
+                            ? slide.srcSet
+                            : slide.featured_media.srcSet
+                        }
+                        alt={slide.title}
                         title={slide.title}
-                        maxHeight={"250px"}
-                        link={slide.acf.pub_link}
-                        pos={"relative"}
-                        w={`calc(100% / ${show} - 30px )`}
-                        _before={{
-                          content: `''`,
-                          position: "absolute",
-                          top: 0,
-                          left: "unset",
-                          width: `100%`,
-                          height: "auto",
-                          borderRadius: "15px",
-                          background: "rgba(0,0,0,0.3)",
-                          backgroundBlendMode: "overlay",
-                        }}
-                        _hover={{
-                          _before: {
-                            background: "transparent",
-                          },
-                        }}
-                      >
-                        <Image
-                          src={slide.featured_media.src}
-                          srcSet={
-                            slide.srcSet
-                              ? slide.srcSet
-                              : slide.featured_media.srcSet
-                          }
-                          alt={slide.title}
-                          title={slide.title}
-                          rounded="xl"
-                          border={`1px solid`}
-                          borderColor={ImageBorderColor}
-                          objectFit="cover"
-                          style={{ width: "160px", height: "auto" }}
-                        />
-                      </Link>
-                    );
-                  }
-                })
-              ) : (
+                        rounded="xl"
+                        border={`1px solid`}
+                        borderColor={ImageBorderColor}
+                        objectFit="cover"
+                        style={{ width: "160px", height: "auto" }}
+                      />
+                    </Link>
+                  );
+                })}{" "}
+              {!tradeInsight.isReady && (
                 <Flex
                   mt="3"
                   rounded="xl"
@@ -172,7 +171,7 @@ const AboutSection = ({
           <Box px={6}>
             <Title py={["3", "6"]} text={"Books"} color="whiteAlpha.900" />
             <MultiItemCarousel show={show} gap={"30px"}>
-              {books.isReady && books.items.length > 0 ? (
+              {books.isReady &&
                 books.items.map(({ type, id }) => {
                   const slide = formatCPTData(
                     state,
@@ -180,52 +179,50 @@ const AboutSection = ({
                     categories
                   );
 
-                  if (slide !== undefined) {
-                    return (
-                      <Link
-                        key={slide.id}
+                  return (
+                    <Link
+                      key={slide.id}
+                      title={slide.title}
+                      maxHeight={"250px"}
+                      link={slide.acf.pub_link}
+                      pos={"relative"}
+                      w={`calc(100% / ${show} - 30px )`}
+                      _before={{
+                        content: `''`,
+                        position: "absolute",
+                        top: 0,
+                        left: "unset",
+                        width: `100%`,
+                        height: "auto",
+                        borderRadius: "15px",
+                        background: "rgba(0,0,0,0.3)",
+                        backgroundBlendMode: "overlay",
+                      }}
+                      _hover={{
+                        _before: {
+                          background: "transparent",
+                        },
+                      }}
+                    >
+                      <Image
+                        src={slide.featured_media.src}
+                        srcSet={
+                          slide.srcSet
+                            ? slide.srcSet
+                            : slide.featured_media.srcSet
+                        }
+                        alt={slide.title}
                         title={slide.title}
-                        maxHeight={"250px"}
-                        link={slide.acf.pub_link}
-                        pos={"relative"}
-                        w={`calc(100% / ${show} - 30px )`}
-                        _before={{
-                          content: `''`,
-                          position: "absolute",
-                          top: 0,
-                          left: "unset",
-                          width: `100%`,
-                          height: "auto",
-                          borderRadius: "15px",
-                          background: "rgba(0,0,0,0.3)",
-                          backgroundBlendMode: "overlay",
-                        }}
-                        _hover={{
-                          _before: {
-                            background: "transparent",
-                          },
-                        }}
-                      >
-                        <Image
-                          src={slide.featured_media.src}
-                          srcSet={
-                            slide.srcSet
-                              ? slide.srcSet
-                              : slide.featured_media.srcSet
-                          }
-                          alt={slide.title}
-                          title={slide.title}
-                          rounded="xl"
-                          border={`1px solid`}
-                          borderColor={ImageBorderColor}
-                          objectFit="cover"
-                          style={{ width: "160px", height: "auto" }}
-                        />
-                      </Link>
-                    );
-                  }
-                })
-              ) : (
+                        rounded="xl"
+                        border={`1px solid`}
+                        borderColor={ImageBorderColor}
+                        objectFit="cover"
+                        style={{ width: "160px", height: "auto" }}
+                      />
+                    </Link>
+                  );
+                })}
+              {!books.isReady && (
                 <Flex
                   mt="3"
                   rounded="xl"

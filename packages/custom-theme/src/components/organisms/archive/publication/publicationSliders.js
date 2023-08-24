@@ -102,7 +102,7 @@ const PublicationSliders = ({ sliderData, show, checkedItems }) => {
                   height={"40px"}
                   noOfLines={1}
                 />
-                <Carousel show={show} gap={"20px"}>
+                <MultiItemCarousel show={show} gap={"20px"}>
                   {[1, 2, 3, 4, 5, 6].map((item) => {
                     return (
                       <Box
@@ -117,7 +117,7 @@ const PublicationSliders = ({ sliderData, show, checkedItems }) => {
                       </Box>
                     );
                   })}
-                </Carousel>
+                </MultiItemCarousel>
               </Stack>
             );
           })}

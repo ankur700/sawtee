@@ -24,8 +24,7 @@ import Sidebar from "../archive/sidebar";
 import SubscriptionCard from "../../atoms/subscriptionCard";
 
 const ProgramPost = ({ state, libraries, actions }) => {
-  const postData = getPostData(state);
-  const post = formatPostData(state, postData);
+  const post = formatPostData(state, getPostData(state));
   const linkColor = state.theme.colors.linkColor;
   // const [programs, setPrograms] = React.useState([]);
   const Html2React = libraries.html2react.Component;
@@ -35,36 +34,10 @@ const ProgramPost = ({ state, libraries, actions }) => {
     "whiteAlpha.800"
   );
   const AccentTextColor = useColorModeValue("primary.600", "accent.200");
-  // const StartDate = post.acf.program_starting_date;
-  // const EndDate = post.acf.program_ending_date;
+
   const { program_starting_date, program_ending_date, program_partner } =
     post.acf;
 
-  // Once the post has loaded in the DOM, prefetch both the
-  // home posts and the list component so if the user visits
-  // the home page, everything is ready and it loads instantly.
-
-  // const data = state.source.get("/programmes/");
-  // console.log("🚀 ~ file: ProgramPost.js:58 ~ ProgramPost ~ data:", data);
-  // useEffect(() => {
-  //   let array = [];
-  //   if (data.isReady) {
-  //     data.items.map((item) => {
-  //       if (item.id !== post.id) {
-  //         const post = state.source[item.type][item.id];
-  //         array.push(post);
-  //       }
-  //     });
-  //   }
-  //   if (array.length > 0) {
-  //     setPrograms([...array]);
-  //   }
-  // }, [data.isReady]);
-
-  const [ref, scroll] = useScrollProgress();
-
-  // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
   return (
     <LightPatternBox
       bg={patternBoxColor}

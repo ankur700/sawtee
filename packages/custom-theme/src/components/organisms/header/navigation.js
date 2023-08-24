@@ -502,11 +502,7 @@ const SiteMenuItem = ({ item, experts, introText, introImage, ...rest }) => {
 };
 
 const Navigation = ({ state, menu, ...rest }) => {
-  const data = state.source.get("/menu/primary/");
-
-  const experts = data.experts;
-  const introText = data.introText;
-  const introImage = data.introImage;
+  const { experts, introText, introImage } = menu;
 
   return (
     <Box
@@ -517,8 +513,8 @@ const Navigation = ({ state, menu, ...rest }) => {
       {...rest}
     >
       <SiteMenu ml="20px">
-        {data.isReady &&
-          Object.entries(data.items).map(([key, item]) => {
+        {menu.isReady &&
+          Object.entries(menu.items).map(([key, item]) => {
             return (
               <SiteMenuItem
                 key={key}
