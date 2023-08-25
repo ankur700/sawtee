@@ -157,64 +157,64 @@ export const PublicationsHandler = {
 
     // Populate state.source.data with the proper info about this URL.
 
-    const newitems = items.sort((a, b) => a.id - b.id);
+    items = items.sort((a, b) => a.id - b.id);
     Object.assign(state.source.data[route], {
       isReady: true,
-      newitems,
+      items,
     });
   },
 };
 
-// export const CategoriesWithParentHandler = {
-//   pattern: "/category/(.*)?/:slug",
-//   func: async ({ route, params, state, libraries }) => {
-//     // Get the page of the current route.
-//     const { page } = libraries.source.parse(route);
+export const CategoriesWithParentHandler = {
+  pattern: "/category/(.*)?/:slug",
+  func: async ({ route, params, state, libraries }) => {
+    // Get the page of the current route.
+    const { page } = libraries.source.parse(route);
 
-//     // Get the id of the parent category.
-//     const parentCatResponse = await libraries.source.api.get({
-//       endpoint: "categories",
-//       params: { slug: params.slug },
-//     });
-//     const [parentCat] = await libraries.source.populate({
-//       state,
-//       response: parentCatResponse,
-//     });
+    // Get the id of the parent category.
+    const parentCatResponse = await libraries.source.api.get({
+      endpoint: "categories",
+      params: { slug: params.slug },
+    });
+    const [parentCat] = await libraries.source.populate({
+      state,
+      response: parentCatResponse,
+    });
 
-//     // Get the ids of all the child categories.
-//     const childCatsResponse = await libraries.source.api.get({
-//       endpoint: "categories",
-//       params: { parent: parentCat.id },
-//     });
-//     const childCats = await libraries.source.populate({
-//       state,
-//       response: childCatsResponse,
-//     });
-//     const ids = childCats.map((cat) => cat.id);
-//     ids.push(parentCat.id);
+    // Get the ids of all the child categories.
+    const childCatsResponse = await libraries.source.api.get({
+      endpoint: "categories",
+      params: { parent: parentCat.id },
+    });
+    const childCats = await libraries.source.populate({
+      state,
+      response: childCatsResponse,
+    });
+    const ids = childCats.map((cat) => cat.id);
+    ids.push(parentCat.id);
 
-//     // Get the posts from those categories.
-//     const postsResponse = await libraries.source.api.get({
-//       endpoint: "posts",
-//       params: { categories: ids.join(","), page, _embed: true },
-//     });
-//     const items = await libraries.source.populate({
-//       state,
-//       response: postsResponse,
-//     });
-//     const total = libraries.source.getTotal(postsResponse);
-//     const totalPages = libraries.source.getTotalPages(postsResponse);
+    // Get the posts from those categories.
+    const postsResponse = await libraries.source.api.get({
+      endpoint: "posts",
+      params: { categories: ids.join(","), page, _embed: true },
+    });
+    const items = await libraries.source.populate({
+      state,
+      response: postsResponse,
+    });
+    const total = libraries.source.getTotal(postsResponse);
+    const totalPages = libraries.source.getTotalPages(postsResponse);
 
-//     // Populate state.source.data with the proper info about this URL.
-//     Object.assign(state.source.data[route], {
-//       id: parentCat.id,
-//       taxonomy: "category",
-//       items,
-//       total,
-//       totalPages,
-//       isArchive: true,
-//       isTaxonomy: true,
-//       isCategory: true,
-//     });
-//   },
-// };
+    // Populate state.source.data with the proper info about this URL.
+    Object.assign(state.source.data[route], {
+      id: parentCat.id,
+      taxonomy: "category",
+      items,
+      total,
+      totalPages,
+      isArchive: true,
+      isTaxonomy: true,
+      isCategory: true,
+    });
+  },
+};

@@ -13,7 +13,6 @@ const Home = ({ state, actions, categories }) => {
   const slides = post.acf?.slides;
   const introText = post.acf?.about_section_intro;
   const introImage = post.acf?.about_section_image;
-  const publicationSliders = post.acf?.publication_slider;
   const tradeInsight = state.source.get("/publications/trade-insight/");
   const books = state.source.get("/publications/books/");
   const eventsData = state.source.get("/events/");
@@ -26,15 +25,6 @@ const Home = ({ state, actions, categories }) => {
     actions.source.fetch("/in-focus/");
   }, []);
 
-  useEffect(() => {
-    actions.source.fetch(
-      `/publications/${publicationSliders[0].category_slug}/`
-    );
-    actions.source.fetch(
-      `/publications/${publicationSliders[1].category_slug}/`
-    );
-  }, [publicationSliders]);
-
   /*
 
     ? Question
@@ -43,9 +33,7 @@ const Home = ({ state, actions, categories }) => {
 
   return (
     <>
-      <Box id="carousel-section" width="full">
-        <FullWidthCarousel slides={slides} loop={true} />
-      </Box>
+      <FullWidthCarousel id="carousel-section" slides={slides} loop={true} />
 
       <AboutSection
         tradeInsight={tradeInsight}

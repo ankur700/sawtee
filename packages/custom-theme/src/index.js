@@ -54,7 +54,7 @@ const customTheme = {
       },
       isSearchModalOpen: false,
       isMobileMenuOpen: false,
-      autoPreFetch: "in-view",
+      autoPreFetch: "no",
       fontSet: "all",
     },
   },
@@ -80,6 +80,8 @@ const customTheme = {
         await actions.source.fetch("/menu/footer/");
         await actions.source.fetch("get-all-categories");
         await actions.source.fetch("/subscription-page");
+        await actions.source.fetch("/publications/trade-insight/");
+        await actions.source.fetch("/publications/books/");
         await actions.source.fetch("get-publications-categories-posts");
       },
     },

@@ -17,6 +17,7 @@ const Publications = ({ state, linkColor, categories, news, inFocus }) => {
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
 
+
   useEffect(() => {
     categories
       .filter((cat) => cat.parent === 5)
@@ -24,7 +25,11 @@ const Publications = ({ state, linkColor, categories, news, inFocus }) => {
   }, []);
 
   useEffect(() => {
-    if (postData.isReady && publicationCategories.length !== 0) {
+    if (
+      postData.isReady &&
+      postData.items &&
+      publicationCategories.length !== 0
+    ) {
       postData.items.forEach((item) => {
         let category = publicationCategories.filter((pc) => pc.id === item.id);
         let array = [];

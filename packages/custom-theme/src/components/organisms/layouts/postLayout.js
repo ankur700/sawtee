@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Heading, Text, useColorModeValue } from "@chakra-ui/react";
 import { LightPatternBox } from "../../styles/pattern-box";
 import PostHeader from "../post/post-header";
 import PostProgressBar from "../post/post-progressbar";
@@ -6,8 +6,16 @@ import Section from "../../styles/section";
 import FeaturedMedia from "../post/featured-media";
 import { Content } from "../../atoms/content";
 import useScrollProgress from "../../hooks/useScrollProgress";
+import PostCategories from "../post/post-categories";
+import { formatDateWithMoment } from "../../helpers";
 
-export const PostLayout = ({ children, showPattern, programPost }) => {
+export const PostLayout = ({
+  children,
+  showPattern,
+  isProgramPost,
+  post,
+  isPage,
+}) => {
   const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const postHeaderColor = useColorModeValue("gray.600", "whiteAlpha.600");
   const sectionBg = useColorModeValue("whiteAlpha.700", "gray.700");
@@ -18,11 +26,10 @@ export const PostLayout = ({ children, showPattern, programPost }) => {
     <LightPatternBox
       bg={patternBoxColor}
       showPattern={showPattern}
-      programPost={programPost}
       ref={ref}
       pb={"40px"}
     >
-      {programPost ? (
+      {isProgramPost ? (
         <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
           <Box
             mt={{ base: "20px", lg: "4rem" }}
@@ -43,7 +50,7 @@ export const PostLayout = ({ children, showPattern, programPost }) => {
               textAlign="center"
               dangerouslySetInnerHTML={{ __html: post.title }}
             />
-            {program_partner && (
+            {post.acf.program_partner && (
               <Text
                 fontSize="lg"
                 fontWeight="bold"
@@ -54,7 +61,7 @@ export const PostLayout = ({ children, showPattern, programPost }) => {
               </Text>
             )}
 
-            {program_starting_date && program_ending_date && (
+            {post.acf.program_starting_date && post.acf.program_ending_date && (
               <Text fontSize="md" mt="12px" textAlign={"center"}>
                 {formatDateWithMoment(
                   post.acf.program_starting_date,
@@ -79,12 +86,12 @@ export const PostLayout = ({ children, showPattern, programPost }) => {
             heading={post.title}
             author={post.author}
             date={post.publishDate}
-            isPage={postData.isPage}
+            isPage={isPage}
           />
         </Box>
       )}
 
-      {!postData.isPage && <PostProgressBar value={scroll} />}
+      {!isPage && <PostProgressBar value={scroll} />}
 
       {/* Look at the settings to see if we should include the featured image */}
       <Section bg={sectionBg} pb="80px" size="lg">

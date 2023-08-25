@@ -27,6 +27,8 @@ const Archive = ({ state, actions, categories }) => {
     actions.source.fetch("/in-focus/");
   }, []);
 
+  console.log(inFocus);
+
   return (
     <ArchiveLayout
       showBackgroundPattern={state.theme.showBackgroundPattern}
