@@ -49,7 +49,8 @@ const Theme = ({ state, actions }) => {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700&family=Roboto+Slab:wght@600;700;800;900&display=swap"
-          rel="stylesheet"
+          rel="prefetch"
+          as="style"
         />
       </Head>
       <SkipLink as="a" href="#main">

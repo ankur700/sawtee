@@ -57,21 +57,22 @@ const MediaArticle = ({ newsItem, linkColor }) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        {acf.publishers.map(({ publisher, publisher_website }) => {
-          return (
-            <Tag
-              key={publisher}
-              px="4"
-              py={2}
-              as="a"
-              color={publisherColor}
-              href={publisher_website}
-              _hover={{ textDecor: "underline" }}
-            >
-              {publisher}
-            </Tag>
-          );
-        })}
+        {acf.publishers.length > 0 &&
+          acf.publishers.map(({ publisher, publisher_website }) => {
+            return (
+              <Tag
+                key={publisher}
+                px="4"
+                py={2}
+                as="a"
+                color={publisherColor}
+                href={publisher_website}
+                _hover={{ textDecor: "underline" }}
+              >
+                {publisher}
+              </Tag>
+            );
+          })}
 
         <Text color={useColorModeValue("gray.600", "gray.200")}>
           {formatDateWithMoment(publishDate)}

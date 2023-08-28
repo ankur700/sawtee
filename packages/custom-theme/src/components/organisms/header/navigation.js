@@ -12,19 +12,23 @@ import {
   SimpleGrid,
   VStack,
   Divider,
+  Link,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
-import link from "../../atoms/link";
+// import link from "../../atoms/link";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
 import { motion } from "framer-motion";
 
-const MenuLink = styled(link)`
+const MenuLink = styled(Link)`
   position: relative;
   text-decoration: none;
   font-family: var(--chakra-fonts-heading);
+  &:hover {
+    text-decoration: none;
+  }
 `;
 
-const FancyLink = styled(link)`
+const FancyLink = styled(Link)`
   position: relative;
   text-decoration: none;
   font-family: var(--chakra-fonts-heading);
@@ -243,7 +247,7 @@ const AboutMegaMenu = ({
                   position="relative"
                   cursor="pointer"
                 >
-                  <FancyLink link={child.url}>{child.title}</FancyLink>
+                  <FancyLink href={child.url}>{child.title}</FancyLink>
                 </Box>
               );
             })}
@@ -322,7 +326,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
     >
       <VStack spacing={10} maxW="90%" m="0 auto">
         <Text fontSize="2xl" fontWeight="bold">
-          {item.child_items[0].title}
+          <Link href={item.child_items[0].url}>
+            {item.child_items[0].title}
+          </Link>
         </Text>
         <SimpleGrid
           as={motion.ul}
@@ -340,7 +346,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                 as={motion.li}
                 variants={ListVariants}
               >
-                <MenuLink link={grandChild.url} textAlign="center">
+                <MenuLink href={grandChild.url} textAlign="center">
                   {grandChild.title}
                 </MenuLink>
               </Text>
@@ -362,7 +368,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
         <GridItem colSpan={2} rowSpan={1}>
           <VStack spacing={10}>
             <Text fontSize="2xl" fontWeight="bold">
-              {item.child_items[1].title}
+              <Link href={item.child_items[1].url}>
+                {item.child_items[1].title}
+              </Link>
             </Text>
             <SimpleGrid
               columns={2}
@@ -379,7 +387,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     as={motion.li}
                     variants={ListVariants}
                   >
-                    <MenuLink link={grandChild.url} textAlign="center">
+                    <MenuLink href={grandChild.url} textAlign="center">
                       {grandChild.title}
                     </MenuLink>
                   </Text>
@@ -397,7 +405,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
         >
           <VStack spacing={10}>
             <Text fontSize="2xl" fontWeight="bold">
-              {item.child_items[2].title}
+              <Link href={item.child_items[2].url}>
+                {item.child_items[2].title}
+              </Link>
             </Text>
             <SimpleGrid columns={5} spacing={6}>
               {item.child_items[2].child_items.map((grandChild) => {
@@ -408,7 +418,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     as={motion.li}
                     variants={ListVariants}
                   >
-                    <MenuLink link={grandChild.url} textAlign="center">
+                    <MenuLink href={grandChild.url} textAlign="center">
                       {grandChild.title}
                     </MenuLink>
                   </Text>
@@ -452,7 +462,7 @@ const SiteMenuItem = ({ item, experts, introText, introImage, ...rest }) => {
           onMouseLeave={onClose}
           rightIcon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
         >
-          <MenuLink textDecoration={"none"} link={item.url}>
+          <MenuLink textDecoration={"none"} href={item.url}>
             {item.title}
           </MenuLink>
         </MenuItem>
@@ -494,7 +504,7 @@ const SiteMenuItem = ({ item, experts, introText, introImage, ...rest }) => {
           onMouseLeave={onClose}
           display="inline-flex"
         >
-          <MenuLink link={item.url}>{item.title}</MenuLink>
+          <MenuLink href={item.url}>{item.title}</MenuLink>
         </MenuItem>
       </Box>
     );

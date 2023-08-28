@@ -19,7 +19,7 @@ const ProgramPost = ({ libraries, content }) => {
       templateColumns={{ base: "1fr", lg: "repeat(5,1fr)" }}
       gap={6}
       placeItems={"center"}
-      pt="50px"
+      pt="50px"npx
     >
       <GridItem
         colSpan={{ base: 1, lg: 3 }}
