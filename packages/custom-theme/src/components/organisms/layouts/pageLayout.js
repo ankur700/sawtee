@@ -22,7 +22,6 @@ export const PageLayout = ({
         {featured_media != null && (
           <FeaturedMedia
             mt="0"
-            s
             height={"350px"}
             id={featured_media.id}
             _after={{

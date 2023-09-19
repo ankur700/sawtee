@@ -1,4 +1,4 @@
-import { Box, useColorModeValue, Heading } from "@chakra-ui/react";
+import { Box, useColorModeValue, Heading, SlideFade } from "@chakra-ui/react";
 import { HiOutlineExternalLink } from "react-icons/hi";
 import Link from "../../../atoms/link";
 import { useState, useEffect } from "react";
