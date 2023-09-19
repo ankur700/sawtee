@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 
-const MultiItemCarousel = ({ slides, noOfItems }) => {
+const MultipleItemCarousel = ({ slides, noOfItems }) => {
   const arrowStyles = {
     cursor: "pointer",
     pos: "absolute",
@@ -151,4 +151,4 @@ const MultiItemCarousel = ({ slides, noOfItems }) => {
   );
 };
 
-export default MultiItemCarousel;
+export default MultipleItemCarousel;

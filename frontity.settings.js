@@ -74,10 +74,6 @@ const settings = {
             },
             headerBg: "#e8f3ff",
             footerBg: "#006181",
-            bodyBg: {
-              light: "#fff",
-              dark: "#343e4b",
-            },
             linkColor: "rgba(8 ,126, 164, 1)",
           },
           showSearchInHeader: true,
@@ -93,7 +89,7 @@ const settings = {
             showOnPost: true,
           },
 
-          autoPreFetch: "all",
+          autoPreFetch: "no",
           fontSets: "us-ascii",
         },
       },
@@ -107,12 +103,6 @@ const settings = {
           homepage: "home",
           postsPage: "blog",
           params: {
-            type: [
-              "featured-events",
-              "sawtee-in-media",
-              "programme",
-              "research",
-            ],
             orderBy: "id",
             order: "desc",
             per_page: 10,
@@ -129,14 +119,14 @@ const settings = {
               archive: "/publications",
             },
             {
-              type: "sawtee-in-media",
-              endpoint: "sawtee-in-media",
-              archive: "/sawtee-in-media",
-            },
-            {
               type: "programme",
               endpoint: "programme",
               archive: "/programme",
+            },
+            {
+              type: "sawtee-in-media",
+              endpoint: "sawtee-in-media",
+              archive: "/sawtee-in-media",
             },
             {
               type: "newsletters",
@@ -152,6 +142,11 @@ const settings = {
               type: "covid",
               endpoint: "covid",
               archive: "/covid",
+            },
+            {
+              type: "in-focus",
+              endpoint: "in-focus",
+              archive: "/in-focus",
             },
           ],
         },

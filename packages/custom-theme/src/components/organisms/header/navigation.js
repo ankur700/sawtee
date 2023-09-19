@@ -15,19 +15,20 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
-import React from "react";
-import link from "../../atoms/link";
+// import link from "../../atoms/link";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
-import MapImage from "../../../assets/Airports_Network_Map.png";
 import { motion } from "framer-motion";
 
-const MenuLink = styled(link)`
+const MenuLink = styled(Link)`
   position: relative;
   text-decoration: none;
   font-family: var(--chakra-fonts-heading);
+  &:hover {
+    text-decoration: none;
+  }
 `;
 
-const FancyLink = styled(link)`
+const FancyLink = styled(Link)`
   position: relative;
   text-decoration: none;
   font-family: var(--chakra-fonts-heading);
@@ -56,11 +57,11 @@ const FancyLink = styled(link)`
 const MegaMenuWrapperVariants = {
   open: {
     opacity: 1,
-    // y: 0
+    y: 0,
   },
   closed: {
     opacity: 0,
-    // y: "-100%"
+    y: "-100%",
   },
 };
 
@@ -91,7 +92,7 @@ const ListContainerVariants = {
 };
 
 const MenuItem = ({ children, ...rest }) => {
-  const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
+  const li = useColorModeValue("gray.800", "whiteAlpha.800");
   return (
     <Button
       as={motion.button}
@@ -185,7 +186,7 @@ const ExpertCard = ({ expert }) => {
   );
 };
 
-export const SiteMenu = (props) => (
+export const SiteMenu = ({ ...styles }) => (
   <Stack
     m="0"
     spacing="20px"
@@ -194,11 +195,18 @@ export const SiteMenu = (props) => (
     alignItems="center"
     direction="row"
     color="white"
-    {...props}
+    {...styles}
   />
 );
 
-const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
+const AboutMegaMenu = ({
+  item,
+  experts,
+  introText,
+  introImage,
+  isOpen,
+  ...rest
+}) => {
   return (
     <Box
       bg={"rgb(8, 126, 164,0.9)"}
@@ -239,7 +247,7 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
                   position="relative"
                   cursor="pointer"
                 >
-                  <FancyLink link={child.url}>{child.title}</FancyLink>
+                  <FancyLink href={child.url}>{child.title}</FancyLink>
                 </Box>
               );
             })}
@@ -255,7 +263,7 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
             alignItems="center"
             overflow="hidden"
             rounded="xl"
-            backgroundImage={`url(${MapImage})`}
+            backgroundImage={`url(${introImage})`}
             backgroundColor="rgba(0,0,0,0.6)"
             backgroundBlendMode="blend"
             backgroundSize="cover"
@@ -270,14 +278,7 @@ const AboutMegaMenu = ({ item, experts, isOpen, ...rest }) => {
               px={6}
               lineHeight="taller"
             >
-              South Asia Watch on Trade, Economics and Environment (SAWTEE) was
-              launched in 1994 as a loose regional network of non-governmental
-              organizations (NGOs) from five South Asian countries: Bangladesh,
-              India, Nepal, Pakistan and Sri Lanka. Taking into consideration
-              the emerging need for fair, effective and meaningful integration
-              of South Asian countries into the regional as well as global
-              economies, the major motto of this regional initiative has been
-              “GLOBALIZATION YES, BUT WITH SAFETY NETS”
+              {introText}
             </Text>
           </Box>
         </GridItem>
@@ -325,7 +326,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
     >
       <VStack spacing={10} maxW="90%" m="0 auto">
         <Text fontSize="2xl" fontWeight="bold">
-          {item.child_items[0].title}
+          <Link href={item.child_items[0].url}>
+            {item.child_items[0].title}
+          </Link>
         </Text>
         <SimpleGrid
           as={motion.ul}
@@ -343,7 +346,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                 as={motion.li}
                 variants={ListVariants}
               >
-                <MenuLink link={grandChild.url} textAlign="center">
+                <MenuLink href={grandChild.url} textAlign="center">
                   {grandChild.title}
                 </MenuLink>
               </Text>
@@ -365,7 +368,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
         <GridItem colSpan={2} rowSpan={1}>
           <VStack spacing={10}>
             <Text fontSize="2xl" fontWeight="bold">
-              {item.child_items[1].title}
+              <Link href={item.child_items[1].url}>
+                {item.child_items[1].title}
+              </Link>
             </Text>
             <SimpleGrid
               columns={2}
@@ -382,7 +387,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     as={motion.li}
                     variants={ListVariants}
                   >
-                    <MenuLink link={grandChild.url} textAlign="center">
+                    <MenuLink href={grandChild.url} textAlign="center">
                       {grandChild.title}
                     </MenuLink>
                   </Text>
@@ -400,7 +405,9 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
         >
           <VStack spacing={10}>
             <Text fontSize="2xl" fontWeight="bold">
-              {item.child_items[2].title}
+              <Link href={item.child_items[2].url}>
+                {item.child_items[2].title}
+              </Link>
             </Text>
             <SimpleGrid columns={5} spacing={6}>
               {item.child_items[2].child_items.map((grandChild) => {
@@ -411,7 +418,7 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
                     as={motion.li}
                     variants={ListVariants}
                   >
-                    <MenuLink link={grandChild.url} textAlign="center">
+                    <MenuLink href={grandChild.url} textAlign="center">
                       {grandChild.title}
                     </MenuLink>
                   </Text>
@@ -425,30 +432,37 @@ const OurWorkMegaMenu = ({ item, isOpen, ...rest }) => {
   );
 };
 
-const MegaMenu = ({ item, experts, isOpen }) => {
+const MegaMenu = ({ item, experts, introText, introImage, isOpen }) => {
   // const li = useColorModeValue("rgb(8, 126, 164,1)", "whiteAlpha.800");
 
   if (item.title === "Know Us") {
-    return <AboutMegaMenu item={item} experts={experts} isOpen={isOpen} />;
+    return (
+      <AboutMegaMenu
+        item={item}
+        experts={experts}
+        introText={introText}
+        introImage={introImage}
+        isOpen={isOpen}
+      />
+    );
   } else if (item.title === "Our Work") {
     return <OurWorkMegaMenu item={item} isOpen={isOpen} />;
   }
 };
 
-const SiteMenuItem = ({ item, experts, ...props }) => {
+const SiteMenuItem = ({ item, experts, introText, introImage, ...rest }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   if (item.child_items !== undefined) {
     return (
-      <Box as="li" role="group" {...props}>
+      <Box as="li" role="group" {...rest}>
         <MenuItem
           aria-label={item.title}
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
-
           rightIcon={isOpen ? <HiChevronUp /> : <HiChevronDown />}
         >
-          <MenuLink textDecoration={"none"} link={item.url}>
+          <MenuLink textDecoration={"none"} href={item.url}>
             {item.title}
           </MenuLink>
         </MenuItem>
@@ -471,28 +485,34 @@ const SiteMenuItem = ({ item, experts, ...props }) => {
             durations: 0.6,
           }}
         >
-          <MegaMenu item={item} experts={experts} isOpen={isOpen} />
+          <MegaMenu
+            item={item}
+            experts={experts}
+            introText={introText}
+            introImage={introImage}
+            isOpen={isOpen}
+          />
         </Box>
       </Box>
     );
   } else {
     return (
-      <Box as="li" role="group" {...props}>
+      <Box as="li" role="group" {...rest}>
         <MenuItem
           aria-label={item.title}
           onMouseEnter={onOpen}
           onMouseLeave={onClose}
           display="inline-flex"
         >
-          <MenuLink link={item.url}>{item.title}</MenuLink>
+          <MenuLink href={item.url}>{item.title}</MenuLink>
         </MenuItem>
       </Box>
     );
   }
 };
 
-const Navigation = ({ state, menu, ...props }) => {
-  const data = state.source.get("/menu/primary/");
+const Navigation = ({ state, menu, ...rest }) => {
+  const { experts, introText, introImage } = menu;
 
   return (
     <Box
@@ -500,13 +520,19 @@ const Navigation = ({ state, menu, ...props }) => {
       width="100%"
       display={{ base: "none", lg: "flex" }}
       zIndex={"999"}
-      {...props}
+      {...rest}
     >
       <SiteMenu ml="20px">
-        {data.isReady &&
-          Object.entries(data.items).map(([key, item]) => {
+        {menu.isReady &&
+          Object.entries(menu.items).map(([key, item]) => {
             return (
-              <SiteMenuItem key={key} item={item} experts={data.experts} />
+              <SiteMenuItem
+                key={key}
+                item={item}
+                experts={experts}
+                introText={introText}
+                introImage={introImage}
+              />
             );
           })}
       </SiteMenu>

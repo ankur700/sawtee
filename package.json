@@ -8,6 +8,10 @@
     "React",
     "Wordpress"
   ],
+  "engines": {
+    "node": "<=14.0.0",
+    "npm": "<=8.0.0"
+  },
   "scripts": {
     "dev": "frontity dev",
     "build": "frontity build",
@@ -22,7 +26,16 @@
     "@frontity/html2react": "^1.7.0",
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
+    "custom-theme": "file:packages/custom-theme",
+    "dayjs": "^1.11.9",
+    "focus-visible": "^5.2.0",
     "frontity": "^1.17.2",
-    "custom-theme": "./packages/custom-theme"
+    "react-icons": "^4.3.1",
+    "react-twitter-embed": "^4.0.4",
+    "recharts": "^2.1.10",
+    "@chakra-ui/react": "^1.3.3",
+    "framer-motion": "^3.9.2",
+    "@frontity/components": "^1.7.1",
+    "@frontity/hooks": "^2.2.2"
   }
 }

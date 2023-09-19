@@ -1,73 +1,12 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import { connect, styled } from "frontity";
-import React from "react";
+import { connect } from "frontity";
 import { formatPostData, getPostData } from "../../helpers";
-import useScrollProgress from "../../hooks/useScrollProgress";
-import { LightPatternBox } from "../../styles/pattern-box";
-import Section from "../../styles/section";
-import FeaturedMedia from "./featured-media";
-import PostHeader from "./post-header";
-import PostProgressBar from "./post-progressbar";
 
-const FeaturedEventPost = ({ state, actions, libraries }) => {
-  const postData = getPostData(state);
-  const post = formatPostData(state, postData);
-  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const postHeaderColor = useColorModeValue("gray.600", "whiteAlpha.600");
-  const sectionBg = useColorModeValue("whiteAlpha.700", "gray.700");
+const FeaturedEventPost = ({ state, libraries }) => {
+  const post = formatPostData(state, getPostData(state));
   // Get the html2react component.
   const Html2React = libraries.html2react.Component;
 
-  // Once the post has loaded in the DOM, prefetch both the
-  // home posts and the list component so if the user visits
-  // the home page, everything is ready and it loads instantly.
-
-  const [ref, scroll] = useScrollProgress();
-
-  // Load the post, but only if the data is ready.
-  if (!postData.isReady) return null;
-  return (
-    <LightPatternBox
-      bg={patternBoxColor}
-      showPattern={state.theme.showBackgroundPattern}
-      ref={ref}
-      pb={"40px"}
-    >
-      <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
-        <PostHeader
-          mt={{ base: "20px", lg: "4rem" }}
-          px={{ base: "32px", md: "3rem" }}
-          color={postHeaderColor}
-          // categories={post.categories}
-          heading={post.title}
-          // author={post.author}
-          date={post.publishDate}
-          isPage={postData.isPage}
-        />
-      </Box>
-
-      {!postData.isPage && <PostProgressBar value={scroll} />}
-
-      {/* Look at the settings to see if we should include the featured image */}
-      <Section bg={sectionBg} pb="80px" size="lg">
-        {post.featured_media != null && (
-          <FeaturedMedia id={post.featured_media.id} />
-        )}
-
-        {/* Render the content using the Html2React component so the HTML is processed
-       by the processors we included in the libraries.html2react.processors array. */}
-        <Content
-          as={Section}
-          className="content"
-          px={{ base: "32px", md: "0" }}
-          size="md"
-          pt="50px"
-        >
-          <Html2React html={post.content} />
-        </Content>
-      </Section>
-    </LightPatternBox>
-  );
+  return <Html2React html={post.content} />;
 };
 
 export default connect(FeaturedEventPost);
@@ -85,75 +24,8 @@ const Content = styled.div`
     padding: 1rem;
   }
 
-  h2,
-  .heading-size-2 {
-    font-size: 3.2rem;
-  }
-  h3,
-  .heading-size-3 {
-    font-size: 2.8rem;
-  }
-  h4,
-  .heading-size-4 {
-    font-size: 2.4rem;
-  }
-  h5,
-  .heading-size-5 {
-    font-size: 2.1rem;
-  }
-  h6,
-  .heading-size-6 {
-    font-size: 1.6rem;
-    text-transform: uppercase;
-  }
-  p {
-    margin: 0 0 1em 0;
-  }
 
-  @media (min-width: 700px) {
-    h2,
-    .heading-size-2,
-    h3,
-    .heading-size-3 {
-      margin: 4rem auto 2rem;
-    }
-    h4,
-    .heading-size-4,
-    h5,
-    .heading-size-5,
-    h6,
-    .heading-size-6 {
-      margin: 2.5rem auto 1rem;
-    }
 
-    h2,
-    .heading-size-2 {
-      font-size: 2.4rem;
-    }
-    h3,
-    .heading-size-3 {
-      font-size: 2rem;
-    }
-    h4,
-    .heading-size-4 {
-      font-size: 1.35rem;
-    }
-    h5,
-    .heading-size-5 {
-      font-size: 1.2rem;
-    }
-    h6,
-    .heading-size-6 {
-      font-size: 0.9rem;
-    }
-  }
-
-  @media (min-width: 1220px) {
-    h1,
-    .heading-size-1 {
-      font-size: 4rem;
-    }
-  }
 
   img {
     width: 100%;

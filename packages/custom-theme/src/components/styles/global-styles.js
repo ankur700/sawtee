@@ -30,7 +30,7 @@ const documentSetup = (colors) => css`
 
   body {
     box-sizing: border-box;
-    background-color: var(--chakra-colors-bodyBg-light);
+    background-color: var(--chakra-colors-blackAlpha.50);
     color: gray.800;
     font-family: var(--chakra-fonts-body);
     text-align: left;
@@ -64,7 +64,7 @@ const documentSetup = (colors) => css`
 
   .chakra-ui-dark {
     color: var(--chakra-colors-whiteAlpha-800);
-    background-color: var(--chakra-colors-bodyBg-dark);
+    background-color: var(--chakra-colors-blackAlpha.800);
   }
 
   main {
@@ -141,156 +141,99 @@ const documentSetup = (colors) => css`
     overflow: hidden;
   }
 
+  .footer-form {
+    & .input-group {
+      display: flex;
+      flex-direction: column;
+
+      & p {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      & .wpcf7-form-control-wrap {
+        flex-grow: 1;
+        width: 75%;
+        & input[type="email"] {
+          flex: 1 0 auto;
+          width: 100%;
+          border: 1px solid #999 !important;
+          background-color: #eee;
+          height: 40px;
+          color: #000;
+          border-radius: 10px;
+          padding: 0 10px;
+        }
+      }
+    }
+
+    & input[type="submit"] {
+      width: 100%;
+      max-width: 25%;
+      height: 40px;
+      background-color: #000;
+      color: #fff;
+      border-radius: 10px;
+      font-size: var(--chakra-fontSizes-sm);
+    }
+
+    /**
+ * Even when I set some dimension-related styles on this
+ * element but not on the input or button, they'll still
+ * line up.
+ */
+    & .input-group-addon {
+      background: #eee;
+      border: 1px solid #ccc;
+      padding: 0.5em 1em;
+    }
+
+    & .wpcf7-response-output {
+      margin-top: 10px;
+    }
+  }
+
+  @media (min-width: 420px) {
+    & .cards {
+      & .title {
+        color: white !important;
+        z-index: 1;
+      }
+
+      & .content {
+        z-index: 1;
+      }
+      &:hover {
+        transition: all 0.4s ease-in-out;
+        & .title {
+          background: hsl(194, 100%, 25%, 0.4);
+        }
+        & .content {
+          color: rgb(0, 0, 0);
+          background: hsl(0, 17%, 95%, 0.4);
+          opacity: 1;
+        }
+      }
+    }
+  }
+
   @media (hover: none) and (pointer: coarse) {
     .left-arrow,
     .right-arrow {
       display: none;
     }
   }
-
-  
 `;
 
-const accessibilitySettings = css`
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0s !important;
-      transition-duration: 0s !important;
-    }
-  }
-`;
-
-/**
- * Styles for code elements.
- *
- * See `2. Element Base / Code` at
- * https://themes.trac.wordpress.org/browser/twentytwenty/1.7/style.css.
- *
- * @param colors - Object with color definitions, from `state.theme.colors`.
- * @returns Serialized style.
- */
-const codeStyle = (colors) => css`
-  code,
-  kbd,
-  pre,
-  samp {
-    font-family: monospace;
-    font-size: 0.9em;
-    padding: 0.4rem 0.6rem;
-  }
-  code,
-  kbd,
-  samp {
-    background: rgba(0, 0, 0, 0.075);
-    border-radius: 0.2rem;
-  }
-  pre {
-    border: 0.1rem solid ${colors.darkgray.light};
-    line-height: 1.5;
-    margin: 4rem 0;
-    overflow: auto;
-    padding: 3rem 2rem;
-    text-align: left;
-  }
-  pre code {
-    background: transparent;
-    padding: 0;
-  }
-`;
-
-/**
- * Styles for media elements.
- *
- * See `2. Element Base / Media` at
- * https://themes.trac.wordpress.org/browser/twentytwenty/1.7/style.css.
- *
- * @param colors - Object with color definitions, from `state.theme.colors`.
- * @returns Serialized style.
- */
-const mediaStyle = (colors) => css`
-  figure {
-    display: block;
-    margin: 0;
-  }
-  iframe {
-    display: block;
-    max-width: 100%;
-  }
-  video {
-    display: block;
-  }
-  svg,
-  img,
-  embed,
-  object {
-    display: block;
-    height: auto;
-    max-width: 100%;
-  }
-  figcaption,
-  .wp-caption-text {
-    color: ${colors.darkgray.base};
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 500;
-    line-height: 1.2;
-    margin-top: 1.5rem;
-  }
-  figcaption a,
-  .wp-caption-text a {
-    color: inherit;
-  }
-`;
-
-/**
- * Styles for tables.
- *
- * See `2. Element Base / Tables` at
- * https://themes.trac.wordpress.org/browser/twentytwenty/1.7/style.css.
- *
- * @param colors - Object with color definitions, from `state.theme.colors`.
- * @returns Serialized style.
- */
-const tableStyles = (colors) => css`
-  table {
-    border: 0.1rem solid ${colors.darkgray.light};
-    border-collapse: collapse;
-    border-spacing: 0;
-    empty-cells: show;
-    font-size: 1.6rem;
-    margin: 4rem 0;
-    max-width: 100%;
-    overflow: hidden;
-    width: 100%;
-  }
-  .alignleft > table {
-    margin: 0;
-  }
-  .alignright > table {
-    margin: 0;
-  }
-  th,
-  td {
-    border: 0.1rem solid ${colors.darkgray.light};
-    line-height: 1.4;
-    margin: 0;
-    overflow: visible;
-    padding: 0.5em;
-  }
-  caption {
-    background: ${colors.darkgray.light};
-    font-weight: 600;
-    padding: 0.5em;
-    text-align: center;
-  }
-  thead {
-    vertical-align: bottom;
-    white-space: nowrap;
-  }
-  th {
-    font-weight: 700;
-  }
-`;
+// const accessibilitySettings = css`
+//   @media (prefers-reduced-motion: reduce) {
+//     * {
+//       animation-duration: 0s !important;
+//       transition-duration: 0s !important;
+//     }
+//   }
+// `;
 
 /**
  * Global styles for the TwentyTwenty theme.
@@ -301,10 +244,7 @@ const tableStyles = (colors) => css`
 const globalStyle = (colors) =>
   css([
     documentSetup(colors),
-    accessibilitySettings,
-    codeStyle(colors),
-    // mediaStyle(colors),
-    tableStyles(colors),
+    // accessibilitySettings,
   ]);
 
 export default globalStyle;

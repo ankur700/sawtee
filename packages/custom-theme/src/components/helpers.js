@@ -1,10 +1,15 @@
 import * as dayjs from "dayjs";
-import { categoriesWidgetsHome } from "./config";
 import { useBreakpointValue } from "@chakra-ui/react";
 
 const MAXIMUM_POSTS = 5;
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
+
+export function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
 
 export const slugToCamelCase = (string, type, separators) => {
   if (!separators || typeof separators != "string") {
@@ -141,7 +146,12 @@ export function getPostTags(state, post) {
 export function getPostData(state) {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
-  return { ...post, isReady: data.isReady, isPage: data.isPage };
+  return {
+    ...post,
+    isReady: data.isReady,
+    isPage: data.isPage,
+    route: data.route,
+  };
 }
 
 export function truthy(value) {

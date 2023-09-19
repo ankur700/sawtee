@@ -1,45 +1,41 @@
 import { Stack } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
-import SidebarWidget from "../../atoms/sidebarWidget.js";
+import SidebarWidget from "../../atoms/sidebarWidgets";
 import SubscriptionCard from "../../atoms/subscriptionCard";
 import TwitterTimeline from "../../atoms/twitterTimeline";
 import GlassBox from "../../atoms/glassBox";
 
 export const Sidebar = ({
   posts,
-  postType,
   news,
   postsLink,
+  categories,
   newsLink,
   showTwitterTimeline,
   showSubscriptionBox,
   linkColor,
   children,
 }) => {
-  function EmptyArray(array) {
-    return array.length === 0;
-  }
-
-
   return (
-    <Stack spacing={12} w="full" maxW={"lg"}>
-      {posts && !EmptyArray(posts) && (
-        <SidebarWidget
-          array={posts}
-          title={`Latest  ${postType}`}
-          linkColor={linkColor}
-          link={postsLink ? postsLink : "#"}
-        />
+    <Stack spacing={12} w="full" maxW={"xl"}>
+      {showSubscriptionBox && (
+        <GlassBox py="4" px="8" rounded="xl" height="max-content">
+          <SubscriptionCard />
+        </GlassBox>
       )}
-      {news && !EmptyArray(news) && (
-        <SidebarWidget
-          array={news}
-          title={news[0].categories[0].name}
-          linkColor={linkColor}
-          link={newsLink}
-        />
-      )}
+      {news
+        ? news.items !== undefined && (
+            <SidebarWidget
+              array={news.items.slice(0, 5)}
+              categories={categories}
+              title={news.type.replaceAll("-", " ").toLocaleUpperCase()}
+              linkColor={linkColor}
+              link={newsLink}
+            />
+          )
+        : null}
+
       {showTwitterTimeline && (
         <GlassBox rounded="xl" height="max-content">
           <TwitterTimeline
@@ -51,18 +47,20 @@ export const Sidebar = ({
           />
         </GlassBox>
       )}
-      {showSubscriptionBox && (
-        <GlassBox
-          py="4"
-          px="8"
-          rounded="xl"
-          height="max-content"
-          position={"sticky"}
-          top={"8.5rem"}
-        >
-          <SubscriptionCard />
-        </GlassBox>
-      )}
+
+      {posts
+        ? posts.items !== undefined && (
+            <SidebarWidget
+              array={posts.items.slice(0, 5)}
+              categories={categories}
+              title={posts.type.replaceAll("-", " ").toLocaleUpperCase()}
+              linkColor={linkColor}
+              link={postsLink}
+              position={children ? "relative" : "sticky"}
+              top={"8.5rem"}
+            />
+          )
+        : null}
       {children}
     </Stack>
   );

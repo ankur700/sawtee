@@ -1,39 +1,24 @@
 import Theme from "./components";
 import image from "@frontity/html2react/processors/image";
 import processors from "./components/styles/processors";
-import AllCategoriesHandler from "./components/handlers/all-categories-handler";
-import EventsHandler from "./components/handlers/events-handler";
-import NewsHandler from "./components/handlers/news-handler";
-import PublicationsHandler from "./components/handlers/publications-handler";
-import PublicationArchiveHandler from "./components/handlers/publication-archive-handler";
-import MenuHandler from "./components/handlers/menu-handler";
+import {
+  GetAllCategoriesHandler,
+  PublicationsHandler,
+  MenuHandler,
+  EventsHandler,
+  PublicationSubcategoryHandler,
+} from "./components/handlers";
 
 const customTheme = {
   name: "custom-theme",
   roots: {
-    // In Frontity, any package can add React components to the site.
-    // We use roots for that, scoped to the "theme" namespace.
     theme: Theme,
   },
   state: {
-    // State is where the packages store their default settings and other
-    // relevant state. It is scoped to the "theme" namespace.
     theme: {
-      /**
-       * The logo can be a text or an image url
-       * logo : "Frontity"
-       * logo: "https://uploads-ssl.webflow.com/5be00771820599586e6bd032/5be0223588110a6dbcac2d05_image.svg",
-       */
-      logo: "Frontity",
+      logo: "SAWTEE",
       showBackgroundPattern: true,
       showSocialLinks: true,
-      /**
-       * socialLinks: [
-            ["pinterest", "https://www.pinterest.com/frontity/"],
-            ["facebook", "https://www.instagram.com/frontity/"],
-            ["twitter", "https://www.twitter.com/frontity/"]
-          ],
-       */
       socialLinks: [],
       menu: [],
       featured: {
@@ -69,7 +54,7 @@ const customTheme = {
       },
       isSearchModalOpen: false,
       isMobileMenuOpen: false,
-      autoPreFetch: "in-view",
+      autoPreFetch: "no",
       fontSet: "all",
     },
   },
@@ -90,44 +75,28 @@ const customTheme = {
         state.theme.isSearchModalOpen = false;
       },
 
-      beforeSSR: async ({ state, actions }) => {
-        await actions.source.fetch("/events");
+      beforeSSR: async ({ actions }) => {
         await actions.source.fetch("/menu/primary/");
         await actions.source.fetch("/menu/footer/");
-        await actions.source.fetch("/programme");
-        await actions.source.fetch("/publications");
-        await actions.source.fetch("/featured-events");
-        await actions.source.fetch("/sawtee-in-media");
-        await actions.source.fetch("all-categories");
+        await actions.source.fetch("get-all-categories");
         await actions.source.fetch("/subscription-page");
-        await actions.source.fetch("/publications/trade-insight");
-        await actions.source.fetch("/publications/books");
-        await actions.source.fetch("/publications/discussion-paper");
-        await actions.source.fetch("/publications/policy-brief");
-        await actions.source.fetch("/publications/briefing-paper");
-        await actions.source.fetch("/publications/issue-paper");
-        await actions.source.fetch("/publications/working-paper");
-        await actions.source.fetch("/publications/research-brief");
-        await actions.source.fetch("/publications/others");
-        await actions.source.fetch("/publications/publications-in-nepali");
-        await actions.source.fetch("/publications/book-chapters");
+        await actions.source.fetch("/publications/trade-insight/");
+        await actions.source.fetch("/publications/books/");
+        await actions.source.fetch("get-publications-categories-posts");
       },
     },
   },
   libraries: {
     html2react: {
-      // Add a processor to html2react so it processes the <img> tags
-      // inside the content HTML. You can add your own processors too.
       processors: [image, ...processors],
     },
     source: {
       handlers: [
-        AllCategoriesHandler,
-        EventsHandler,
-        NewsHandler,
-        PublicationsHandler,
-        PublicationArchiveHandler,
+        GetAllCategoriesHandler,
         MenuHandler,
+        PublicationsHandler,
+        EventsHandler,
+        PublicationSubcategoryHandler,
       ],
     },
   },
