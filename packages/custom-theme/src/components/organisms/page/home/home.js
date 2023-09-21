@@ -16,13 +16,13 @@ const Home = ({ state, actions, categories }) => {
   const tradeInsight = state.source.get("/publications/trade-insight/");
   const books = state.source.get("/publications/books/");
   const eventsData = state.source.get("/events/");
-  const infocus = state.source.get("/in-focus/");
+  const infocus = state.source.get("/posts/");
   const linkColor = state.theme.colors.linkColor;
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
   useEffect(() => {
     actions.source.fetch("/events/");
-    actions.source.fetch("/in-focus/");
+    actions.source.fetch("/posts/");
   }, []);
 
   /*
@@ -52,13 +52,13 @@ const Home = ({ state, actions, categories }) => {
         categories={categories}
       />
 
-      {infocus.isReady && (
+      {/* {infocus.isReady && (
         <InFocusSection
           articles={infocus.items}
           state={state}
           categories={categories}
         />
-      )}
+      )} */}
     </>
   );
 };

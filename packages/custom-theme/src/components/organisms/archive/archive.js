@@ -1,6 +1,10 @@
-import { Box, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  SimpleGrid,
+  useColorModeValue,
+  useSafeLayoutEffect,
+} from "@chakra-ui/react";
 import { connect, decode } from "frontity";
-import { useEffect, useState } from "react";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
@@ -22,12 +26,10 @@ const Archive = ({ state, actions, categories }) => {
   const inFocus = state.source.get("/in-focus/");
   const linkColor = state.theme.colors.linkColor;
 
-  useEffect(() => {
+  useSafeLayoutEffect(() => {
     actions.source.fetch("/sawtee-in-media/");
     actions.source.fetch("/in-focus/");
   }, []);
-
-  console.log(inFocus);
 
   return (
     <ArchiveLayout

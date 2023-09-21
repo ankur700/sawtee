@@ -99,7 +99,7 @@ const settings = {
       state: {
         source: {
           url: "https://sawtee.org/backend/",
-          redirections: ["404"],
+          // redirections: ["404"],
           homepage: "home",
           postsPage: "blog",
           params: {
@@ -119,16 +119,6 @@ const settings = {
               archive: "/publications",
             },
             {
-              type: "programme",
-              endpoint: "programme",
-              archive: "/programme",
-            },
-            {
-              type: "sawtee-in-media",
-              endpoint: "sawtee-in-media",
-              archive: "/sawtee-in-media",
-            },
-            {
               type: "newsletters",
               endpoint: "newsletters",
               archive: "/newsletters",
@@ -137,16 +127,6 @@ const settings = {
               type: "research",
               endpoint: "research",
               archive: "/research",
-            },
-            {
-              type: "covid",
-              endpoint: "covid",
-              archive: "/covid",
-            },
-            {
-              type: "in-focus",
-              endpoint: "in-focus",
-              archive: "/in-focus",
             },
           ],
         },
