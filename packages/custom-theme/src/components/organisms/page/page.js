@@ -19,8 +19,8 @@ const Page = ({ state }) => {
       isPage={data.isPage}
     >
       <Switch>
-        <OurWork when={data.route === "/our-work/"} data={data} />
         <KnowUs when={data.route === "/about/"} data={data} />
+        <OurWork when={data.route === "/our-work/"} data={data} />
         <Contact when={data.route === "/contact/"} data={data} />
         <DefaultPage data={data} />
       </Switch>

@@ -7,6 +7,7 @@ import {
   MenuHandler,
   EventsHandler,
   PublicationSubcategoryHandler,
+  GetPostsByCategory,
 } from "./components/handlers";
 
 const customTheme = {
@@ -97,6 +98,7 @@ const customTheme = {
         PublicationsHandler,
         EventsHandler,
         PublicationSubcategoryHandler,
+        GetPostsByCategory,
       ],
     },
   },

@@ -64,7 +64,7 @@ export const ArchiveLayout = ({
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"
           >
-            {category}
+            {category === 'post' ? "Blog" : category}
           </Heading>
         </Box>
       </Box>

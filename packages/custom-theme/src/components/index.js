@@ -1,4 +1,10 @@
-import { Box, ChakraProvider, ScaleFade, extendTheme } from "@chakra-ui/react";
+import {
+  Box,
+  ChakraProvider,
+  ScaleFade,
+  extendTheme,
+  useSafeLayoutEffect,
+} from "@chakra-ui/react";
 import Switch from "@frontity/components/switch";
 import "focus-visible/dist/focus-visible";
 import { Global, Head, connect } from "frontity";
@@ -15,6 +21,7 @@ import Header from "./organisms/header";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Home from "./organisms/page/home/home";
+import HomeArchive from "./organisms/archive/home-archive";
 
 const config = {
   initialColorMode: "light",
@@ -34,7 +41,7 @@ const Theme = ({ state, actions }) => {
     colors: { ...state.theme.colors },
   });
 
-  useEffect(() => {
+  useSafeLayoutEffect(() => {
     actions.source.fetch("get-all-categories");
   }, []);
 
@@ -64,8 +71,9 @@ const Theme = ({ state, actions }) => {
             <Loading when={data.isFetching} />
             <Home when={data.route === "/"} categories={categories} />
             <Page when={data.isPage} categories={categories} />
-            <Post when={data.isPostType} />
+            {/* <HomeArchive when={data.route === "/blog"} /> */}
             <Archive when={data.isArchive} categories={categories} />
+            <Post when={data.isPostType} />
             <SearchResults when={data.isSearch} />
             <Page404 when={data.is404} />
           </Switch>

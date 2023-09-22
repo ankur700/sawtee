@@ -1,6 +1,5 @@
 import { connect } from "frontity";
-import { useEffect } from "react";
-import { useBreakpointValue, Box } from "@chakra-ui/react";
+import { useBreakpointValue, useSafeLayoutEffect } from "@chakra-ui/react";
 import AboutSection from "./aboutSection";
 import InfoSection from "./infoSection";
 import BlogSection from "./blogSection";
@@ -20,7 +19,7 @@ const Home = ({ state, actions, categories }) => {
   const linkColor = state.theme.colors.linkColor;
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
-  useEffect(() => {
+  useSafeLayoutEffect(() => {
     actions.source.fetch("/events/");
     actions.source.fetch("/posts/");
   }, []);
