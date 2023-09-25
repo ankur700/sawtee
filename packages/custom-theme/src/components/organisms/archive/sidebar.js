@@ -3,8 +3,7 @@ import { connect } from "frontity";
 import React from "react";
 import SidebarWidget from "../../atoms/sidebarWidgets";
 import SubscriptionCard from "../../atoms/subscriptionCard";
-import TwitterTimeline from "../../atoms/twitterTimeline";
-import GlassBox from "../../atoms/glassBox";
+import { TwitterTimeline, GlassBox } from "../../atoms";
 
 export const Sidebar = ({
   posts,

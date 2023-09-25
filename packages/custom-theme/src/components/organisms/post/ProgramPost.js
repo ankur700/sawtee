@@ -3,7 +3,7 @@ import { connect, styled } from "frontity";
 
 import Section from "../../styles/section";
 
-import GlassBox from "../../atoms/glassBox";
+import { GlassBox } from "../../atoms";
 import Sidebar from "../archive/sidebar";
 import SubscriptionCard from "../../atoms/subscriptionCard";
 

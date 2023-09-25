@@ -4,7 +4,7 @@ import PostHeader from "../post/post-header";
 import PostProgressBar from "../post/post-progressbar";
 import Section from "../../styles/section";
 import FeaturedMedia from "../post/featured-media";
-import { Content } from "../../atoms/content";
+import { Content } from "../../atoms/";
 import useScrollProgress from "../../hooks/useScrollProgress";
 import PostCategories from "../post/post-categories";
 import { formatDateWithMoment } from "../../helpers";

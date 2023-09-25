@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import Title from "./title";
+import { Title } from "./atoms";
 import Link from "./link";
 import { decode } from "frontity";
 

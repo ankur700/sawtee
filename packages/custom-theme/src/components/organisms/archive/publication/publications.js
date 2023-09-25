@@ -3,7 +3,7 @@ import { connect } from "frontity";
 import Sidebar from "../../../organisms/archive/sidebar";
 import PublicationFilter from "./publicationFilter";
 import PublicationSliders from "./publicationSliders";
-import GlassBox from "../../../atoms/glassBox";
+import { GlassBox } from "../../../atoms";
 import { useState, useEffect } from "react";
 import { formatCPTData } from "../../../helpers";
 

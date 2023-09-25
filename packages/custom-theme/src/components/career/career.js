@@ -1,9 +1,9 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { connect, styled } from "frontity";
 import React from "react";
-import Section from "../../../styles/section";
-import GlassBox from "../../../atoms/glassBox";
-import { formatPostData } from "../../../helpers";
+import Section from "../styles/section";
+import GlassBox from "../atoms/glassBox";
+import { formatPostData } from "../helpers";
 
 const Career = ({ state, data, libraries }) => {
   const post = formatPostData(state, data);

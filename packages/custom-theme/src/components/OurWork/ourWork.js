@@ -10,9 +10,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { connect, decode, styled } from "frontity";
-import Section from "../../../styles/section";
-import { formatPostData } from "../../../helpers";
-import { Content } from "../../../atoms/content";
+import Section from "../styles/section";
+import { formatPostData } from "../helpers";
+import { Content } from "../atoms";
 
 const OurWork = ({ state, data, libraries }) => {
   const post = formatPostData(state, data);

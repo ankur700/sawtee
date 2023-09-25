@@ -19,10 +19,9 @@ import {
   FaLinkedin,
   FaYoutube,
 } from "react-icons/fa";
-import { formatPostData } from "../../../helpers";
-import Section from "../../../styles/section";
-import { Content } from "../../../atoms/content";
-import { MapModel } from "../../../atoms/mapModel";
+import { formatPostData } from "../helpers";
+import Section from "../styles/section";
+import { Content, MapModel } from "../atoms";
 
 const Contact = ({ state, data, libraries }) => {
   const post = formatPostData(state, data);
@@ -204,15 +203,10 @@ const Contact = ({ state, data, libraries }) => {
             </Box>
           </SimpleGrid>
         </Box>
-        <MapModel
-          isOpen={isOpen}
-          onOpen={onOpen}
-          mapLink={post.acf.map_link}
-        />
+        <MapModel isOpen={isOpen} onOpen={onOpen} mapLink={post.acf.map_link} />
       </Box>
     </Content>
   );
 };
 
 export default connect(Contact);
-

@@ -15,7 +15,7 @@ import React from "react";
 import { SocialMenu } from "../header/social-menu";
 import { connect, styled } from "frontity";
 import FooterSubscription from "./footer-subscription";
-import { MapModel } from "../../atoms/mapModel";
+import { MapModel } from "../../atoms";
 
 const FancyLink = styled(Link)`
   position: relative;

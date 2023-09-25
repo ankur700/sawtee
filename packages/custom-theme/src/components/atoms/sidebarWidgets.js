@@ -13,7 +13,7 @@ import {
 import React from "react";
 import { formatCPTData, formatedDate } from "../helpers";
 import { decode, connect } from "frontity";
-import GlassBox from "./glassBox";
+import { GlassBox } from "../atoms";
 
 const ListHeading = ({ title, link }) => {
   return (

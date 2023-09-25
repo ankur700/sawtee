@@ -8,7 +8,6 @@ import {
 import Switch from "@frontity/components/switch";
 import "focus-visible/dist/focus-visible";
 import { Global, Head, connect } from "frontity";
-import { useEffect } from "react";
 import Post from "../components/organisms/post/post";
 import Page from "../components/organisms/page/page";
 import Loading from "./atoms/loading";
@@ -20,8 +19,10 @@ import Footer from "./organisms/footer";
 import Header from "./organisms/header";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
-import Home from "./organisms/page/home/home";
-import HomeArchive from "./organisms/archive/home-archive";
+import Home from "./home/home";
+import KnowUs from "./KnowUs/knowUs";
+import OurWork from "./OurWork/ourWork";
+import Contact from "./contact/contact";
 
 const config = {
   initialColorMode: "light",
@@ -69,12 +70,14 @@ const Theme = ({ state, actions }) => {
         <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
           <Switch>
             <Loading when={data.isFetching} />
+            <SearchResults when={data.isSearch} />
             <Home when={data.route === "/"} categories={categories} />
-            <Page when={data.isPage} categories={categories} />
-            {/* <HomeArchive when={data.route === "/blog"} /> */}
+            <KnowUs when={data.route === "/about"} />
+            <OurWork when={data.route === "/our-work"} />
+            <Contact when={data.route === "/contact"} />
+            <Page when={data.isPage} />
             <Archive when={data.isArchive} categories={categories} />
             <Post when={data.isPostType} />
-            <SearchResults when={data.isSearch} />
             <Page404 when={data.is404} />
           </Switch>
         </Box>
