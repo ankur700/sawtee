@@ -8,13 +8,13 @@ import {
   Heading,
   Button,
 } from "@chakra-ui/react";
-import { PostImageWithOverlay } from "../../../molecules/featured-post/components";
+import { PostImageWithOverlay } from "../molecules/featured-post/components";
 // Here we have used react-icons package for the icons
 import { GoChevronRight } from "react-icons/go";
-import Link from "../../../atoms/link";
+import Link from "../atoms/link";
 import { decode, connect } from "frontity";
-import { formatDateWithMoment } from "../../../helpers";
-import PostCategories from "../../../organisms/post/post-categories";
+import { formatDateWithMoment } from "../helpers";
+import PostCategories from "../organisms/post/post-categories";
 
 const EventItem = ({ state, libraries, event }) => {
   const format = "MMMM YYYY";

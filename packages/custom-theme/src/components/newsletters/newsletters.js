@@ -1,10 +1,10 @@
 import { Grid, GridItem, VStack } from "@chakra-ui/react";
 import { connect } from "frontity";
-import Sidebar from "../../../organisms/archive/sidebar";
-import Loading from "../../../atoms/loading";
-import { formatCPTData } from "../../../helpers";
+import Sidebar from "../organisms/archive/sidebar";
+import Loading from "../atoms/loading";
+import { formatCPTData } from "../helpers";
 import NewsletterCard from "./newsletterCard";
-import Pagination from "../../../organisms/archive/pagination";
+import Pagination from "../organisms/archive/pagination";
 
 const NewsletterArchive = ({
   state,

@@ -2,9 +2,9 @@ import { connect } from "frontity";
 import { useEffect } from "react";
 import MediaArticle from "./MediaArticle";
 import { Grid, GridItem, VStack } from "@chakra-ui/react";
-import Sidebar from "../sidebar";
-import { formatCPTData } from "../../../helpers";
-import NumberedPagination from "../../../atoms/NumberedPagination";
+import Sidebar from "../organisms/archive/sidebar";
+import { formatCPTData } from "../helpers";
+import NumberedPagination from "../atoms/NumberedPagination";
 
 const SawteeInMedia = ({ state, actions, categories, inFocus }) => {
   const postData = state.source.get(state.router.link);

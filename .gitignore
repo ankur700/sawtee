@@ -25,6 +25,7 @@ jspm_packages/
 .vscode/
 packages/sawtee-theme
 packages/package.json
+componentsFr
 
 
 # TypeScript cache

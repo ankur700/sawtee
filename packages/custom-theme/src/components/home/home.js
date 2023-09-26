@@ -29,8 +29,8 @@ import {
   ViewAllBtn,
   TwitterTimeline,
   GlassBox,
-  DemoChart,
 } from "../atoms";
+import DemoChart from "../atoms/charts";
 import CustomLink from "../atoms/link";
 import { formatCPTData, formatDate } from "../helpers";
 
@@ -43,13 +43,13 @@ const Home = ({ state, actions, categories }) => {
   const tradeInsight = state.source.get("/publications/trade-insight/");
   const books = state.source.get("/publications/books/");
   const eventsData = state.source.get("/events/");
-  const infocus = state.source.get("/posts/");
+  const infocus = state.source.get("/category/in-focus/");
   const linkColor = state.theme.colors.linkColor;
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
   useSafeLayoutEffect(() => {
     actions.source.fetch("/events/");
-    actions.source.fetch("/posts/");
+    actions.source.fetch("/category/in-focus/");
   }, []);
 
   /*
@@ -60,7 +60,7 @@ const Home = ({ state, actions, categories }) => {
 
   return (
     <>
-      <FullWidthCarousel id="carousel-section" slides={slides} loop={true} />
+      <CarouselSection slides={slides} />
 
       <AboutSection
         tradeInsight={tradeInsight}
@@ -69,33 +69,37 @@ const Home = ({ state, actions, categories }) => {
         intro={introText}
         image={introImage.sizes.large}
         show={show}
+        state={state}
       />
 
       <InfoSection />
 
-      <BlogSection
-        linkColor={linkColor}
-        eventsData={eventsData}
-        categories={categories}
-      />
+      {eventsData.isReady && (
+        <BlogSection
+          state={state}
+          linkColor={linkColor}
+          eventsData={eventsData}
+          categories={categories}
+        />
+      )}
 
-      {/* {infocus.isReady && (
+      {infocus.isReady && (
         <InFocusSection
           articles={infocus.items}
           state={state}
           categories={categories}
         />
-      )} */}
+      )}
     </>
   );
 };
 
 export default connect(Home);
 
-const CarouselSection = ({ data }) => {
+const CarouselSection = ({ slides }) => {
   return (
     <Box id="carousel-section" width="full">
-      <FullWidthCarousel slides={data} loop={true} />
+      <FullWidthCarousel slides={slides} loop={true} />
     </Box>
   );
 };

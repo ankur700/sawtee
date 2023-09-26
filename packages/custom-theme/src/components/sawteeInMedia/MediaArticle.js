@@ -8,8 +8,8 @@ import {
   Tag,
 } from "@chakra-ui/react";
 import { decode } from "frontity";
-import { formatDateWithMoment } from "../../../helpers";
-import Link from "../../../atoms/link";
+import { formatDateWithMoment } from "../helpers";
+import Link from "../atoms/link";
 import { motion } from "framer-motion";
 
 const MediaArticle = ({ newsItem, linkColor }) => {

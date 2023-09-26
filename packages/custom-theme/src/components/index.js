@@ -23,6 +23,10 @@ import Home from "./home/home";
 import KnowUs from "./KnowUs/knowUs";
 import OurWork from "./OurWork/ourWork";
 import Contact from "./contact/contact";
+import Publications from "./publication/publications";
+import Events from "./events/events";
+import Research from "./research/research";
+import Newsletters from "./newsletters/newsletters";
 
 const config = {
   initialColorMode: "light",
@@ -75,6 +79,10 @@ const Theme = ({ state, actions }) => {
             <KnowUs when={data.route === "/about"} />
             <OurWork when={data.route === "/our-work"} />
             <Contact when={data.route === "/contact"} />
+            <Events categories={categories} />
+            <Publications categories={categories} />
+            <Newsletters categories={categories} />
+            <Research categories={categories} />
             <Page when={data.isPage} />
             <Archive when={data.isArchive} categories={categories} />
             <Post when={data.isPostType} />

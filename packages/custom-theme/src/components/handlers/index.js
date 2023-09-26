@@ -165,51 +165,52 @@ export const PublicationsHandler = {
   },
 };
 
-export const GetPostsByCategory = {
-  priority: 10,
-  pattern: "/category/:slug",
-  func: async ({ route, params, state, libraries }) => {
-    // Get the page of the current route.
-    const { page } = libraries.source.parse(route);
+// export const GetPostsByCategory = {
+//   priority: 10,
+//   pattern: "/category/:slug",
+//   func: async ({ route, params, state, libraries }) => {
+//     // Get the page of the current route.
+//     const { page } = libraries.source.parse(route);
 
-    const categoriesResponse = await libraries.source.api.get({
-      endpoint: "categories",
-      params: {
-        per_page: 100,
-      },
-    });
+//     const categoriesResponse = await libraries.source.api.get({
+//       endpoint: "categories",
+//       params: {
+//         per_page: 10,
+//       },
+//     });
+//     const categories = await categoriesResponse.json();
+//     const [category] = await libraries.source.populate({
+//       state,
+//       response: categories
+//     });
+//     console.log("🚀 ~ file: index.js:185 ~ func: ~ category:", category);
 
-    const category = categoriesResponse.filter(
-      (cat) => cat.slug === params.slug
-    )[0];
-    console.log("🚀 ~ file: index.js:186 ~ func: ~ category:", category);
+//     // Get the id
+//     const postsResponse = await libraries.source.api.get({
+//       endpoint: "posts",
+//       params: {
+//         categories: category.id,
+//         page,
+//         _embed: true,
+//         per_page: 10,
+//       },
+//     });
+//     const total = libraries.source.getTotal(postsResponse);
+//     const totalPages = libraries.source.getTotalPages(postsResponse);
 
-    // Get the id
-    const postsResponse = await libraries.source.api.get({
-      endpoint: "posts",
-      params: {
-        categories: category.id,
-        page,
-        _embed: true,
-        per_page: 10,
-      },
-    });
-    const total = libraries.source.getTotal(postsResponse);
-    const totalPages = libraries.source.getTotalPages(postsResponse);
-
-    // Populate state.source.data with the proper info about this URL.
-    Object.assign(state.source.data[route], {
-      id: category.id,
-      taxonomy: "category",
-      items,
-      total,
-      totalPages,
-      isArchive: true,
-      isTaxonomy: true,
-      isCategory: true,
-    });
-  },
-};
+//     // Populate state.source.data with the proper info about this URL.
+//     Object.assign(state.source.post, {
+//       id: category.id,
+//       taxonomy: "category",
+//       items,
+//       total,
+//       totalPages,
+//       isArchive: true,
+//       isTaxonomy: true,
+//       isCategory: true,
+//     });
+//   },
+// };
 
 export const CategoriesWithParentHandler = {
   pattern: "/category/(.*)?/:slug",

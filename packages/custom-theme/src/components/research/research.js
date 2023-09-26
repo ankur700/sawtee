@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { GridItem, Grid } from "@chakra-ui/react";
 import { connect } from "frontity";
-import Sidebar from "../../../organisms/archive/sidebar";
+import Sidebar from "../organisms/archive/sidebar";
 import ResearchList from "./researchList";
-import { formatCPTData } from "../../../helpers";
-import NumberedPagination from "../../../atoms/NumberedPagination";
+import { formatCPTData } from "../helpers";
+import NumberedPagination from "../atoms/NumberedPagination";
 
 const Research = ({ state, news, inFocus, categories }) => {
   // Get the data of the current list.
