@@ -7,7 +7,8 @@ import { Content } from "../atoms";
 import Section from "../styles/section";
 import Link from "../atoms/link";
 
-const KnowUs = ({ state, data, libraries }) => {
+const KnowUs = ({ state, libraries }) => {
+  const data = state.source.get(state.router.link);
   const post = formatPostData(state, data);
   const Html2React = libraries.html2react.Component;
   const linkColor = state.theme.colors.linkColor;

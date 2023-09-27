@@ -25,6 +25,7 @@ export const ArchiveLayout = ({
       bg={patternBoxColor}
       showPattern={showBackgroundPattern}
       pt="0"
+      px={{ base: "16px", lg: "32px" }}
     >
       <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
         <Box
@@ -64,7 +65,7 @@ export const ArchiveLayout = ({
             mb={{ base: "20px", lg: "32px" }}
             textTransform="capitalize"
           >
-            {category === 'post' ? "Blog" : category}
+            {category === "post" ? "Blog" : category}
           </Heading>
         </Box>
       </Box>

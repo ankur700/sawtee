@@ -4,29 +4,24 @@ import {
   Box,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { connect } from "frontity";
+import { connect, decode } from "frontity";
 import CoverImage from "../../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
 import PublicationImage from "../../../assets/publications-1-resized.jpg";
 import { ArchiveLayout } from "../layouts/archiveLayout";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
+import BlogArchive from "./blog-archive";
 
 const Archive = ({ state, actions }) => {
   const data = state.source.get(state.router.link);
-  // const newsData = state.source.get("/sawtee-in-media/");
-  // const inFocus = state.source.get("/in-focus/");
-  // const linkColor = state.theme.colors.linkColor;
+
   const archiveWrapperColor = useColorModeValue("whiteAlpha.300", "gray.800");
   const gridWrapperColor = useColorModeValue("whiteAlpha.700", "gray.700");
-  const posts = state.source.get(`/category${data.route}`);
 
-  useSafeLayoutEffect(() => {
-    actions.source.fetch(`/category${data.route}`);
-  }, []);
-
-  console.log(data, posts);
-
+  if (data.route === "/blog") {
+    return <BlogArchive />;
+  }
   return (
     <ArchiveLayout
       showBackgroundPattern={state.theme.showBackgroundPattern}

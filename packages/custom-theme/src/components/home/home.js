@@ -33,6 +33,7 @@ import {
 import DemoChart from "../atoms/charts";
 import CustomLink from "../atoms/link";
 import { formatCPTData, formatDate } from "../helpers";
+import React, { Fragment } from "react";
 
 const Home = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
@@ -43,13 +44,14 @@ const Home = ({ state, actions, categories }) => {
   const tradeInsight = state.source.get("/publications/trade-insight/");
   const books = state.source.get("/publications/books/");
   const eventsData = state.source.get("/events/");
-  const infocus = state.source.get("/category/in-focus/");
+  const infocus = state.source.get("/category/infocus/");
   const linkColor = state.theme.colors.linkColor;
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
 
+
   useSafeLayoutEffect(() => {
     actions.source.fetch("/events/");
-    actions.source.fetch("/category/in-focus/");
+    actions.source.fetch("/category/infocus/");
   }, []);
 
   /*

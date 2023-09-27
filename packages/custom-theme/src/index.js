@@ -99,7 +99,7 @@ const customTheme = {
         PublicationsHandler,
         PublicationSubcategoryHandler,
         EventsHandler,
-        CategoriesWithParentHandler,
+        // CategoriesWithParentHandler,
       ],
     },
   },

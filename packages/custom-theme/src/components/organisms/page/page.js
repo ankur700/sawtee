@@ -4,6 +4,8 @@ import { formatPostData, getPostData } from "../../helpers";
 import { PageLayout } from "../layouts/pageLayout";
 import Section from "../../styles/section";
 import {GlassBox} from "../../atoms";
+import KnowUs from "../../KnowUs/knowUs";
+import OurWork from "../../OurWork/ourWork";
 
 const Page = ({ state, libraries }) => {
   const data = getPostData(state);
@@ -30,16 +32,24 @@ const Page = ({ state, libraries }) => {
         fontSize={["md", "lg", "xl"]}
         color={contentColor}
       >
-        <Content
-          as={GlassBox}
-          px={["4", "8"]}
-          maxW="5xl"
-          paddingBlock="50px"
-          fontSize={["sm", "md"]}
-          color={contentColor}
-        >
-          <Html2React html={post.content} />
-        </Content>
+        {data.route === "/about/" && <KnowUs />}
+        {data.route === "/our-work/" && <OurWork />}
+        {data.route === "/contact/" && <Contact />}
+
+        {data.route !== "/about/" ||
+          "/our-work/" ||
+          ("/contact/" && (
+            <Content
+              as={GlassBox}
+              px={["4", "8"]}
+              maxW="5xl"
+              paddingBlock="50px"
+              fontSize={["sm", "md"]}
+              color={contentColor}
+            >
+              <Html2React html={post.content} />
+            </Content>
+          ))}
       </Section>
     </PageLayout>
   );

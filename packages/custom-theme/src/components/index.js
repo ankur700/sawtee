@@ -20,9 +20,6 @@ import Header from "./organisms/header";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Home from "./home/home";
-import KnowUs from "./KnowUs/knowUs";
-import OurWork from "./OurWork/ourWork";
-import Contact from "./contact/contact";
 import Publications from "./publication/publications";
 import Events from "./events/events";
 import Research from "./research/research";
@@ -76,9 +73,6 @@ const Theme = ({ state, actions }) => {
             <Loading when={data.isFetching} />
             <SearchResults when={data.isSearch} />
             <Home when={data.route === "/"} categories={categories} />
-            <KnowUs when={data.route === "/about"} />
-            <OurWork when={data.route === "/our-work"} />
-            <Contact when={data.route === "/contact"} />
             <Events categories={categories} />
             <Publications categories={categories} />
             <Newsletters categories={categories} />

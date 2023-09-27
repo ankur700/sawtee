@@ -99,7 +99,7 @@ const settings = {
       state: {
         source: {
           url: "https://sawtee.org/backend/",
-          // redirections: ["404"],
+          redirections: ["404", "301"],
           homepage: "home",
           postsPage: "blog",
           params: {
