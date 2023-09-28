@@ -8,22 +8,18 @@ import {
 import Switch from "@frontity/components/switch";
 import "focus-visible/dist/focus-visible";
 import { Global, Head, connect } from "frontity";
-import Post from "../components/organisms/post/post";
-import Page from "../components/organisms/page/page";
+import Post from "./post/post";
 import Loading from "./atoms/loading";
 import Page404 from "./atoms/page404";
 import PageTitle from "./atoms/pageTitle";
-import SearchResults from "./molecules/search";
-import Archive from "./organisms/archive";
-import Footer from "./organisms/footer";
-import Header from "./organisms/header";
+import SearchResults from "./search";
+import Archive from "./archive";
+import Footer from "./footer";
+import Header from "./header";
 import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
-import Home from "./home/home";
-import Publications from "./publication/publications";
-import Events from "./events/events";
-import Research from "./research/research";
-import Newsletters from "./newsletters/newsletters";
+import Home from "../components/page/home";
+import Page from "./page/page";
 
 const config = {
   initialColorMode: "light",
@@ -73,12 +69,8 @@ const Theme = ({ state, actions }) => {
             <Loading when={data.isFetching} />
             <SearchResults when={data.isSearch} />
             <Home when={data.route === "/"} categories={categories} />
-            <Events categories={categories} />
-            <Publications categories={categories} />
-            <Newsletters categories={categories} />
-            <Research categories={categories} />
-            <Page when={data.isPage} />
             <Archive when={data.isArchive} categories={categories} />
+            <Page when={data.isPage} />
             <Post when={data.isPostType} />
             <Page404 when={data.is404} />
           </Switch>

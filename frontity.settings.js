@@ -109,11 +109,6 @@ const settings = {
           },
           postTypes: [
             {
-              type: "featured-events",
-              endpoint: "featured-events",
-              archive: "/featured-events",
-            },
-            {
               type: "publications",
               endpoint: "publications",
               archive: "/publications",
@@ -122,11 +117,6 @@ const settings = {
               type: "newsletters",
               endpoint: "newsletters",
               archive: "/newsletters",
-            },
-            {
-              type: "research",
-              endpoint: "research",
-              archive: "/research",
             },
           ],
         },

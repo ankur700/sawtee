@@ -5,10 +5,7 @@ import {
   GetAllCategoriesHandler,
   PublicationsHandler,
   MenuHandler,
-  EventsHandler,
   PublicationSubcategoryHandler,
-  GetPostsByCategory,
-  CategoriesWithParentHandler,
 } from "./components/handlers";
 
 const customTheme = {
@@ -98,8 +95,6 @@ const customTheme = {
         MenuHandler,
         PublicationsHandler,
         PublicationSubcategoryHandler,
-        EventsHandler,
-        // CategoriesWithParentHandler,
       ],
     },
   },
