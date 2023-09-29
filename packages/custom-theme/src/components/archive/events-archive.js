@@ -33,7 +33,6 @@ const EventsArchive = ({
   inFocus,
 }) => {
   const linkColor = state.theme.colors.linkColor;
-  const Html2React = libraries.html2react.Component;
 
   return (
     <Grid

@@ -28,7 +28,7 @@ export const Sidebar = ({
             <SidebarWidget
               array={news.items.slice(0, 5)}
               categories={categories}
-              title={news.type.replaceAll("-", " ").toLocaleUpperCase()}
+              title={news.route.split("/")[2].toLocaleUpperCase()}
               linkColor={linkColor}
               link={newsLink}
             />
@@ -52,7 +52,7 @@ export const Sidebar = ({
             <SidebarWidget
               array={posts.items.slice(0, 5)}
               categories={categories}
-              title={posts.type.replaceAll("-", " ").toLocaleUpperCase()}
+              title={posts.route.split("/")[2].toLocaleUpperCase()}
               linkColor={linkColor}
               link={postsLink}
               position={children ? "relative" : "sticky"}

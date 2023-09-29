@@ -9,14 +9,11 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { connect, decode, styled } from "frontity";
+import { decode } from "frontity";
 import Section from "../styles/section";
-import { formatPostData } from "../helpers";
 import { Content } from "../atoms";
 
-const OurWork = ({ state, data, libraries }) => {
-  const post = formatPostData(state, data);
-  const Html2React = libraries.html2react.Component;
+const OurWork = ({ post, Html2React }) => {
   const sectors = post?.acf.sectors || null;
   const intro = post?.acf.intro || null;
   const themes = post?.acf.thematic_areas || null;
@@ -177,4 +174,4 @@ const OurWork = ({ state, data, libraries }) => {
   );
 };
 
-export default connect(OurWork);
+export default OurWork;

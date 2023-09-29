@@ -9,57 +9,55 @@ import {
   HStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { connect } from "frontity";
 import Sidebar from "../archive/sidebar";
-import { formatCPTData } from "../helpers";
-import { formatDateWithMoment } from "../helpers";
-import Loading from "../atoms/loading";
+import { formatDateWithMoment, formatPostData } from "../helpers";
 import NumberedPagination from "../atoms/NumberedPagination";
 import Link from "../atoms/link";
 import { BsArrowUpRight } from "react-icons/bs";
+import { connect } from "frontity";
+import { ArchiveLayout } from "../layouts/archiveLayout";
+import PublicationImage from "../../assets/publications-1-resized.jpg";
 
-const Covid = ({ state, data, linkColor, categories, news, inFocus }) => {
-  // const data = state.source.get(state.router.link);
-
+const CovidArchive = ({ state, postData, linkColor, news, inFocus }) => {
+  const category = postData.route.split("/");
   return (
-    <Grid
-      templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-      gap={6}
-      pos={"relative"}
+    <ArchiveLayout
+      showBackgroundPattern={state.theme.showBackgroundPattern}
+      category={category[2].toUpperCase()}
+      image={PublicationImage}
     >
-      <GridItem colSpan={3}>
-        <VStack spacing={12} mb="56px">
-          {data.isReady ? (
-            data.items.map(({ type, id }) => {
-              const post = formatCPTData(
-                state,
-                state.source[type][id],
-                categories
-              );
+      <Grid
+        templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+        gap={6}
+        pos={"relative"}
+      >
+        <GridItem colSpan={3}>
+          <VStack spacing={12} mb="56px">
+            {postData.items.map(({ id, type }) => {
+              const post = formatPostData(state, state.source[type][id]);
+
               return <CovidItemCard key={post.id} post={post} />;
-            })
-          ) : (
-            <Loading />
-          )}
-        </VStack>
-        <NumberedPagination />
-      </GridItem>
-      <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-        <Sidebar
-          posts={inFocus}
-          news={news}
-          linkColor={linkColor}
-          postsLink={inFocus.link}
-          newsLink={inFocus.link}
-          showTwitterTimeline={true}
-          showSubscriptionBox={true}
-        />
-      </GridItem>
-    </Grid>
+            })}
+          </VStack>
+          <NumberedPagination />
+        </GridItem>
+        <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
+          <Sidebar
+            posts={inFocus}
+            news={news}
+            linkColor={linkColor}
+            postsLink={inFocus.link}
+            newsLink={inFocus.link}
+            showTwitterTimeline={true}
+            showSubscriptionBox={true}
+          />
+        </GridItem>
+      </Grid>
+    </ArchiveLayout>
   );
 };
 
-export default connect(Covid);
+export default connect(CovidArchive);
 
 const CovidItemCard = ({ post }) => {
   return (

@@ -1,19 +1,27 @@
 import { useState, useEffect } from "react";
-import { connect } from "frontity";
-import { Box, useColorModeValue, Heading, SlideFade } from "@chakra-ui/react";
+import {
+  Box,
+  useColorModeValue,
+  Heading,
+  SlideFade,
+  Divider,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionIcon,
+  AccordionPanel,
+} from "@chakra-ui/react";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { formatPostData } from "../helpers";
 import { Content } from "../atoms";
 import Section from "../styles/section";
 import Link from "../atoms/link";
 
-const KnowUs = ({ state, data, libraries }) => {
-  const postData = state.source.get(state.router.link);
-  console.log("🚀 ~ file: knowUs.js:12 ~ KnowUs ~ postData:", postData);
-
-  const post = formatPostData(state, postData);
-  const Html2React = libraries.html2react.Component;
-  const linkColor = state.theme.colors.linkColor;
+const KnowUs = ({ post, Html2React, linkColor }) => {
   const sections = post?.acf.sections || null;
   const memberInstitutions = post?.acf.memberInstitutions || null;
 
@@ -44,7 +52,7 @@ const KnowUs = ({ state, data, libraries }) => {
   );
 };
 
-export default connect(KnowUs);
+export default KnowUs;
 
 export const Members = ({ memberInstitutions, linkColor }) => {
   const [hovered, setHovered] = useState([]);

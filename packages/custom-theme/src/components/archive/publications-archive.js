@@ -15,6 +15,7 @@ import {
   SimpleGrid,
   useBreakpointValue,
   useColorModeValue,
+  useSafeLayoutEffect,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import Sidebar from "../archive/sidebar";
@@ -22,14 +23,11 @@ import { GlassBox } from "../atoms";
 import { useState, useEffect } from "react";
 import { formatCPTData } from "../helpers";
 import { MultiItemCarousel } from "../atoms/carousels";
+import Link from "../atoms/link";
+import { ArchiveLayout } from "../layouts/archiveLayout";
+import PublicationImage from "../../assets/publications-1-resized.jpg";
 
-const PublicationsArchive = ({
-  state,
-  linkColor,
-  categories,
-  news,
-  inFocus,
-}) => {
+const PublicationsArchive = ({ state, categories, news, inFocus }) => {
   const postData = state.source.get("get-publications-categories-posts");
   const [publicationCategories, setPublicationCategories] = useState([]);
   const [sliderData, setSliderData] = useState([]);
@@ -38,26 +36,27 @@ const PublicationsArchive = ({
   const show = useBreakpointValue([1, 2, 3]);
   const allChecked = checkedItems.every(Boolean);
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
-
+  const linkColor = state.theme.colors.linkColor;
+  const contentColor = useColorModeValue(
+    "rgba(12, 17, 43, 0.8)",
+    "whiteAlpha.800"
+  );
   useEffect(() => {
-    categories &&
-      categories
-        .filter((cat) => cat.parent === 5)
-        .map((item) => setPublicationCategories((prev) => [...prev, item]));
-  }, [categories]);
+    categories
+      .filter((cat) => cat.parent === 5)
+      .map((item) => setPublicationCategories((prev) => [...prev, item]));
+  }, []);
 
-  useEffect(() => {
-    if (
-      postData.isReady &&
-      postData.items &&
-      publicationCategories.length !== 0
-    ) {
+  useSafeLayoutEffect(() => {
+    if (publicationCategories.length !== 0) {
       postData.items.forEach((item) => {
         let category = publicationCategories.filter((pc) => pc.id === item.id);
         let array = [];
+
         item.posts.map((post) => {
           let slide = state.source[post.type][post.id];
           let link = formatCPTData(state, slide, categories).acf.pub_link;
+
           slide &&
             array.push({
               ...formatCPTData(state, slide, categories).featured_media,
@@ -75,66 +74,72 @@ const PublicationsArchive = ({
               slides: [...array],
             },
           ]);
+          console.log(category[0]);
         }
       });
-    }
-  }, [postData, publicationCategories]);
 
-  useEffect(() => {
-    publicationCategories.map((_, idx) => {
-      setCheckedItems((prev) => [...prev, idx < 7]);
-    });
-  }, [publicationCategories]);
+      publicationCategories.map((_, idx) => {
+        setCheckedItems((prev) => [...prev, idx < 7]);
+      });
+    }
+  }, [postData.isReady, publicationCategories]);
 
   return (
-    <Grid
-      templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
-      gap={6}
-      pos={"relative"}
+    <ArchiveLayout
+      showBackgroundPattern={state.theme.showBackgroundPattern}
+      category={postData.items[0].posts[0].type}
+      image={PublicationImage}
     >
-      <GridItem colSpan={{ base: 1, xl: 3 }} px={4}>
-        <PublicationSliders
-          linkColor={linkColor}
-          sliderData={sliderData}
-          show={show || 3}
-          checkedItems={checkedItems}
-        />
-      </GridItem>
-      <GridItem
-        colSpan={{ base: 1, xl: 2 }}
-        display={"flex"}
-        flexDirection={"column"}
-        alignItems={"center"}
+      <Grid
+        templateColumns={{ base: "1fr", xl: "repeat(5, 1fr)" }}
+        gap={6}
+        pos={"relative"}
       >
-        <Sidebar
-          posts={inFocus}
-          news={news}
-          categories={categories}
-          linkColor={linkColor}
-          postsLink={inFocus.link}
-          newsLink={news.link}
-          showTwitterTimeline={true}
-          showSubscriptionBox={true}
-        />
-        <GlassBox
-          mt={12}
-          py="4"
-          px="8"
-          rounded="xl"
-          height="max-content"
-          position={"sticky"}
-          top={"8.5rem"}
-        >
-          <PublicationFilter
-            categories={publicationCategories}
-            allChecked={allChecked}
-            isIndeterminate={isIndeterminate}
+        <GridItem colSpan={{ base: 1, xl: 3 }} px={4}>
+          <PublicationSliders
+            linkColor={linkColor}
+            sliderData={sliderData}
+            show={show || 3}
             checkedItems={checkedItems}
-            setCheckedItems={setCheckedItems}
           />
-        </GlassBox>
-      </GridItem>
-    </Grid>
+        </GridItem>
+        <GridItem
+          colSpan={{ base: 1, xl: 2 }}
+          display={"flex"}
+          flexDirection={"column"}
+          alignItems={"center"}
+        >
+          <Sidebar
+            posts={inFocus}
+            news={news}
+            categories={categories}
+            linkColor={linkColor}
+            postsLink={inFocus.length > 0 ? inFocus.link : ""}
+            newsLink={news.length > 0 ? news.link : ""}
+            showTwitterTimeline={true}
+            showSubscriptionBox={true}
+          />
+          <GlassBox
+            mt={12}
+            py="4"
+            px="8"
+            rounded="xl"
+            height="max-content"
+            position={"sticky"}
+            top={"8.5rem"}
+          >
+            <PublicationFilter
+              categories={publicationCategories}
+              allChecked={allChecked}
+              isIndeterminate={isIndeterminate}
+              checkedItems={checkedItems}
+              setCheckedItems={setCheckedItems}
+              contentColor={contentColor}
+            />
+          </GlassBox>
+        </GridItem>
+      </Grid>
+    </ArchiveLayout>
   );
 };
 
@@ -146,17 +151,14 @@ const PublicationFilter = ({
   isIndeterminate,
   checkedItems,
   setCheckedItems,
+  contentColor,
 }) => {
-  const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
-  );
   return (
     <CheckboxGroup colorScheme="primary" size="md" variant="outline">
       <SimpleGrid
         spacingX="20px"
         spacingY="10px"
-        columns={[2, 2, 3]}
+        columns={[1, 2]}
         // minChildWidth="120px"
       >
         <Checkbox

@@ -175,19 +175,24 @@ export function formatCPTData(state, post, categories) {
 }
 
 export function formatPostData(state, post) {
-  return {
-    id: post.id,
-    author: getPostAuthor(state, post),
-    publishDate: post.date,
-    title: post.title.rendered,
-    categories: getPostCategories(state, post),
-    tags: getPostTags(state, post),
-    link: post.link,
-    featured_media: getMediaAttributes(state, post.featured_media),
-    content: post.content.rendered,
-    excerpt: post.excerpt.rendered,
-    acf: post.acf,
-  };
+  try {
+    return {
+      id: post.id,
+      author: getPostAuthor(state, post),
+      publishDate: post.date,
+      title: post.title.rendered,
+      categories: getPostCategories(state, post),
+      tags: getPostTags(state, post),
+      link: post.link,
+      featured_media: getMediaAttributes(state, post.featured_media),
+      content: post.content.rendered,
+      excerpt: post.excerpt.rendered,
+      acf: post.acf,
+    };
+  } catch (error) {
+    console.error(error, error.message);
+  }
+
 }
 
 export function splitPosts(state, routeData) {

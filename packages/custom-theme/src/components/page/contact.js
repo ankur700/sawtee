@@ -10,7 +10,6 @@ import {
   Link,
   useDisclosure,
 } from "@chakra-ui/react";
-import { connect } from "frontity";
 import { MdPhone, MdEmail, MdLocationOn } from "react-icons/md";
 import {
   FaFax,
@@ -19,17 +18,12 @@ import {
   FaLinkedin,
   FaYoutube,
 } from "react-icons/fa";
-import { formatPostData } from "../helpers";
 import Section from "../styles/section";
 import { Content, MapModel } from "../atoms";
 
-const Contact = ({ state, data, libraries }) => {
-  const post = formatPostData(state, data);
+const Contact = ({ post, Html2React, socialMenus }) => {
   const CONTACT_FORM = post.acf.cf7_form;
-  const Html2React = libraries.html2react.Component;
-
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const socialMenus = state.theme.socialLinks;
 
   return (
     <Content
@@ -209,4 +203,4 @@ const Contact = ({ state, data, libraries }) => {
   );
 };
 
-export default connect(Contact);
+export default Contact;

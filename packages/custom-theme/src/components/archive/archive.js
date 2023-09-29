@@ -1,56 +1,87 @@
 import { useColorModeValue, Box, SimpleGrid } from "@chakra-ui/react";
 import { connect, decode } from "frontity";
-import CoverImage from "../../assets/COVID-19-South-Asia-and-LDCs.jpeg";
-import PublicationImage from "../../assets/publications-1-resized.jpg";
-import { ArchiveLayout } from "../layouts/archiveLayout";
 import ArchiveHeader from "./archive-header";
 import ArchiveItem from "./archive-item";
 import Pagination from "./pagination";
 import BlogArchive from "./blog-archive";
 import PublicationsArchive from "./publications-archive";
 import NewsletterArchive from "./newsletter-archive";
-import { formatCPTData } from "../helpers";
+import { LightPatternBox } from "../styles/pattern-box";
+import CovidArchive from "./covid-archive";
+import { useEffect } from "react";
+import ProgrammesArchive from "./programmes-archive";
 
-const Archive = ({ state, categories }) => {
-  const data = state.source.get(state.router.link);
-  const postData = formatCPTData(state, data, categories);
+const Archive = ({ state, actions, categories }) => {
+  const postData = state.source.get(state.router.link);
   const archiveWrapperColor = useColorModeValue("whiteAlpha.300", "gray.800");
   const gridWrapperColor = useColorModeValue("whiteAlpha.700", "gray.700");
+  const news = state.source.get("/category/sawtee-in-media/");
+  const infocus = state.source.get("/category/infocus/");
+  // const linkColor = state.theme.colors.linkColor;
+  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
 
-  if (data.route === "/blog") {
+  useEffect(() => {
+    actions.source.fetch("/category/sawtee-in-media/");
+    actions.source.fetch("/category/infocus/");
+  }, []);
+
+  if (postData.route === "/blog") {
     return <BlogArchive />;
-  } else if (data.isPublicationsArchive) {
-    return <PublicationsArchive categories={categories} />;
-  } else if (data.isNewslettersArchive) {
+  } else if (postData.isPublicationsArchive) {
+    return (
+      <PublicationsArchive
+        categories={categories}
+        news={news.isReady ? news : []}
+        inFocus={infocus.isReady ? infocus : []}
+      />
+    );
+  } else if (postData.isNewslettersArchive) {
     return (
       <NewsletterArchive
-        news={[]}
-        inFocus={[]}
+        news={news.isReady ? news : []}
+        inFocus={infocus.isReady ? infocus : []}
         postData={postData}
         categories={categories}
       />
     );
+  } else if (postData.route.replace("/category", "") === "/covid/") {
+    return (
+      <CovidArchive
+        news={news.isReady ? news : []}
+        inFocus={infocus.isReady ? infocus : []}
+        postData={postData}
+      />
+    );
+  } else if (postData.route.replace("/category", "") === "/programme/") {
+    return (
+      <ProgrammesArchive
+        news={news.isReady ? news : []}
+        inFocus={infocus.isReady ? infocus : []}
+        postData={postData}
+      />
+    );
   }
   return (
-    <ArchiveLayout
-      showBackgroundPattern={state.theme.showBackgroundPattern}
-      category={data.type}
-      image={data.route !== "covid" ? PublicationImage : CoverImage}
+    <LightPatternBox
+      bg={patternBoxColor}
+      showPattern={state.theme.showBackgroundPattern}
+      pt="0"
+      // px={{ base: "16px", lg: "32px" }}
     >
       <Box bg={archiveWrapperColor} as="section">
-        {data.isTaxonomy && (
+        {postData.isTaxonomy && (
           <ArchiveHeader
             showPattern={state.theme.showBackgroundPattern}
-            taxonomy={data.taxonomy}
-            title={decode(state.source[data.taxonomy][data.id].name)}
+            taxonomy={postData.taxonomy}
+            title={decode(state.source[postData.taxonomy][postData.id].name)}
           />
         )}
 
-        {data.isAuthor && (
+        {postData.isAuthor && (
           <ArchiveHeader
             showPattern={state.theme.showBackgroundPattern}
             taxonomy="Posts By"
-            title={decode(state.source.author[data.id].name)}
+            title={decode(state.source.author[postData.id].name)}
           />
         )}
 
@@ -62,7 +93,7 @@ const Archive = ({ state, categories }) => {
           mx="auto"
         >
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing="40px">
-            {data.items.map(({ type, id }) => {
+            {postData.items.map(({ type, id }) => {
               const item = state.source[type][id];
               return <ArchiveItem key={item.id} item={item} />;
             })}
@@ -71,7 +102,7 @@ const Archive = ({ state, categories }) => {
           <Pagination mt="56px" />
         </Box>
       </Box>
-    </ArchiveLayout>
+    </LightPatternBox>
   );
 };
 
