@@ -253,11 +253,21 @@ const monthNames = [
 const formatDay = (day) => {
   let dayString = day.toString();
   const lastLetter = dayString[dayString.length - 1];
-
-  if (lastLetter === "1") return `${day}st`;
-  if (lastLetter === "2") return `${day}nd`;
-  if (lastLetter === "3") return `${day}rd`;
-  return `${day}th`;
+  let result;
+  switch (lastLetter) {
+    case "1":
+      result = `${day}<sup>st</sup>`;
+      break;
+    case "2":
+      result = `${day}<sup>nd</sup>`;
+      break;
+    case "3":
+      result = `${day}<sup>rd</sup>`;
+    default:
+      result = `${day}<sup>th</sup>`;
+      break;
+  }
+  return result;
 };
 
 export function formatDate(date) {

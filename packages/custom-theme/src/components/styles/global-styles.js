@@ -45,7 +45,7 @@ const documentSetup = (colors) => css`
 
    html {
     scroll-behavior: smooth;
-    word-break: break-all;
+    word-break: break-word;
 
   }
 

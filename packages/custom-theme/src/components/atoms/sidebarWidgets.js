@@ -11,7 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { formatCPTData, formatDate, formatedDate } from "../helpers";
+import { formatCPTData, formatDate } from "../helpers";
 import { decode, connect } from "frontity";
 import { GlassBox } from "../atoms";
 
@@ -35,15 +35,7 @@ const ListHeading = ({ title, link }) => {
   );
 };
 
-const SidebarWidget = ({
-  state,
-  array,
-  categories,
-  linkColor,
-  title,
-  link,
-  ...rest
-}) => {
+const SidebarWidget = ({ state, array, categories, title, link, ...rest }) => {
   const HeadingColor = useColorModeValue(
     "var(--color-dark)",
     "var(--color-light)"
@@ -73,24 +65,19 @@ const SidebarWidget = ({
         }
         return (
           <Stack spacing={2} mt="6" key={post.id}>
-            <Heading
-              as="h4"
-              className="title"
-              fontSize={{ base: "sm", lg: "md" }}
-              mb="2"
-              color={HeadingColor}
-              lineHeight={1.2}
-              fontWeight="semibold"
-            >
-              <Link
-                _hover={{
-                  textDecoration: "underline",
-                }}
-                link={post.link}
+            <Link className="primary-link" href={post.link}>
+              <Heading
+                as="h4"
+                className="title"
+                fontSize={{ base: "sm", lg: "md" }}
+                mb="2"
+                color={HeadingColor}
+                lineHeight={1.2}
+                fontWeight="semibold"
               >
                 {decode(post.title)}
-              </Link>
-            </Heading>
+              </Heading>
+            </Link>
             <Box
               display={"flex"}
               justifyContent="space-between"
@@ -119,9 +106,10 @@ const SidebarWidget = ({
                 as="time"
                 fontSize={["xs", "sm"]}
                 dateTime={new Date(post.publishDate).toLocaleDateString()}
-              >
-                {formatDate(post.publishDate)}
-              </Box>
+                dangerouslySetInnerHTML={{
+                  __html: formatDate(post.publishDate),
+                }}
+              />
             </Box>
             <Divider
               mb="10px"

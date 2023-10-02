@@ -13,7 +13,6 @@ export const Sidebar = ({
   newsLink,
   showTwitterTimeline,
   showSubscriptionBox,
-  linkColor,
   children,
 }) => {
   return (
@@ -29,7 +28,6 @@ export const Sidebar = ({
               array={news.items.slice(0, 5)}
               categories={categories}
               title={news.route.split("/")[2].toLocaleUpperCase()}
-              linkColor={linkColor}
               link={newsLink}
             />
           )
@@ -53,7 +51,6 @@ export const Sidebar = ({
               array={posts.items.slice(0, 5)}
               categories={categories}
               title={posts.route.split("/")[2].toLocaleUpperCase()}
-              linkColor={linkColor}
               link={postsLink}
               position={children ? "relative" : "sticky"}
               top={"8.5rem"}
