@@ -13,30 +13,42 @@ const documentSetup = (colors) => css`
   html {
     scroll-behavior: smooth;
   }
-
   html {
     --scrollbarBG: #cfd8dc;
     --thumbBG: #90a4ae;
+    --color-black: #000;
+    --color-bg: #fff;
+    --color-dark: #262626;
+    --color-dark-acc: #404040;
+    --color-grey-darker: #595959;
+    --color-grey-dark: #737373;
+    --color-grey: grey;
+    --color-grey-light: #8c8c8c;
+    --color-grey-lighter: #a6a6a6;
+    --color-light-acc: #bfbfbf;
+    --color-light: #d9d9d9;
+    --linkcolor: "#006181";
   }
 
   *,
   *::before,
   *::after {
     box-sizing: inherit;
-    -webkit-font-smoothing: antialiased;
-    word-break: break-word;
-    word-wrap: break-word;
   }
 
   body {
     box-sizing: border-box;
-    background-color: var(--chakra-colors-blackAlpha.50);
+    background-color: var(--color-bg);
     color: gray.800;
     font-family: var(--chakra-fonts-body);
     text-align: left;
     font-weight: normal;
     scrollbar-width: thin;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+  }
+  .chakra-ui-dark {
+    color: var(--color-light);
+    background-color: var(--color-dark);
   }
 
   body::-webkit-scrollbar {
@@ -60,85 +72,6 @@ const documentSetup = (colors) => css`
   .glassbox {
     -ms-overflow-styles: none;
     scrollbar-width: none;
-  }
-
-  .chakra-ui-dark {
-    color: var(--chakra-colors-whiteAlpha-800);
-    background-color: var(--chakra-colors-blackAlpha.800);
-  }
-
-  main {
-    display: block;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  .faux-heading {
-    font-feature-settings: "lnum";
-    font-variant-numeric: lining-nums;
-    font-weight: 700;
-  }
-
-  em,
-  i,
-  q,
-  dfn {
-    font-style: italic;
-  }
-  em em,
-  em i,
-  i em,
-  i i,
-  cite em,
-  cite i {
-    font-weight: bolder;
-  }
-  big {
-    font-size: 1.2em;
-  }
-  small {
-    font-size: 0.75em;
-  }
-  b,
-  strong {
-    font-weight: 700;
-  }
-  ins {
-    text-decoration: underline;
-  }
-  sub,
-  sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-  }
-  sup {
-    top: -0.5em;
-  }
-  sub {
-    bottom: -0.25em;
-  }
-  abbr,
-  acronym {
-    cursor: help;
-  }
-  address {
-    line-height: 1.5;
-    margin: 0 0 2rem 0;
-  }
-  hr {
-    border-style: solid;
-    border-width: 0.1rem 0 0 0;
-    border-color: ${colors.darkgray.light};
-  }
-
-  #site-content {
-    overflow: hidden;
   }
 
   .footer-form {
@@ -226,14 +159,14 @@ const documentSetup = (colors) => css`
   }
 `;
 
-// const accessibilitySettings = css`
-//   @media (prefers-reduced-motion: reduce) {
-//     * {
-//       animation-duration: 0s !important;
-//       transition-duration: 0s !important;
-//     }
-//   }
-// `;
+const accessibilitySettings = css`
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0s !important;
+      transition-duration: 0s !important;
+    }
+  }
+`;
 
 /**
  * Global styles for the TwentyTwenty theme.
@@ -242,9 +175,6 @@ const documentSetup = (colors) => css`
  * @returns Serialized style.
  */
 const globalStyle = (colors) =>
-  css([
-    documentSetup(colors),
-    // accessibilitySettings,
-  ]);
+  css([documentSetup(colors), accessibilitySettings]);
 
 export default globalStyle;

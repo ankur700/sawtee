@@ -61,10 +61,10 @@ const Theme = ({ state, actions }) => {
       <SkipLink as="a" href="#main">
         Skip to main content
       </SkipLink>
-      <Header />
 
-      <ScaleFade key={state.router.link} initialScale={0.9} in="true">
-        <Box as="main" mt="5rem" minH="calc(100vh - 5rem)">
+      <Box as="main">
+        <Header />
+        <ScaleFade key={state.router.link} initialScale={0.9} in="true">
           <Switch>
             <Loading when={data.isFetching} />
             <SearchResults when={data.isSearch} />
@@ -74,8 +74,8 @@ const Theme = ({ state, actions }) => {
             <Post when={data.isPostType} />
             <Page404 when={data.is404} />
           </Switch>
-        </Box>
-      </ScaleFade>
+        </ScaleFade>
+      </Box>
       <Footer />
     </ChakraProvider>
   );

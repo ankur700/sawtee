@@ -14,74 +14,82 @@ import Sidebar from "../archive/sidebar";
 import { formatPostData } from "../helpers";
 import NumberedPagination from "../atoms/NumberedPagination";
 import PostCategories from "../post/post-categories";
-import { ArchiveLayout } from "../layouts/archiveLayout";
+import { LightPatternBox } from "../styles/pattern-box";
+import ArchiveHeader from "./archive-header";
+import Section from "../styles/section";
+import { GlassBox } from "../atoms";
 
-const ProgrammesArchive = ({ state, postData, news, inFocus }) => {
+const ProgrammesArchive = ({ state, news, inFocus }) => {
+  const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
 
   return (
-    <ArchiveLayout
-      showBackgroundPattern={state.theme.showBackgroundPattern}
-      category={postData.items[0].type}
-      image={PublicationImage}
-    >
-      <Grid
-        templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-        gap={6}
-        pos={"relative"}
-      >
-        <GridItem colSpan={3}>
-          <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
-            {postData.items.map(({ type, id }) => {
-              const program = formatPostData(state, state.source[type][id]);
-              return (
-                <ProgrammeItem
-                  key={program.id}
-                  program={program}
-                  linkColor={linkColor}
-                />
-              );
-            })}
-          </VStack>
-          <NumberedPagination />
-        </GridItem>
-        <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-          <Sidebar
-            posts={inFocus}
-            news={news}
-            linkColor={linkColor}
-            postsLink={inFocus.link}
-            newsLink={news.link}
-            showTwitterTimeline={true}
-            showSubscriptionBox={true}
+    <LightPatternBox showPattern={state.theme.showBackgroundPattern} pt="0">
+      <Box as="section">
+        {postData.isTaxonomy && (
+          <ArchiveHeader
+            showPattern={state.theme.showBackgroundPattern}
+            taxonomy={postData.taxonomy}
+            title={decode(state.source[postData.taxonomy][postData.id].name)}
+            mb="0px"
           />
-        </GridItem>
-      </Grid>
-    </ArchiveLayout>
+        )}
+
+        {postData.isAuthor && (
+          <ArchiveHeader
+            showPattern={state.theme.showBackgroundPattern}
+            taxonomy="Posts By"
+            title={decode(state.source.author[postData.id].name)}
+          />
+        )}
+
+        <Section
+          padding={{ base: "24px", lg: "40px" }}
+          width={{ lg: "80%" }}
+          size="huge"
+          mx="auto"
+        >
+          <Grid
+            templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+            gap={12}
+            pos={"relative"}
+          >
+            <GridItem colSpan={3}>
+              <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
+                {postData.items.map(({ type, id }) => {
+                  const program = formatPostData(state, state.source[type][id]);
+                  return <ProgrammeItem key={program.id} program={program} />;
+                })}
+              </VStack>
+              <NumberedPagination />
+            </GridItem>
+            <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
+              <Sidebar
+                posts={inFocus}
+                news={news}
+                linkColor={linkColor}
+                postsLink={inFocus.link}
+                newsLink={news.link}
+                showTwitterTimeline={true}
+                showSubscriptionBox={true}
+              />
+            </GridItem>
+          </Grid>
+        </Section>
+      </Box>
+    </LightPatternBox>
   );
 };
 
 export default connect(ProgrammesArchive);
 
-const ProgrammeItem = ({ program, linkColor }) => {
+const ProgrammeItem = ({ program }) => {
   const HeaderColor = useColorModeValue("gray.800", "whiteAlpha.800");
   const CategoryColor = useColorModeValue("gray.700", "whiteAlpha.700");
 
   return (
-    <Flex as="article" alignItems="center" justifyContent="center">
-      <Box
-        mx="auto"
-        px={8}
-        py={4}
-        rounded="lg"
-        shadow="lg"
-        fontSize="md"
-        bg="whiteAlpha.300"
-        _dark={{
-          bg: "blackAlpha.300",
-        }}
-        maxW="5xl"
-      >
+    <Flex as="article" w="full">
+      <GlassBox px={8} py={4} fontSize="md" maxW="5xl">
         <Box mt={2}>
           <Heading
             as="h3"
@@ -90,8 +98,8 @@ const ProgrammeItem = ({ program, linkColor }) => {
           >
             <Link
               href={program.link}
-              textDecoration={"underline"}
-              _hover={{ textDecoration: "none", color: linkColor }}
+              textDecoration={"none"}
+              _hover={{ textDecoration: "underline" }}
             >
               {decode(program.title)}
             </Link>
@@ -134,7 +142,7 @@ const ProgrammeItem = ({ program, linkColor }) => {
             )}
           </Box>
         </Flex>
-      </Box>
+      </GlassBox>
     </Flex>
   );
 };

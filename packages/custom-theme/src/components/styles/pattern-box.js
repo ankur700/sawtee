@@ -11,8 +11,8 @@ export const PatternBox = ({ showPattern = true, ...props }) => (
   <Box
     as="section"
     bg="primary.700"
-    borderTop="10px solid"
-    borderColor="accent.400"
+    // borderTop="5px solid"
+    // borderColor="accent.400"
     {...(showPattern && {
       bgImage: `url(${tileGreen})`,
       bgSize: "1018px",
@@ -42,7 +42,6 @@ export const LightPatternBox = React.forwardRef(
   ({ showPattern = true, ...props }, ref) => (
     <Box
       ref={ref}
-      bg={useColorModeValue("gray.100", "gray.800")}
       pt="40px"
       pos="relative"
       zIndex={0}

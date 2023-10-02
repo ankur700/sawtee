@@ -1,4 +1,4 @@
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { useBreakpointValue } from "@chakra-ui/react";
 
 const MAXIMUM_POSTS = 5;

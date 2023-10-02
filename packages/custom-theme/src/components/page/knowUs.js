@@ -20,6 +20,7 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import { Content } from "../atoms";
 import Section from "../styles/section";
 import Link from "../atoms/link";
+import Loading from "../atoms/loading";
 
 const KnowUs = ({ post, Html2React, linkColor }) => {
   const sections = post?.acf.sections || null;
@@ -34,6 +35,7 @@ const KnowUs = ({ post, Html2React, linkColor }) => {
       size="md"
       fontSize={{ base: "md", lg: "lg" }}
     >
+      {!sections && !memberInstitutions && <Loading />}
       {sections !== null &&
         sections.map((section) => (
           <PageSection

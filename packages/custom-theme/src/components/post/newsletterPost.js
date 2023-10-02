@@ -1,23 +1,18 @@
-import { Box, useColorModeValue } from "@chakra-ui/react";
-import { connect } from "frontity";
+import { Box } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { formatPostData, getPostData } from "../helpers";
 import Section from "../styles/section";
 import Script from "@frontity/components/script";
 
-const NewsletterPost = ({ state }) => {
-  const post = formatPostData(state, getPostData(state));
-  const sectionBg = useColorModeValue("whiteAlpha.700", "gray.700");
-
+const NewsletterPost = ({ resource_link, title }) => {
   return (
-    <Section bg={sectionBg} pt="0px" size="lg">
+    <Section pt="0px" size="lg">
       <Script src="https://documentcloud.adobe.com/view-sdk/main.js" async />
-      <PDFEMBED url={post.acf.resource_link} title={post.title} />
+      <PDFEMBED url={resource_link} title={title} />
     </Section>
   );
 };
 
-export default connect(NewsletterPost);
+export default NewsletterPost;
 
 const PDFEMBED = ({ url, title }) => {
   const viewerConfig = {

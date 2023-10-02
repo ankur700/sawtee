@@ -14,25 +14,25 @@ import {
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import Sidebar from "../archive/sidebar";
-import { formatCPTData } from "../helpers";
+import { formatPostData } from "../helpers";
 import NumberedPagination from "../atoms/NumberedPagination";
 import { FaFilePdf } from "react-icons/fa";
+import PublicationImage from "../../assets/publications-1-resized.jpg";
+import { ArchiveLayout } from "../layouts/archiveLayout";
 
-const ResearchArchive = ({ state, news, inFocus, categories }) => {
+const ResearchArchive = ({ state, news, inFocus }) => {
   // Get the data of the current list.
   const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
   const [researches, setResearches] = useState([]);
   const [tagsArray, setTagsArray] = useState([]);
+  const category = postData.route.split("/");
 
   useEffect(() => {
     if (postData.isReady) {
       postData.items.map(({ type, id }, idx) => {
         const post = state.source[type][id];
-        setResearches((prev) => [
-          ...prev,
-          formatCPTData(state, post, categories),
-        ]);
+        setResearches((prev) => [...prev, formatPostData(state, post)]);
       });
     }
   }, [postData]);
@@ -50,32 +50,38 @@ const ResearchArchive = ({ state, news, inFocus, categories }) => {
   }, [researches]);
 
   return (
-    <Grid
-      templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-      gap="10"
-      pos={"relative"}
+    <ArchiveLayout
+      showBackgroundPattern={state.theme.showBackgroundPattern}
+      category={category[2].toUpperCase()}
+      image={PublicationImage}
     >
-      <GridItem colSpan={3} pb="56px">
-        <ResearchList
-          researches={researches}
-          tags={tagsArray}
-          linkColor={linkColor}
-        />
-        <NumberedPagination />
-      </GridItem>
-      <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-        <Sidebar
-          posts={inFocus}
-          // news={news}
-          categories={categories}
-          linkColor={linkColor}
-          postsLink={inFocus.link}
-          newsLink={news.link}
-          showTwitterTimeline={false}
-          showSubscriptionBox={true}
-        />
-      </GridItem>
-    </Grid>
+      <Grid
+        templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+        gap="10"
+        pos={"relative"}
+      >
+        <GridItem colSpan={3} pb="56px">
+          <ResearchList
+            researches={researches}
+            tags={tagsArray}
+            linkColor={linkColor}
+          />
+          <NumberedPagination />
+        </GridItem>
+        <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
+          <Sidebar
+            posts={inFocus}
+            // news={news}
+            categories={categories}
+            linkColor={linkColor}
+            postsLink={inFocus.link}
+            newsLink={news.link}
+            showTwitterTimeline={false}
+            showSubscriptionBox={true}
+          />
+        </GridItem>
+      </Grid>
+    </ArchiveLayout>
   );
 };
 

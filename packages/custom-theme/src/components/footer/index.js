@@ -50,8 +50,8 @@ const FooterSection = ({ children, ...rest }) => (
   <Box
     as="footer"
     pos="relative"
-    bg="primary.100"
-    _dark={{ bg: "primary.900" }}
+    bg="var(--color-light)"
+    _dark={{ bg: "rgba(255, 255, 255, 0.1)" }}
     {...rest}
   >
     {children}

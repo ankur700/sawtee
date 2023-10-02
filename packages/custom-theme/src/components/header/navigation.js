@@ -214,6 +214,13 @@ const AboutMegaMenu = ({
       px={8}
       py={10}
       h="100vh"
+      _before={{
+        content: "''",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        bgColor: "rgba(255,)"
+      }}
     >
       <Grid
         templateColumns="repeat(6, 1fr)"

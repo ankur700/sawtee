@@ -11,81 +11,89 @@ import {
   Button,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { connect } from "frontity";
-import Sidebar from "../archive/sidebar";
-
-import { formatCPTData, formatDateWithMoment } from "../helpers";
-import Loading from "../atoms/loading";
-import NumberedPagination from "../atoms/NumberedPagination";
-import { PostImageWithOverlay } from "../featured-post/components";
+import Sidebar from "./components/archive/sidebar";
+import { formatDateWithMoment, formatPostData } from "./components/helpers";
+import Loading from "./components/atoms/loading";
+import NumberedPagination from "./components/atoms/NumberedPagination";
+import { PostImageWithOverlay } from "./components/featured-post/components";
 // Here we have used react-icons package for the icons
 import { GoChevronRight } from "react-icons/go";
-import Link from "../atoms/link";
+import Link from "./components/atoms/link";
 import { decode, connect } from "frontity";
-import PostCategories from "../post/post-categories";
+import PostCategories from "./components/post/post-categories";
+import PublicationImage from "../../assets/publications-1-resized.jpg";
+import { ArchiveLayout } from "./components/layouts/archiveLayout";
 
-const EventsArchive = ({
-  state,
-  postData,
-  linkColor,
-  categories,
-  news,
-  inFocus,
-}) => {
+const EventsArchive = ({ state, news, inFocus, libraries }) => {
+  const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
-
+  const category = postData.route.split("/");
+  const Html2React = libraries.html2react.Component;
   return (
-    <Grid
-      templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-      gap={6}
-      pos={"relative"}
-      w="full"
+    <ArchiveLayout
+      showBackgroundPattern={state.theme.showBackgroundPattern}
+      category={category[2].toUpperCase()}
+      image={PublicationImage}
     >
-      <GridItem
-        colSpan={3}
-        display="flex"
-        p="2"
-        flexDirection="column"
-        align-items="center"
-        w="95%"
-        mx="auto"
+      <Grid
+        templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+        gap={6}
+        pos={"relative"}
+        w="full"
       >
-        <VStack spacing={20} mb="56px" w={"full"}>
-          {postData.isReady ? (
-            postData.items.map(({ type, id }) => {
-              const event = formatCPTData(
-                state,
-                state.source[type][id],
-                categories
-              );
-              return <EventItem key={event.id} event={event} />;
-            })
-          ) : (
-            <Loading />
-          )}
-        </VStack>
+        <GridItem
+          colSpan={3}
+          display="flex"
+          p="2"
+          flexDirection="column"
+          align-items="center"
+          w="95%"
+          mx="auto"
+        >
+          <VStack spacing={20} mb="56px" w={"full"}>
+            {postData.isReady ? (
+              postData.items.map(({ type, id }) => {
+                const event = formatPostData(state, state.source[type][id]);
+                return (
+                  <EventItem
+                    key={event.id}
+                    event={event}
+                    linkColor={linkColor}
+                    Html2React={Html2React}
+                  />
+                );
+              })
+            ) : (
+              <Loading />
+            )}
+          </VStack>
 
-        <NumberedPagination />
-      </GridItem>
-      <GridItem colSpan={2} display={"flex"} justifyContent={"center"} w="full">
-        <Sidebar
-          posts={inFocus}
-          news={news}
-          categories={categories}
-          linkColor={linkColor}
-          postsLink={inFocus.link}
-          newsLink={news.link}
-          showTwitterTimeline={true}
-          showSubscriptionBox={true}
-        />
-      </GridItem>
-    </Grid>
+          <NumberedPagination />
+        </GridItem>
+        <GridItem
+          colSpan={2}
+          display={"flex"}
+          justifyContent={"center"}
+          w="full"
+        >
+          <Sidebar
+            posts={inFocus}
+            news={news}
+            linkColor={linkColor}
+            postsLink={inFocus.link}
+            newsLink={news.link}
+            showTwitterTimeline={true}
+            showSubscriptionBox={true}
+          />
+        </GridItem>
+      </Grid>
+    </ArchiveLayout>
   );
 };
 
 export default connect(EventsArchive);
 
-const EventItem = ({ event }) => {
+const EventItem = ({ event, linkColor, Html2React }) => {
   const format = "MMMM YYYY";
   const categoriesColor = useColorModeValue("gray.700", "whiteAlpha.700");
   const headingColor = useColorModeValue("gray.700", "whiteAlpha.800");

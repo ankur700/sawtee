@@ -74,7 +74,6 @@ const PublicationsArchive = ({ state, categories, news, inFocus }) => {
               slides: [...array],
             },
           ]);
-          console.log(category[0]);
         }
       });
 

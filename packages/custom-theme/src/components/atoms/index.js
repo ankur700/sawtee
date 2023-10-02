@@ -164,15 +164,14 @@ export const Content = styled(Box)`
   }
 
   a {
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
 
     &:hover,
     &:focus {
       text-decoration: underline;
-      text-decoration-style: dotted;
-
-      text-decoration-thickness: 2px;
-      text-underline-offset: 3px;
+      color: var(--linkcolor);
     }
   }
 
@@ -470,27 +469,16 @@ export const GlassBox = ({ children, ...rest }) => {
   return (
     <Box
       w="100%"
-      border={useColorModeValue("1px solid", "none")}
-      borderColor={"blackAlpha.100"}
-      bg={useColorModeValue("blackAlpha.100", "blackAlpha.300")}
-      boxShadow={"0 8px 20px 0 rgba(0, 0, 0, 0.17)"}
-      borderRadius="xl"
+      border={"1px solid"}
+      borderColor={useColorModeValue("#ebebeb", "#333")}
+      rounded="xl"
       {...rest}
+      bg={useColorModeValue("var(--color-white)", "var(--color-dark)")}
     >
       {children}
     </Box>
   );
 };
-
-// export const Image = ({ src, alt, height, width }) => {
-//   const CustomImage = styled.img`
-//     display: block;
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-//   `;
-//   return <CustomImage src={src} alt={alt} />;
-// };
 
 export const MapModel = ({ isOpen, onClose, mapLink }) => {
   const modalContentColor = useColorModeValue(

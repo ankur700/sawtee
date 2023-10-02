@@ -1,22 +1,18 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 import React from "react";
 import Link from "../atoms/link";
 import { decode } from "frontity";
 
 export const PostCategory = (props) => (
-  <Box
+  <Button
     px={3}
     py={1}
     className="category"
-    bg={"primary.100"}
-    _dark={{
-      bg: "primary.800",
-    }}
     fontSize="sm"
     fontWeight="600"
     rounded="md"
-    zIndex={50}
-    cursor="pointer"
+    variant="solid"
+    colorScheme="gray"
     {...props}
   />
 );
@@ -36,19 +32,17 @@ export const PostCategories = ({
 
   if (limitCategories.length > 0) {
     return (
-      <Flex
-        className="post-categories"
-        flexWrap="wrap"
-        w="full"
-        mt="12px"
-        {...props}
-      >
+      <Flex className="post-categories" flexWrap="wrap" mt="12px" {...props}>
         {limitCategories.map((category) => (
-          <PostCategory key={category.id} mr="6px" mb="6px">
-            <Link link={category.link} _hover={{ textDecor: "none" }}>
+          <Link
+            key={category.id}
+            link={category.link}
+            _hover={{ textDecor: "unserline" }}
+          >
+            <PostCategory mr="6px" mb="6px">
               {decode(category.name)}
-            </Link>
-          </PostCategory>
+            </PostCategory>
+          </Link>
         ))}
       </Flex>
     );

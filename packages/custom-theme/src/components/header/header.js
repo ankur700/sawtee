@@ -13,7 +13,7 @@ const SiteHeader = (props) => (
     pos="fixed"
     top="0"
     left="0"
-    bg={useColorModeValue("#fff", "primary.900")}
+    bg={useColorModeValue("var(--color-bg)", "var(--color-dark)")}
     zIndex="90"
     boxShadow="md"
     justifyContent="space-between"

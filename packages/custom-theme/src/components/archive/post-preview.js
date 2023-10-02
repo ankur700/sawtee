@@ -15,7 +15,7 @@ const PostPreview = ({ data, showImage, ...rest }) => {
     <Flex
       direction="column"
       position="relative"
-      bg={useColorModeValue("whiteAlpha", "rgba(0,0,0,0.3)")}
+      bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       as="article"
       shadow="md"
       rounded="xl"

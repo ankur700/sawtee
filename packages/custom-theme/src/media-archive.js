@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   Grid,
   GridItem,
@@ -7,74 +6,71 @@ import {
   Text,
   useColorModeValue,
   HStack,
-  VStack,
   Heading,
   Tag,
 } from "@chakra-ui/react";
 import { connect, decode } from "frontity";
 import Sidebar from "../archive/sidebar";
-import { formatCPTData, formatDateWithMoment } from "../helpers";
-import NumberedPagination from "../NumberedPagination";
-import { formatDateWithMoment } from "../helpers";
+import { formatDateWithMoment, formatPostData } from "../helpers";
+import NumberedPagination from "../atoms/NumberedPagination";
 import Link from "../atoms/link";
 import { motion } from "framer-motion";
+import PublicationImage from "../../assets/publications-1-resized.jpg";
+import { ArchiveLayout } from "../layouts/archiveLayout";
 
-const MediaArchive = ({ state, actions, categories, inFocus }) => {
+const SawteeMediaArchive = ({ state, programData, inFocus }) => {
   const postData = state.source.get(state.router.link);
   const linkColor = state.theme.colors.linkColor;
-
-  const programeData = state.source.get("/programme/");
-
-  useEffect(() => {
-    actions.source.fetch("/programme/");
-  }, []);
+  const category = postData.route.split("/");
 
   return (
-    <Grid
-      templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
-      gap="10"
-      pos={"relative"}
+    <ArchiveLayout
+      showBackgroundPattern={state.theme.showBackgroundPattern}
+      category={category[2].toUpperCase()}
+      image={PublicationImage}
     >
-      <GridItem colSpan={{ base: 1, lg: 3 }} w="full">
-        <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
-          {postData.isReady &&
-            postData.items.map(({ type, id }) => {
-              const newsItem = formatCPTData(
-                state,
-                state.source[type][id],
-                categories
-              );
-              return (
-                <MediaArticle
-                  key={newsItem.id}
-                  newsItem={newsItem}
-                  linkColor={linkColor}
-                />
-              );
-            })}
-        </VStack>
-        <NumberedPagination />
-      </GridItem>
-      <GridItem
-        colSpan={{ base: 1, lg: 2 }}
-        display={"flex"}
-        justifyContent={"center"}
+      <Grid
+        templateColumns={{ base: "1fr", lg: "repeat(5, 1fr)" }}
+        gap="10"
+        pos={"relative"}
       >
-        <Sidebar
-          posts={inFocus}
-          // news={programeData}
-          linkColor={linkColor}
-          postsLink={inFocus.link}
-          newsLink={programeData.link}
-          showTwitterTimeline={true}
-          showSubscriptionBox={true}
-        />
-      </GridItem>
-    </Grid>
+        <GridItem colSpan={{ base: 1, lg: 3 }} w="full">
+          <VStack spacing={12} w={{ base: "auto", md: "full" }} mb="56px">
+            {postData.isReady &&
+              postData.items.map(({ type, id }) => {
+                const newsItem = formatPostData(state, state.source[type][id]);
+                return (
+                  <MediaArticle
+                    key={newsItem.id}
+                    newsItem={newsItem}
+                    linkColor={linkColor}
+                  />
+                );
+              })}
+          </VStack>
+          <NumberedPagination />
+        </GridItem>
+        <GridItem
+          colSpan={{ base: 1, lg: 2 }}
+          display={"flex"}
+          justifyContent={"center"}
+        >
+          <Sidebar
+            posts={inFocus}
+            // news={programeData}
+            linkColor={linkColor}
+            postsLink={inFocus.link}
+            newsLink={programData.link}
+            showTwitterTimeline={true}
+            showSubscriptionBox={true}
+          />
+        </GridItem>
+      </Grid>
+    </ArchiveLayout>
   );
 };
 
-export default connect(MediaArchive);
+export default connect(SawteeMediaArchive);
 
 const MediaArticle = ({ newsItem, linkColor }) => {
   const { title, excerpt, publishDate, link, acf } = newsItem;

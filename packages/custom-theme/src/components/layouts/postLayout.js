@@ -16,19 +16,12 @@ export const PostLayout = ({
   post,
   isPage,
 }) => {
-  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const postHeaderColor = useColorModeValue("gray.600", "whiteAlpha.600");
-  const sectionBg = useColorModeValue("whiteAlpha.700", "gray.700");
 
   const [ref, scroll] = useScrollProgress();
 
   return (
-    <LightPatternBox
-      bg={patternBoxColor}
-      showPattern={showPattern}
-      ref={ref}
-      pb={"40px"}
-    >
+    <LightPatternBox showPattern={showPattern} ref={ref} pb={"40px"}>
       {isProgramPost ? (
         <Box pb={{ base: "2rem", lg: "50px" }} maxW="5xl" mx="auto">
           <Box
@@ -91,10 +84,10 @@ export const PostLayout = ({
         </Box>
       )}
 
-      {!isPage && <PostProgressBar value={scroll} />}
+      <PostProgressBar value={scroll} />
 
       {/* Look at the settings to see if we should include the featured image */}
-      <Section bg={sectionBg} pb="80px" size="lg">
+      <Section pb="80px" size="lg">
         {post.featured_media != null && (
           <FeaturedMedia id={post.featured_media.id} />
         )}

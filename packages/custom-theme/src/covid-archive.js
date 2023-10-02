@@ -9,17 +9,20 @@ import {
   HStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import Sidebar from "../archive/sidebar";
-import { formatDateWithMoment, formatPostData } from "../helpers";
-import NumberedPagination from "../atoms/NumberedPagination";
-import Link from "../atoms/link";
+import Sidebar from "./components/archive/sidebar";
+import { formatDateWithMoment, formatPostData } from "./components/helpers";
+import NumberedPagination from "./components/atoms/NumberedPagination";
+import Link from "./components/atoms/link";
 import { BsArrowUpRight } from "react-icons/bs";
 import { connect } from "frontity";
-import { ArchiveLayout } from "../layouts/archiveLayout";
+import { ArchiveLayout } from "./components/layouts/archiveLayout";
 import PublicationImage from "../../assets/publications-1-resized.jpg";
 
-const CovidArchive = ({ state, postData, linkColor, news, inFocus }) => {
+const CovidArchive = ({ state, news, inFocus }) => {
+  const postData = state.source.get(state.router.link);
   const category = postData.route.split("/");
+  const linkColor = state.theme.colors.linkColor;
+
   return (
     <ArchiveLayout
       showBackgroundPattern={state.theme.showBackgroundPattern}

@@ -11,7 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { formatCPTData, formatedDate } from "../helpers";
+import { formatCPTData, formatDate, formatedDate } from "../helpers";
 import { decode, connect } from "frontity";
 import { GlassBox } from "../atoms";
 
@@ -53,15 +53,7 @@ const SidebarWidget = ({
   const TextColor = useColorModeValue("gray.600", "whiteAlpha.600");
 
   return (
-    <GlassBox
-      className="glassbox"
-      rounded="xl"
-      border="1px solid #E2E4E6"
-      px={8}
-      py={6}
-
-      {...rest}
-    >
+    <GlassBox className="glassbox" rounded="xl" px={8} py={6} {...rest}>
       <ListHeading title={title} link={link} />
 
       {array.map(({ type, id }, index) => {
@@ -88,12 +80,15 @@ const SidebarWidget = ({
               color={HeadingColor}
               lineHeight={1.2}
               fontWeight="bold"
-              _hover={{
-                color: linkColor,
-                textDecoration: "underline",
-              }}
             >
-              <Link link={post.link}>{decode(post.title)}</Link>
+              <Link
+                _hover={{
+                  textDecoration: "underline",
+                }}
+                link={post.link}
+              >
+                {decode(post.title)}
+              </Link>
             </Heading>
             <Box
               display={"flex"}
@@ -125,7 +120,7 @@ const SidebarWidget = ({
                 fontSize={["xs", "sm"]}
                 dateTime={new Date(post.publishDate).toLocaleDateString()}
               >
-                {formatedDate(post.publishDate)}
+                {formatDate(post.publishDate)}
               </Box>
             </Box>
             <Divider
