@@ -10,15 +10,16 @@ import { css } from "frontity";
  * @returns Serialized style.
  */
 const documentSetup = (colors) => css`
-  html {
-    scroll-behavior: smooth;
-  }
-  html {
+
+  :root {
     --scrollbarBG: #cfd8dc;
     --thumbBG: #90a4ae;
     --color-black: #000;
     --color-bg: #fff;
+    --color-bg-reverse: var(--color-dark);
+    --color-body-bg: var(--color-white);
     --color-dark: #262626;
+    --color-darker: #1f1f1f;
     --color-dark-acc: #404040;
     --color-grey-darker: #595959;
     --color-grey-dark: #737373;
@@ -28,6 +29,24 @@ const documentSetup = (colors) => css`
     --color-light-acc: #bfbfbf;
     --color-light: #d9d9d9;
     --linkcolor: "#006181";
+    --color-border: "#ebebeb";
+    --color-text: var(--color-dark);
+    --color-text-reverse: var(--color-light);
+  }
+
+  [data-theme="dark"] {
+    --color-bg: var(--color-darker);
+    --color-body-bg: var(--color-dark);
+    --color-text:var(--color-light);
+    --color-border: #333;
+    --color-bg-reverse: #fff;
+    --color-text-reverse: var(--color-dark);
+   }
+
+   html {
+    scroll-behavior: smooth;
+    word-break: break-all;
+
   }
 
   *,
@@ -38,17 +57,13 @@ const documentSetup = (colors) => css`
 
   body {
     box-sizing: border-box;
-    background-color: var(--color-bg);
-    color: gray.800;
+    background-color: var(--color-body-bg);
+    color: var(--color-text);
     font-family: var(--chakra-fonts-body);
     text-align: left;
     font-weight: normal;
     scrollbar-width: thin;
     scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-  }
-  .chakra-ui-dark {
-    color: var(--color-light);
-    background-color: var(--color-dark);
   }
 
   body::-webkit-scrollbar {
@@ -72,6 +87,18 @@ const documentSetup = (colors) => css`
   .glassbox {
     -ms-overflow-styles: none;
     scrollbar-width: none;
+  }
+
+  .primary-link {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--linkcolor);
+      color: var(--linkcolor);
+    }
+    }
   }
 
   .footer-form {

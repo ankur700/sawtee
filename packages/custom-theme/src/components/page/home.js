@@ -23,8 +23,6 @@ import {
 import { FullWidthCarousel, MultiItemCarousel } from "../atoms/carousels";
 import {
   Title,
-  Card,
-  ImageCard,
   FancyTitle,
   ViewAllBtn,
   TwitterTimeline,
@@ -34,6 +32,7 @@ import DemoChart from "../atoms/charts";
 import CustomLink from "../atoms/link";
 import { formatCPTData, formatDate } from "../helpers";
 import React, { Fragment } from "react";
+import PostPreviewCard from "../archive/post-preview-card";
 
 const Home = ({ state, actions, categories }) => {
   const data = state.source.get(state.router.link);
@@ -325,7 +324,7 @@ const AboutSection = ({
   );
 };
 
-const BlogSection = ({ state, eventsData, linkColor, categories }) => {
+const BlogSection = ({ state, eventsData, categories }) => {
   return (
     <Box
       maxW="full"
@@ -366,20 +365,7 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
                       rowSpan={2}
                       // maxW="6xl"
                     >
-                      <ImageCard
-                        title={article.title}
-                        categories={article.categories}
-                        featured_media={{
-                          alt: article.featured_media.alt,
-                          src: article.featured_media.src,
-                          srcSet: article.featured_media.srcSet,
-                        }}
-                        excerpt={article.excerpt}
-                        target={article.link}
-                        linkColor={linkColor}
-                        date={article.publishDate}
-                        imageHeight={"250px"}
-                      />
+                      <PostPreviewCard data={article} showImage={true} />
                     </GridItem>
                   );
                 } else {
@@ -388,17 +374,8 @@ const BlogSection = ({ state, eventsData, linkColor, categories }) => {
                       key={article.id}
                       colSpan={{ base: "1", md: "1", lg: "2" }}
                       rowSpan="auto"
-                      // maxW="3xl"
-                      // minH={"10rem"}
                     >
-                      <Card
-                        title={article.title}
-                        categories={article.categories}
-                        excerpt={article.excerpt}
-                        target={article.link}
-                        linkColor={linkColor}
-                        date={article.publishDate}
-                      />
+                      <PostPreviewCard data={article} showImage={false} />
                     </GridItem>
                   );
                 }
@@ -463,6 +440,7 @@ const InFocusSection = ({ articles, state, categories }) => {
                   <Box gridColumnEnd={{ base: "span 2", md: "unset" }}>
                     <chakra.h3
                       as={Link}
+                      className="primary-link"
                       fontFamily={"heading"}
                       href={article.link}
                       isExternal

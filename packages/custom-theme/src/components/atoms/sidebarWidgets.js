@@ -17,22 +17,17 @@ import { GlassBox } from "../atoms";
 
 const ListHeading = ({ title, link }) => {
   return (
-    <Box borderBottom="1px solid #E2E4E6">
+    <Box borderBottom="1px solid var(--color-border)">
       <Flex align="center" p="3">
         <Heading
           as="h3"
-          color={useColorModeValue("gray.800", "whiteAlpha.900")}
+          color={"var(--color-text)"}
           fontSize={{ base: "md", md: "xl" }}
         >
           {title}
         </Heading>
         <Spacer />
-        <Link
-          href={link}
-          fontSize="14px"
-          color={useColorModeValue("primary.700", "primary.100")}
-          fontWeight="medium"
-        >
+        <Link href={link} fontSize="14px" fontWeight="medium">
           See all
         </Link>
       </Flex>
@@ -49,8 +44,14 @@ const SidebarWidget = ({
   link,
   ...rest
 }) => {
-  const HeadingColor = useColorModeValue("gray.700", "whiteAlpha.800");
-  const TextColor = useColorModeValue("gray.600", "whiteAlpha.600");
+  const HeadingColor = useColorModeValue(
+    "var(--color-dark)",
+    "var(--color-light)"
+  );
+  const TextColor = useColorModeValue(
+    "var(--color-dark-acc)",
+    "var(--color-light-acc)"
+  );
 
   return (
     <GlassBox className="glassbox" rounded="xl" px={8} py={6} {...rest}>
@@ -62,10 +63,10 @@ const SidebarWidget = ({
         if (!post) {
           return (
             <Box key={post.id} display={"flex"} flexDir={"column"} gap={2}>
-              <Skeleton w="full" height="15px" />
+              <Skeleton w="full" height="30px" />
               <Box display={"flex"} justifyContent={"space-between"}>
-                <Skeleton w="80px" height="10px" />
-                <Skeleton w="80px" height="10px" />
+                <Skeleton w="80px" height="15px" />
+                <Skeleton w="80px" height="15px" />
               </Box>
             </Box>
           );
@@ -79,7 +80,7 @@ const SidebarWidget = ({
               mb="2"
               color={HeadingColor}
               lineHeight={1.2}
-              fontWeight="bold"
+              fontWeight="semibold"
             >
               <Link
                 _hover={{
@@ -93,7 +94,6 @@ const SidebarWidget = ({
             <Box
               display={"flex"}
               justifyContent="space-between"
-              fontWeight="semibold"
               color={TextColor}
             >
               {post.acf.publishers

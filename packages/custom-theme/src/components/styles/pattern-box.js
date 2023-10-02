@@ -11,8 +11,8 @@ export const PatternBox = ({ showPattern = true, ...props }) => (
   <Box
     as="section"
     bg="primary.700"
-    // borderTop="5px solid"
-    // borderColor="accent.400"
+    borderTop="5px solid"
+    borderColor="primary.900"
     {...(showPattern && {
       bgImage: `url(${tileGreen})`,
       bgSize: "1018px",

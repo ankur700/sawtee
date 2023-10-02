@@ -25,7 +25,6 @@ export const ArchiveLayout = ({
       bg={patternBoxColor}
       showPattern={showBackgroundPattern}
       pt="0"
-      // px={{ base: "16px", lg: "32px" }}
     >
       <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
         <Box

@@ -10,7 +10,7 @@ const SiteHeader = (props) => (
     as="header"
     transition="transform ease .25s"
     width="100%"
-    pos="fixed"
+    pos="sticky"
     top="0"
     left="0"
     bg={useColorModeValue("var(--color-bg)", "var(--color-dark)")}

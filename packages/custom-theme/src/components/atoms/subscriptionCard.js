@@ -6,6 +6,7 @@ import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
 const SubscriptionCard = ({ state, libraries }) => {
   const post = state.source["page"][735];
   const Html2React = libraries.html2react.Component;
+  const color = useColorModeValue("var(--color-dark)", "var(--color-light)");
   return (
     <SubscriptionBox
       display="flex"
@@ -19,13 +20,13 @@ const SubscriptionCard = ({ state, libraries }) => {
       color={useColorModeValue("gray.600", "whiteAlpha.600")}
     >
       <Box display={"flex"} justifyContent="center">
-        <HiMailOpen size={"60px"} fill={useColorModeValue("#000", "white")} />
+        <HiMailOpen size={"60px"} fill={color} />
       </Box>
       <Heading
         as="h4"
-        fontSize={{base: 'lg', lg: 'xl'}}
+        fontSize={{ base: "lg", lg: "xl" }}
         textTransform="uppercase"
-        color={useColorModeValue("gray.800", "whiteAlpha.800")}
+        color={color}
       >
         Don't miss out on our future issues!
       </Heading>
@@ -63,10 +64,10 @@ const SubscriptionBox = styled(Box)`
   & input[type="email"] {
     flex: 1 0 auto;
     width: 100%;
-    border: 1px solid #999 !important;
-    background-color: #eee;
+    border: 1px solid var(--color-grey) !important;
+    background-color: var(--color-grey-lighter);
     height: 40px;
-    color: #000;
+    color: var(--color-dark);
     border-radius: 10px;
     padding: 0 10px;
   }
@@ -75,8 +76,8 @@ const SubscriptionBox = styled(Box)`
     width: 100%;
     margin: 0 auto;
     height: 40px;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--color-bg-reverse);
+    color: var(--color-text-reverse);
     border-radius: 10px;
     margin-bottom: 20px;
   }
