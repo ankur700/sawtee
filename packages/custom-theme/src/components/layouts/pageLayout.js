@@ -10,14 +10,8 @@ export const PageLayout = ({
   featured_media,
   children,
 }) => {
-  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
-
   return (
-    <LightPatternBox
-      bg={patternBoxColor}
-      showPattern={showBackgroundPattern}
-      pt="0"
-    >
+    <LightPatternBox showPattern={showBackgroundPattern} pt="0">
       <Box pos="relative">
         {featured_media != null && (
           <FeaturedMedia

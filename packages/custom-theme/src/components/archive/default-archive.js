@@ -22,7 +22,6 @@ import NumberedPagination from "../atoms/NumberedPagination";
 
 const DefaultArchive = ({ state, news, inFocus }) => {
   const postData = state.source.get(state.router.link);
-  const gridWrapperColor = useColorModeValue("gray.200", "gray.700");
   const isProgram = postData.route.replace("/category", "") === "/programme/";
   const isEvent = postData.route.replace("/category", "") === "/events/";
   const isMedia =
@@ -61,7 +60,7 @@ const DefaultArchive = ({ state, news, inFocus }) => {
         <Section
           padding={{ base: "24px", lg: "40px" }}
           width={"full"}
-          size="lg"
+          size="huge"
           mx="auto"
         >
           {isPost && (

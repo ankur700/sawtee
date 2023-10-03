@@ -17,7 +17,6 @@ import {
   Divider,
   HStack,
   useBreakpointValue,
-  useSafeLayoutEffect,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FullWidthCarousel, MultiItemCarousel } from "../atoms/carousels";
@@ -34,7 +33,7 @@ import { formatCPTData, formatDate } from "../helpers";
 import React, { Fragment } from "react";
 import PostPreviewCard from "../archive/post-preview-card";
 
-const Home = ({ state, actions, categories }) => {
+const Home = ({ state, categories }) => {
   const data = state.source.get(state.router.link);
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
@@ -46,11 +45,6 @@ const Home = ({ state, actions, categories }) => {
   const infocus = state.source.get("/category/infocus/");
   const linkColor = state.theme.colors.linkColor;
   const show = useBreakpointValue({ base: 1, md: 2, xl: 3 });
-
-  useSafeLayoutEffect(() => {
-    actions.source.fetch("/category/events/");
-    actions.source.fetch("/category/infocus/");
-  }, []);
 
   /*
 

@@ -3,7 +3,6 @@ import {
   ChakraProvider,
   ScaleFade,
   extendTheme,
-  useSafeLayoutEffect,
 } from "@chakra-ui/react";
 import Switch from "@frontity/components/switch";
 import "focus-visible/dist/focus-visible";
@@ -39,9 +38,7 @@ const Theme = ({ state, actions }) => {
     colors: { ...state.theme.colors },
   });
 
-  useSafeLayoutEffect(() => {
-    actions.source.fetch("get-all-categories");
-  }, []);
+
 
   return (
     <ChakraProvider resetCSS theme={{ config, ...overrides }}>
