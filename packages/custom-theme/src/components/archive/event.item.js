@@ -29,7 +29,7 @@ const EventItem = ({ post, headingColor, textColor }) => {
           <Link href={post.link}>
             <PostImageWithOverlay
               {...post.featured_media}
-              height="300px"
+              height="260px"
               borderRadius="0.75rem 0.75rem 0 0"
               overflow="hidden"
               _groupHover={{

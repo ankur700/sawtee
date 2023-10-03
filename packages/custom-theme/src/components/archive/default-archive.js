@@ -46,6 +46,7 @@ const DefaultArchive = ({ state, news, inFocus }) => {
             taxonomy={postData.taxonomy}
             title={decode(state.source[postData.taxonomy][postData.id].name)}
             mb={isPost ? "-80px" : "0px"}
+            pb={isPost ? "80px" : "0px"}
           />
         )}
 
@@ -59,9 +60,8 @@ const DefaultArchive = ({ state, news, inFocus }) => {
 
         <Section
           padding={{ base: "24px", lg: "40px" }}
-          // bg={gridWrapperColor}
           width={"full"}
-          size="huge"
+          size="lg"
           mx="auto"
         >
           {isPost && (
