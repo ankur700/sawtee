@@ -4,6 +4,7 @@ import {
   GridItem,
   SimpleGrid,
   VStack,
+  useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { LightPatternBox } from "../styles/pattern-box";
@@ -19,8 +20,9 @@ import EventItem from "./event.item";
 import Sidebar from "./sidebar";
 import { formatPostData } from "../helpers";
 import NumberedPagination from "../atoms/NumberedPagination";
+import SidebarWidgets from "../atoms/sidebarWidgets";
 
-const DefaultArchive = ({ state, news, inFocus }) => {
+const DefaultArchive = ({ state, news, infocus }) => {
   const postData = state.source.get(state.router.link);
   const isProgram = postData.route.replace("/category", "") === "/programme/";
   const isEvent = postData.route.replace("/category", "") === "/events/";
@@ -36,6 +38,8 @@ const DefaultArchive = ({ state, news, inFocus }) => {
     "var(--color-dark-acc)",
     "var(--color-light-acc)"
   );
+  const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+
   return (
     <LightPatternBox showPattern={state.theme.showBackgroundPattern} pt="0">
       <Box as="section">
@@ -59,8 +63,7 @@ const DefaultArchive = ({ state, news, inFocus }) => {
 
         <Section
           padding={{ base: "24px", lg: "40px" }}
-          width={"full"}
-          size="huge"
+          size={size || "lg"}
           mx="auto"
         >
           {isPost && (
@@ -128,9 +131,9 @@ const DefaultArchive = ({ state, news, inFocus }) => {
               </GridItem>
               <GridItem colSpan={{ base: 1, xl: 2 }}>
                 <Sidebar
-                  posts={inFocus}
+                  posts={infocus}
                   news={news}
-                  postsLink={inFocus.link}
+                  postsLink={infocus.link}
                   newsLink={news.link}
                   showTwitterTimeline={true}
                   showSubscriptionBox={true}

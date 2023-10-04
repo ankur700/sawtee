@@ -16,6 +16,7 @@ import { PostImageWithOverlay } from "../featured-post/components";
 import { GoChevronRight } from "react-icons/go";
 
 const EventItem = ({ post, headingColor, textColor }) => {
+  console.log(post);
   return (
     <GlassBox
       spacing={4}

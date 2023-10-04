@@ -108,34 +108,26 @@ const PublicationsArchive = ({ state, categories, news, inFocus }) => {
           flexDirection={"column"}
           alignItems={"center"}
         >
-          <Sidebar
-            posts={inFocus}
-            news={news}
-            categories={categories}
-            linkColor={linkColor}
-            postsLink={inFocus.length > 0 ? inFocus.link : ""}
-            newsLink={news.length > 0 ? news.link : ""}
-            showTwitterTimeline={true}
-            showSubscriptionBox={true}
-          />
-          <GlassBox
-            mt={12}
-            py="4"
-            px="8"
-            rounded="xl"
-            height="max-content"
-            position={"sticky"}
-            top={"8.5rem"}
-          >
-            <PublicationFilter
-              categories={publicationCategories}
-              allChecked={allChecked}
-              isIndeterminate={isIndeterminate}
-              checkedItems={checkedItems}
-              setCheckedItems={setCheckedItems}
-              contentColor={contentColor}
-            />
-          </GlassBox>
+          <Sidebar showTwitterTimeline={true} showSubscriptionBox={true}>
+            <GlassBox
+              mt={12}
+              py="4"
+              px="8"
+              rounded="xl"
+              height="max-content"
+              position={"sticky"}
+              top={"8.5rem"}
+            >
+              <PublicationFilter
+                categories={publicationCategories}
+                allChecked={allChecked}
+                isIndeterminate={isIndeterminate}
+                checkedItems={checkedItems}
+                setCheckedItems={setCheckedItems}
+                contentColor={contentColor}
+              />
+            </GlassBox>
+          </Sidebar>
         </GridItem>
       </Grid>
     </ArchiveLayout>
@@ -154,12 +146,7 @@ const PublicationFilter = ({
 }) => {
   return (
     <CheckboxGroup colorScheme="primary" size="md" variant="outline">
-      <SimpleGrid
-        spacingX="20px"
-        spacingY="10px"
-        columns={[1, 2]}
-        // minChildWidth="120px"
-      >
+      <SimpleGrid spacingX="20px" spacingY="10px" columns={[1, 2]}>
         <Checkbox
           isChecked={allChecked}
           color={contentColor}
@@ -179,7 +166,6 @@ const PublicationFilter = ({
         </Checkbox>
         {categories.map(({ name, id }, idx) => {
           return (
-            // <Link key={id} link={`/publications#${name}`}>
             <Checkbox
               key={id}
               color={contentColor}
@@ -192,7 +178,6 @@ const PublicationFilter = ({
             >
               {name}
             </Checkbox>
-            // </Link>
           );
         })}
       </SimpleGrid>

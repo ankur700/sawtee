@@ -15,21 +15,15 @@ export const ArchiveLayout = ({
   category,
 }) => {
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
-  const patternBoxColor = useColorModeValue("whiteAlpha.700", "gray.700");
   const contentColor = useColorModeValue(
     "rgba(12, 17, 43, 0.8)",
     "whiteAlpha.800"
   );
   return (
-    <LightPatternBox
-      bg={patternBoxColor}
-      showPattern={showBackgroundPattern}
-      pt="0"
-    >
-      <Box pb={{ base: "2rem", lg: "50px" }} pos="relative">
+    <LightPatternBox showPattern={showBackgroundPattern} pt="0">
+      <Box pos="relative">
         <Box
           as="figure"
-          mt={4}
           height="350px"
           _after={{
             display: "block",

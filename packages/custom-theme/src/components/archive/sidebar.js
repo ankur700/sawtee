@@ -16,7 +16,7 @@ export const Sidebar = ({
   children,
 }) => {
   return (
-    <Stack spacing={12} w="full" maxW={"xl"}>
+    <Stack spacing={12} maxW={"xl"}>
       {showSubscriptionBox && (
         <GlassBox py="4" px="8" rounded="xl" height="max-content">
           <SubscriptionCard />

@@ -29,7 +29,7 @@ const config = {
 // in roots.
 const Theme = ({ state, actions }) => {
   const data = state.source.get(state.router.link);
-  const categories = state.source.data["get-all-categories/"].items;
+  const categories = [];
   const overrides = extendTheme({
     fonts: {
       heading: "'Roboto Slab', system-ui, 'Helvetica', serif",
@@ -37,8 +37,6 @@ const Theme = ({ state, actions }) => {
     },
     colors: { ...state.theme.colors },
   });
-
-
 
   return (
     <ChakraProvider resetCSS theme={{ config, ...overrides }}>
@@ -65,8 +63,8 @@ const Theme = ({ state, actions }) => {
           <Switch>
             <Loading when={data.isFetching} />
             <SearchResults when={data.isSearch} />
-            <Home when={data.route === "/"} categories={categories} />
-            <Archive when={data.isArchive} categories={categories} />
+            <Home when={data.route === "/"} />
+            <Archive when={data.isArchive} />
             <Page when={data.isPage} />
             <Post when={data.isPostType} />
             <Page404 when={data.is404} />

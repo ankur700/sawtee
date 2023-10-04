@@ -33,8 +33,9 @@ import { formatCPTData, formatDate } from "../helpers";
 import React, { Fragment } from "react";
 import PostPreviewCard from "../archive/post-preview-card";
 
-const Home = ({ state, categories }) => {
+const Home = ({ state }) => {
   const data = state.source.get(state.router.link);
+  const categories = state.source.data["get-all-categories/"].items;
   const post = state.source[data.type][data.id];
   const slides = post.acf?.slides;
   const introText = post.acf?.about_section_intro;

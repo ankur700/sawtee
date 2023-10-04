@@ -5,10 +5,15 @@ import NewsletterArchive from "./newsletter-archive";
 import HomeArchive from "./home-archive";
 import Switch from "@frontity/components/switch";
 
-const Archive = ({ state, categories }) => {
+const Archive = ({ state }) => {
   const postData = state.source.get(state.router.link);
   const news = state.source.get("/category/sawtee-in-media/");
   const infocus = state.source.get("/category/infocus/");
+  const categories = state.source.data["get-all-categories/"].items;
+
+
+  
+
   return (
     <Switch>
       <HomeArchive when={postData.route === "/blog/"} />
@@ -28,7 +33,7 @@ const Archive = ({ state, categories }) => {
       <DefaultArchive
         when={postData.isCategory}
         news={news}
-        inFocus={infocus}
+        infocus={infocus}
       />
     </Switch>
   );
