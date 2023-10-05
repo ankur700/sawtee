@@ -11,19 +11,24 @@ import React from "react";
 import { PostImageWithOverlay } from "../featured-post/components";
 import Link from "../atoms/link";
 import PostCategories from "../post/post-categories";
-import { formatDateWithMoment } from "../helpers";
+import { formatDate } from "../helpers";
 import { decode } from "frontity";
 import { GlassBox } from "../atoms";
 
-const PostPreviewCard = ({ data, showImage, ...rest }) => {
+const PostPreviewCard = ({
+  data,
+  showImage,
+  isProgramSubcategory,
+  ...rest
+}) => {
   const { title, excerpt, featured_media, link, categories, publishDate } =
     data;
+  const color = useColorModeValue("var(--color-dark", "var(--color-light)");
   return (
     <GlassBox
       display="flex"
       flexDir="column"
       position="relative"
-      bg={useColorModeValue("white", "rgba(0,0,0,0.3)")}
       as="article"
       shadow="md"
       rounded="xl"
@@ -41,27 +46,29 @@ const PostPreviewCard = ({ data, showImage, ...rest }) => {
         )}
 
         <Flex p="40px" flexGrow="1" direction="column">
-          <Box
-            display={"flex"}
-            justifyContent="space-between"
-            alignItems={"center"}
-          >
-            <PostCategories
-              justify="flex-start"
-              categories={categories}
-              mt="0px"
-              color={useColorModeValue("gray.700", "whiteAlpha.700")}
-            />
+          {!isProgramSubcategory && (
             <Box
-              as="time"
-              fontWeight={"semibold"}
-              color={useColorModeValue("gray.700", "whiteAlpha.700")}
+              display={"flex"}
+              justifyContent="space-between"
+              alignItems={"center"}
+              mb={3}
             >
-              {formatDateWithMoment(publishDate)}
+              <PostCategories
+                justify="flex-start"
+                categories={categories}
+                mt="0px"
+                color={color}
+                limit={1}
+              />
+
+              <Box as="time" fontWeight={"semibold"} color={color}>
+                {formatDate(publishDate)}
+              </Box>
             </Box>
-          </Box>
+          )}
+
           <LinkOverlay className="primary-link" href={link}>
-            <Heading fontSize="2xl" as="h4" minH="2.25rem" noOfLines={"3"}>
+            <Heading fontSize="2xl" as="h4" minH="2.25rem" noOfLines={"2"}>
               {decode(title)}
             </Heading>
           </LinkOverlay>
@@ -74,8 +81,7 @@ const PostPreviewCard = ({ data, showImage, ...rest }) => {
             display="-webkit-box"
             lineHeight="1.5"
             noOfLines="3"
-            maxHeight="4.6875rem"
-            color={useColorModeValue("gray.700", "whiteAlpha.700")}
+            color={color}
             sx={{ webkitLineClamp: "3", webkitBoxOrient: "vertical" }}
             dangerouslySetInnerHTML={{ __html: excerpt }}
           />

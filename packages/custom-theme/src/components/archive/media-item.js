@@ -1,30 +1,19 @@
-import {
-  VStack,
-  Box,
-  Link,
-  Text,
-  Heading,
-  useColorModeValue,
-  HStack,
-  Tag,
-} from "@chakra-ui/react";
+import { VStack, Link, Text, Heading, HStack, Tag } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { decode } from "frontity";
+import { formatDate } from "../helpers";
+import { GlassBox } from "../atoms";
 
 const MediaItem = ({ post, headingColor, textColor }) => {
   const { title, excerpt, publishDate, link, acf } = post;
   return (
-    <Box
+    <GlassBox
       as={motion.div}
-      px={8}
-      pt={8}
-      pb={4}
-      bg={useColorModeValue("gray.50", "gray.800")}
-      w="full"
-      boxShadow="md"
-      borderLeft={"2px solid"}
-      borderBottom={"2px solid"}
-      borderColor="primary.300"
-      whileHover={{ y: -5 }}
+      p="40px"
+      // borderLeft={"2px solid"}
+      // borderBottom={"2px solid"}
+      whileHover={{ y: "-10px" }}
+      boxShadow="lg"
       _hover={{ boxShadow: "xl" }}
     >
       <VStack spacing={2} mb={5} alignItems={"start"}>
@@ -46,6 +35,12 @@ const MediaItem = ({ post, headingColor, textColor }) => {
           fontSize="sm"
           noOfLines={3}
           color={textColor}
+          flex="1"
+          overflow="hidden"
+          textOverflow="ellipsis"
+          display="-webkit-box"
+          lineHeight="1.5"
+          sx={{ webkitLineClamp: "3", webkitBoxOrient: "vertical" }}
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
       </VStack>
@@ -74,10 +69,10 @@ const MediaItem = ({ post, headingColor, textColor }) => {
 
         <Text
           color={headingColor}
-          dangerouslySetInnerHTML={{ __html: formatDate(post.publishDate) }}
+          dangerouslySetInnerHTML={{ __html: formatDate(publishDate) }}
         />
       </HStack>
-    </Box>
+    </GlassBox>
   );
 };
 

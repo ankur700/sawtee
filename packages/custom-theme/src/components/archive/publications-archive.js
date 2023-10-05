@@ -15,7 +15,6 @@ import {
   SimpleGrid,
   useBreakpointValue,
   useColorModeValue,
-  useSafeLayoutEffect,
 } from "@chakra-ui/react";
 import { connect } from "frontity";
 import Sidebar from "../archive/sidebar";
@@ -26,8 +25,9 @@ import { MultiItemCarousel } from "../atoms/carousels";
 import Link from "../atoms/link";
 import { ArchiveLayout } from "../layouts/archiveLayout";
 import PublicationImage from "../../assets/publications-1-resized.jpg";
+import SidebarWidget from "../atoms/sidebarWidget";
 
-const PublicationsArchive = ({ state, categories, news, inFocus }) => {
+const PublicationsArchive = ({ state, categories, news, infocus }) => {
   const postData = state.source.get("get-publications-categories-posts");
   const [publicationCategories, setPublicationCategories] = useState([]);
   const [sliderData, setSliderData] = useState([]);
@@ -47,7 +47,7 @@ const PublicationsArchive = ({ state, categories, news, inFocus }) => {
       .map((item) => setPublicationCategories((prev) => [...prev, item]));
   }, []);
 
-  useSafeLayoutEffect(() => {
+  useEffect(() => {
     if (publicationCategories.length !== 0) {
       postData.items.forEach((item) => {
         let category = publicationCategories.filter((pc) => pc.id === item.id);
@@ -108,26 +108,45 @@ const PublicationsArchive = ({ state, categories, news, inFocus }) => {
           flexDirection={"column"}
           alignItems={"center"}
         >
-          <Sidebar showTwitterTimeline={true} showSubscriptionBox={true}>
-            <GlassBox
-              mt={12}
-              py="4"
-              px="8"
-              rounded="xl"
-              height="max-content"
-              position={"sticky"}
-              top={"8.5rem"}
-            >
-              <PublicationFilter
-                categories={publicationCategories}
-                allChecked={allChecked}
-                isIndeterminate={isIndeterminate}
-                checkedItems={checkedItems}
-                setCheckedItems={setCheckedItems}
-                contentColor={contentColor}
-              />
-            </GlassBox>
-          </Sidebar>
+          <Sidebar showTwitterTimeline={true} showSubscriptionBox={true} />
+          {news
+            ? news.items !== undefined && (
+                <SidebarWidget
+                  array={news.items.slice(0, 5)}
+                  title={news.route.split("/")[2].toLocaleUpperCase()}
+                  link={news.link}
+                />
+              )
+            : null}
+          {infocus
+            ? infocus.items !== undefined && (
+                <SidebarWidget
+                  array={infocus.items.slice(0, 5)}
+                  title={infocus.route.split("/")[2].toLocaleUpperCase()}
+                  link={infocus.link}
+                  position={"sticky"}
+                  top={"8.5rem"}
+                />
+              )
+            : null}
+          <GlassBox
+            mt={12}
+            py="4"
+            px="8"
+            rounded="xl"
+            height="max-content"
+            position={"sticky"}
+            top={"8.5rem"}
+          >
+            <PublicationFilter
+              categories={publicationCategories}
+              allChecked={allChecked}
+              isIndeterminate={isIndeterminate}
+              checkedItems={checkedItems}
+              setCheckedItems={setCheckedItems}
+              contentColor={contentColor}
+            />
+          </GlassBox>
         </GridItem>
       </Grid>
     </ArchiveLayout>

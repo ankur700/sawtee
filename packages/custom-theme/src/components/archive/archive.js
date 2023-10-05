@@ -12,8 +12,6 @@ const Archive = ({ state }) => {
   const categories = state.source.data["get-all-categories/"].items;
 
 
-  
-
   return (
     <Switch>
       <HomeArchive when={postData.route === "/blog/"} />
@@ -21,12 +19,12 @@ const Archive = ({ state }) => {
         when={postData.isPublicationsArchive}
         categories={categories}
         news={news}
-        inFocus={infocus}
+        infocus={infocus}
       />
       <NewsletterArchive
         when={postData.isNewslettersArchive}
         news={news}
-        inFocus={infocus}
+        infocus={infocus}
         postData={postData}
         categories={categories}
       />
@@ -34,6 +32,7 @@ const Archive = ({ state }) => {
         when={postData.isCategory}
         news={news}
         infocus={infocus}
+        categories={categories}
       />
     </Switch>
   );

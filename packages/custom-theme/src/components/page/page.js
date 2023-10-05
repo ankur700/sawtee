@@ -13,8 +13,8 @@ const Page = ({ state, libraries }) => {
   const post = formatPostData(state, postData);
   const Html2React = libraries.html2react.Component;
   const contentColor = useColorModeValue(
-    "rgba(12, 17, 43, 0.8)",
-    "whiteAlpha.800"
+    "var(--color-dark)",
+    "var(--color-light)"
   );
 
   const socialMenus = state.theme.socialLinks;

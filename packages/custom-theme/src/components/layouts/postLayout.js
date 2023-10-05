@@ -7,7 +7,7 @@ import FeaturedMedia from "../post/featured-media";
 import { Content } from "../atoms";
 import useScrollProgress from "../hooks/useScrollProgress";
 import PostCategories from "../post/post-categories";
-import { formatDateWithMoment } from "../helpers";
+import { formatDate } from "../helpers";
 
 export const PostLayout = ({
   children,
@@ -56,15 +56,9 @@ export const PostLayout = ({
 
             {post.acf.program_starting_date && post.acf.program_ending_date && (
               <Text fontSize="md" mt="12px" textAlign={"center"}>
-                {formatDateWithMoment(
-                  post.acf.program_starting_date,
-                  "MMMM D YYYY"
-                ) +
+                {formatDate(post.acf.program_starting_date) +
                   " - " +
-                  formatDateWithMoment(
-                    post.acf.program_ending_date,
-                    "MMMM D YYYY"
-                  )}
+                  formatDate(post.acf.program_ending_date)}
               </Text>
             )}
           </Box>

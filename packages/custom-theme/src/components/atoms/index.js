@@ -196,12 +196,12 @@ export const Content = styled(Box)`
 export const GlassBox = ({ children, ...rest }) => {
   return (
     <Box
-      w="100%"
-      border={"1px solid"}
+      border="1px solid"
       borderColor={useColorModeValue("#ebebeb", "#333")}
       rounded="xl"
+      shadow="lg"
+      bg="var(--color-bg)"
       {...rest}
-      bg={"var(--color-bg)"}
     >
       {children}
     </Box>

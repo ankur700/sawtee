@@ -1,9 +1,6 @@
-import dayjs from "dayjs";
 import { useBreakpointValue } from "@chakra-ui/react";
 
 const MAXIMUM_POSTS = 5;
-const relativeTime = require("dayjs/plugin/relativeTime");
-dayjs.extend(relativeTime);
 
 export function toTitleCase(str) {
   return str.replace(/\w\S*/g, function (txt) {
@@ -192,7 +189,6 @@ export function formatPostData(state, post) {
   } catch (error) {
     console.error(error, error.message);
   }
-
 }
 
 export function splitPosts(state, routeData) {
@@ -229,11 +225,11 @@ export function omitConnectProps(props) {
   return out;
 }
 
-export const formatedDate = (date) => dayjs(date).fromNow();
+// export const formatedDate = (date) => dayjs(date).fromNow();
 
-export function formatDateWithMoment(date, format) {
-  return dayjs(date).format(format ? format : "MMM DD, YYYY");
-}
+// export function formatDateWithMoment(date, format) {
+//   return dayjs(date).format(format ? format : "MMM DD, YYYY");
+// }
 
 const monthNames = [
   "January",
@@ -270,13 +266,22 @@ const formatDay = (day) => {
   return result;
 };
 
-export function formatDate(date) {
+export function formatedDate(date) {
   const jsDate = new Date(date);
   const day = jsDate.getDate();
   const month = jsDate.getMonth();
   const year = jsDate.getFullYear();
 
   return `${formatDay(day)} ${monthNames[month]}, ${year}`;
+}
+
+export function formatDate(date) {
+  const jsDate = new Date(date);
+  const day = jsDate.getDate();
+  const month = jsDate.getMonth();
+  const year = jsDate.getFullYear();
+
+  return `${day} ${monthNames[month]}, ${year}`;
 }
 
 export function isUrl(str) {

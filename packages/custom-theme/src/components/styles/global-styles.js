@@ -52,11 +52,10 @@ const documentSetup = (colors) => css`
   *,
   *::before,
   *::after {
-    box-sizing: inherit;
+    box-sizing: border-box;
   }
 
   body {
-    box-sizing: border-box;
     background-color: var(--color-body-bg);
     color: var(--color-text);
     font-family: var(--chakra-fonts-body);

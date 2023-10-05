@@ -20,9 +20,10 @@ import EventItem from "./event.item";
 import Sidebar from "./sidebar";
 import { formatPostData } from "../helpers";
 import NumberedPagination from "../atoms/NumberedPagination";
-import SidebarWidgets from "../atoms/sidebarWidgets";
+import Loading from "../atoms/loading";
+import SidebarWidget from "../atoms/sidebarWidget";
 
-const DefaultArchive = ({ state, news, infocus }) => {
+const DefaultArchive = ({ state, news, infocus, categories }) => {
   const postData = state.source.get(state.router.link);
   const isProgram = postData.route.replace("/category", "") === "/programme/";
   const isEvent = postData.route.replace("/category", "") === "/events/";
@@ -40,6 +41,9 @@ const DefaultArchive = ({ state, news, infocus }) => {
   );
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
 
+  if (!postData.isReady || postData.items.length === 0) {
+    return <Loading />;
+  }
   return (
     <LightPatternBox showPattern={state.theme.showBackgroundPattern} pt="0">
       <Box as="section">
@@ -61,11 +65,7 @@ const DefaultArchive = ({ state, news, infocus }) => {
           />
         )}
 
-        <Section
-          padding={{ base: "24px", lg: "40px" }}
-          size={size || "lg"}
-          mx="auto"
-        >
+        <Section padding={{ base: "24px", lg: "80px" }} size={size} mx="auto">
           {isPost && (
             <>
               <SimpleGrid columns={{ base: 1, md: 2 }} spacing="40px">
@@ -85,7 +85,7 @@ const DefaultArchive = ({ state, news, infocus }) => {
               pos={"relative"}
             >
               <GridItem colSpan={{ base: 1, xl: 3 }}>
-                <VStack spacing={12} w={"full"} mb="56px">
+                <VStack spacing={12} mb="56px">
                   {postData.items.map(({ type, id }) => {
                     const post = formatPostData(state, state.source[type][id]);
                     if (isCovid) {
@@ -131,13 +131,29 @@ const DefaultArchive = ({ state, news, infocus }) => {
               </GridItem>
               <GridItem colSpan={{ base: 1, xl: 2 }}>
                 <Sidebar
-                  posts={infocus}
-                  news={news}
-                  postsLink={infocus.link}
-                  newsLink={news.link}
                   showTwitterTimeline={true}
                   showSubscriptionBox={true}
                 />
+                {news
+                  ? news.items !== undefined && (
+                      <SidebarWidget
+                        array={news.items.slice(0, 5)}
+                        title={news.route.split("/")[2].toLocaleUpperCase()}
+                        link={news.link}
+                      />
+                    )
+                  : null}
+                {infocus
+                  ? infocus.items !== undefined && (
+                      <SidebarWidget
+                        array={infocus.items.slice(0, 5)}
+                        title={infocus.route.split("/")[2].toLocaleUpperCase()}
+                        link={infocus.link}
+                        position={"sticky"}
+                        top={"8.5rem"}
+                      />
+                    )
+                  : null}
               </GridItem>
             </Grid>
           )}

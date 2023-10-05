@@ -319,7 +319,7 @@ const AboutSection = ({
   );
 };
 
-const BlogSection = ({ state, eventsData, categories }) => {
+const BlogSection = ({ state, eventsData }) => {
   return (
     <Box
       maxW="full"
@@ -346,10 +346,9 @@ const BlogSection = ({ state, eventsData, categories }) => {
             {eventsData.isReady &&
               eventsData.items.length > 0 &&
               eventsData.items.slice(0, 6).map((item, i) => {
-                const article = formatCPTData(
+                const article = formatPostData(
                   state,
-                  state.source[item.type][item.id],
-                  categories
+                  state.source[item.type][item.id]
                 );
 
                 if (i === 0) {

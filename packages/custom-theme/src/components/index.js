@@ -20,16 +20,16 @@ import SkipLink from "./styles/skip-link";
 import Home from "../components/page/home";
 import Page from "./page/page";
 
-const config = {
-  initialColorMode: "light",
-  useSystemColorMode: false,
-};
+
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.
-const Theme = ({ state, actions }) => {
+const Theme = ({ state }) => {
   const data = state.source.get(state.router.link);
-  const categories = [];
+  const config = {
+    initialColorMode: "light",
+    useSystemColorMode: false,
+  };
   const overrides = extendTheme({
     fonts: {
       heading: "'Roboto Slab', system-ui, 'Helvetica', serif",
@@ -39,7 +39,7 @@ const Theme = ({ state, actions }) => {
   });
 
   return (
-    <ChakraProvider resetCSS theme={{ config, ...overrides }}>
+    <ChakraProvider theme={{ config, ...overrides }}>
       <Global styles={globalStyles(state.theme.colors)} />
       <PageTitle />
       <Head>

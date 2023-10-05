@@ -11,9 +11,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { formatCPTData, formatDate } from "../helpers";
+import { formatCPTData, formatDate, formatPostData } from "../helpers";
 import { decode, connect } from "frontity";
-import { GlassBox } from "../atoms";
+import { GlassBox } from ".";
 
 const ListHeading = ({ title, link }) => {
   return (
@@ -27,7 +27,19 @@ const ListHeading = ({ title, link }) => {
           {title}
         </Heading>
         <Spacer />
-        <Link href={link} fontSize="14px" fontWeight="medium">
+        <Link
+          href={link}
+          fontSize="sm"
+          textDecor={"underline"}
+          textUnderlineOffset={"2px"}
+          _hover={{
+            textDecor: "underline",
+            color: "primary.700",
+            textUnderlineOffset: "3px",
+            textDecorationColor: "primary.700",
+          }}
+          fontWeight="medium"
+        >
           See all
         </Link>
       </Flex>
@@ -35,7 +47,7 @@ const ListHeading = ({ title, link }) => {
   );
 };
 
-const SidebarWidget = ({ state, array, categories, title, link, ...rest }) => {
+const SidebarWidget = ({ state, array, title, link, ...rest }) => {
   const HeadingColor = useColorModeValue(
     "var(--color-dark)",
     "var(--color-light)"
@@ -46,11 +58,18 @@ const SidebarWidget = ({ state, array, categories, title, link, ...rest }) => {
   );
 
   return (
-    <GlassBox className="glassbox" rounded="xl" px={8} py={6} {...rest}>
+    <GlassBox
+      className="sidebar_widget"
+      rounded="xl"
+      py="4"
+      px="8"
+      height="max-content"
+      {...rest}
+    >
       <ListHeading title={title} link={link} />
 
       {array.map(({ type, id }, index) => {
-        const post = formatCPTData(state, state.source[type][id], categories);
+        const post = formatPostData(state, state.source[type][id]);
 
         if (!post) {
           return (

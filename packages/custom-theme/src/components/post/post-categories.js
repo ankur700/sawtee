@@ -26,7 +26,7 @@ export const PostCategories = ({
   const limitCategories =
     categories.length >= limit
       ? categories.filter((cat, idx) => {
-          if (idx <= limit && cat.parent !== 0) return cat;
+          if (idx <= limit && cat.parent !== undefined) return cat;
         })
       : categories;
 

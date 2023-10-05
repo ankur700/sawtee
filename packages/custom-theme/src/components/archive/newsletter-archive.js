@@ -14,6 +14,7 @@ import Loading from "../atoms/loading";
 import { formatCPTData } from "../helpers";
 import Pagination from "../archive/pagination";
 import Link from "../atoms/link";
+import SidebarWidget from "../atoms/sidebarWidget";
 
 const NewsletterArchive = ({
   state,
@@ -21,7 +22,7 @@ const NewsletterArchive = ({
   linkColor,
   categories,
   news,
-  inFocus,
+  infocus,
 }) => {
   // const postData = state.source.get(state.router.link);
 
@@ -57,15 +58,27 @@ const NewsletterArchive = ({
       </GridItem>
 
       <GridItem colSpan={2} display={"flex"} justifyContent={"center"}>
-        <Sidebar
-          posts={inFocus}
-          news={news}
-          linkColor={linkColor}
-          postsLink={inFocus.link}
-          newsLink={news.link}
-          showTwitterTimeline={false}
-          showSubscriptionBox={true}
-        />
+        <Sidebar showTwitterTimeline={true} showSubscriptionBox={true} />
+        {news
+          ? news.items !== undefined && (
+              <SidebarWidget
+                array={news.items.slice(0, 5)}
+                title={news.route.split("/")[2].toLocaleUpperCase()}
+                link={news.link}
+              />
+            )
+          : null}
+        {infocus
+          ? infocus.items !== undefined && (
+              <SidebarWidget
+                array={infocus.items.slice(0, 5)}
+                title={infocus.route.split("/")[2].toLocaleUpperCase()}
+                link={infocus.link}
+                position={"sticky"}
+                top={"8.5rem"}
+              />
+            )
+          : null}
       </GridItem>
     </Grid>
   );
