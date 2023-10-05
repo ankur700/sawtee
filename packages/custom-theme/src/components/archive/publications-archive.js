@@ -115,6 +115,7 @@ const PublicationsArchive = ({ state, categories, news, infocus }) => {
                   array={news.items.slice(0, 5)}
                   title={news.route.split("/")[2].toLocaleUpperCase()}
                   link={news.link}
+                  mt={12}
                 />
               )
             : null}
@@ -124,8 +125,7 @@ const PublicationsArchive = ({ state, categories, news, infocus }) => {
                   array={infocus.items.slice(0, 5)}
                   title={infocus.route.split("/")[2].toLocaleUpperCase()}
                   link={infocus.link}
-                  position={"sticky"}
-                  top={"8.5rem"}
+                  mt={12}
                 />
               )
             : null}

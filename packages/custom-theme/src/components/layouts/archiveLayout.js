@@ -66,8 +66,9 @@ export const ArchiveLayout = ({
       <Box
         as={Section}
         pb="80px"
-        size={size || "huge"}
-        px={{ base: "32px", md: "0" }}
+        padding={{ base: "24px", lg: "80px" }}
+        size={size}
+        mx="auto"
         pt="50px"
         fontSize={["md", "lg", "xl"]}
         color={contentColor}

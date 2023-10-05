@@ -1,4 +1,4 @@
-import { Box, Stack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { connect } from "frontity";
 import React from "react";
 import SubscriptionCard from "../atoms/subscriptionCard";
@@ -10,7 +10,6 @@ export const Sidebar = ({
   children,
 }) => {
   return (
-    <Box>
       <Stack spacing={12} maxW={"xl"}>
         {showSubscriptionBox && (
           <GlassBox py="4" px="8" rounded="xl" height="max-content">
@@ -32,7 +31,6 @@ export const Sidebar = ({
 
         {children}
       </Stack>
-    </Box>
   );
 };
 
