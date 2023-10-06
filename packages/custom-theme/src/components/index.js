@@ -19,8 +19,7 @@ import globalStyles from "./styles/global-styles";
 import SkipLink from "./styles/skip-link";
 import Home from "../components/page/home";
 import Page from "./page/page";
-
-
+import Script from "@frontity/components/script";
 
 // Theme is the root React component of our theme. The one we will export
 // in roots.

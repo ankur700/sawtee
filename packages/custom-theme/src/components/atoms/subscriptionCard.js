@@ -65,25 +65,25 @@ const SubscriptionBox = styled(Box)`
     flex: 1 0 auto;
     width: 100%;
     border: 1px solid var(--color-grey) !important;
-    background-color: var(--color-grey-lighter);
-    height: 40px;
-    color: var(--color-dark);
+    background-color: var(--color-body-bg);
+    height: 50px;
+    color: var(--color-text);
     border-radius: 10px;
     padding: 0 10px;
+    &::placeholder {
+      color: var(--color-grey) !important;
+    }
   }
 
   & input[type="submit"] {
     width: 100%;
     margin: 0 auto;
     height: 40px;
-    background-color: var(--color-bg-reverse);
-    color: var(--color-text-reverse);
+    background-color: var(--color-body-bg);
+    color: var(--color-text);
     border-radius: 10px;
     margin-bottom: 20px;
-  }
-
-  & input[type="checkbox"] {
-    margin-right: 5px;
+    border: 1px solid var(--color-grey) !important;
   }
 
   /**

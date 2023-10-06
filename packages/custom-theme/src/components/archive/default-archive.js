@@ -22,6 +22,7 @@ import { formatPostData } from "../helpers";
 import NumberedPagination from "../atoms/NumberedPagination";
 import Loading from "../atoms/loading";
 import SidebarWidget from "../atoms/sidebarWidget";
+import useCrossSiteTrackingCookies from "../hooks/useCrossSiteTrackingCookies";
 
 const DefaultArchive = ({ state, news, infocus, categories }) => {
   const postData = state.source.get(state.router.link);
@@ -40,6 +41,12 @@ const DefaultArchive = ({ state, news, infocus, categories }) => {
     "var(--color-light-acc)"
   );
   const size = useBreakpointValue(["sm", "md", "lg", "huge"]);
+
+  const isTrackingProtectionEnabled = useCrossSiteTrackingCookies();
+  console.log(
+    "🚀 ~ file: default-archive.js:46 ~ DefaultArchive ~ isTrackingProtectionEnabled:",
+    isTrackingProtectionEnabled
+  );
 
   if (!postData.isReady || postData.items.length === 0) {
     return <Loading />;
@@ -131,7 +138,7 @@ const DefaultArchive = ({ state, news, infocus, categories }) => {
               </GridItem>
               <GridItem colSpan={{ base: 1, xl: 2 }}>
                 <Sidebar
-                  showTwitterTimeline={true}
+                  showTwitterTimeline={isTrackingProtectionEnabled === null ? false : !isTrackingProtectionEnabled}
                   showSubscriptionBox={true}
                 />
                 {news
@@ -140,6 +147,7 @@ const DefaultArchive = ({ state, news, infocus, categories }) => {
                         array={news.items.slice(0, 5)}
                         title={news.route.split("/")[2].toLocaleUpperCase()}
                         link={news.link}
+                        mt={12}
                       />
                     )
                   : null}
@@ -150,7 +158,8 @@ const DefaultArchive = ({ state, news, infocus, categories }) => {
                         title={infocus.route.split("/")[2].toLocaleUpperCase()}
                         link={infocus.link}
                         position={"sticky"}
-                        top={"8.5rem"}
+                        top={"8rem"}
+                        mt={12}
                       />
                     )
                   : null}

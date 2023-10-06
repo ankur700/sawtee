@@ -29,7 +29,7 @@ import {
 } from "../atoms";
 import DemoChart from "../atoms/charts";
 import CustomLink from "../atoms/link";
-import { formatCPTData, formatDate } from "../helpers";
+import { formatCPTData, formatDate, formatPostData } from "../helpers";
 import React, { Fragment } from "react";
 import PostPreviewCard from "../archive/post-preview-card";
 
@@ -396,10 +396,9 @@ const InFocusSection = ({ articles, state, categories }) => {
       <Container maxW="7xl">
         <VStack overflow="hidden" spacing={6}>
           {articles.map((item, index) => {
-            const article = formatCPTData(
+            const article = formatPostData(
               state,
-              state.source[item.type][item.id],
-              categories
+              state.source[item.type][item.id]
             );
             return (
               <Fragment key={article.id}>

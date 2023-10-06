@@ -357,9 +357,8 @@ export const TwitterTimeline = ({ height, width, handle }) => {
   const theme = useColorModeValue("light", "dark");
 
   const TwitterWrapper = styled(Box)`
-    display: flex;
-    justifycontent: center;
-    alignitems: center;
+    display: block;
+    text-align: center;
     fontweight: bold;
     width: 100%;
 
